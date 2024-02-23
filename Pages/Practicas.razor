@@ -5,9 +5,19 @@
 
 }
 
-<input type="text" @bind="Id" />
-<input type="text" @bind="Practica" />
-<input type="text" @bind="Precio" />
+<div class="form-group">
+    <label for="inputText">Texto:</label>
+    <input type="text" id="inputText" @bind="Practica" />
+</div>
+<div class="form-group">
+    <label for="inputText">Texto:</label>
+    <input type="text" id="inputText" @bind="Id" />
+</div>
+<div class="form-group">
+    <label for="inputText">Texto:</label>
+    <input type="text" id="inputText" @bind="Precio" />
+
+</div>
 
 <button @onclick="Agregar">Mostrar Texto</button>
 
