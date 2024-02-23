@@ -1,0 +1,24 @@
+﻿@page "/Practicas"
+<h3>Practicas</h3>
+
+@code {
+
+}
+
+<input type="text" @bind="Id" />
+<input type="text" @bind="Practica" />
+<input type="text" @bind="Precio" />
+
+<button @onclick="Agregar">Mostrar Texto</button>
+
+<p>Texto ingresado: @Practica</p>
+
+@code {
+    private int Id = 0;
+    private string Practica = "";
+    private string Precio = "";
+    private void Agregar()
+    {
+        Console.WriteLine($"Texto ingresado: {Practica}");
+    }
+}
