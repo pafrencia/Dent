@@ -1,4 +1,5 @@
 ﻿@page "/Practicas"
+@using Dent.Models
 <h3>Practicas</h3>
 
 @code {
@@ -6,30 +7,39 @@
 }
 
 <div class="form-group">
-    <label for="inputText">Texto:</label>
+    <label for="inputText">Practica:</label>
     <input type="text" id="inputText" @bind="Practica" />
 </div>
 <div class="form-group">
-    <label for="inputText">Texto:</label>
-    <input type="text" id="inputText" @bind="Id" />
-</div>
-<div class="form-group">
-    <label for="inputText">Texto:</label>
+    <label for="inputText">Precio:</label>
     <input type="text" id="inputText" @bind="Precio" />
 
+
 </div>
 
-<button @onclick="Agregar">Mostrar Texto</button>
+<button @onclick="Agregar">Agregar</button>
 
 <p>Texto ingresado: @Practica</p>
 
 @code {
-    private int Id = 0;
-    private string Practica = "";
-    private string Precio = "";
+    public string Practica = "";
+    public int Precio = 0;
+
+
+    [Inject]
+    private AgregarPracticas agregarPracticas { get; set; }
+  
     private void Agregar()
     {
-        
-        Console.WriteLine($"Texto ingresado: {Practica}");
+        var prueba = new Practica();
+        prueba.Practica1 = Practica;
+        prueba.Precio = Precio;
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Practicas.Add(prueba);
+            db.SaveChanges();
+        }
+        //agregarPracticas.CargarPractica();
+       //Console.WriteLine($"Texto ingresado: {Practica} agregada");
     }
 }

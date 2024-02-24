@@ -5,9 +5,14 @@
 
         public void CargarPractica()
         {
-            var pedro = new Practica();
-            pedro.Practica1 = "nueva Pracica";
-            pedro.Precio = 123;
+            var prueba = new Practica();
+            prueba.Practica1 = "nueva Practica";
+            prueba.Precio = 123;
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.Practicas.Add(prueba);
+                db.SaveChanges();
+            }
         }
     }
 }

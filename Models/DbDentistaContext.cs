@@ -25,7 +25,7 @@ public partial class DbDentistaContext : DbContext
     {
         modelBuilder.Entity<Practica>(entity =>
         {
-            entity.HasNoKey();
+          entity.HasKey(p => p.Id);
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Practica1)
