@@ -19,16 +19,18 @@
 
 <button @onclick="Agregar">Agregar</button>
 
-<p>Texto ingresado: @Practica</p>
+<label for="miString">Ultima Ingresada:</label>
+<input id="miString" @bind="miString" />
+
 
 @code {
     public string Practica = "";
     public int Precio = 0;
-
+    public string miString = "";
 
     [Inject]
     private AgregarPracticas agregarPracticas { get; set; }
-  
+
     private void Agregar()
     {
         var prueba = new Practica();
@@ -39,7 +41,11 @@
             db.Practicas.Add(prueba);
             db.SaveChanges();
         }
+        miString = Practica;
+        Practica = "";
+        Precio = 0;
+
         //agregarPracticas.CargarPractica();
-       //Console.WriteLine($"Texto ingresado: {Practica} agregada");
+       Console.WriteLine($"Texto ingresado: {Practica} agregada");
     }
 }
