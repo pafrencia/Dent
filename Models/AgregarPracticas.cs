@@ -5,8 +5,8 @@
 
         public void CargarPractica()
         {
-            var prueba = new Practica();
-            prueba.Practica1 = "nueva Practica";
+            var prueba = new Practica1();
+            prueba.Practica = "nueva Practica";
             prueba.Precio = 123;
             using (DbDentistaContext db = new DbDentistaContext())
             {

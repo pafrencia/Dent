@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dent.Models;
 
-public partial class Practica
+public class Practica1
 {
     [Key]
     public int Id { get; set; }
 
-    public string? Practica1 { get; set; }
+    public string? Practica { get; set; }
 
     public int? Precio { get; set; }
 }

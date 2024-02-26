@@ -15,7 +15,7 @@ public partial class DbDentistaContext : DbContext
     {
     }
 
-    public virtual DbSet<Practica> Practicas { get; set; }
+    public virtual DbSet<Practica1> Practicas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -23,12 +23,12 @@ public partial class DbDentistaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Practica>(entity =>
+        modelBuilder.Entity<Practica1>(entity =>
         {
           entity.HasKey(p => p.Id);
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.Practica1)
+            entity.Property(e => e.Practica)
                 .HasMaxLength(30)
                 .IsFixedLength()
                 .HasColumnName("Practica");
