@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dent.Pages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dent.Models;
@@ -23,10 +24,11 @@ public partial class DbDentistaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Practica1>().HasKey(p => p.Id);
         modelBuilder.Entity<Practica1>(entity =>
         {
-          entity.HasKey(p => p.Id);
 
+            entity.HasKey(p => p.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Practica)
                 .HasMaxLength(30)

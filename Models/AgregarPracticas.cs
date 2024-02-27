@@ -1,4 +1,6 @@
-﻿namespace Dent.Models
+﻿using Dent.Pages;
+
+namespace Dent.Models
 {
     public class AgregarPracticas
     {
@@ -15,4 +17,5 @@
             }
         }
     }
+
 }

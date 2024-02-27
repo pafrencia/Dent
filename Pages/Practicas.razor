@@ -21,10 +21,9 @@
 
 <label for="miString">Ultima Ingresada:</label>
 <input id="miString" @bind="miString" />
-
-
+<p> </p>
 <h3>Tabla de Practicas</h3>
-
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -40,6 +39,10 @@
                 <td>@practica.Id</td>
                 <td>@practica.Practica</td>
                 <td>@practica.Precio</td>
+                <td>
+                    <button @onclick="() => EditarPractica(practica.Id)">Editar</button>
+                    <button @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
+                </td>
             </tr>
         }
     </tbody>
@@ -63,6 +66,48 @@
     [Inject]
     private AgregarPracticas agregarPracticas { get; set; }
 
+    private void EditarPractica(int practicaId)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+
+
+
+            var practica = DbContext.Practicas.Find(practicaId);
+            if (practica != null)
+            {
+                // Actualizar los campos necesarios
+                if (Practica == "")
+                { practica.Precio = Precio; }
+                else
+                {
+                    practica.Practica = Practica;
+                    practica.Precio = Precio;
+                }
+             
+                
+                db.SaveChanges();
+            }
+        }
+        ActualizaTabla();
+    }
+
+    private void EliminarPractica(int practicaId)
+    {
+
+
+        var practica = DbContext.Practicas.Find(practicaId);
+        if (practica != null)
+        {
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.Practicas.Remove(practica);
+                db.SaveChanges();
+            }
+            ActualizaTabla();
+        }
+
+    }
     private void Agregar()
     {
         var prueba = new Practica1();
@@ -73,11 +118,19 @@
             db.Practicas.Add(prueba);
             db.SaveChanges();
         }
+        // Al final del método donde realizas cambios y antes de volver a cargar los datos
+        ActualizaTabla();
         miString = Practica;
         Practica = "";
         Precio = 0;
 
         //agregarPracticas.CargarPractica();
-       Console.WriteLine($"Texto ingresado: {Practica} agregada");
+        Console.WriteLine($"Texto ingresado: {Practica} agregada");
+    }
+    private void ActualizaTabla()
+    {
+        ListaDePracticas = DbContext.Practicas.ToList();
+        StateHasChanged();
+
     }
 }

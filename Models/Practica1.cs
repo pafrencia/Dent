@@ -12,4 +12,6 @@ public class Practica1
     public string? Practica { get; set; }
 
     public int? Precio { get; set; }
+
+
 }
