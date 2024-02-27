@@ -1,0 +1,136 @@
+﻿@page "/Imprimir"
+@using Dent.Models
+<h3>Imprimir</h3>
+
+
+
+<h3>Tabla de Practicas</h3>
+<br />
+
+<input type="text" id="inputText" @bind="PrimeraPractica" />
+<input type="text" id="inputText" @bind="PrimerPrecio" />
+<br />
+<input type="text" id="inputText" @bind="SegundaPractica" />
+<input type="text" id="inputText" @bind="SegundoPrecio" />
+<br />
+<input type="text" id="inputText" @bind="TerceraPractica" />
+<input type="text" id="inputText" @bind="TercerPrecio" />
+<br />
+<input type="text" id="inputText" @bind="CuartaPractica" />
+<input type="text" id="inputText" @bind="CuartoPrecio" />
+<br />
+<input type="text" id="inputText" @bind="QuintaPractica" />
+<input type="text" id="inputText" @bind="QuintoPrecio" />
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Practica</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var practica in ListaDePracticas)
+        {
+            <tr>
+                <td>@practica.Id</td>
+                <td>@practica.Practica</td>
+                <td>@practica.Precio</td>
+                <td>
+                    <button @onclick="() => Agregar(practica.Id)">Agregar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Practica</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>practica.Practica</td>
+                <td>practica.Precio</td>
+                <td>
+                    <button @onclick="() => Quitar(12)">Quitar</button>
+                </td>
+            </tr>        
+    </tbody>
+</table>
+
+
+@code {
+    public string PrimeraPractica = "-";
+    public string SegundaPractica = "-";
+    public string TerceraPractica = "-";
+    public string CuartaPractica = "-";
+    public string QuintaPractica = "-";
+    public int PrimerPrecio = 0;
+    public int SegundoPrecio = 0;
+    public int TercerPrecio = 0;
+    public int CuartoPrecio = 0;
+    public int QuintoPrecio = 0;
+    private List<Practica1> ListaDePracticas = new List<Practica1>();
+
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ListaDePracticas = DbContext.Practicas.ToList();
+    }
+
+    private void Quitar(int practicaId)
+    {
+    }
+
+    private void Agregar(int practicaId)
+    {
+        if (PrimeraPractica == "-")
+        {
+
+
+            var practica = DbContext.Practicas.Find(practicaId);
+
+            PrimeraPractica = practica.Practica.ToString();
+            PrimerPrecio = Convert.ToInt32(practica.Precio.ToString());
+
+        }
+        else if (SegundaPractica == "-")
+        {
+            var practica = DbContext.Practicas.Find(practicaId);
+            SegundaPractica = practica.Practica.ToString();
+            SegundoPrecio = Convert.ToInt32(practica.Precio.ToString());
+        }
+        else if (TerceraPractica == "-")
+        {
+            var practica = DbContext.Practicas.Find(practicaId);
+            TerceraPractica = practica.Practica.ToString();
+            TercerPrecio = Convert.ToInt32(practica.Precio.ToString());
+            
+        }
+        else if (CuartaPractica == "-")
+        {
+            var practica = DbContext.Practicas.Find(practicaId);
+            CuartaPractica = practica.Practica.ToString();
+            CuartoPrecio = Convert.ToInt32(practica.Precio.ToString());
+
+        }
+        else if (QuintaPractica == "-")
+        {
+            var practica = DbContext.Practicas.Find(practicaId);
+            QuintaPractica = practica.Practica.ToString();
+            QuintoPrecio = Convert.ToInt32(practica.Precio.ToString());
+
+        }
+
+        }
+
+        
+    }
+}

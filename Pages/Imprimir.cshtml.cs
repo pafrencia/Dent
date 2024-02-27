@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dent.Pages
 {
-    public class ImpimirModel : PageModel
+    public class ImprimirModel : PageModel
     {
         public void OnGet()
         {

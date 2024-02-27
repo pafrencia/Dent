@@ -9,9 +9,9 @@ public class Practica1
     [Key]
     public int Id { get; set; }
 
-    public string? Practica { get; set; }
+    public string Practica { get; set; }
 
-    public int? Precio { get; set; }
+    public int Precio { get; set; }
 
 
 }
