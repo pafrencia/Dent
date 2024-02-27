@@ -5,22 +5,47 @@
 
 
 <h3>Tabla de Practicas</h3>
+
 <br />
 
-<input type="text" id="inputText" @bind="PrimeraPractica" />
-<input type="text" id="inputText" @bind="PrimerPrecio" />
+<input type="text" id="inputText" @bind="PrimeraPracticaTitulo" readonly />
+<input type="text" id="inputText" @bind="PrecioTitulo" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos1Titulo" readonly />
+<input type="text" id="inputText" @bind="TresCuotas1Titulo" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas1Titulo" readonly />
 <br />
-<input type="text" id="inputText" @bind="SegundaPractica" />
-<input type="text" id="inputText" @bind="SegundoPrecio" />
 <br />
-<input type="text" id="inputText" @bind="TerceraPractica" />
-<input type="text" id="inputText" @bind="TercerPrecio" />
+
+<input type="text" id="inputText" @bind="PrimeraPractica" readonly />
+<input type="text" id="inputText" @bind="PrimerPrecio" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos1" readonly />
+<input type="text" id="inputText" @bind="TresCuotas1" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas1" readonly />
+
 <br />
-<input type="text" id="inputText" @bind="CuartaPractica" />
-<input type="text" id="inputText" @bind="CuartoPrecio" />
+<input type="text" id="inputText" @bind="SegundaPractica" readonly />
+<input type="text" id="inputText" @bind="SegundoPrecio" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos2" readonly />
+<input type="text" id="inputText" @bind="TresCuotas2" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas2" readonly />
 <br />
-<input type="text" id="inputText" @bind="QuintaPractica" />
-<input type="text" id="inputText" @bind="QuintoPrecio" />
+<input type="text" id="inputText" @bind="TerceraPractica" readonly />
+<input type="text" id="inputText" @bind="TercerPrecio" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos3" readonly />
+<input type="text" id="inputText" @bind="TresCuotas3" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas3" readonly />
+<br />
+<input type="text" id="inputText" @bind="CuartaPractica" readonly />
+<input type="text" id="inputText" @bind="CuartoPrecio" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos4" readonly />
+<input type="text" id="inputText" @bind="TresCuotas4" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas4" readonly />
+<br />
+<input type="text" id="inputText" @bind="QuintaPractica" readonly />
+<input type="text" id="inputText" @bind="QuintoPrecio" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos5" readonly />
+<input type="text" id="inputText" @bind="TresCuotas5" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas5" readonly />
 <br />
 <table class="table">
     <thead>
@@ -65,11 +90,34 @@
 
 
 @code {
+    public string PrimeraPracticaTitulo = "PRACTICA";
+    public string PrecioTitulo = "DEBITO o 1 CUOTA";
+    public string Efectivo20Menos1Titulo = "EFECTIVO";
+    public string TresCuotas1Titulo = "TRES COUTAS";
+    public string SeisCuotas1Titulo = "SEIS COUTAS";
     public string PrimeraPractica = "-";
     public string SegundaPractica = "-";
     public string TerceraPractica = "-";
     public string CuartaPractica = "-";
     public string QuintaPractica = "-";
+    public int TresCuotas = 0;
+    public int TresCuotas1 = 0;
+    public int TresCuotas2 = 0;
+    public int TresCuotas3 = 0;
+    public int TresCuotas4 = 0;
+    public int TresCuotas5 = 0;
+    public int SeisCuotas = 0;
+    public int SeisCuotas1 = 0;
+    public int SeisCuotas2 = 0;
+    public int SeisCuotas3 = 0;
+    public int SeisCuotas4 = 0;
+    public int SeisCuotas5 = 0;
+    public int Efectivo20Menos = 0;
+    public int Efectivo20Menos1 = 0;
+    public int Efectivo20Menos2 = 0;
+    public int Efectivo20Menos3 = 0;
+    public int Efectivo20Menos4 = 0;
+    public int Efectivo20Menos5 = 0;
     public int PrimerPrecio = 0;
     public int SegundoPrecio = 0;
     public int TercerPrecio = 0;
@@ -84,6 +132,15 @@
     {
         ListaDePracticas = DbContext.Practicas.ToList();
     }
+
+    public (int, int, int) ObtenerResultados(int PrecioPasado)
+    {
+        Efectivo20Menos = Convert.ToInt32(PrecioPasado * 0.8);
+        TresCuotas = Convert.ToInt32(PrecioPasado * 1.5);
+        SeisCuotas = Convert.ToInt32(PrecioPasado * 2);
+        return (Efectivo20Menos, TresCuotas, SeisCuotas);
+    }
+
 
     private void Quitar(int practicaId)
     {
@@ -100,25 +157,40 @@
             PrimeraPractica = practica.Practica.ToString();
             PrimerPrecio = Convert.ToInt32(practica.Precio.ToString());
 
+            ObtenerResultados(PrimerPrecio);
+            Efectivo20Menos1 = Efectivo20Menos;
+            TresCuotas1 = TresCuotas;
+            SeisCuotas1 = SeisCuotas;
         }
         else if (SegundaPractica == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
             SegundaPractica = practica.Practica.ToString();
             SegundoPrecio = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(SegundoPrecio);
+            Efectivo20Menos2 = Efectivo20Menos;
+            TresCuotas2 = TresCuotas;
+            SeisCuotas2 = SeisCuotas;
         }
         else if (TerceraPractica == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
             TerceraPractica = practica.Practica.ToString();
             TercerPrecio = Convert.ToInt32(practica.Precio.ToString());
-            
+            ObtenerResultados(TercerPrecio);
+            Efectivo20Menos3 = Efectivo20Menos;
+            TresCuotas3 = TresCuotas;
+            SeisCuotas3 = SeisCuotas;
         }
         else if (CuartaPractica == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
             CuartaPractica = practica.Practica.ToString();
             CuartoPrecio = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(CuartoPrecio);
+            Efectivo20Menos4 = Efectivo20Menos;
+            TresCuotas4 = TresCuotas;
+            SeisCuotas4 = SeisCuotas;
 
         }
         else if (QuintaPractica == "-")
@@ -126,6 +198,10 @@
             var practica = DbContext.Practicas.Find(practicaId);
             QuintaPractica = practica.Practica.ToString();
             QuintoPrecio = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(QuintoPrecio);
+            Efectivo20Menos5 = Efectivo20Menos;
+            TresCuotas5 = TresCuotas;
+            SeisCuotas5 = SeisCuotas;
 
         }
 
