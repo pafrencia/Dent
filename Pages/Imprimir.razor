@@ -2,50 +2,68 @@
 @using Dent.Models
 <h3>Imprimir</h3>
 
+<div class="form-group">
+    <label for="inputText">% en 3 Cuotas:</label>
+    <input type="text" id="inputText" @bind="TresCuotasPorcentaje" />
+</div>
+<div class="form-group">
+    <label for="inputText">% en 6 Cuotas:</label>
+    <input type="text" id="inputText" @bind="SeisCuotasPorcentaje" />
 
+
+</div>
 
 <h3>Tabla de Practicas</h3>
 
 <br />
 
 <input type="text" id="inputText" @bind="PrimeraPracticaTitulo" readonly />
-<input type="text" id="inputText" @bind="PrecioTitulo" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos1Titulo" readonly />
-<input type="text" id="inputText" @bind="TresCuotas1Titulo" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas1Titulo" readonly />
+<input type="text" id="inputText" @bind="PrecioTitulo" size="10" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos1Titulo" size="10" readonly />
+<input type="text" id="inputText" @bind="TresCuotas1Titulo" size="10" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas1Titulo" size="10" readonly />
 <br />
 <br />
 
 <input type="text" id="inputText" @bind="PrimeraPractica" readonly />
-<input type="text" id="inputText" @bind="PrimerPrecio" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos1" readonly />
-<input type="text" id="inputText" @bind="TresCuotas1" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas1" readonly />
-
+<input type="text" id="inputText" @bind="PrimerPrecio" size="10" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos1" size="10" readonly />
+<input type="text" id="inputText" @bind="TresCuotas1" size="10" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas1" size="10" readonly />
+<button @onclick="() => EliminarFIla1(1)">X</button>
+<br />
 <br />
 <input type="text" id="inputText" @bind="SegundaPractica" readonly />
-<input type="text" id="inputText" @bind="SegundoPrecio" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos2" readonly />
-<input type="text" id="inputText" @bind="TresCuotas2" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas2" readonly />
+<input type="text" id="inputText" @bind="SegundoPrecio" size="10" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos2" size="10" readonly />
+<input type="text" id="inputText" @bind="TresCuotas2" size="10" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas2" size="10" readonly />
+<button @onclick="() => EliminarFIla1(2)">X</button>
+<br />
 <br />
 <input type="text" id="inputText" @bind="TerceraPractica" readonly />
-<input type="text" id="inputText" @bind="TercerPrecio" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos3" readonly />
-<input type="text" id="inputText" @bind="TresCuotas3" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas3" readonly />
+<input type="text" id="inputText" @bind="TercerPrecio" size="10" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos3" size="10" readonly />
+<input type="text" id="inputText" @bind="TresCuotas3" size="10" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas3" size="10" readonly />
+<button @onclick="() => EliminarFIla1(3)">X</button>
+<br />
 <br />
 <input type="text" id="inputText" @bind="CuartaPractica" readonly />
-<input type="text" id="inputText" @bind="CuartoPrecio" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos4" readonly />
-<input type="text" id="inputText" @bind="TresCuotas4" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas4" readonly />
+<input type="text" id="inputText" @bind="CuartoPrecio" size="10" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos4" size="10" readonly />
+<input type="text" id="inputText" @bind="TresCuotas4" size="10" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas4" size="10" readonly />
+<button @onclick="() => EliminarFIla1(4)">X</button>
+<br />
 <br />
 <input type="text" id="inputText" @bind="QuintaPractica" readonly />
-<input type="text" id="inputText" @bind="QuintoPrecio" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos5" readonly />
-<input type="text" id="inputText" @bind="TresCuotas5" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas5" readonly />
+<input type="text" id="inputText" @bind="QuintoPrecio" size="10" readonly />
+<input type="text" id="inputText" @bind="Efectivo20Menos5" size="10" readonly />
+<input type="text" id="inputText" @bind="TresCuotas5" size="10" readonly />
+<input type="text" id="inputText" @bind="SeisCuotas5" size="10" readonly />
+<button @onclick="() => EliminarFIla1(5)">X</button>
+<br />
 <br />
 <table class="table">
     <thead>
@@ -69,7 +87,7 @@
         }
     </tbody>
 </table>
-
+<!--
 <table class="table">
     <thead>
         <tr>
@@ -87,19 +105,20 @@
             </tr>        
     </tbody>
 </table>
-
-
+    -->
 @code {
     public string PrimeraPracticaTitulo = "PRACTICA";
-    public string PrecioTitulo = "DEBITO o 1 CUOTA";
+    public string PrecioTitulo = "DEBITO";
     public string Efectivo20Menos1Titulo = "EFECTIVO";
-    public string TresCuotas1Titulo = "TRES COUTAS";
-    public string SeisCuotas1Titulo = "SEIS COUTAS";
+    public string TresCuotas1Titulo = "3 COUTAS";
+    public string SeisCuotas1Titulo = "6 COUTAS";
     public string PrimeraPractica = "-";
     public string SegundaPractica = "-";
     public string TerceraPractica = "-";
     public string CuartaPractica = "-";
     public string QuintaPractica = "-";
+    public int TresCuotasPorcentaje = 30;
+    public int SeisCuotasPorcentaje = 60;
     public int TresCuotas = 0;
     public int TresCuotas1 = 0;
     public int TresCuotas2 = 0;
@@ -136,11 +155,62 @@
     public (int, int, int) ObtenerResultados(int PrecioPasado)
     {
         Efectivo20Menos = Convert.ToInt32(PrecioPasado * 0.8);
-        TresCuotas = Convert.ToInt32(PrecioPasado * 1.5);
-        SeisCuotas = Convert.ToInt32(PrecioPasado * 2);
+        TresCuotas = Convert.ToInt32(((PrecioPasado * TresCuotasPorcentaje) / 100) + PrecioPasado);
+        SeisCuotas = Convert.ToInt32(((PrecioPasado * SeisCuotasPorcentaje) / 100) + PrecioPasado);
         return (Efectivo20Menos, TresCuotas, SeisCuotas);
     }
 
+    private void EliminarFIla1(int FilaAEliminar)
+    {
+        if (FilaAEliminar == 1)
+        {
+            PrimeraPractica = "-";
+            PrimerPrecio = 0;
+            ObtenerResultados(0);
+            Efectivo20Menos1 = Efectivo20Menos;
+            TresCuotas1 = TresCuotas;
+            SeisCuotas1 = SeisCuotas;
+
+        }
+        else if (FilaAEliminar == 2)
+        {
+            SegundaPractica = "-";
+            SegundoPrecio = 0;
+            ObtenerResultados(0);
+            Efectivo20Menos2 = Efectivo20Menos;
+            TresCuotas2 = TresCuotas;
+            SeisCuotas2 = SeisCuotas;
+        }
+        else if (FilaAEliminar == 3)
+        {  
+            TerceraPractica = "-";
+            TercerPrecio = 0;
+            ObtenerResultados(0);
+            Efectivo20Menos3 = Efectivo20Menos;
+            TresCuotas3 = TresCuotas;
+            SeisCuotas3 = SeisCuotas;
+        }
+        else if (FilaAEliminar == 4)
+        { 
+            CuartaPractica = "-";
+            CuartoPrecio = 0;
+            ObtenerResultados(0);
+            Efectivo20Menos4 = Efectivo20Menos;
+            TresCuotas4 = TresCuotas;
+            SeisCuotas4 = SeisCuotas;
+        }
+        else if (FilaAEliminar == 5)
+        {
+            QuintaPractica = "-";
+            QuintoPrecio = 0;
+            ObtenerResultados(0);
+            Efectivo20Menos5 = Efectivo20Menos;
+            TresCuotas5 = TresCuotas;
+            SeisCuotas5 = SeisCuotas;
+        }
+
+       
+        }
 
     private void Quitar(int practicaId)
     {
