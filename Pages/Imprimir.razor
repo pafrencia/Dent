@@ -125,8 +125,8 @@
     public string PrimeraPracticaTitulo = "PRACTICA";
     public string PrecioTitulo = "DEBITO";
     public string Efectivo20Menos1Titulo = "EFECTIVO";
-    public string TresCuotas1Titulo = "3 COUTAS";
-    public string SeisCuotas1Titulo = "6 COUTAS";
+    public string TresCuotas1Titulo = "3 CUOTAS";
+    public string SeisCuotas1Titulo = "6 CUOTAS";
     public string PrimeraPractica = "-";
     public string SegundaPractica = "-";
     public string TerceraPractica = "-";
@@ -167,12 +167,14 @@
         ListaDePracticas = DbContext.Practicas.ToList();
     }
 
-    public (int, int, int) ObtenerResultados(int PrecioPasado)
+    public (int,int,int) ObtenerResultados(int PrecioPasado)
     {
         Efectivo20Menos = Convert.ToInt32(PrecioPasado * 0.8);
         TresCuotas = Convert.ToInt32(((PrecioPasado * TresCuotasPorcentaje) / 100) + PrecioPasado);
         SeisCuotas = Convert.ToInt32(((PrecioPasado * SeisCuotasPorcentaje) / 100) + PrecioPasado);
-        return (Efectivo20Menos, TresCuotas, SeisCuotas);
+        var asd = (Efectivo20Menos, TresCuotas, SeisCuotas);
+        var sda = asd.GetType();
+        return asd;
     }
     public void CargarTotales()
     {
@@ -302,4 +304,4 @@
 
         
     }
-}
+

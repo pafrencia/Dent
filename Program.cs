@@ -11,7 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<AgregarPracticas>();
 builder.Services.AddSingleton<EliminarPracticaMetod>();
 builder.Services.AddSingleton<DbDentistaContext>();
-
+builder.Services.AddSingleton<ServicioAutenticacion>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

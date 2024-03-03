@@ -1,24 +1,50 @@
 ﻿@page "/"
+@using Dent.Models
+@inject ServicioAutenticacion ServicioAutenticacion
+@inject NavigationManager NavigationManager
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>BIENVENIDOS A DENT</h1>
 
+<h3>Iniciar Sesión</h3>
 
-<h3>Ejemplo de Botón en Blazor</h3>
+<EditForm Model="@usuario" OnValidSubmit="IniciarSesion">
+    <DataAnnotationsValidator />
+    <div>
+        <label for="nombreUsuario">Nombre de Usuario:</label>
+        <InputText id="nombreUsuario" @bind-Value="usuario.NombreUsuario" />
+    </div>
+    <div>
+        <label for="contraseña">Contraseña:</label>
+        <InputText id="contraseña" type="password" @bind-Value="usuario.Contraseña" />
+    </div>
+    <button type="submit">Iniciar Sesión</button>
 
-<button @onclick="OnClick">ir</button>
+    <label>@ContraseñaIncorrecta</label>
+</EditForm>
+
 
 @code {
-    // Método que se ejecutará cuando se haga clic en el botón
-    private void OnClick()
+    string ContraseñaIncorrecta = "Ingrese Usuario y contraseña";
+    private Usuario usuario = new Usuario();
+
+    private async Task IniciarSesion()
     {
-        // Lógica que se ejecutará cuando se haga clic en el botón
-        // Puedes agregar el código que desees aquí
-        Console.WriteLine("¡Se hizo clic en el botón!");
+        if (ServicioAutenticacion.ValidarCredenciales(usuario.NombreUsuario, usuario.Contraseña))
+        {
+            // Redirigir o realizar otras acciones después de iniciar sesión correctamente
+            // Puedes usar la navegación de Blazor para redirigir a otra página
+            NavigationManager.NavigateTo("/Practicas");
+        }
+        else
+        {
+            // Mostrar mensaje de error o realizar otras acciones en caso de credenciales incorrectas
+            ContraseñaIncorrecta = "Usuario/contraseña INCORRECTA";
+        }
     }
+    // Método que se ejecutará cuando se haga clic en el botón
+    //
+   // Welcome to your new app.
+   //<SurveyPrompt Title = "How is Blazor working for you?" />4
 }
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
