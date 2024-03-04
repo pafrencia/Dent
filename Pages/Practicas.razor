@@ -36,7 +36,7 @@
                 <td>@practica.Practica</td>
                 <td>@practica.Precio</td>
                 <td>
-                    <button @onclick="() => EditarPractica(practica.Id)">Editar</button>
+                    <button @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
                     <button @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
                 </td>
             </tr>
@@ -45,7 +45,29 @@
 </table>
 
 
+<div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
+    <div class="modal-content">
+        <span class="cerrar" @onclick="CerrarModalEdit">&times;</span>
+        <h3>EDITAR</h3>
+                <div class="form-group">
+            <label for="inputText">Id:</label>
+            <input type="number" id="inputText" @bind="IdEdit" />
+        </div>
+        <div class="form-group">
+            <label for="inputText">Practica:</label>
+            <input type="text" id="inputText" @bind="Practica" />
+        </div>
+        <div class="form-group">
+            <label for="inputText">Precio:</label>
+            <input type="text" id="inputText" @bind="Precio" />
+            <button @onclick="() => EditarPractica(IdEdit)">Editar</button>
+
+        </div>
+    </div>
+</div>
+
 @code {
+    private bool mostrarModalEdit = false;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
 
     [Inject]
@@ -57,22 +79,32 @@
     }
     public string Practica = "";
     public int Precio = 0;
+    public int IdEdit = 0;
     public string miString = "";
 
     [Inject]
     private AgregarPracticas agregarPracticas { get; set; }
 
-    private void EditarPractica(int practicaId)
+    private void EditarPracticaAbrir(int practicaId)
+    {
+        AbrirModalEdit();
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var practica = DbContext.Practicas.Find(practicaId);
+
+            IdEdit = practica.Id;
+            Practica = practica.Practica;
+            Precio = practica.Precio;
+        }
+    }
+    public void EditarPractica(int practicaId)
     {
         using (DbDentistaContext db = new DbDentistaContext())
         {
-
-
-
             var practica = DbContext.Practicas.Find(practicaId);
             if (practica != null)
             {
-                // Actualizar los campos necesarios
+                //Actualizar los campos necesarios
                 if (Practica == "")
                 { practica.Precio = Precio; }
                 else
@@ -80,14 +112,13 @@
                     practica.Practica = Practica;
                     practica.Precio = Precio;
                 }
-             
-                
+
+
                 db.SaveChanges();
             }
         }
-        ActualizaTabla();
+        CerrarModalEdit();
     }
-
     private void EliminarPractica(int practicaId)
     {
 
@@ -128,5 +159,16 @@
         ListaDePracticas = DbContext.Practicas.ToList();
         StateHasChanged();
 
+    }
+
+    public void AbrirModalEdit()
+    {
+        mostrarModalEdit = true;
+    }
+
+    // Método para cerrar el modal
+    public void CerrarModalEdit()
+    {
+        mostrarModalEdit = false;
     }
 }
