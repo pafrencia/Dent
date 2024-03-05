@@ -13,18 +13,18 @@
     <DataAnnotationsValidator />
     <div>
         <label for="nombreUsuario">Nombre de Usuario:</label>
-        <InputText id="nombreUsuario" @bind-Value="usuario.NombreUsuario" />
+        <InputText id="nombreUsuario" @bind-Value="nombreUsuario" />
     </div>
     <div>
         <label for="contraseña">Contraseña:</label>
-        <InputText id="contraseña" type="password" @bind-Value="usuario.Contraseña" />
+        <InputText id="contraseña" type="password" @bind-Value="contraseña" />
     </div>
     <button type="submit">Iniciar Sesión</button>
 
-    <label>@ContraseñaIncorrecta</label>
+    <label>@info</label>
 </EditForm>
 
-<button @onclick="AbrirModal">Abrir Modal</button>
+<button @onclick="AbrirModal">Crear Usuario</button>
 
 
 <div class="modal" style="display: @(mostrarModal ? "block" : "none")">
@@ -42,13 +42,36 @@
             <input type="password" id="contraseña" @bind="contraseña" />
         </div>
 
-        <button @onclick="IniciarSesion">Iniciar Sesión</button>
+        <button @onclick="CrearUsuario">Crear Usuario</button>
     </div>
 </div>
 
 @code {
-    string ContraseñaIncorrecta = "Ingrese Usuario y contraseña";
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+    string info = "Ingrese Usuario y contraseña";
+    private bool mostrarModal = false;
+    private string nombreUsuario = "";
+    private string contraseña = "";
+
     private Usuario usuario = new Usuario();
+
+    public void CrearUsuario()
+    {
+
+        var datos = new Login();
+        datos.Usuario = nombreUsuario;
+        datos.Contraseña = contraseña;
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Logins.Add(datos);
+            db.SaveChanges();
+        }
+        CerrarModal();
+
+        info = "El Usuario se creo correctamente, ya puede ingresar";
+    }
+
 
     private async Task IniciarSesion()
     {
@@ -62,7 +85,7 @@
         else
         {
             // Mostrar mensaje de error o realizar otras acciones en caso de credenciales incorrectas
-            ContraseñaIncorrecta = "Usuario/contraseña INCORRECTA";
+            info = "Usuario/contraseña INCORRECTA";
         }
     }
     // Método que se ejecutará cuando se haga clic en el botón
@@ -70,9 +93,6 @@
    // Welcome to your new app.
    //<SurveyPrompt Title = "How is Blazor working for you?" />4
 
-    private bool mostrarModal = false;
-    private string nombreUsuario = "";
-    private string contraseña = "";
 
     // Método para abrir el modal
     public void AbrirModal()

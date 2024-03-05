@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dent.Pages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dent.Models;
@@ -16,6 +15,8 @@ public partial class DbDentistaContext : DbContext
     {
     }
 
+    public virtual DbSet<Login> Logins { get; set; }
+
     public virtual DbSet<Practica1> Practicas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -24,12 +25,20 @@ public partial class DbDentistaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Practica1>().HasKey(p => p.Id);
+        modelBuilder.Entity<Login>(entity =>
+        {
+            entity.ToTable("Login");
+
+            entity.Property(e => e.Contraseña)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Usuario)
+                .HasMaxLength(10)
+                .IsFixedLength();
+        });
+
         modelBuilder.Entity<Practica1>(entity =>
         {
-
-            entity.HasKey(p => p.Id);
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Practica)
                 .HasMaxLength(30)
                 .IsFixedLength()
