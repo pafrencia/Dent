@@ -19,8 +19,7 @@
         <label for="contraseña">Contraseña:</label>
         <InputText id="contraseña" type="password" @bind-Value="contraseña" />
     </div>
-    <button type="submit">Iniciar Sesión</button>
-
+    <button @onclick="IniciarSesion">Iniciar Sesion</button>
     <label>@info</label>
 </EditForm>
 
@@ -58,36 +57,66 @@
 
     public void CrearUsuario()
     {
-
-        var datos = new Login();
-        datos.Usuario = nombreUsuario;
-        datos.Contraseña = contraseña;
-        using (DbDentistaContext db = new DbDentistaContext())
+        var comparacion = contraseña.Length;
+        if (comparacion == 10)
+        { 
+            var datos = new Login();
+            datos.Usuario = nombreUsuario;
+            datos.Contraseña = contraseña;
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.Logins.Add(datos);
+                db.SaveChanges();
+            }
+            info = "El Usuario se creo correctamente, ya puede ingresar";
+        }
+        else
         {
-            db.Logins.Add(datos);
-            db.SaveChanges();
+            info = "LA CONTRASEÑA DEBE TENER 10 CARACTERES";
         }
         CerrarModal();
 
-        info = "El Usuario se creo correctamente, ya puede ingresar";
     }
 
 
     private async Task IniciarSesion()
     {
-        if (ServicioAutenticacion.ValidarCredenciales(usuario.NombreUsuario, usuario.Contraseña))
+
+
+        var entidad = new Login();
+
+        entidad = DbContext.Logins.SingleOrDefault(e => e.Usuario == nombreUsuario);
+
+
+        if (entidad != null)
         {
-            // Redirigir o realizar otras acciones después de iniciar sesión correctamente
-            // Puedes usar la navegación de Blazor para redirigir a otra página
-            CerrarModal();
-            NavigationManager.NavigateTo("/Practicas");
+           
+            if (entidad.Contraseña == contraseña)
+
+            { info = "USUARIO Y CONTRASEÑA CORRECTA"; }
+        else
+            { info = "CONTRASEÑA INCORRECTA"; }
         }
         else
         {
-            // Mostrar mensaje de error o realizar otras acciones en caso de credenciales incorrectas
-            info = "Usuario/contraseña INCORRECTA";
+            info = "EL USUARIO NO EXISTE";
+
         }
+           
     }
+
+    //    if (ServicioAutenticacion.ValidarCredenciales(nombreUsuario, contraseña))
+  //      {
+
+   //       
+    //        NavigationManager.NavigateTo("/Practicas");
+    //    }
+    //    else
+    //    {
+            // Mostrar mensaje de error o realizar otras acciones en caso de credenciales incorrectas
+    //        info = "Usuario/contraseña INCORRECTA";
+    //    }
+    
     // Método que se ejecutará cuando se haga clic en el botón
     //
    // Welcome to your new app.
