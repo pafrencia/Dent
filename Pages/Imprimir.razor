@@ -1,5 +1,33 @@
 ﻿@page "/Imprimir"
 @using Dent.Models
+
+
+<style>
+    /* Definición de la clase CSS para el botón */
+    .boton-celeste {
+        background-color: #5bc0de; /* Color de fondo celeste por defecto */
+        color: #000000; /* Color de texto blanco por defecto */
+        border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
+        border-radius: 5px; /* Bordes redondeados por defecto */
+        padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        font-weight: bold; /* Texto en negrita */
+    }
+
+        /* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
+        .boton-celeste:hover {
+            background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
+            border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
+        }
+
+        /* Cambio de color cuando el botón está presionado (efecto active) */
+        .boton-celeste:active {
+            background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
+            border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
+        }
+</style>
+
+
 <h3>Imprimir</h3>
 
 <div class="form-group">
@@ -72,32 +100,69 @@
 <input type="text" id="inputText" @bind="Total6Cuotas" size="8" readonly />
 <br />
 <br />
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Practica</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var practica in ListaDePracticas)
-        {
+
+
+<button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
+
+
+
+<div style="display: @(currentDiv == 1 ? "block" : "none")">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@practica.Id</td>
-                <td>@practica.Practica</td>
-                <td>@practica.Precio</td>
-                <td>
-                    <button @onclick="() => Agregar(practica.Id)">Agregar</button>
-                </td>
+                <th>ID</th>
+                <th>Practica</th>
+                <th>Precio</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var practica in ListaDePracticas)
+            {
+                <tr>
+                    <td>@practica.Id</td>
+                    <td>@practica.Practica</td>
+                    <td>@practica.Precio</td>
+                    <td>
+                        <button @onclick="() => Agregar(practica.Id)">Agregar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div style="display: @(currentDiv == 2 ? "block" : "none")">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Practica</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var practica in ListaDePracticasApross)
+            {
+                <tr>
+                    <td>@practica.Id</td>
+                    <td>@practica.Practica</td>
+                    <td>@practica.Precio</td>
+                    <td>
+                        <button @onclick="() => Agregar(practica.Id)">Agregar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 @code {
     // VARIABLES DE LA ULTIMA LINEA DE LA TABLA HARCODEADA//
     public string TotalLabel = "TOTAL:";
-
+    private int currentDiv = 1;
     public int TotalDebito = 0;
     public int TotalEfectivo = 0;
     public int Total3Cuotas = 0;
@@ -115,13 +180,56 @@
     public int SeisCuotas = 0;
     public int Efectivo20Menos = 0;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
+    private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
 
+    private void InicializarVariables()
+    {
+
+        PracticasArreglo[0] = "-";
+        PracticasArreglo[1] = "-";
+        PracticasArreglo[2] = "-";
+        PracticasArreglo[3] = "-";
+        PracticasArreglo[4] = "-";
+        TresCuotasArreglo[0] = 0;
+        TresCuotasArreglo[1] = 0;
+        TresCuotasArreglo[2] = 0;
+        TresCuotasArreglo[3] = 0;
+        TresCuotasArreglo[4] = 0;
+        SeisCuotasArreglo[0] = 0;
+        SeisCuotasArreglo[1] = 0;
+        SeisCuotasArreglo[2] = 0;
+        SeisCuotasArreglo[3] = 0;
+        SeisCuotasArreglo[4] = 0;
+        PrecioArreglo[0] = 0;
+        PrecioArreglo[1] = 0;
+        PrecioArreglo[2] = 0;
+        PrecioArreglo[3] = 0;
+        PrecioArreglo[4] = 0;
+        EfectivoArreglo[0] = 0;
+        EfectivoArreglo[1] = 0;
+        EfectivoArreglo[2] = 0;
+        EfectivoArreglo[3] = 0;
+        EfectivoArreglo[4] = 0;
+        TresCuotas = 0;
+        SeisCuotas = 0;
+        Efectivo20Menos = 0;
+        CargarTotales();
+
+    }
+
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+        InicializarVariables();
+    }
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
     protected override void OnInitialized()
     {
         ListaDePracticas = DbContext.Practicas.ToList();
+        ListaDePracticasApross = DbContext.PracticasApros.ToList();
     }
 
     public (int,int,int) ObtenerResultados(int PrecioPasado)
@@ -207,58 +315,179 @@
         if (PracticasArreglo[0] == "-")
         {
 
+            if (currentDiv == 1)
+            {
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var practica = DbContext.Practicas.Find(practicaId);
 
-            var practica = DbContext.Practicas.Find(practicaId);
+                    PracticasArreglo[0] = practica.Practica.ToString();
+                    PrecioArreglo[0] = Convert.ToInt32(practica.Precio.ToString());
 
-            PracticasArreglo[0] = practica.Practica.ToString();
-            PrecioArreglo[0] = Convert.ToInt32(practica.Precio.ToString());
+                    ObtenerResultados(PrecioArreglo[0]);
+                    EfectivoArreglo[0] = Efectivo20Menos;
+                    TresCuotasArreglo[0] = TresCuotas;
+                    SeisCuotasArreglo[0] = SeisCuotas;
 
-            ObtenerResultados(PrecioArreglo[0]);
-            EfectivoArreglo[0] = Efectivo20Menos;
-            TresCuotasArreglo[0] = TresCuotas;
-            SeisCuotasArreglo[0] = SeisCuotas;
-        }
-        else if (PracticasArreglo[1] == "-")
-        {
-            var practica = DbContext.Practicas.Find(practicaId);
-            PracticasArreglo[1] = practica.Practica.ToString();
-            PrecioArreglo[1] = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(PrecioArreglo[1]);
-            EfectivoArreglo[1] = Efectivo20Menos;
-            TresCuotasArreglo[1] = TresCuotas;
-            SeisCuotasArreglo[1] = SeisCuotas;
-        }
-        else if (PracticasArreglo[2] == "-")
-        {
-            var practica = DbContext.Practicas.Find(practicaId);
-            PracticasArreglo[2] = practica.Practica.ToString();
-            PrecioArreglo[2] = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(PrecioArreglo[2]);
-            EfectivoArreglo[2] = Efectivo20Menos;
-            TresCuotasArreglo[2] = TresCuotas;
-            SeisCuotasArreglo[2] = SeisCuotas;
-        }
-        else if (PracticasArreglo[3] == "-")
-        {
-            var practica = DbContext.Practicas.Find(practicaId);
-            PracticasArreglo[3] = practica.Practica.ToString();
-            PrecioArreglo[3] = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(PrecioArreglo[3]);
-            EfectivoArreglo[3] = Efectivo20Menos;
-            TresCuotasArreglo[3] = TresCuotas;
-            SeisCuotasArreglo[3] = SeisCuotas;
+                }
+            }
+            else if (currentDiv == 2)
+            {
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var practica = DbContext.PracticasApros.Find(practicaId);
+
+                    PracticasArreglo[0] = practica.Practica.ToString();
+                    PrecioArreglo[0] = Convert.ToInt32(practica.Precio.ToString());
+
+                    ObtenerResultados(PrecioArreglo[0]);
+                    EfectivoArreglo[0] = Efectivo20Menos;
+                    TresCuotasArreglo[0] = TresCuotas;
+                    SeisCuotasArreglo[0] = SeisCuotas;
+                }
+            }
 
         }
-        else if (PracticasArreglo[4] == "-")
-        {
-            var practica = DbContext.Practicas.Find(practicaId);
-            PracticasArreglo[4] = practica.Practica.ToString();
-            PrecioArreglo[4] = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(PrecioArreglo[4]);
-            EfectivoArreglo[4] = Efectivo20Menos;
-            TresCuotasArreglo[4] = TresCuotas;
-            SeisCuotasArreglo[4] = SeisCuotas;
+        else if (PracticasArreglo[1] == "-") 
 
+            {
+
+                if (currentDiv == 1)
+                {
+                    using (DbDentistaContext db = new DbDentistaContext())
+                    {
+                        var practica = DbContext.Practicas.Find(practicaId);
+
+                        PracticasArreglo[1] = practica.Practica.ToString();
+                        PrecioArreglo[1] = Convert.ToInt32(practica.Precio.ToString());
+
+                        ObtenerResultados(PrecioArreglo[1]);
+                        EfectivoArreglo[1] = Efectivo20Menos;
+                        TresCuotasArreglo[1] = TresCuotas;
+                        SeisCuotasArreglo[1] = SeisCuotas;
+
+                    }
+                }
+                else if (currentDiv == 2)
+                {
+                    using (DbDentistaContext db = new DbDentistaContext())
+                    {
+                        var practica = DbContext.PracticasApros.Find(practicaId);
+
+                        PracticasArreglo[1] = practica.Practica.ToString();
+                        PrecioArreglo[1] = Convert.ToInt32(practica.Precio.ToString());
+
+                        ObtenerResultados(PrecioArreglo[1]);
+                        EfectivoArreglo[1] = Efectivo20Menos;
+                        TresCuotasArreglo[1] = TresCuotas;
+                        SeisCuotasArreglo[1] = SeisCuotas;
+                    }
+                }
+            }
+            else if (PracticasArreglo[2] == "-")
+            {
+
+                if (currentDiv == 1)
+                {
+                    using (DbDentistaContext db = new DbDentistaContext())
+                    {
+                        var practica = DbContext.Practicas.Find(practicaId);
+
+                        PracticasArreglo[2] = practica.Practica.ToString();
+                        PrecioArreglo[2] = Convert.ToInt32(practica.Precio.ToString());
+
+                        ObtenerResultados(PrecioArreglo[2]);
+                        EfectivoArreglo[2] = Efectivo20Menos;
+                        TresCuotasArreglo[2] = TresCuotas;
+                        SeisCuotasArreglo[2] = SeisCuotas;
+
+                    }
+                }
+                else if (currentDiv == 2)
+                {
+                    using (DbDentistaContext db = new DbDentistaContext())
+                    {
+                        var practica = DbContext.PracticasApros.Find(practicaId);
+
+                        PracticasArreglo[2] = practica.Practica.ToString();
+                        PrecioArreglo[2] = Convert.ToInt32(practica.Precio.ToString());
+
+                        ObtenerResultados(PrecioArreglo[2]);
+                        EfectivoArreglo[2] = Efectivo20Menos;
+                        TresCuotasArreglo[2] = TresCuotas;
+                        SeisCuotasArreglo[2] = SeisCuotas;
+                    }
+                }
+            }
+            else if (PracticasArreglo[3] == "-")
+        {
+
+            if (currentDiv == 1)
+            {
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var practica = DbContext.Practicas.Find(practicaId);
+
+                    PracticasArreglo[3] = practica.Practica.ToString();
+                    PrecioArreglo[3] = Convert.ToInt32(practica.Precio.ToString());
+
+                    ObtenerResultados(PrecioArreglo[3]);
+                    EfectivoArreglo[3] = Efectivo20Menos;
+                    TresCuotasArreglo[3] = TresCuotas;
+                    SeisCuotasArreglo[3] = SeisCuotas;
+
+                }
+            }
+            else if (currentDiv == 2)
+            {
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var practica = DbContext.PracticasApros.Find(practicaId);
+
+                    PracticasArreglo[3] = practica.Practica.ToString();
+                    PrecioArreglo[3] = Convert.ToInt32(practica.Precio.ToString());
+
+                    ObtenerResultados(PrecioArreglo[3]);
+                    EfectivoArreglo[3] = Efectivo20Menos;
+                    TresCuotasArreglo[3] = TresCuotas;
+                    SeisCuotasArreglo[3] = SeisCuotas;
+                }
+            }
+        }
+            else if (PracticasArreglo[4] == "-")
+        {
+
+            if (currentDiv == 1)
+            {
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var practica = DbContext.Practicas.Find(practicaId);
+
+                    PracticasArreglo[4] = practica.Practica.ToString();
+                    PrecioArreglo[4] = Convert.ToInt32(practica.Precio.ToString());
+
+                    ObtenerResultados(PrecioArreglo[4]);
+                    EfectivoArreglo[4] = Efectivo20Menos;
+                    TresCuotasArreglo[4] = TresCuotas;
+                    SeisCuotasArreglo[4] = SeisCuotas;
+
+                }
+            }
+            else if (currentDiv == 2)
+            {
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var practica = DbContext.PracticasApros.Find(practicaId);
+
+                    PracticasArreglo[4] = practica.Practica.ToString();
+                    PrecioArreglo[4] = Convert.ToInt32(practica.Precio.ToString());
+
+                    ObtenerResultados(PrecioArreglo[4]);
+                    EfectivoArreglo[4] = Efectivo20Menos;
+                    TresCuotasArreglo[4] = TresCuotas;
+                    SeisCuotasArreglo[4] = SeisCuotas;
+                }
+            }
         }
         CargarTotales();
 
