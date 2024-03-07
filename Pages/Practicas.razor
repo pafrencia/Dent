@@ -1,5 +1,32 @@
 ﻿@page "/Practicas"
 @using Dent.Models
+
+
+<style>
+    /* Definición de la clase CSS para el botón */
+    .boton-celeste {
+        background-color: #5bc0de; /* Color de fondo celeste por defecto */
+        color: #000000; /* Color de texto blanco por defecto */
+        border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
+        border-radius: 5px; /* Bordes redondeados por defecto */
+        padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        font-weight: bold; /* Texto en negrita */
+    }
+
+        /* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
+        .boton-celeste:hover {
+            background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
+            border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
+        }
+
+        /* Cambio de color cuando el botón está presionado (efecto active) */
+        .boton-celeste:active {
+            background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
+            border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
+        }
+</style>
+
 <h3>Practicas</h3>
 
 <div class="form-group">
@@ -18,31 +45,57 @@
 <label for="miString">Ultima Ingresada:</label>
 <input id="miString" @bind="miString" />
 <p> </p>
-<h3>Tabla de Practicas</h3>
-<br />
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Practica</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var practica in ListaDePracticas)
-        {
+
+
+<button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
+<button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
+
+
+<!-- Divs -->
+<div style="display: @(currentDiv == 1 ? "block" : "none")">
+    <h3>Practicas PARTICULAR</h3>
+    <br />
+    <table class="table">
+        <thead>
             <tr>
-                <td>@practica.Id</td>
-                <td>@practica.Practica</td>
-                <td>@practica.Precio</td>
-                <td>
-                    <button @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-                    <button @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
-                </td>
+                <th>ID</th>
+                <th>Practica</th>
+                <th>Precio</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var practica in ListaDePracticas)
+            {
+                <tr>
+                    <td>@practica.Id</td>
+                    <td>@practica.Practica</td>
+                    <td>@practica.Precio</td>
+                    <td>
+                        <button @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
+                        <button @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div style="display: @(currentDiv == 2 ? "block" : "none")">
+    <p>Contenido del Div 2</p>
+</div>
+<div style="display: @(currentDiv == 3 ? "block" : "none")">
+    <p>Contenido del Div 3</p>
+</div>
+<div style="display: @(currentDiv == 4 ? "block" : "none")">
+    <p>Contenido del Div 4</p>
+</div>
+<div style="display: @(currentDiv == 5 ? "block" : "none")">
+    <p>Contenido del Div 5</p>
+</div>
 
 
 <div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
@@ -69,7 +122,13 @@
 @code {
     private bool mostrarModalEdit = false;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
+    private int currentDiv = 1;
 
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 

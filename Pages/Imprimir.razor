@@ -25,43 +25,43 @@
 <br />
 <br />
 
-<input type="text" id="inputText" @bind="PrimeraPractica" readonly />
-<input type="text" id="inputText" @bind="PrimerPrecio" size="8" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos1" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotas1" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas1" size="8" readonly />
+<input type="text" id="inputText" @bind="PracticasArreglo[0]" readonly />
+<input type="text" id="inputText" @bind="PrecioArreglo[0]" size="8" readonly />
+<input type="text" id="inputText" @bind="EfectivoArreglo[0]" size="8" readonly />
+<input type="text" id="inputText" @bind="TresCuotasArreglo[0]" size="8" readonly />
+<input type="text" id="inputText" @bind="SeisCuotasArreglo[0]" size="8" readonly />
 <button @onclick="() => EliminarFIla1(1)">X</button>
 <br />
 
-<input type="text" id="inputText" @bind="SegundaPractica" readonly />
-<input type="text" id="inputText" @bind="SegundoPrecio" size="8" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos2" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotas2" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas2" size="8" readonly />
+<input type="text" id="inputText" @bind="PracticasArreglo[1]" readonly />
+<input type="text" id="inputText" @bind="PrecioArreglo[1]" size="8" readonly />
+<input type="text" id="inputText" @bind="EfectivoArreglo[1]" size="8" readonly />
+<input type="text" id="inputText" @bind="TresCuotasArreglo[1]" size="8" readonly />
+<input type="text" id="inputText" @bind="SeisCuotasArreglo[1]" size="8" readonly />
 <button @onclick="() => EliminarFIla1(2)">X</button>
 <br />
 
-<input type="text" id="inputText" @bind="TerceraPractica" readonly />
-<input type="text" id="inputText" @bind="TercerPrecio" size="8" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos3" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotas3" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas3" size="8" readonly />
+<input type="text" id="inputText" @bind="PracticasArreglo[2]" readonly />
+<input type="text" id="inputText" @bind="PrecioArreglo[2]" size="8" readonly />
+<input type="text" id="inputText" @bind="EfectivoArreglo[2]" size="8" readonly />
+<input type="text" id="inputText" @bind="TresCuotasArreglo[2]" size="8" readonly />
+<input type="text" id="inputText" @bind="SeisCuotasArreglo[2]" size="8" readonly />
 <button @onclick="() => EliminarFIla1(3)">X</button>
 <br />
 
-<input type="text" id="inputText" @bind="CuartaPractica" readonly />
-<input type="text" id="inputText" @bind="CuartoPrecio" size="8" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos4" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotas4" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas4" size="8" readonly />
+<input type="text" id="inputText" @bind="PracticasArreglo[3]" readonly />
+<input type="text" id="inputText" @bind="PrecioArreglo[3]" size="8" readonly />
+<input type="text" id="inputText" @bind="EfectivoArreglo[3]" size="8" readonly />
+<input type="text" id="inputText" @bind="TresCuotasArreglo[3]" size="8" readonly />
+<input type="text" id="inputText" @bind="SeisCuotasArreglo[3]" size="8" readonly />
 <button @onclick="() => EliminarFIla1(4)">X</button>
 <br />
 
-<input type="text" id="inputText" @bind="QuintaPractica" readonly />
-<input type="text" id="inputText" @bind="QuintoPrecio" size="8" readonly />
-<input type="text" id="inputText" @bind="Efectivo20Menos5" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotas5" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotas5" size="8" readonly />
+<input type="text" id="inputText" @bind="PracticasArreglo[4]" readonly />
+<input type="text" id="inputText" @bind="PrecioArreglo[4]" size="8" readonly />
+<input type="text" id="inputText" @bind="EfectivoArreglo[4]" size="8" readonly />
+<input type="text" id="inputText" @bind="TresCuotasArreglo[4]" size="8" readonly />
+<input type="text" id="inputText" @bind="SeisCuotasArreglo[4]" size="8" readonly />
 <button @onclick="() => EliminarFIla1(5)">X</button>
 <br />
 
@@ -94,65 +94,26 @@
         }
     </tbody>
 </table>
-<!--
-<table class="table">
-    <thead>
-        <tr>
-            <th>Practica</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-            <tr>
-                <td>practica.Practica</td>
-                <td>practica.Precio</td>
-                <td>
-                    <button @onclick="() => Quitar(12)">Quitar</button>
-                </td>
-            </tr>        
-    </tbody>
-</table>
-    -->
 @code {
     // VARIABLES DE LA ULTIMA LINEA DE LA TABLA HARCODEADA//
     public string TotalLabel = "TOTAL:";
+
     public int TotalDebito = 0;
     public int TotalEfectivo = 0;
     public int Total3Cuotas = 0;
     public int Total6Cuotas = 0;
     /////////////////////////////////////////////////////////
-    string[] Titulos = { "PRACTICA", "DEBITO", "EFECTIVO", "3 CUOTAS", "6 CUOTAS" };
-
-    public string PrimeraPractica = "-";
-    public string SegundaPractica = "-";
-    public string TerceraPractica = "-";
-    public string CuartaPractica = "-";
-    public string QuintaPractica = "-";
     public int TresCuotasPorcentaje = 30;
     public int SeisCuotasPorcentaje = 60;
+    string[] Titulos = { "PRACTICA", "DEBITO", "EFECTIVO", "3 CUOTAS", "6 CUOTAS" };
+    string[] PracticasArreglo = { "-", "-", "-", "-", "-" };
+    int[] TresCuotasArreglo = { 0, 0, 0, 0, 0 }; 
+    int[] SeisCuotasArreglo = { 0, 0, 0, 0, 0 };
+    int[] PrecioArreglo = { 0, 0, 0, 0, 0 };
+    int[] EfectivoArreglo = { 0, 0, 0, 0, 0 };
     public int TresCuotas = 0;
-    public int TresCuotas1 = 0;
-    public int TresCuotas2 = 0;
-    public int TresCuotas3 = 0;
-    public int TresCuotas4 = 0;
-    public int TresCuotas5 = 0;
     public int SeisCuotas = 0;
-    public int SeisCuotas1 = 0;
-    public int SeisCuotas2 = 0;
-    public int SeisCuotas3 = 0;
-    public int SeisCuotas4 = 0;
-    public int SeisCuotas5 = 0;
     public int Efectivo20Menos = 0;
-    public int Efectivo20Menos1 = 0;
-    public int Efectivo20Menos2 = 0;
-    public int Efectivo20Menos3 = 0;
-    public int Efectivo20Menos4 = 0;
-    public int Efectivo20Menos5 = 0;
-    public int PrimerPrecio = 0;
-    public int SegundoPrecio = 0;
-    public int TercerPrecio = 0;
-    public int CuartoPrecio = 0;
-    public int QuintoPrecio = 0;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
 
     [Inject]
@@ -174,63 +135,68 @@
     }
     public void CargarTotales()
     {
-        TotalDebito = PrimerPrecio + SegundoPrecio + TercerPrecio + CuartoPrecio + QuintoPrecio;
-        TotalEfectivo = Efectivo20Menos1 + Efectivo20Menos2 + Efectivo20Menos3 + Efectivo20Menos4 + Efectivo20Menos5;
-        Total3Cuotas = TresCuotas1 + TresCuotas2 + TresCuotas3 + TresCuotas4 + TresCuotas5;
-        Total6Cuotas = SeisCuotas1 + SeisCuotas2 + SeisCuotas3 + SeisCuotas4 + SeisCuotas5;
+        TotalDebito = PrecioArreglo[0] + PrecioArreglo[1] + PrecioArreglo[2] + PrecioArreglo[3] + PrecioArreglo[4];
+        //    TotalEfectivo = EfectivoArreglo[0] + EfectivoArreglo[1] + EfectivoArreglo[2] + EfectivoArreglo[3] + EfectivoArreglo[4];
+        TotalEfectivo = 0;
+        foreach (int p in EfectivoArreglo)
+        {
+            TotalEfectivo = TotalEfectivo + p;
+        }
+        Total3Cuotas = TresCuotasArreglo[0] + TresCuotasArreglo[1] + TresCuotasArreglo[2] + TresCuotasArreglo[3] + TresCuotasArreglo[4];
+        Total6Cuotas = SeisCuotasArreglo[0] + SeisCuotasArreglo[1] + SeisCuotasArreglo[2] + SeisCuotasArreglo[3] + SeisCuotasArreglo[4];
 
     }
     private void EliminarFIla1(int FilaAEliminar)
     {
         if (FilaAEliminar == 1)
         {
-            PrimeraPractica = "-";
-            PrimerPrecio = 0;
+            PracticasArreglo[0] = "-";
+            PrecioArreglo[0] = 0;
             ObtenerResultados(0);
-            Efectivo20Menos1 = Efectivo20Menos;
-            TresCuotas1 = TresCuotas;
-            SeisCuotas1 = SeisCuotas;
+            EfectivoArreglo[0] = Efectivo20Menos;
+            TresCuotasArreglo[0] = 0;
+            SeisCuotasArreglo[0]= SeisCuotas;
 
         }
         else if (FilaAEliminar == 2)
         {
-            SegundaPractica = "-";
-            SegundoPrecio = 0;
+            PracticasArreglo[1] = "-";
+            PrecioArreglo[1] = 0;
             ObtenerResultados(0);
-            Efectivo20Menos2 = Efectivo20Menos;
-            TresCuotas2 = TresCuotas;
-            SeisCuotas2 = SeisCuotas;
+            EfectivoArreglo[1] = Efectivo20Menos;
+            TresCuotasArreglo[1] = 0;
+            SeisCuotasArreglo[1] = SeisCuotas;
         }
         else if (FilaAEliminar == 3)
         {  
-            TerceraPractica = "-";
-            TercerPrecio = 0;
+            PracticasArreglo[2] = "-";
+            PrecioArreglo[2] = 0;
             ObtenerResultados(0);
-            Efectivo20Menos3 = Efectivo20Menos;
-            TresCuotas3 = TresCuotas;
-            SeisCuotas3 = SeisCuotas;
+            EfectivoArreglo[2] = Efectivo20Menos;
+            TresCuotasArreglo[2] = 0;
+            SeisCuotasArreglo[2] = SeisCuotas;
         }
         else if (FilaAEliminar == 4)
         { 
-            CuartaPractica = "-";
-            CuartoPrecio = 0;
+            PracticasArreglo[3] = "-";
+            PrecioArreglo[3] = 0;
             ObtenerResultados(0);
-            Efectivo20Menos4 = Efectivo20Menos;
-            TresCuotas4 = TresCuotas;
-            SeisCuotas4 = SeisCuotas;
+            EfectivoArreglo[3] = Efectivo20Menos;
+            TresCuotasArreglo[3] = 0;
+            SeisCuotasArreglo[3] = SeisCuotas;
         }
         else if (FilaAEliminar == 5)
         {
-            QuintaPractica = "-";
-            QuintoPrecio = 0;
+            PracticasArreglo[4] = "-";
+            PrecioArreglo[4] = 0;
             ObtenerResultados(0);
-            Efectivo20Menos5 = Efectivo20Menos;
-            TresCuotas5 = TresCuotas;
-            SeisCuotas5 = SeisCuotas;
+            EfectivoArreglo[4] = Efectivo20Menos;
+            TresCuotasArreglo[4] = 0;
+            SeisCuotasArreglo[4] = SeisCuotas;
         }
 
         CargarTotales();
-        }
+    }
 
     private void Quitar(int practicaId)
     {
@@ -238,65 +204,65 @@
 
     private void Agregar(int practicaId)
     {
-        if (PrimeraPractica == "-")
+        if (PracticasArreglo[0] == "-")
         {
 
 
             var practica = DbContext.Practicas.Find(practicaId);
 
-            PrimeraPractica = practica.Practica.ToString();
-            PrimerPrecio = Convert.ToInt32(practica.Precio.ToString());
+            PracticasArreglo[0] = practica.Practica.ToString();
+            PrecioArreglo[0] = Convert.ToInt32(practica.Precio.ToString());
 
-            ObtenerResultados(PrimerPrecio);
-            Efectivo20Menos1 = Efectivo20Menos;
-            TresCuotas1 = TresCuotas;
-            SeisCuotas1 = SeisCuotas;
+            ObtenerResultados(PrecioArreglo[0]);
+            EfectivoArreglo[0] = Efectivo20Menos;
+            TresCuotasArreglo[0] = TresCuotas;
+            SeisCuotasArreglo[0] = SeisCuotas;
         }
-        else if (SegundaPractica == "-")
+        else if (PracticasArreglo[1] == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
-            SegundaPractica = practica.Practica.ToString();
-            SegundoPrecio = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(SegundoPrecio);
-            Efectivo20Menos2 = Efectivo20Menos;
-            TresCuotas2 = TresCuotas;
-            SeisCuotas2 = SeisCuotas;
+            PracticasArreglo[1] = practica.Practica.ToString();
+            PrecioArreglo[1] = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(PrecioArreglo[1]);
+            EfectivoArreglo[1] = Efectivo20Menos;
+            TresCuotasArreglo[1] = TresCuotas;
+            SeisCuotasArreglo[1] = SeisCuotas;
         }
-        else if (TerceraPractica == "-")
+        else if (PracticasArreglo[2] == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
-            TerceraPractica = practica.Practica.ToString();
-            TercerPrecio = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(TercerPrecio);
-            Efectivo20Menos3 = Efectivo20Menos;
-            TresCuotas3 = TresCuotas;
-            SeisCuotas3 = SeisCuotas;
+            PracticasArreglo[2] = practica.Practica.ToString();
+            PrecioArreglo[2] = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(PrecioArreglo[2]);
+            EfectivoArreglo[2] = Efectivo20Menos;
+            TresCuotasArreglo[2] = TresCuotas;
+            SeisCuotasArreglo[2] = SeisCuotas;
         }
-        else if (CuartaPractica == "-")
+        else if (PracticasArreglo[3] == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
-            CuartaPractica = practica.Practica.ToString();
-            CuartoPrecio = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(CuartoPrecio);
-            Efectivo20Menos4 = Efectivo20Menos;
-            TresCuotas4 = TresCuotas;
-            SeisCuotas4 = SeisCuotas;
+            PracticasArreglo[3] = practica.Practica.ToString();
+            PrecioArreglo[3] = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(PrecioArreglo[3]);
+            EfectivoArreglo[3] = Efectivo20Menos;
+            TresCuotasArreglo[3] = TresCuotas;
+            SeisCuotasArreglo[3] = SeisCuotas;
 
         }
-        else if (QuintaPractica == "-")
+        else if (PracticasArreglo[4] == "-")
         {
             var practica = DbContext.Practicas.Find(practicaId);
-            QuintaPractica = practica.Practica.ToString();
-            QuintoPrecio = Convert.ToInt32(practica.Precio.ToString());
-            ObtenerResultados(QuintoPrecio);
-            Efectivo20Menos5 = Efectivo20Menos;
-            TresCuotas5 = TresCuotas;
-            SeisCuotas5 = SeisCuotas;
+            PracticasArreglo[4] = practica.Practica.ToString();
+            PrecioArreglo[4] = Convert.ToInt32(practica.Precio.ToString());
+            ObtenerResultados(PrecioArreglo[4]);
+            EfectivoArreglo[4] = Efectivo20Menos;
+            TresCuotasArreglo[4] = TresCuotas;
+            SeisCuotasArreglo[4] = SeisCuotas;
 
         }
         CargarTotales();
 
-        }
+    }
 
         
     }
