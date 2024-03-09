@@ -17,6 +17,8 @@ public partial class DbDentistaContext : DbContext
 
     public virtual DbSet<Login> Logins { get; set; }
 
+    public virtual DbSet<Paciente> Pacientes { get; set; }
+
     public virtual DbSet<Practica1> Practicas { get; set; }
 
     public virtual DbSet<PracticasApro> PracticasApros { get; set; }
@@ -35,6 +37,36 @@ public partial class DbDentistaContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.Usuario)
+                .HasMaxLength(10)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Paciente>(entity =>
+        {
+            entity.Property(e => e.Apellido)
+                .HasMaxLength(15)
+                .IsFixedLength();
+            entity.Property(e => e.Domicilio)
+                .HasMaxLength(15)
+                .IsFixedLength();
+            entity.Property(e => e.FechaDeAlta).HasColumnType("date");
+            entity.Property(e => e.FechaDeNacimiento).HasColumnType("date");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(15)
+                .IsFixedLength();
+            entity.Property(e => e.NumeroAfiliado)
+                .HasMaxLength(20)
+                .IsFixedLength();
+            entity.Property(e => e.ObraSocial)
+                .HasMaxLength(15)
+                .IsFixedLength();
+            entity.Property(e => e.Observaciones)
+                .HasMaxLength(1000)
+                .IsFixedLength();
+            entity.Property(e => e.PlanDeObraSocial)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Titular)
                 .HasMaxLength(10)
                 .IsFixedLength();
         });

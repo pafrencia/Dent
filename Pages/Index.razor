@@ -3,6 +3,7 @@
 @inject ServicioAutenticacion ServicioAutenticacion
 @inject NavigationManager NavigationManager
 
+
 <PageTitle>Index</PageTitle>
 
 <h1>BIENVENIDOS A DENT</h1>
@@ -54,8 +55,8 @@
     private string contraseña = "";
 
     private Usuario usuario = new Usuario();
+    public static int Logueado = 0;
 
- 
 
     public void CrearUsuario()
     {
@@ -92,10 +93,14 @@
 
         if (entidad != null)
         {
-           
+
             if (entidad.Contraseña == contraseña)
 
-            { info = "USUARIO Y CONTRASEÑA CORRECTA"; }
+            { 
+                info = "USUARIO Y CONTRASEÑA CORRECTA";
+              Logueado = 1;
+
+            }
         else
             { info = "CONTRASEÑA INCORRECTA"; }
         }
@@ -106,25 +111,6 @@
         }
            
     }
-
-    //    if (ServicioAutenticacion.ValidarCredenciales(nombreUsuario, contraseña))
-  //      {
-
-   //       
-    //        NavigationManager.NavigateTo("/Practicas");
-    //    }
-    //    else
-    //    {
-            // Mostrar mensaje de error o realizar otras acciones en caso de credenciales incorrectas
-    //        info = "Usuario/contraseña INCORRECTA";
-    //    }
-    
-    // Método que se ejecutará cuando se haga clic en el botón
-    //
-   // Welcome to your new app.
-   //<SurveyPrompt Title = "How is Blazor working for you?" />4
-
-
     // Método para abrir el modal
     public void AbrirModal()
     {
@@ -137,4 +123,4 @@
         mostrarModal = false;
     }
 
-}
+    }

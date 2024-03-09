@@ -1,11 +1,16 @@
 ﻿@inherits LayoutComponentBase
+@using Dent.Pages
 
 <PageTitle>Dent</PageTitle>
-
+<button @onclick="() => ShowNav(1)">X</button>
 <div class="page">
-    <div class="sidebar">
+
+    <div class="sidebar" style="display: @(CoultarNav == 1 ? "block" : "none")">
+ 
         <NavMenu />
+
     </div>
+
 
     <main>
 
@@ -14,3 +19,16 @@
         </article>
     </main>
 </div>
+
+@code {
+    private int CoultarNav = 1;
+    public void ShowNav(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        if (CoultarNav == 1)
+            CoultarNav = 0;
+
+           else
+            CoultarNav = 1;
+    }
+}

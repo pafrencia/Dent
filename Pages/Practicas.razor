@@ -1,5 +1,6 @@
 ﻿@page "/Practicas"
 @using Dent.Models
+@inject Permisos Permiso
 
 
 <style>
@@ -143,10 +144,36 @@
     </div>
 </div>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>DOMICILIO</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var datos in ListaDePacientes)
+        {
+            <tr>
+
+                <td>@datos.Id</td>
+                <td>@datos.Nombre</td>
+                <td>@datos.Apellido</td>
+                <td>@datos.Domicilio</td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 @code {
     private bool mostrarModalEdit = false;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
+    private List<Paciente> ListaDePacientes = new List<Paciente>();
     private int currentDiv = 1;
 
     private void ShowDiv(int divNumber)
@@ -161,6 +188,7 @@
     {
         ListaDePracticas = DbContext.Practicas.ToList();
         ListaDePracticasApross = DbContext.PracticasApros.ToList();
+
     }
     public string Practica = "";
     public int Precio = 0;
@@ -278,42 +306,52 @@
                 }
                 ActualizaTabla();
             }
-            
+
         }
     }
     private void Agregar()
     {
-        if (currentDiv == 1)
-        {
-            var prueba = new Practica1();
-            prueba.Practica = Practica;
-            prueba.Precio = Precio;
-            using (DbDentistaContext db = new DbDentistaContext())
-            {
-                db.Practicas.Add(prueba);
-                db.SaveChanges();
-            }
-        }
-        else if (currentDiv == 2)
-        {
-            var prueba = new PracticasApro();
-            prueba.Practica = Practica;
-            prueba.Precio = Precio;
-            using (DbDentistaContext db = new DbDentistaContext())
-            {
-                db.PracticasApros.Add(prueba);
-                db.SaveChanges();
-            }
-        }
-        // Al final del método donde realizas cambios y antes de volver a cargar los datos
-        ActualizaTabla();
-        miString = Practica;
-        Practica = "";
-        Precio = 0;
 
-        //agregarPracticas.CargarPractica();
-        Console.WriteLine($"Texto ingresado: {Practica} agregada");
-    }
+        if (Index.Logueado == 1)
+        {
+            if (currentDiv == 1)
+            {
+                var prueba = new Practica1();
+                prueba.Practica = Practica;
+                prueba.Precio = Precio;
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    db.Practicas.Add(prueba);
+                    db.SaveChanges();
+                }
+            }
+            else if (currentDiv == 2)
+            {
+                var prueba = new PracticasApro();
+                prueba.Practica = Practica;
+                prueba.Precio = Precio;
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    db.PracticasApros.Add(prueba);
+                    db.SaveChanges();
+                }
+            }
+            // Al final del método donde realizas cambios y antes de volver a cargar los datos
+            ActualizaTabla();
+            miString = Practica;
+            Practica = "";
+            Precio = 0;
+
+            //agregarPracticas.CargarPractica();
+            Console.WriteLine($"Texto ingresado: {Practica} agregada");
+        }
+        else
+        {
+            Console.WriteLine($"Texto ingresado: USTED NO TIENE ACCESO A REALIZAR ESTA OPERACION");
+        }
+
+        }
+  
     private void ActualizaTabla()
     {
         ListaDePracticas = DbContext.Practicas.ToList();

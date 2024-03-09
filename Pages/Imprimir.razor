@@ -1,6 +1,6 @@
 ﻿@page "/Imprimir"
 @using Dent.Models
-
+@using Dent.Shared
 
 <style>
     /* Definición de la clase CSS para el botón */
@@ -28,7 +28,13 @@
 </style>
 
 
-<h3>Imprimir</h3>
+
+<button class="boton-celeste" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
+
+<br />
+<br />
+
+<div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
 
 <div class="form-group">
     <label for="inputText">% en 3 Cuotas:</label>
@@ -38,12 +44,8 @@
     <label for="inputText">% en 6 Cuotas:</label>
     <input type="text" id="inputText" @bind="SeisCuotasPorcentaje" />
 
-
+    </div>
 </div>
-
-<h3>Tabla de Practicas</h3>
-
-<br />
 
 <input type="text" id="inputText" @bind="Titulos[0]" readonly />
 <input type="text" id="inputText" @bind="Titulos[1]" size="8" readonly />
@@ -100,13 +102,22 @@
 <input type="text" id="inputText" @bind="Total6Cuotas" size="8" readonly />
 <br />
 <br />
+<div style="width: 50%;">
+ <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
+</div>
 
 
-<button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
+
+
+
+
+<div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
+
+    <button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
+    <button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
+    <button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
+    <button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
+    <button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
 
 
 
@@ -159,6 +170,15 @@
         </tbody>
     </table>
 </div>
+<script>
+    var hola = "";
+    
+
+    var adios = hola;
+
+</script>
+</div>
+
 @code {
     // VARIABLES DE LA ULTIMA LINEA DE LA TABLA HARCODEADA//
     public string TotalLabel = "TOTAL:";
@@ -179,9 +199,27 @@
     public int TresCuotas = 0;
     public int SeisCuotas = 0;
     public int Efectivo20Menos = 0;
+    public int OcultarTodoValor = 1;
+    string nombreDelBoton = "IMPRIMIR";
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
+    private string textoMultilinea = "Aqui va la explicacion de precios y alguna observacion que quieras aplicar\n puede a ver saltos de linea no pasa nada\n tantos entres";
+    
 
+    public void OcultarTodo()
+    {
+        if (OcultarTodoValor  == 1)
+        {
+            OcultarTodoValor = 0;
+            nombreDelBoton = "PRESUPUESTO VALIDO POR 48hs, Posteriormente SUJETO A MODIFICACIONES";
+        }
+        else
+        {
+            OcultarTodoValor = 1;
+            nombreDelBoton = "IMPRIMIR";
+        }
+
+    }
     private void InicializarVariables()
     {
 
@@ -216,8 +254,12 @@
         CargarTotales();
 
     }
-
-    private void ShowDiv(int divNumber)
+    private void LlamarShowNav(int show1)
+    {
+        
+        
+    }
+    public void ShowDiv(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
         currentDiv = divNumber;

@@ -1,0 +1,273 @@
+﻿@page "/Pacientes"
+
+@using Dent.Models
+@using Dent.Shared
+@using Dent.Pages
+@inject Permisos Permiso
+<style>
+    /* Definición de la clase CSS para el botón */
+    .boton-celeste {
+        background-color: #5bc0de; /* Color de fondo celeste por defecto */
+        color: #000000; /* Color de texto blanco por defecto */
+        border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
+        border-radius: 5px; /* Bordes redondeados por defecto */
+        padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        font-weight: bold; /* Texto en negrita */
+    }
+
+        /* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
+        .boton-celeste:hover {
+            background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
+            border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
+        }
+
+        /* Cambio de color cuando el botón está presionado (efecto active) */
+        .boton-celeste:active {
+            background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
+            border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
+        }
+</style>
+
+
+<button class="boton-celeste" @onclick="() => AgregarPacientesMenu(1)">AGREGAR PACIENTE</button>
+  <br />
+<div style="display: @(currentDivPacientes == 1 ? "block" : "none")">
+
+<div class="form-group">
+    <label for="inputText">Nombre:</label>
+    <input type="text" id="inputText" @bind="nombrePaciente" />
+</div>
+<div class="form-group">
+    <label for="inputText">Apellido:</label>
+    <input type="text" id="inputText" @bind="apellido" />
+</div>
+<div class="form-group">
+    <label for="inputText">Domicilio:</label>
+    <input type="text" id="inputText" @bind="domicilio" />
+</div>
+<div class="form-group">
+    <label for="inputText">Celular:</label>
+    <input type="text" id="inputText" @bind="celular" />
+</div>
+    <br />
+<div class="form-group">
+    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" />
+</div>
+<div
+
+<label for="miString">EDAD:</label>
+<input id="miString" @bind="edad" />
+<button class="boton-celeste" @onclick="CalcularEdad">CALCULAR </button>
+</div>
+    <br />
+<div class="form-group">
+    <label for="ObrasSocialesList">Selecciona una Obra Social:</label>
+    <select id="ObrasSocialesList" @onchange="MetodoPersonalizado" class="form-control">
+        <option value="0">Selecciona...</option>
+        <option value="particular">PARTICULAR</option>
+        <option value="avalian">AVALIAN</option>
+        <option value="americaServicios">AMERICA SERVICIOS</option>
+        <option value="cajaNotarial">CAJA NOTARIAL</option>
+        <option value="federada">FEDERADA</option
+        <option value="galeno">GALENO</option>
+        <option value="iospa">IOSPA</option>
+        <option value="jerarquicos">JERARQUICOS</option>
+        <option value="medife">MEDIFE</option>
+        <option value="omint">OMINT</option>
+        <option value="ossej">OSSEJ</option>
+        <option value="prevencion">PREVENCION</option>
+        <option value="sancor">SANCOR</option>
+        <option value="swissMedical">SWISS MEDICAL</option>
+        <option value="unimed">UNIMED</option>
+    </select>
+</div>
+    <br />
+<!-- Divs -->
+<div style="display: @(currentDiv == 1 ? "block" : "none")">
+<!-- DATOS PARA OBJETO DE BASE DE DATOS AFILIADO -->
+<div class="form-group">
+    <label for="inputText">Nº Afiliado:</label>
+    <input type="text" id="inputText" @bind="afiliado" />
+</div>
+<div class="form-group">
+    <label for="inputText">Plan:</label>
+    <input type="text" id="inputText" @bind="plan" />
+</div>
+<div class="form-group">
+    <label for="inputText">PARENTESCO:</label>
+    <input type="text" id="inputText" @bind="titular" />
+</div>
+</div>
+    <br />
+<div style="width: 50%;">
+ <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
+</div>
+
+
+<button class="boton-celeste" @onclick="Agregar">Agregar </button>
+
+</div>
+    <br />
+    <h3>Pacientes</h3>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>DOMICILIO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var datos in ListaDePacientes)
+            {
+                <tr>
+                    
+                    <td>@datos.Id</td>
+                    <td>@datos.Nombre</td>
+                    <td>@datos.Apellido</td>
+                    <td>@datos.Domicilio</td>
+                    <td>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+
+@code {
+    private bool mostrarModalEdit = false;
+    private List<Paciente> ListaDePacientes = new List<Paciente>();
+
+    private int currentDiv = 0;
+    public int edad = 0;
+    public int currentDivPacientes = 0;
+
+
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ListaDePacientes = DbContext.Pacientes.ToList();
+    }
+
+    public string nombrePaciente = "-";
+    public string apellido = "-";
+    public string domicilio = "-";
+    public int celular = 0;
+    private DateTime fechaNacimiento = DateTime.Today;
+    private DateTime fechaAlta = DateTime.Today;
+    private string obraSocialSeleccionada;
+    public string titular = "TITULAR";
+    public string plan = "-";
+    public string afiliado = "0";
+    private string textoMultilinea = "observacioes del paciente, aca como ejemplo escribire cualquiier cosa para ver que la base de datos tome bien todo el contenido de la caja de texto se ve que puede tenre bastante, recordemos que es u campo de observacion, tampoco la gilada de escribir un libro, si no para eso directamente vas al rawson y sacas un turno con anticipacion para no tener demoras cuando veas que estas escribiendo m,ucho en este campo, directamente vas al turno que ya sacaste";
+    private void AgregarPacientesMenu(int log)
+    {        if (currentDivPacientes == 0)
+        {
+            currentDivPacientes = log;
+        }
+        else
+        {
+            currentDivPacientes = 0;
+        }
+
+    }
+    private void CalcularEdad()
+    {
+
+        DateTime fechaActual = DateTime.Today;
+        edad = fechaActual.Year - fechaNacimiento.Year;
+
+        // Verifica si aún no ha cumplido años en el año actual
+        if (fechaActual.Month < fechaNacimiento.Month || (fechaActual.Month == fechaNacimiento.Month && fechaActual.Day < fechaNacimiento.Day))
+        {
+            edad--;
+        }    
+    }
+
+    private void MetodoPersonalizado(ChangeEventArgs args)
+    {
+        obraSocialSeleccionada = args.Value.ToString();
+        // Lógica del método personalizado
+        if (obraSocialSeleccionada == "particular")
+        {
+            ShowDiv(0);
+            titular = "TITULAR";
+            plan = "-";
+            afiliado = "0";
+        }
+        else if (obraSocialSeleccionada == "0")
+        {
+
+            ShowDiv(0);
+        }
+        else
+        {
+
+            ShowDiv(1);
+        }        
+    }
+    public void InicializarPacientes()
+    {
+        nombrePaciente = "-";
+        apellido = "-";
+        domicilio = "-";
+        celular = 0;
+        fechaNacimiento = DateTime.Today;
+        fechaAlta = DateTime.Today;
+        obraSocialSeleccionada = "0";
+        titular = "TITULAR";
+        plan = "-";
+        afiliado = "0";
+    }
+
+    public void Agregar()
+    {
+        var prueba = new Paciente();
+        //      if (prueba.Nombre != null && prueba.Apellido != null && prueba.Domicilio != null && prueba.Celular != null && prueba.FechaDeNacimiento != null && prueba.FechaDeAlta != null && prueba.ObraSocial != null && prueba.Titular != null && prueba.PlanDeObraSocial != null && prueba.Observaciones != null)
+        //      {
+        prueba.Nombre = nombrePaciente;
+        prueba.Apellido = apellido;
+        prueba.Domicilio = domicilio;
+        prueba.Celular = celular;
+        prueba.FechaDeNacimiento = fechaNacimiento;
+        prueba.FechaDeAlta = DateTime.Today;
+        prueba.ObraSocial = "obraSocialSeleccionada";
+        prueba.Titular = titular;
+        prueba.PlanDeObraSocial = plan;
+        prueba.NumeroAfiliado = afiliado;
+        prueba.Observaciones = textoMultilinea;
+
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Pacientes.Add(prueba);
+            db.SaveChanges();
+        }
+        InicializarPacientes();
+        //       }
+        //      else
+        //      {
+
+        //       }
+        ActualizaTablaPacientes();
+    }
+       private void ActualizaTablaPacientes()
+    {    
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
+
+
+}
