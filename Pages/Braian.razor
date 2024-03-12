@@ -1,0 +1,179 @@
+﻿@page "/Braian"
+@using Dent.Models
+@inject Permisos Permiso
+@inject AgregarPracticas AgregarPracticas
+@inject EliminarPracticaMetod EliminarPracticaMethod
+
+<div class="form-group">
+    <label for="inputText">Paciente:</label>
+    <input type="text" id="inputText" @bind="PacienteAtendido" />
+    <p> </p>
+    <label for="inputText">Practica:</label>
+    <input type="text" id="inputText" @bind="Practica" />
+    <p> </p>
+    <button class="btn btn-success" @onclick="Agregar">Agregar </button>
+    </div>
+
+<!-- Divs -->
+<div style="display: @(currentDiv == 1 ? "block" : "none")">
+    <br />
+    <table class="table">
+        <thead>
+            <tr class="table-dark">
+                <th>FECHA</th>
+                <th>PACIENTE</th>
+                <th>PRACTICA</th>
+                <th>OBRA SOCIAL</th>
+                <th>PRECIO</th>
+                <th>ODONTOLOGO</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var practicaRealizada in ListaDePracticasRealizadas)
+            {
+                <tr class="table-success">
+                    <td>@practicaRealizada.Fecha</td>
+                    <td>@practicaRealizada.Paciente</td>
+                    <td>@practicaRealizada.Practica</td>
+                    <td>@practicaRealizada.ObraSocial</td>
+                    <td>@practicaRealizada.Precio</td>
+                    <td>@practicaRealizada.Odontologo</td>
+                    <td>
+                    <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practicaRealizada.Id)">Editar</button>
+                    <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
+    <div class="modal-content">
+        <span class="cerrar" @onclick="CerrarModalEdit">&times;</span>
+        <h3>EDITAR</h3>
+        <div class="form-group">
+            <label for="inputText">PACIENTE:</label>
+            <input type="text" id="inputText" @bind="PacienteAtendido" />
+            <p> </p>
+            <label for="inputText">Practica:</label>
+            <input type="text" id="inputText" @bind="Practica" />
+        </div>
+        <div class="form-group">
+
+            <button class="btn btn-warning"  @onclick="() => EditarPractica(IdEdit)">Editar</button>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool mostrarModalEdit = false;
+    private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
+
+    private int currentDiv = 1;
+    private Eliminar Eliminar;
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+
+    }
+    public string Practica = "";
+    public string PacienteAtendido = "";
+    public int Precio = 0;
+    public int IdEdit = 0;
+    public string miString = "";
+
+    [Inject]
+    private AgregarPracticas agregarPracticas { get; set; }
+    [Inject]
+    private EliminarPracticaMetod Eliminarla { get; set; }
+    private void EditarPracticaAbrir(int practicaId)
+    {
+        AbrirModalEdit();
+
+        if (currentDiv == 1)
+        {
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var practica = DbContext.PracticasRealizadas.Find(practicaId);
+
+                IdEdit = practica.Id;
+                Practica = practica.Practica;
+                PacienteAtendido = practica.Paciente;
+            }
+        }
+    }
+    public void EditarPractica(int practicaId)
+    {
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var practica = DbContext.PracticasRealizadas.Find(practicaId);
+                practica.Paciente = PacienteAtendido;
+                practica.Practica = Practica;
+                db.SaveChanges();
+                ActualizaTabla();
+            }
+            CerrarModalEdit();
+
+    }
+    public void EliminarPractica(int practicaId)
+    {
+        //  Eliminarla.Eliminarla(practicaId);
+        var practica = DbContext.PracticasRealizadas.Find(practicaId);
+        if (practica != null)
+        {
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.PracticasRealizadas.Remove(practica);
+                db.SaveChanges();
+            }
+        }
+        ActualizaTabla();
+
+    }
+    private void Agregar()
+    {
+        var prueba = new PracticasRealizada();
+        prueba.Paciente = PacienteAtendido;
+        prueba.Practica = Practica;
+        prueba.ObraSocial = "pendiente";
+        prueba.Precio = Precio;
+        prueba.Odontologo = "BRAIAN";
+        prueba.Fecha = DateTime.Now;
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.PracticasRealizadas.Add(prueba);
+            db.SaveChanges();
+        }         
+        ActualizaTabla();
+    }
+
+    private void ActualizaTabla()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        StateHasChanged();
+
+    }
+
+    public void AbrirModalEdit()
+    {
+        mostrarModalEdit = true;
+    }
+
+    // Método para cerrar el modal
+    public void CerrarModalEdit()
+    {
+        mostrarModalEdit = false;
+    }
+}

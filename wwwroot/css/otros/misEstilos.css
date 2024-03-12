@@ -1,0 +1,25 @@
+﻿<style >
+/* Definición de la clase CSS para el botón */
+.boton-celeste {
+    background-color: #5bc0de; /* Color de fondo celeste por defecto */
+    color: #000000; /* Color de texto blanco por defecto */
+    border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
+    border-radius: 5px; /* Bordes redondeados por defecto */
+    padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
+.boton-celeste:hover {
+    background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
+    border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
+}
+
+/* Cambio de color cuando el botón está presionado (efecto active) */
+.boton-celeste:active {
+    background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
+    border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
+}
+
+</style >

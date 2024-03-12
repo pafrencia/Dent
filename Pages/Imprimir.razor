@@ -3,6 +3,31 @@
 @using Dent.Shared
 
 <style>
+       .boton-rojo {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .boton-amarillo {
+        background-color: yellow;
+        color: black;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        cursor: pointer;
+    }
     /* Definición de la clase CSS para el botón */
     .boton-celeste {
         background-color: #5bc0de; /* Color de fondo celeste por defecto */
@@ -26,7 +51,6 @@
             border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
         }
 </style>
-
 
 
 <button class="boton-celeste" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
@@ -60,7 +84,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[0]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[0]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[0]" size="8" readonly />
-<button @onclick="() => EliminarFIla1(1)">X</button>
+<button class="boton-rojo" @onclick="() => EliminarFIla1(1)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[1]" readonly />
@@ -68,7 +92,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[1]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[1]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[1]" size="8" readonly />
-<button @onclick="() => EliminarFIla1(2)">X</button>
+<button class="boton-rojo" @onclick="() => EliminarFIla1(2)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[2]" readonly />
@@ -76,7 +100,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[2]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[2]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[2]" size="8" readonly />
-<button @onclick="() => EliminarFIla1(3)">X</button>
+<button class ="boton-rojo" @onclick="() => EliminarFIla1(3)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[3]" readonly />
@@ -84,7 +108,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[3]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[3]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[3]" size="8" readonly />
-<button @onclick="() => EliminarFIla1(4)">X</button>
+<button class="boton-rojo" @onclick="() => EliminarFIla1(4)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[4]" readonly />
@@ -92,7 +116,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[4]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[4]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[4]" size="8" readonly />
-<button @onclick="() => EliminarFIla1(5)">X</button>
+<button class="boton-rojo" @onclick="() => EliminarFIla1(5)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="TotalLabel" readonly />
@@ -112,15 +136,15 @@
 
 
 <div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
-
+    <!-- BOTONES POR SI SE NECESITA USAR PRECIOS DIFERENCIADOS POR OBRAS SOCIALES
     <button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
     <button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
     <button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
     <button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
     <button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
+    -->
 
-
-
+      
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
     <table class="table">
         <thead>
@@ -138,7 +162,7 @@
                     <td>@practica.Practica</td>
                     <td>@practica.Precio</td>
                     <td>
-                        <button @onclick="() => Agregar(practica.Id)">Agregar</button>
+                            <button class="boton-celeste" @onclick="() => Agregar(practica.Id)">Agregar</button>
                     </td>
                 </tr>
             }
@@ -163,7 +187,7 @@
                     <td>@practica.Practica</td>
                     <td>@practica.Precio</td>
                     <td>
-                        <button @onclick="() => Agregar(practica.Id)">Agregar</button>
+                            <button class="boton-celeste" @onclick="() => Agregar(practica.Id)">Agregar</button>
                     </td>
                 </tr>
             }
@@ -180,6 +204,7 @@
 </div>
 
 @code {
+
     // VARIABLES DE LA ULTIMA LINEA DE LA TABLA HARCODEADA//
     public string TotalLabel = "TOTAL:";
     private int currentDiv = 1;

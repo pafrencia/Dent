@@ -1,34 +1,8 @@
 ﻿@page "/Practicas"
 @using Dent.Models
 @inject Permisos Permiso
-
-
-<style>
-    /* Definición de la clase CSS para el botón */
-    .boton-celeste {
-        background-color: #5bc0de; /* Color de fondo celeste por defecto */
-        color: #000000; /* Color de texto blanco por defecto */
-        border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
-        border-radius: 5px; /* Bordes redondeados por defecto */
-        padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        font-weight: bold; /* Texto en negrita */
-    }
-
-        /* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
-        .boton-celeste:hover {
-            background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
-            border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
-        }
-
-        /* Cambio de color cuando el botón está presionado (efecto active) */
-        .boton-celeste:active {
-            background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
-            border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
-        }
-</style>
-
-<h3>Practicas</h3>
+@inject AgregarPracticas AgregarPracticas
+@inject EliminarPracticaMetod EliminarPracticaMethod
 
 <div class="form-group">
     <label for="inputText">Practica:</label>
@@ -41,49 +15,54 @@
 
 </div>
 
-<button @onclick="Agregar">Agregar </button>
+<button class="boton-celeste" @onclick="Agregar">Agregar </button>
 
 <label for="miString">Ultima Ingresada:</label>
 <input id="miString" @bind="miString" />
 <p> </p>
 
-
+@* 
 <button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
 <button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
 <button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
 <button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
 <button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
-
+ *@
 
 <!-- Divs -->
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
-    <h3>Practicas PARTICULAR</h3>
     <br />
-    <table class="table">
+    <table class="table" id="tablepracticas">
         <thead>
-            <tr>
+            <tr class="table-dark">
                 <th>ID</th>
-                <th>Practica</th>
-                <th>Precio</th>
+                <th>PRACTICA</th>
+                <th>PRECIO</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var practica in ListaDePracticas)
             {
-                <tr>
+                <tr class ="table-success">
                     <td>@practica.Id</td>
                     <td>@practica.Practica</td>
                     <td>@practica.Precio</td>
                     <td>
-                        <button @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-                        <button @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
+                        <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
+                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practica.Id)">X</button>
+                      @*   <button class="boton-amarillo"  @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
+
+                        <!--  <button class="boton-rojo" @onclick="@(() => model.Show<Braian>("SEGURO DESEA ELIMINAR LA PRACTICA?"))">X</button>
+                        <button @onclick="() => EliminarPractica(practica.Id)">X</button>-->
+                        <button class="boton-rojo" @onclick="() => EliminarPractica(practica.Id)">X</button> *@
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
+@* 
 
 <div style="display: @(currentDiv == 2 ? "block" : "none")">
     <h3>Practicas APROSS</h3>
@@ -104,8 +83,8 @@
                     <td>@practica.Practica</td>
                     <td>@practica.Precio</td>
                     <td>
-                        <button @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-                        <button @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
+                        <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
+                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
                     </td>
                 </tr>
             }
@@ -121,7 +100,78 @@
 <div style="display: @(currentDiv == 5 ? "block" : "none")">
     <p>Contenido del Div 5</p>
 </div>
+ *@
 
+ @* 
+
+<div style="display: @(currentDiv == 2 ? "block" : "none")">
+    <h3>Practicas APROSS</h3>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Practica</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var practica in ListaDePracticasApross)
+            {
+                <tr>
+                    <td>@practica.Id</td>
+                    <td>@practica.Practica</td>
+                    <td>@practica.Precio</td>
+                    <td>
+                        <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
+                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div style="display: @(currentDiv == 3 ? "block" : "none")">
+    <p>Contenido del Div 3</p>
+</div>
+<div style="display: @(currentDiv == 4 ? "block" : "none")">
+    <p>Contenido del Div 4</p>
+</div>
+<div style="display: @(currentDiv == 5 ? "block" : "none")">
+    <p>Contenido del Div 5</p>
+</div>
+ *@
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modaledit" >
+ EDITAR
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputText">Practica:</label>
+                    <input type="text" id="inputText" @bind="Practica" />
+                </div>
+                <div class="form-group">
+                    <label for="inputText">Precio:</label>
+                    <input type="text" id="inputText" @bind="Precio" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
     <div class="modal-content">
@@ -144,38 +194,13 @@
     </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>APELLIDO</th>
-            <th>DOMICILIO</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var datos in ListaDePacientes)
-        {
-            <tr>
-
-                <td>@datos.Id</td>
-                <td>@datos.Nombre</td>
-                <td>@datos.Apellido</td>
-                <td>@datos.Domicilio</td>
-                <td>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
 @code {
     private bool mostrarModalEdit = false;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
     private List<Paciente> ListaDePacientes = new List<Paciente>();
     private int currentDiv = 1;
-
+    private Eliminar Eliminar;
     private void ShowDiv(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
@@ -197,7 +222,8 @@
 
     [Inject]
     private AgregarPracticas agregarPracticas { get; set; }
-
+    [Inject]
+    private EliminarPracticaMetod Eliminarla { get; set; }
     private void EditarPracticaAbrir(int practicaId)
     {
         AbrirModalEdit();
@@ -278,79 +304,34 @@
         /////////////////////////////////////////////
 
     }
-    private void EliminarPractica(int practicaId)
+    public void EliminarPractica(int practicaId)
     {
-
-        if (currentDiv == 1)
+      //  Eliminarla.Eliminarla(practicaId);
+        var practica = DbContext.Practicas.Find(practicaId);
+        if (practica != null)
         {
-            var practica = DbContext.Practicas.Find(practicaId);
-            if (practica != null)
+            using (DbDentistaContext db = new DbDentistaContext())
             {
-                using (DbDentistaContext db = new DbDentistaContext())
-                {
-                    db.Practicas.Remove(practica);
-                    db.SaveChanges();
-                }
-                ActualizaTabla();
+                db.Practicas.Remove(practica);
+                db.SaveChanges();
             }
         }
-        else if (currentDiv == 2)
-        {
-            var practica = DbContext.PracticasApros.Find(practicaId);
-            if (practica != null)
-            {
-                using (DbDentistaContext db = new DbDentistaContext())
-                {
-                    db.PracticasApros.Remove(practica);
-                    db.SaveChanges();
-                }
-                ActualizaTabla();
-            }
 
-        }
+        ActualizaTabla();
+            
     }
     private void Agregar()
     {
+        AgregarPracticas.CargarPractica(Practica,Precio);
+        // Al final del método donde realizas cambios y antes de volver a cargar los datos
+        ActualizaTabla();
+        miString = Practica;
+        Practica = "";
+        Precio = 0;
 
-        if (Index.Logueado == 1)
-        {
-            if (currentDiv == 1)
-            {
-                var prueba = new Practica1();
-                prueba.Practica = Practica;
-                prueba.Precio = Precio;
-                using (DbDentistaContext db = new DbDentistaContext())
-                {
-                    db.Practicas.Add(prueba);
-                    db.SaveChanges();
-                }
-            }
-            else if (currentDiv == 2)
-            {
-                var prueba = new PracticasApro();
-                prueba.Practica = Practica;
-                prueba.Precio = Precio;
-                using (DbDentistaContext db = new DbDentistaContext())
-                {
-                    db.PracticasApros.Add(prueba);
-                    db.SaveChanges();
-                }
-            }
-            // Al final del método donde realizas cambios y antes de volver a cargar los datos
-            ActualizaTabla();
-            miString = Practica;
-            Practica = "";
-            Precio = 0;
-
-            //agregarPracticas.CargarPractica();
-            Console.WriteLine($"Texto ingresado: {Practica} agregada");
-        }
-        else
-        {
-            Console.WriteLine($"Texto ingresado: USTED NO TIENE ACCESO A REALIZAR ESTA OPERACION");
-        }
-
-        }
+        //agregarPracticas.CargarPractica();
+        Console.WriteLine($"Texto ingresado: {Practica} agregada");
+    }
   
     private void ActualizaTabla()
     {

@@ -1,0 +1,12 @@
+﻿<h3>Eliminar</h3>
+
+<div class="form-group">
+    <label for="inputText">Practica:</label>
+    <input type="text" id="inputText" @bind="Datos" />
+</div>
+
+@code {
+	[Parameter]
+	public string Datos { get; set; }
+
+}

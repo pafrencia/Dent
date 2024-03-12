@@ -5,17 +5,17 @@ namespace Dent.Models
     public class AgregarPracticas
     {
 
-        public void CargarPractica()
+        public void CargarPractica(string Practica, int Precio)
         {
             var prueba = new Practica1();
-            prueba.Practica = "nueva Practica";
-            prueba.Precio = 123;
+            prueba.Practica = Practica;
+            prueba.Precio = Precio;
             using (DbDentistaContext db = new DbDentistaContext())
             {
                 db.Practicas.Add(prueba);
                 db.SaveChanges();
             }
         }
-    }
 
+    }
 }

@@ -5,6 +5,22 @@
 @using Dent.Pages
 @inject Permisos Permiso
 <style>
+    .boton-rojo {
+        background-color: red;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .boton-rojo:hover {
+            background-color: #cf0500; /* Cambia el color de fondo a azul al pasar el cursor */
+            border-color: black; /* Cambia el color del borde a azul al pasar el cursor */
+    }
     /* Definición de la clase CSS para el botón */
     .boton-celeste {
         background-color: #5bc0de; /* Color de fondo celeste por defecto */
@@ -30,8 +46,9 @@
 </style>
 
 
-<button class="boton-celeste" @onclick="() => AgregarPacientesMenu(1)">AGREGAR PACIENTE</button>
+<button class="boton-celeste" @onclick="() => AgregarPacientesMenu(1)">@nombreDelBotonPacientes</button>
   <br />
+<div
 <div style="display: @(currentDivPacientes == 1 ? "block" : "none")">
 
 <div class="form-group">
@@ -48,7 +65,7 @@
 </div>
 <div class="form-group">
     <label for="inputText">Celular:</label>
-    <input type="text" id="inputText" @bind="celular" />
+    <input type="text" id="inputText" @bind="celu" />
 </div>
     <br />
 <div class="form-group">
@@ -83,6 +100,7 @@
         <option value="unimed">UNIMED</option>
     </select>
 </div>
+
     <br />
 <!-- Divs -->
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
@@ -107,29 +125,35 @@
 
 
 <button class="boton-celeste" @onclick="Agregar">Agregar </button>
-
 </div>
+</div>
+
     <br />
     <h3>Pacientes</h3>
     
     <table class="table">
         <thead>
-            <tr>
-                                <th>ID</th>
+        <tr class="table-dark">
                 <th>NOMBRE</th>
                 <th>APELLIDO</th>
                 <th>DOMICILIO</th>
-            </tr>
+                <th>CELULAR</th>
+                <th>FECHA DE NACIMIENTO</th>
+                <th>FECHA DE ALTA</th>
+                <th>OBRA SOCIAL</th>
+                </tr>
         </thead>
         <tbody>
             @foreach (var datos in ListaDePacientes)
             {
-                <tr>
-                    
-                    <td>@datos.Id</td>
+            <tr class="table-success">
                     <td>@datos.Nombre</td>
                     <td>@datos.Apellido</td>
                     <td>@datos.Domicilio</td>
+                    <td>@datos.Celular</td>
+                    <td>@datos.FechaDeNacimiento</td>
+                    <td>@datos.FechaDeAlta</td>
+                    <td>@datos.ObraSocial</td>
                     <td>
                     </td>
                 </tr>
@@ -145,6 +169,8 @@
     private int currentDiv = 0;
     public int edad = 0;
     public int currentDivPacientes = 0;
+    public string pacienteAgregadoCorrectamente = "";
+
 
 
     private void ShowDiv(int divNumber)
@@ -159,27 +185,32 @@
     {
         ListaDePacientes = DbContext.Pacientes.ToList();
     }
-
+    public string nombreDelBotonPacientes = "AGREGAR PACIENTE";
     public string nombrePaciente = "-";
     public string apellido = "-";
     public string domicilio = "-";
-    public int celular = 0;
+    public string celu = "0";
     private DateTime fechaNacimiento = DateTime.Today;
     private DateTime fechaAlta = DateTime.Today;
     private string obraSocialSeleccionada;
+    public string obraSocialGuardar = "ninguna";
     public string titular = "TITULAR";
     public string plan = "-";
     public string afiliado = "0";
     private string textoMultilinea = "observacioes del paciente, aca como ejemplo escribire cualquiier cosa para ver que la base de datos tome bien todo el contenido de la caja de texto se ve que puede tenre bastante, recordemos que es u campo de observacion, tampoco la gilada de escribir un libro, si no para eso directamente vas al rawson y sacas un turno con anticipacion para no tener demoras cuando veas que estas escribiendo m,ucho en este campo, directamente vas al turno que ya sacaste";
+
     private void AgregarPacientesMenu(int log)
     {        if (currentDivPacientes == 0)
         {
             currentDivPacientes = log;
+            nombreDelBotonPacientes = "CERRAR PESTAÑA";
         }
         else
         {
             currentDivPacientes = 0;
+            nombreDelBotonPacientes = "AGREGAR PACIENTES";
         }
+        InicializarPacientes();
 
     }
     private void CalcularEdad()
@@ -201,6 +232,7 @@
         // Lógica del método personalizado
         if (obraSocialSeleccionada == "particular")
         {
+            obraSocialGuardar = "particular";
             ShowDiv(0);
             titular = "TITULAR";
             plan = "-";
@@ -208,12 +240,12 @@
         }
         else if (obraSocialSeleccionada == "0")
         {
-
+            obraSocialGuardar = obraSocialSeleccionada;
             ShowDiv(0);
         }
         else
         {
-
+            obraSocialGuardar = obraSocialSeleccionada;
             ShowDiv(1);
         }        
     }
@@ -222,10 +254,11 @@
         nombrePaciente = "-";
         apellido = "-";
         domicilio = "-";
-        celular = 0;
+        celu = "0";
         fechaNacimiento = DateTime.Today;
         fechaAlta = DateTime.Today;
         obraSocialSeleccionada = "0";
+        obraSocialGuardar = "ninguna";
         titular = "TITULAR";
         plan = "-";
         afiliado = "0";
@@ -234,15 +267,14 @@
     public void Agregar()
     {
         var prueba = new Paciente();
-        //      if (prueba.Nombre != null && prueba.Apellido != null && prueba.Domicilio != null && prueba.Celular != null && prueba.FechaDeNacimiento != null && prueba.FechaDeAlta != null && prueba.ObraSocial != null && prueba.Titular != null && prueba.PlanDeObraSocial != null && prueba.Observaciones != null)
-        //      {
+
         prueba.Nombre = nombrePaciente;
         prueba.Apellido = apellido;
         prueba.Domicilio = domicilio;
-        prueba.Celular = celular;
+        prueba.Celular = celu;
         prueba.FechaDeNacimiento = fechaNacimiento;
         prueba.FechaDeAlta = DateTime.Today;
-        prueba.ObraSocial = "obraSocialSeleccionada";
+        prueba.ObraSocial = obraSocialGuardar;
         prueba.Titular = titular;
         prueba.PlanDeObraSocial = plan;
         prueba.NumeroAfiliado = afiliado;
@@ -254,13 +286,9 @@
             db.Pacientes.Add(prueba);
             db.SaveChanges();
         }
-        InicializarPacientes();
-        //       }
-        //      else
-        //      {
-
-        //       }
+        pacienteAgregadoCorrectamente = "paciente agregado correctamente";
         ActualizaTablaPacientes();
+        InicializarPacientes();
     }
        private void ActualizaTablaPacientes()
     {    
