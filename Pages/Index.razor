@@ -10,21 +10,23 @@
 
 <h3>Iniciar Sesión</h3>
 
-<EditForm Model="@usuario" OnValidSubmit="IniciarSesion">
+<EditForm Model="@usuario"  OnValidSubmit="IniciarSesion" >
     <DataAnnotationsValidator />
-    <div>
-        <label for="nombreUsuario">Nombre de Usuario:</label>
-        <InputText id="nombreUsuario" @bind-Value="nombreUsuario" />
+    <div class="form-group" style="width: 50%;">
+        <div>
+        <label  for="nombreUsuario">Nombre de Usuario:</label>
+        <InputText style="width: 100%;" id="nombreUsuario" @bind-Value="nombreUsuario" />
     </div>
     <div>
         <label for="contraseña">Contraseña:</label>
-        <InputText id="contraseña" type="password" @bind-Value="contraseña" />
+        <InputText style="width: 100%;" id="contraseña" type="password" @bind-Value="contraseña" />
     </div>
-    <button @onclick="IniciarSesion">Iniciar Sesion</button>
+    </div>
+    <button class="btn btn-primary"  @onclick="IniciarSesion">Iniciar Sesion</button>
     <label>@info</label>
 </EditForm>
 
-<button @onclick="AbrirModal">Crear Usuario</button>
+<button class="btn btn-primary" @onclick="AbrirModal">Crear Usuario</button>
 
 
 <div class="modal" style="display: @(mostrarModal ? "block" : "none")">
@@ -42,7 +44,7 @@
             <input type="password" id="contraseña" @bind="contraseña" />
         </div>
 
-        <button @onclick="CrearUsuario">Crear Usuario</button>
+        <button class="btn btn-primary" @onclick="CrearUsuario">Crear Usuario</button>
     </div>
 </div>
 

@@ -4,100 +4,59 @@
 @using Dent.Shared
 @using Dent.Pages
 @inject Permisos Permiso
-<style>
-    .boton-rojo {
-        background-color: red;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
-    }
 
-    .boton-rojo:hover {
-            background-color: #cf0500; /* Cambia el color de fondo a azul al pasar el cursor */
-            border-color: black; /* Cambia el color del borde a azul al pasar el cursor */
-    }
-    /* Definición de la clase CSS para el botón */
-    .boton-celeste {
-        background-color: #5bc0de; /* Color de fondo celeste por defecto */
-        color: #000000; /* Color de texto blanco por defecto */
-        border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
-        border-radius: 5px; /* Bordes redondeados por defecto */
-        padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        font-weight: bold; /* Texto en negrita */
-    }
-
-        /* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
-        .boton-celeste:hover {
-            background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
-            border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
-        }
-
-        /* Cambio de color cuando el botón está presionado (efecto active) */
-        .boton-celeste:active {
-            background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
-            border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
-        }
-</style>
-
-
-<button class="boton-celeste" @onclick="() => AgregarPacientesMenu(1)">@nombreDelBotonPacientes</button>
-  <br />
+<button class="btn btn-success" @onclick="() => AgregarPacientesMenu(1)">@nombreDelBotonPacientes</button>
+<p> </p>
 <div
 <div style="display: @(currentDivPacientes == 1 ? "block" : "none")">
 
 <div class="form-group">
-    <label for="inputText">Nombre:</label>
-    <input type="text" id="inputText" @bind="nombrePaciente" />
+    <label style="width: 100%;" for="inputText">Nombre:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="nombrePaciente" />
 </div>
 <div class="form-group">
-    <label for="inputText">Apellido:</label>
-    <input type="text" id="inputText" @bind="apellido" />
+    <label style="width: 100%;" for="inputText">Apellido:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="apellido" />
 </div>
 <div class="form-group">
-    <label for="inputText">Domicilio:</label>
-    <input type="text" id="inputText" @bind="domicilio" />
+    <label style="width: 100%;" for="inputText">Domicilio:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="domicilio" />
 </div>
 <div class="form-group">
-    <label for="inputText">Celular:</label>
-    <input type="text" id="inputText" @bind="celu" />
+    <label style="width: 100%;" for="inputText">Celular:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="celu" />
 </div>
     <br />
 <div class="form-group">
-    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-    <input type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" />
+    <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input style="width: 100%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" />
 </div>
 <div
 
-<label for="miString">EDAD:</label>
-<input id="miString" @bind="edad" />
-<button class="boton-celeste" @onclick="CalcularEdad">CALCULAR </button>
+<labe style="width: 100%;"l for="miString">EDAD:</labe>
+<input style="width: 100%;" id="miString" @bind="edad" />
+<button class="btn btn-info" @onclick="CalcularEdad">CALCULAR </button>
 </div>
     <br />
 <div class="form-group">
-    <label for="ObrasSocialesList">Selecciona una Obra Social:</label>
-    <select id="ObrasSocialesList" @onchange="MetodoPersonalizado" class="form-control">
+    <label style="width: 100%;" for="ObrasSocialesList">Selecciona una Obra Social:</label>
+    <select style="width: 100%;" id="ObrasSocialesList" @onchange="MetodoPersonalizado" class="form-control">
         <option value="0">Selecciona...</option>
-        <option value="particular">PARTICULAR</option>
-        <option value="avalian">AVALIAN</option>
-        <option value="americaServicios">AMERICA SERVICIOS</option>
-        <option value="cajaNotarial">CAJA NOTARIAL</option>
-        <option value="federada">FEDERADA</option
-        <option value="galeno">GALENO</option>
-        <option value="iospa">IOSPA</option>
-        <option value="jerarquicos">JERARQUICOS</option>
-        <option value="medife">MEDIFE</option>
-        <option value="omint">OMINT</option>
-        <option value="ossej">OSSEJ</option>
-        <option value="prevencion">PREVENCION</option>
-        <option value="sancor">SANCOR</option>
-        <option value="swissMedical">SWISS MEDICAL</option>
-        <option value="unimed">UNIMED</option>
+        <option value="PARTICULAR">PARTICULAR</option>
+        <option value="AVALIAN">AVALIAN</option>
+        <option value="AMERICA_SERVICIOS">AMERICA SERVICIOS</option>
+        <option value="CAJA_NOTARIAL">CAJA NOTARIAL</option>
+        <option value="FEDERADA">FEDERADA</option
+        <option value="GALENO">GALENO</option>
+        <option value="IOSPA">IOSPA</option>
+        <option value="JERARQUICOS">JERARQUICOS</option>
+        <option value="MEDIFE">MEDIFE</option>
+        <option value="OMINT">OMINT</option>
+        <option value="OSSEJ">OSSEJ</option>
+        <option value="PREVENCION">PREVENCION</option>
+        <option value="SANCOR">SANCOR</option>
+        <option value="SWISS_MEDICAL">SWISS MEDICAL</option>
+        <option value="UNIMED">UNIMED</option>
     </select>
 </div>
 
@@ -106,25 +65,25 @@
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
 <!-- DATOS PARA OBJETO DE BASE DE DATOS AFILIADO -->
 <div class="form-group">
-    <label for="inputText">Nº Afiliado:</label>
-    <input type="text" id="inputText" @bind="afiliado" />
+    <label style="width: 100%;" for="inputText">Nº Afiliado:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="afiliado" />
 </div>
 <div class="form-group">
-    <label for="inputText">Plan:</label>
-    <input type="text" id="inputText" @bind="plan" />
+    <label style="width: 100%;" for="inputText">Plan:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="plan" />
 </div>
 <div class="form-group">
-    <label for="inputText">PARENTESCO:</label>
-    <input type="text" id="inputText" @bind="titular" />
+    <label style="width: 100%;" for="inputText">PARENTESCO:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="titular" />
 </div>
 </div>
     <br />
-<div style="width: 50%;">
- <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
+<div  style="width: 100%;">
+ <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
 </div>
 
+<button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
 
-<button class="boton-celeste" @onclick="Agregar">Agregar </button>
 </div>
 </div>
 
@@ -135,7 +94,6 @@
         <thead>
         <tr class="table-dark">
                 <th>NOMBRE</th>
-                <th>APELLIDO</th>
                 <th>DOMICILIO</th>
                 <th>CELULAR</th>
                 <th>FECHA DE NACIMIENTO</th>
@@ -153,9 +111,10 @@
                     <td>@datos.Celular</td>
                     <td>@datos.FechaDeNacimiento</td>
                     <td>@datos.FechaDeAlta</td>
-                    <td>@datos.ObraSocial</td>
-                    <td>
-                    </td>
+                <td>@datos.ObraSocial</td>
+                <td>
+                    <button class="btn btn-danger" @onclick="() => EliminarPractica(datos.Id)">X</button>
+                </td>
                 </tr>
             }
         </tbody>
@@ -163,6 +122,7 @@
     
 
 @code {
+    private bool CamposValidos => !string.IsNullOrEmpty(apellido) && !string.IsNullOrEmpty(nombrePaciente);
     private bool mostrarModalEdit = false;
     private List<Paciente> ListaDePacientes = new List<Paciente>();
 
@@ -198,6 +158,29 @@
     public string plan = "-";
     public string afiliado = "0";
     private string textoMultilinea = "observacioes del paciente, aca como ejemplo escribire cualquiier cosa para ver que la base de datos tome bien todo el contenido de la caja de texto se ve que puede tenre bastante, recordemos que es u campo de observacion, tampoco la gilada de escribir un libro, si no para eso directamente vas al rawson y sacas un turno con anticipacion para no tener demoras cuando veas que estas escribiendo m,ucho en este campo, directamente vas al turno que ya sacaste";
+
+    public void EliminarPractica(int pacienteId)
+    {
+        //  Eliminarla.Eliminarla(practicaId);
+        var practica = DbContext.Pacientes.Find(pacienteId);
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Pacientes.Remove(practica);
+            db.SaveChanges();
+        }
+        ActualizaTabla();
+    }
+
+
+
+
+    private void ActualizaTabla()
+    {
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
 
     private void AgregarPacientesMenu(int log)
     {        if (currentDivPacientes == 0)
@@ -268,14 +251,14 @@
     {
         var prueba = new Paciente();
 
-        prueba.Nombre = nombrePaciente;
-        prueba.Apellido = apellido;
-        prueba.Domicilio = domicilio;
+        prueba.Nombre = nombrePaciente.ToUpper();
+        prueba.Apellido = apellido.ToUpper();
+        prueba.Domicilio = domicilio.ToUpper();
         prueba.Celular = celu;
         prueba.FechaDeNacimiento = fechaNacimiento;
         prueba.FechaDeAlta = DateTime.Today;
         prueba.ObraSocial = obraSocialGuardar;
-        prueba.Titular = titular;
+        prueba.Titular = titular.ToUpper();
         prueba.PlanDeObraSocial = plan;
         prueba.NumeroAfiliado = afiliado;
         prueba.Observaciones = textoMultilinea;
@@ -289,6 +272,7 @@
         pacienteAgregadoCorrectamente = "paciente agregado correctamente";
         ActualizaTablaPacientes();
         InicializarPacientes();
+        AgregarPacientesMenu(1);
     }
        private void ActualizaTablaPacientes()
     {    

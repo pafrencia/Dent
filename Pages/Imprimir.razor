@@ -2,58 +2,7 @@
 @using Dent.Models
 @using Dent.Shared
 
-<style>
-       .boton-rojo {
-        background-color: red;
-        color: white;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 5px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-    .boton-amarillo {
-        background-color: yellow;
-        color: black;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 5px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        cursor: pointer;
-    }
-    /* Definición de la clase CSS para el botón */
-    .boton-celeste {
-        background-color: #5bc0de; /* Color de fondo celeste por defecto */
-        color: #000000; /* Color de texto blanco por defecto */
-        border: 1px solid #5bc0de; /* Borde de 1px con color celeste por defecto */
-        border-radius: 5px; /* Bordes redondeados por defecto */
-        padding: 8px 16px; /* Espaciado interno para el contenido del botón por defecto */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        font-weight: bold; /* Texto en negrita */
-    }
-
-        /* Cambio de color al pasar el cursor sobre el botón (efecto hover) */
-        .boton-celeste:hover {
-            background-color: #0073e6; /* Cambia el color de fondo a azul al pasar el cursor */
-            border-color: #0073e6; /* Cambia el color del borde a azul al pasar el cursor */
-        }
-
-        /* Cambio de color cuando el botón está presionado (efecto active) */
-        .boton-celeste:active {
-            background-color: #000000; /* Cambia el color de fondo a negro cuando está presionado */
-            border-color: #000000; /* Cambia el color del borde a negro cuando está presionado */
-        }
-</style>
-
-
-<button class="boton-celeste" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
+<button class="btn btn-primary" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
 
 <br />
 <br />
@@ -70,7 +19,7 @@
 
     </div>
 </div>
-
+<div  style="width: 100%;">
 <input type="text" id="inputText" @bind="Titulos[0]" readonly />
 <input type="text" id="inputText" @bind="Titulos[1]" size="8" readonly />
 <input type="text" id="inputText" @bind="Titulos[2]" size="8" readonly />
@@ -84,7 +33,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[0]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[0]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[0]" size="8" readonly />
-<button class="boton-rojo" @onclick="() => EliminarFIla1(1)">X</button>
+<button class="btn btn-danger" @onclick="() => EliminarFIla1(1)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[1]" readonly />
@@ -92,7 +41,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[1]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[1]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[1]" size="8" readonly />
-<button class="boton-rojo" @onclick="() => EliminarFIla1(2)">X</button>
+<button class="btn btn-danger" @onclick="() => EliminarFIla1(2)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[2]" readonly />
@@ -100,7 +49,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[2]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[2]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[2]" size="8" readonly />
-<button class ="boton-rojo" @onclick="() => EliminarFIla1(3)">X</button>
+<button class="btn btn-danger" @onclick="() => EliminarFIla1(3)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[3]" readonly />
@@ -108,7 +57,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[3]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[3]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[3]" size="8" readonly />
-<button class="boton-rojo" @onclick="() => EliminarFIla1(4)">X</button>
+<button class="btn btn-danger" @onclick="() => EliminarFIla1(4)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="PracticasArreglo[4]" readonly />
@@ -116,7 +65,7 @@
 <input type="text" id="inputText" @bind="EfectivoArreglo[4]" size="8" readonly />
 <input type="text" id="inputText" @bind="TresCuotasArreglo[4]" size="8" readonly />
 <input type="text" id="inputText" @bind="SeisCuotasArreglo[4]" size="8" readonly />
-<button class="boton-rojo" @onclick="() => EliminarFIla1(5)">X</button>
+<button class="btn btn-danger" @onclick="() => EliminarFIla1(5)">X</button>
 <br />
 
 <input type="text" id="inputText" @bind="TotalLabel" readonly />
@@ -129,7 +78,7 @@
 <div style="width: 50%;">
  <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
 </div>
-
+</div>
 
 
 
@@ -148,21 +97,22 @@
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
     <table class="table">
         <thead>
-            <tr>
+                <tr class="table-dark">
                 <th>ID</th>
                 <th>Practica</th>
                 <th>Precio</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var practica in ListaDePracticas)
             {
-                <tr>
+                    <tr class="table-success">
                     <td>@practica.Id</td>
                     <td>@practica.Practica</td>
                     <td>@practica.Precio</td>
                     <td>
-                            <button class="boton-celeste" @onclick="() => Agregar(practica.Id)">Agregar</button>
+                            <button class="btn btn-success" @onclick="() => Agregar(practica.Id)">Agregar</button>
                     </td>
                 </tr>
             }

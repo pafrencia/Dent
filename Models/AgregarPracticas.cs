@@ -8,7 +8,7 @@ namespace Dent.Models
         public void CargarPractica(string Practica, int Precio)
         {
             var prueba = new Practica1();
-            prueba.Practica = Practica;
+            prueba.Practica = Practica.ToUpper();
             prueba.Precio = Precio;
             using (DbDentistaContext db = new DbDentistaContext())
             {

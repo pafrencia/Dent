@@ -4,21 +4,17 @@
 @inject AgregarPracticas AgregarPracticas
 @inject EliminarPracticaMetod EliminarPracticaMethod
 
-<div class="form-group">
-    <label for="inputText">Practica:</label>
-    <input type="text" id="inputText" @bind="Practica" />
+<div class="form-group" style="width: 100%;">
+    <label for="inputText" style="width: 100%;">Practica:</label>
+    <input type="text" id="inputText" style="width: 100%;" @bind="Practica" />
+    <p> </p>
+    <label for="inputText" style="width: 100%;">Precio:</label>
+    <input type="text" id="inputText" style="width: 100%;" @bind="Precio" />
 </div>
-<div class="form-group">
-    <label for="inputText">Precio:</label>
-    <input type="text" id="inputText" @bind="Precio" />
-
-
-</div>
-
-<button class="boton-celeste" @onclick="Agregar">Agregar </button>
-
-<label for="miString">Ultima Ingresada:</label>
-<input id="miString" @bind="miString" />
+<button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
+<p> </p>
+<label for="miString" style="width: 100%;">Ultima Ingresada:</label>
+<input id="miString" style="width: 100%;" @bind="miString" />
 <p> </p>
 
 @* 
@@ -175,11 +171,11 @@
 
 <div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
     <div class="modal-content">
-        <span class="cerrar" @onclick="CerrarModalEdit">&times;</span>
+     <span class="btn btn-danger" @onclick="CerrarModalEdit">CERRAR</span>
         <h3>EDITAR</h3>
         <div class="form-group">
             <label for="inputText">Id:</label>
-            <input type="number" id="inputText" @bind="IdEdit" />
+            <input type="number" id="inputText" @bind="IdEdit" readonly />
         </div>
         <div class="form-group">
             <label for="inputText">Practica:</label>
@@ -188,19 +184,18 @@
         <div class="form-group">
             <label for="inputText">Precio:</label>
             <input type="text" id="inputText" @bind="Precio" />
-            <button @onclick="() => EditarPractica(IdEdit)">Editar</button>
-
+            <button style="width: 100%;" class="btn btn-warning" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEdit)">Editar</button>
         </div>
     </div>
 </div>
 
 @code {
+    private bool CamposValidos => Precio != 0 && !string.IsNullOrEmpty(Practica);
     private bool mostrarModalEdit = false;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
     private List<Paciente> ListaDePacientes = new List<Paciente>();
     private int currentDiv = 1;
-    private Eliminar Eliminar;
     private void ShowDiv(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente

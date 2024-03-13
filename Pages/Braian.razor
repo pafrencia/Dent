@@ -5,13 +5,25 @@
 @inject EliminarPracticaMetod EliminarPracticaMethod
 
 <div class="form-group">
-    <label for="inputText">Paciente:</label>
-    <input type="text" id="inputText" @bind="PacienteAtendido" />
+    <label style="width: 100%;" >PACIENTE:</label>
+    <select style="width: 100%;" @bind="IdPacienteAtendido">
+        <option value="">Seleccionar</option>
+        @foreach (var paciente in listaDePacientes)
+        {
+            <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+        }
+    </select>
     <p> </p>
-    <label for="inputText">Practica:</label>
-    <input type="text" id="inputText" @bind="Practica" />
-    <p> </p>
-    <button class="btn btn-success" @onclick="Agregar">Agregar </button>
+    <label style="width: 100%;">PRACTICA:</label>
+    <select style="width: 100%;" @bind="PracticaSeleccionada">
+        <option value="">Seleccionar</option>
+        @foreach (var practicaseleccion in ListaDePracticas)
+        {
+            <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
+        }
+    </select>
+
+    <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
     </div>
 
 <!-- Divs -->
@@ -51,29 +63,52 @@
 
 <div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
     <div class="modal-content">
-        <span class="cerrar" @onclick="CerrarModalEdit">&times;</span>
+        <span class="btn btn-danger" @onclick="CerrarModalEdit">CERRAR</span>
         <h3>EDITAR</h3>
         <div class="form-group">
-            <label for="inputText">PACIENTE:</label>
-            <input type="text" id="inputText" @bind="PacienteAtendido" />
+            <label style="width: 100%;">PACIENTE:</label>
+            <select style="width: 100%;" @bind="IdPacienteAtendido">
+                <option value="">Seleccionar</option>
+                @foreach (var paciente in listaDePacientes)
+                {
+                    <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                }
+            </select>
             <p> </p>
-            <label for="inputText">Practica:</label>
-            <input type="text" id="inputText" @bind="Practica" />
-        </div>
-        <div class="form-group">
+            <label style="width: 100%;">PRACTICA:</label>
+            <select style="width: 100%;" @bind="PracticaSeleccionada">
+                <option value="">Seleccionar</option>
+                @foreach (var practicaseleccion in ListaDePracticas)
+                {
+                    <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
+                }
+            </select>
+            <button style="width: 100%;" class="btn btn-warning" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEditar)">EDITAR</button>
 
-            <button class="btn btn-warning"  @onclick="() => EditarPractica(IdEdit)">Editar</button>
-
         </div>
+
+
+
     </div>
 </div>
 
+
+
 @code {
+
+    private bool CamposValidos => IdPacienteAtendido != 0 && !string.IsNullOrEmpty(PracticaSeleccionada);
+
+
+
     private bool mostrarModalEdit = false;
     private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
-
+    private List<Paciente> listaDePacientes = new List<Paciente>();
+    private List<Practica1> ListaDePracticas = new List<Practica1>();
     private int currentDiv = 1;
-    private Eliminar Eliminar;
+    private int IdPacienteAtendido;
+    private int IdPacienteEditar;
+    private string ObraSocialPacienteAtendido = "no cargada";
+    private string PracticaSeleccionada;
     private void ShowDiv(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
@@ -85,12 +120,14 @@
     protected override void OnInitialized()
     {
         ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        listaDePacientes = DbContext.Pacientes.ToList();
+        ListaDePracticas = DbContext.Practicas.ToList();
 
     }
     public string Practica = "";
     public string PacienteAtendido = "";
     public int Precio = 0;
-    public int IdEdit = 0;
+    public int IdEditar = 0;
     public string miString = "";
 
     [Inject]
@@ -101,29 +138,46 @@
     {
         AbrirModalEdit();
 
+
         if (currentDiv == 1)
         {
             using (DbDentistaContext db = new DbDentistaContext())
             {
                 var practica = DbContext.PracticasRealizadas.Find(practicaId);
-
-                IdEdit = practica.Id;
-                Practica = practica.Practica;
-                PacienteAtendido = practica.Paciente;
+                PracticaSeleccionada = practica.Practica;
+                PacienteAtendido = practica.Practica;
+                IdPacienteEditar = practica.IdPaciente;
+            }
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var paciente = DbContext.Pacientes.Find(IdPacienteEditar);
+                IdPacienteAtendido = paciente.Id;
             }
         }
     }
+
+
+    private List<Paciente> listaDeItems;
+    private Paciente selectedItem;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        listaDeItems = DbContext.Pacientes.ToList();
+
+    }
+
     public void EditarPractica(int practicaId)
     {
-            using (DbDentistaContext db = new DbDentistaContext())
-            {
-                var practica = DbContext.PracticasRealizadas.Find(practicaId);
-                practica.Paciente = PacienteAtendido;
-                practica.Practica = Practica;
-                db.SaveChanges();
-                ActualizaTabla();
-            }
-            CerrarModalEdit();
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var practica = DbContext.PracticasRealizadas.Find(practicaId);
+            practica.Paciente = PacienteAtendido;
+            practica.Practica = Practica;
+            db.SaveChanges();
+            ActualizaTabla();
+        }
+        CerrarModalEdit();
 
     }
     public void EliminarPractica(int practicaId)
@@ -143,13 +197,25 @@
     }
     private void Agregar()
     {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
+            PacienteAtendido = paciente.Nombre + paciente.Apellido;
+            ObraSocialPacienteAtendido = paciente.ObraSocial;
+            IdPacienteEditar = paciente.Id;
+        }
+
         var prueba = new PracticasRealizada();
+
         prueba.Paciente = PacienteAtendido;
-        prueba.Practica = Practica;
+        prueba.Practica = PracticaSeleccionada;
         prueba.ObraSocial = "pendiente";
         prueba.Precio = Precio;
+        prueba.ObraSocial = ObraSocialPacienteAtendido;
         prueba.Odontologo = "BRAIAN";
         prueba.Fecha = DateTime.Now;
+        prueba.IdPaciente = IdPacienteEditar;
+
 
         using (DbDentistaContext db = new DbDentistaContext())
         {
