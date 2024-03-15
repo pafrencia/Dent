@@ -15,9 +15,9 @@ public partial class Paciente
 
     public string? Celular { get; set; }
 
-    public DateTime? FechaDeNacimiento { get; set; }
+    public DateTime FechaDeNacimiento { get; set; }
 
-    public DateTime? FechaDeAlta { get; set; }
+    public DateTime FechaDeAlta { get; set; }
 
     public string? ObraSocial { get; set; }
 

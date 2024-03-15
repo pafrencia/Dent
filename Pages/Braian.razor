@@ -52,7 +52,7 @@
                     <td>@practicaRealizada.Precio</td>
                     <td>@practicaRealizada.Odontologo</td>
                     <td>
-                    <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practicaRealizada.Id)">Editar</button>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDITAR</button>
                     <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
                     </td>
                 </tr>
@@ -84,11 +84,33 @@
                 }
             </select>
             <button style="width: 100%;" class="btn btn-warning" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEditar)">EDITAR</button>
-
         </div>
+     </div>
+</div>
 
 
-
+<div class="modal fade" id="modaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputText">Practica:</label>
+                    <input style="width: 100%;" type="text" id="inputText" @bind="Practica" />
+                </div>
+                <div class="form-group">
+                    <label for="inputText">Precio:</label>
+                    <input style="width: 100%;" type="text" id="inputText" @bind="Precio" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEdit)">Editar</button>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -99,7 +121,7 @@
     private bool CamposValidos => IdPacienteAtendido != 0 && !string.IsNullOrEmpty(PracticaSeleccionada);
 
 
-
+    private int IdEdit = 0;
     private bool mostrarModalEdit = false;
     private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
     private List<Paciente> listaDePacientes = new List<Paciente>();

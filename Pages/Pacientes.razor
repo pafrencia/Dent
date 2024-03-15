@@ -4,12 +4,51 @@
 @using Dent.Shared
 @using Dent.Pages
 @inject Permisos Permiso
-
-<button class="btn btn-success" @onclick="() => AgregarPacientesMenu(1)">@nombreDelBotonPacientes</button>
-<p> </p>
-<div
-<div style="display: @(currentDivPacientes == 1 ? "block" : "none")">
-
+    <br />
+    <h3>ADMINISTRAR PACIENTES</h3>
+    
+    <table class="table">
+        <thead>
+        <tr class="table-dark">
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>OBRA SOCIAL</th>
+            <th><button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalagregar">AGREGAR</button></th>
+        </tr>
+        </thead>
+        <tbody>
+                    <tr class="table-success">                       
+                    <td>  <input @oninput="ActualizarFiltro"  placeholder="Buscar..."/></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            @foreach (var datos in ListaDePacientes)
+            {
+            <tr class="table-success" @onclick="() => SeleccionarPaciente(datos.Id)">
+                    <td>@datos.Nombre</td>
+                    <td>@datos.Apellido</td>
+                    <td>@datos.ObraSocial</td>
+                    <td>
+                       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalcelular">&#9742</button>
+                       <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalinfo">INFO</button>
+                       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDIT</button>
+                       <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modaleliminar">X</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<!-- Modal AGREGAR -->
+<div class="modal fade" id="modalagregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
 <div class="form-group">
     <label style="width: 100%;" for="inputText">Nombre:</label>
     <input style="width: 100%;" type="text" id="inputText" @bind="nombrePaciente" />
@@ -33,7 +72,7 @@
 </div>
 <div
 
-<labe style="width: 100%;"l for="miString">EDAD:</labe>
+<label style="width: 100%;" for="miString">EDAD:</label>
 <input style="width: 100%;" id="miString" @bind="edad" />
 <button class="btn btn-info" @onclick="CalcularEdad">CALCULAR </button>
 </div>
@@ -57,9 +96,7 @@
         <option value="SANCOR">SANCOR</option>
         <option value="SWISS_MEDICAL">SWISS MEDICAL</option>
         <option value="UNIMED">UNIMED</option>
-    </select>
-</div>
-
+    </select>    
     <br />
 <!-- Divs -->
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
@@ -81,63 +118,245 @@
 <div  style="width: 100%;">
  <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
 </div>
-
-<button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
-
 </div>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-success" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+            </div>
+        </div>
+    </div>
 </div>
-
+<!-- FIN Modal AGREGAR -->
+<!-- Modal EDITAR -->
+<div class="modal fade" id="modaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+           <div class="modal-body">
+                
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Nombre:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="nombrePaciente" />
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Apellido:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="apellido" />
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Domicilio:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="domicilio" />
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Celular:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="celu" />
+</div>
     <br />
-    <h3>Pacientes</h3>
-    
-    <table class="table">
-        <thead>
-        <tr class="table-dark">
-                <th>NOMBRE</th>
-                <th>DOMICILIO</th>
-                <th>CELULAR</th>
-                <th>FECHA DE NACIMIENTO</th>
-                <th>FECHA DE ALTA</th>
-                <th>OBRA SOCIAL</th>
-                </tr>
-        </thead>
-        <tbody>
-            @foreach (var datos in ListaDePacientes)
-            {
-            <tr class="table-success">
-                    <td>@datos.Nombre</td>
-                    <td>@datos.Apellido</td>
-                    <td>@datos.Domicilio</td>
-                    <td>@datos.Celular</td>
-                    <td>@datos.FechaDeNacimiento</td>
-                    <td>@datos.FechaDeAlta</td>
-                <td>@datos.ObraSocial</td>
-                <td>
-                    <button class="btn btn-danger" @onclick="() => EliminarPractica(datos.Id)">X</button>
-                </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    
+<div class="form-group">
+    <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input style="width: 100%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" />
+</div>
+<div
+        <p> </p>
+<label style="width: 100%;" for="miString">EDAD:</label>
+<input style="width: 100%;" id="miString" @bind="edad" />
+    <p> </p>
+<button class="btn btn-info" @onclick="CalcularEdad">CALCULAR </button>
+</div>
+    <p> </p>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">OBRA SOCIAL ACTUAL:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="obraSocialGuardar" readonly/>
+    <p> </p>
+    <label style="width: 100%;" for="ObrasSocialesList">Selecciona una Obra Social:</label>
+    <select style="width: 100%;" id="ObrasSocialesList" @onchange="MetodoPersonalizado" class="form-control" >
+        <option value="0">Selecciona...</option>
+        <option value="PARTICULAR">PARTICULAR</option>
+        <option value="AVALIAN">AVALIAN</option>
+        <option value="AMERICA_SERVICIOS">AMERICA SERVICIOS</option>
+        <option value="CAJA_NOTARIAL">CAJA NOTARIAL</option>
+        <option value="FEDERADA">FEDERADA</option
+        <option value="GALENO">GALENO</option>
+        <option value="IOSPA">IOSPA</option>
+        <option value="JERARQUICOS">JERARQUICOS</option>
+        <option value="MEDIFE">MEDIFE</option>
+        <option value="OMINT">OMINT</option>
+        <option value="OSSEJ">OSSEJ</option>
+        <option value="PREVENCION">PREVENCION</option>
+        <option value="SANCOR">SANCOR</option>
+        <option value="SWISS_MEDICAL">SWISS MEDICAL</option>
+        <option value="UNIMED">UNIMED</option>
+    </select>    
+    <br />
+<!-- Divs -->
+<div style="display: @(currentDiv == 1 ? "block" : "none")">
+<!-- DATOS PARA OBJETO DE BASE DE DATOS AFILIADO -->
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Nº Afiliado:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="afiliado" />
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Plan:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="plan" />
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">PARENTESCO:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="titular" />
+</div>
+</div>
+    <br />
+<div  style="width: 100%;">
+ <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+</div>
+</div>
 
+
+
+            </div>
+            <div class="modal-footer">
+             <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPaciente(IdEdit)">EDIT</button>
+             <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal" >X</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN Modal EDITAR -->
+
+<!-- Modal ELIMINAR -->
+<div class="modal fade" id="modaleliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">ELIMINAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>¿SEGURO DESEA ELIMINAR AL PACIENTE?</label>
+                <p> </p>
+                <div class="form-group">
+
+                </div>
+          </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-success" data-bs-dismiss="modal">SI</button>
+                <p> </p>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal CELULAR -->
+<div class="modal fade" id="modalcelular" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">CELULAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p> </p>
+                <div class="form-group">
+                        <input style="width: 100%;" type="text" id="inputText" @bind="celu" readonly />
+                         <button style="width: 100%;" class="btn btn-success" @onclick="() => CopiarAlPortapapeles(celu)">COPIAR</button>
+                         </div>
+          </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-dark" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal MAS INFO (DATOS) -->
+
+<div class="modal fade" id="modalinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">DATOS DEL PACIENTE</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                               
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Nombre:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="nombrePaciente" readonly/>
+    <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(nombrePaciente)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Apellido:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="apellido" readonly/>
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(apellido)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Domicilio:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="domicilio" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(domicilio)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Celular:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="celu" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(celu)">&#128203</button>
+</div>
+    <br />
+<div class="form-group">
+    <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input style="width: 90%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" readonly />
+</div>
+<div
+        <p> </p>
+<label style="width: 100%;" for="miString">EDAD:</label>
+<input style="width: 90%;" id="miString" @bind="edad" readonly />
+    <p> </p>
+<button class="btn btn-info" @onclick="CalcularEdad">CALCULAR </button>
+</div>
+    <p> </p>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">OBRA SOCIAL ACTUAL:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="obraSocialGuardar" readonly/>
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(obraSocialGuardar)">&#128203</button>
+    <p> </p>
+
+<!-- Divs -->
+<div style="">
+<!-- DATOS PARA OBJETO DE BASE DE DATOS AFILIADO -->
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Nº Afiliado:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="afiliado" readonly/>
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(afiliado)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Plan:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="plan" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(plan)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">PARENTESCO:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="titular" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(titular)">&#128203</button>
+</div>
+</div>
+    <br />
+<div  style="width: 100%;">
+ <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea" readonly ></textarea>
+     <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(textoMultilinea)">&#128203</button>
+</div>
+</div>
+                <p> </p>
+                <div class="form-group">
+
+                </div>
+          </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-dark" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @code {
-    private bool CamposValidos => !string.IsNullOrEmpty(apellido) && !string.IsNullOrEmpty(nombrePaciente);
-    private bool mostrarModalEdit = false;
-    private List<Paciente> ListaDePacientes = new List<Paciente>();
-
-    private int currentDiv = 0;
-    public int edad = 0;
-    public int currentDivPacientes = 0;
-    public string pacienteAgregadoCorrectamente = "";
-
-
-
-    private void ShowDiv(int divNumber)
-    {
-        // Cambiar el número del div actual al hacer clic en el botón correspondiente
-        currentDiv = divNumber;
-    }
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
@@ -145,6 +364,7 @@
     {
         ListaDePacientes = DbContext.Pacientes.ToList();
     }
+    private string algo = "valor uno";
     public string nombreDelBotonPacientes = "AGREGAR PACIENTE";
     public string nombrePaciente = "-";
     public string apellido = "-";
@@ -157,9 +377,94 @@
     public string titular = "TITULAR";
     public string plan = "-";
     public string afiliado = "0";
-    private string textoMultilinea = "observacioes del paciente, aca como ejemplo escribire cualquiier cosa para ver que la base de datos tome bien todo el contenido de la caja de texto se ve que puede tenre bastante, recordemos que es u campo de observacion, tampoco la gilada de escribir un libro, si no para eso directamente vas al rawson y sacas un turno con anticipacion para no tener demoras cuando veas que estas escribiendo m,ucho en este campo, directamente vas al turno que ya sacaste";
+    private string textoMultilinea = "observacioes del paciente";
+    private bool CamposValidos => !string.IsNullOrEmpty(apellido) && !string.IsNullOrEmpty(nombrePaciente);
+    private bool mostrarModalEdit = false;
+    private List<Paciente> ListaDePacientes = new List<Paciente>();
+    private int PacienteIdEdit = 0;
+    private int currentDiv = 0;
+    public int edad = 0;
+    public int currentDivPacientes = 0;
+    public string pacienteAgregadoCorrectamente = "";
+    private int IdEdit = 0;
+    private string filtro = "";
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
 
-    public void EliminarPractica(int pacienteId)
+    async Task CopiarAlPortapapeles(string texto)
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", texto);
+    }
+    public void EditarPaciente(int practicaId)
+    {
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.Pacientes.Find(practicaId);
+
+
+            prueba.Nombre = nombrePaciente.ToUpper();
+            prueba.Apellido = apellido.ToUpper();
+            prueba.Domicilio = domicilio.ToUpper();
+            prueba.Celular = celu;
+            prueba.FechaDeNacimiento = fechaNacimiento;
+            prueba.FechaDeAlta = DateTime.Today;
+            prueba.ObraSocial = obraSocialGuardar;
+            prueba.Titular = titular.ToUpper();
+            prueba.PlanDeObraSocial = plan;
+            prueba.NumeroAfiliado = afiliado;
+            prueba.Observaciones = textoMultilinea;
+            db.Update(prueba);
+            db.SaveChanges();
+
+        }
+
+    }
+
+    private void ActualizarFiltro(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Nombre.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+   
+
+    }
+
+    private void SeleccionarPaciente(int seleccionado)
+    {
+              using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.Pacientes.Find(seleccionado);
+        IdEdit = prueba.Id;
+        nombrePaciente = prueba.Nombre;
+        apellido =  prueba.Apellido;
+        domicilio =  prueba.Domicilio;
+        celu = prueba.Celular;
+        fechaNacimiento = prueba.FechaDeNacimiento;
+        fechaAlta = prueba.FechaDeAlta;
+        obraSocialGuardar = prueba.ObraSocial;
+        titular = prueba.Titular;
+        plan = prueba.PlanDeObraSocial;
+        afiliado = prueba.NumeroAfiliado;
+        textoMultilinea = prueba.Observaciones;            
+        }
+    }
+
+
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
+
+
+    public void EliminarPaciente(int pacienteId)
     {
         //  Eliminarla.Eliminarla(practicaId);
         var practica = DbContext.Pacientes.Find(pacienteId);

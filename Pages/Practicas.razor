@@ -3,167 +3,108 @@
 @inject Permisos Permiso
 @inject AgregarPracticas AgregarPracticas
 @inject EliminarPracticaMetod EliminarPracticaMethod
-
-<div class="form-group" style="width: 100%;">
-    <label for="inputText" style="width: 100%;">Practica:</label>
-    <input type="text" id="inputText" style="width: 100%;" @bind="Practica" />
-    <p> </p>
-    <label for="inputText" style="width: 100%;">Precio:</label>
-    <input type="text" id="inputText" style="width: 100%;" @bind="Precio" />
-</div>
-<button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
-<p> </p>
-<label for="miString" style="width: 100%;">Ultima Ingresada:</label>
-<input id="miString" style="width: 100%;" @bind="miString" />
-<p> </p>
-
-@* 
-<button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
-<button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
- *@
-
+<h1>MANEJO DE PRACTICAS</h1>
 <!-- Divs -->
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
-    <br />
     <table class="table" id="tablepracticas">
         <thead>
             <tr class="table-dark">
-                <th>ID</th>
                 <th>PRACTICA</th>
                 <th>PRECIO</th>
-                <th></th>
+                <th><button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalagregar">AGREGAR</button></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var practica in ListaDePracticas)
             {
-                <tr class ="table-success">
-                    <td>@practica.Id</td>
+                <tr class="table-success" @onclick="() => SeleccionarPractica(practica.Id)">
                     <td>@practica.Practica</td>
-                    <td>@practica.Precio</td>
+                    <td>$@practica.Precio</td>
                     <td>
-                        <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practica.Id)">X</button>
-                      @*   <button class="boton-amarillo"  @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-
-                        <!--  <button class="boton-rojo" @onclick="@(() => model.Show<Braian>("SEGURO DESEA ELIMINAR LA PRACTICA?"))">X</button>
-                        <button @onclick="() => EliminarPractica(practica.Id)">X</button>-->
-                        <button class="boton-rojo" @onclick="() => EliminarPractica(practica.Id)">X</button> *@
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDIT</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modaleliminar">X</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-@* 
 
-<div style="display: @(currentDiv == 2 ? "block" : "none")">
-    <h3>Practicas APROSS</h3>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Practica</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var practica in ListaDePracticasApross)
-            {
-                <tr>
-                    <td>@practica.Id</td>
-                    <td>@practica.Practica</td>
-                    <td>@practica.Precio</td>
-                    <td>
-                        <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<div style="display: @(currentDiv == 3 ? "block" : "none")">
-    <p>Contenido del Div 3</p>
-</div>
-<div style="display: @(currentDiv == 4 ? "block" : "none")">
-    <p>Contenido del Div 4</p>
-</div>
-<div style="display: @(currentDiv == 5 ? "block" : "none")">
-    <p>Contenido del Div 5</p>
-</div>
- *@
+<!-- Modal AGREGAR -->
 
- @* 
-
-<div style="display: @(currentDiv == 2 ? "block" : "none")">
-    <h3>Practicas APROSS</h3>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Practica</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var practica in ListaDePracticasApross)
-            {
-                <tr>
-                    <td>@practica.Id</td>
-                    <td>@practica.Practica</td>
-                    <td>@practica.Precio</td>
-                    <td>
-                        <button class="btn btn-warning" @onclick="() => EditarPracticaAbrir(practica.Id)">Editar</button>
-                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practica.Id)">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="modal fade" id="modalagregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="width: 100%;">
+                    <label for="inputText" style="width: 100%;">Practica:</label>
+                    <input type="text" id="inputText" style="width: 100%;" @bind="Practica" />
+                    <p> </p>
+                    <label for="inputText" style="width: 100%;">Precio:</label>
+                    <input type="text" id="inputText" style="width: 100%;" @bind="Precio" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div style="display: @(currentDiv == 3 ? "block" : "none")">
-    <p>Contenido del Div 3</p>
-</div>
-<div style="display: @(currentDiv == 4 ? "block" : "none")">
-    <p>Contenido del Div 4</p>
-</div>
-<div style="display: @(currentDiv == 5 ? "block" : "none")">
-    <p>Contenido del Div 5</p>
-</div>
- *@
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modaledit" >
- EDITAR
-</button>
-
-<!-- Modal -->
+<!-- Modal EDITAR -->
 <div class="modal fade" id="modaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="inputText">Practica:</label>
-                    <input type="text" id="inputText" @bind="Practica" />
+                    <input style ="width: 100%;" type="text" id="inputText" @bind="Practica" />
                 </div>
                 <div class="form-group">
                     <label for="inputText">Precio:</label>
-                    <input type="text" id="inputText" @bind="Precio" />
+                    <input style="width: 100%;" type="text" id="inputText" @bind="Precio" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEdit)">Editar</button>
+             <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal" >X</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal ELIMINAR -->
+<div class="modal fade" id="modaleliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">ELIMINAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>¿SEGURO DESEA ELIMINAR LA PRACTICA?</label>
+                <p> </p>
+                <div class="form-group">
+                    <label for="inputText">Practica:</label>
+                    <input style="width: 100%;" type="text" id="inputText" @bind="Practica" readonly />
+                    <p> </p>
+                    <label for="inputText">Precio:</label>
+                    <input style="width: 100%;" type="text" id="inputText" @bind="Precio" readonly />
+                    <p> </p>
+                </div>
+          </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-success" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EliminarPractica(IdEdit)">SI</button>
+                <p> </p>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
             </div>
         </div>
     </div>
@@ -246,6 +187,18 @@
             }
         }
     }
+    public void SeleccionarPractica(int practicaseleccionada)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var practica = DbContext.Practicas.Find(practicaseleccionada);
+
+            IdEdit = practica.Id;
+            Practica = practica.Practica;
+            Precio = practica.Precio;
+        }
+    }
+
     public void EditarPractica(int practicaId)
     {
 
@@ -264,8 +217,7 @@
                         practica.Practica = Practica;
                         practica.Precio = Precio;
                     }
-
-
+                    db.Update(practica);
                     db.SaveChanges();
                 }
             }
