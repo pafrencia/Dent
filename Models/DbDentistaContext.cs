@@ -79,7 +79,7 @@ public partial class DbDentistaContext : DbContext
         modelBuilder.Entity<Practica1>(entity =>
         {
             entity.Property(e => e.Practica)
-                .HasMaxLength(30)
+                .HasMaxLength(40)
                 .IsFixedLength()
                 .HasColumnName("Practica");
         });

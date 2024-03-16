@@ -28,4 +28,6 @@ public partial class Paciente
     public string? Titular { get; set; }
 
     public string? Observaciones { get; set; }
+
+    public string Dni { get; set; }
 }

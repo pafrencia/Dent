@@ -12,15 +12,17 @@
         <tr class="table-dark">
                 <th>NOMBRE</th>
                 <th>APELLIDO</th>
+                <th>DNI</th>
                 <th>OBRA SOCIAL</th>
             <th><button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalagregar">AGREGAR</button></th>
         </tr>
         </thead>
         <tbody>
                     <tr class="table-success">                       
-                    <td>  <input @oninput="ActualizarFiltro"  placeholder="Buscar..."/></td>
-                    <td></td>
-                    <td></td>
+                    <td>  <input @oninput="ActualizarFiltroNombre"  placeholder="Buscar..."/></td>
+                    <td><input @oninput="ActualizarFiltroApellido"  placeholder="Buscar..."/></td>
+                    <td><input @oninput="ActualizarFiltroDni"  placeholder="Buscar..."/></td>
+                    <td><input @oninput="ActualizarFiltroObraSocial"  placeholder="Buscar..."/></td>
                     <td></td>
                 </tr>
             @foreach (var datos in ListaDePacientes)
@@ -28,6 +30,7 @@
             <tr class="table-success" @onclick="() => SeleccionarPaciente(datos.Id)">
                     <td>@datos.Nombre</td>
                     <td>@datos.Apellido</td>
+                    <td>@datos.Dni</td>
                     <td>@datos.ObraSocial</td>
                     <td>
                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalcelular">&#9742</button>
@@ -421,7 +424,7 @@
 
     }
 
-    private void ActualizarFiltro(ChangeEventArgs e)
+    private void ActualizarFiltroNombre(ChangeEventArgs e)
     {
         algo = e.Value.ToString().ToUpper();
         if (!string.IsNullOrEmpty(algo))
@@ -435,7 +438,50 @@
    
 
     }
+    private void ActualizarFiltroApellido(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Apellido.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+   
 
+    }
+    
+    private void ActualizarFiltroDni(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Dni.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+   
+
+    }
+    
+    private void ActualizarFiltroObraSocial(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.ObraSocial.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+   
+
+    }
     private void SeleccionarPaciente(int seleccionado)
     {
               using (DbDentistaContext db = new DbDentistaContext())
