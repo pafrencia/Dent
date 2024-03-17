@@ -4,7 +4,7 @@
 @inject AgregarPracticas AgregarPracticas
 @inject EliminarPracticaMetod EliminarPracticaMethod
 
-<div class="form-group">
+@* <div class="form-group">
     <label style="width: 100%;" >PACIENTE:</label>
     <select style="width: 100%;" @bind="IdPacienteAtendido">
         <option value="">Seleccionar</option>
@@ -25,7 +25,7 @@
 
     <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
     </div>
-
+ *@
 <!-- Divs -->
 <div style="display: @(currentDiv == 1 ? "block" : "none")">
     <br />
@@ -38,21 +38,22 @@
                 <th>OBRA SOCIAL</th>
                 <th>PRECIO</th>
                 <th>ODONTOLOGO</th>
-                <th></th>
+                <th><button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">AGREGAR</button>
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var practicaRealizada in ListaDePracticasRealizadas)
             {
-                <tr class="table-success">
+                <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
                     <td>@practicaRealizada.Fecha</td>
                     <td>@practicaRealizada.Paciente</td>
                     <td>@practicaRealizada.Practica</td>
                     <td>@practicaRealizada.ObraSocial</td>
-                    <td>@practicaRealizada.Precio</td>
+                    <td>$@practicaRealizada.Precio</td>
                     <td>@practicaRealizada.Odontologo</td>
                     <td>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDITAR</button>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditPaciente">EDIT</button>
                     <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
                     </td>
                 </tr>
@@ -113,12 +114,125 @@
         </div>
     </div>
 </div>
+<!-- Modal AGREGAR -->
+<div class="modal fade" id="modalAgregarPracticaRealizada" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA REALIZADA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+<div class="form-group">
+                    <div class="form-group">
+                        <label style="width: 100%;">PACIENTE:</label>
+                        <select style="width: 100%;" @bind="IdPacienteAtendido">
+                            <option value="">Seleccionar</option>
+                            @foreach (var paciente in listaDePacientes)
+                            {
+                                <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                            }
+                        </select>
+                        <p> </p>
+                        <label style="width: 100%;">PRACTICA:</label>
+                        <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                            <option value="">Seleccionar</option>
+                            @foreach (var practicaseleccion in ListaDePracticas)
+                            {
+                                <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                            }
+                        </select>                                        
+                    </div>
+            </div>
+            <div class="modal-footer">
+                    <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal EDITAR -->
+<div class="modal fade" id="modalEditPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="form-group">
+                <label for="inputText">ID PRACTCA A EDITAR:</label>
+                <input style="width: 100%;" type="text" id="inputText" @bind="IdEdit" />
+            </div>
+           <div class="modal-body">
+              
+                <div class="form-group">
+                    <label style="width: 100%;">PACIENTE:</label>
+                    <select style="width: 100%;" @bind="IdPacienteAtendido">
+                        <option value="">Seleccionar</option>
+                        @foreach (var paciente in listaDePacientes)
+                        {
+                            <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                        }
+                    </select>
+                    <p> </p>
 
+                    <label style="width: 100%;" for="inputText">PRACTICA ACTUAL:</label>
+                    <input style="width: 100%;" type="text" id="inputText" @bind="PracticaSeleccionada" readonly />
+                    <p> </p>
+                    <label style="width: 100%;">SELECCIONE QUE PRACTICA DESEA PONER:</label>
+                    <select style="width: 100%;" @bind="PracticaSeleccionada">
+                        <option value="">Seleccionar</option>
+                        @foreach (var practicaseleccion in ListaDePracticas)
+                        {
+                            <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
+                        }
+                    </select>
+                </div>
 
+            </div>
+            <div class="modal-footer">
+             <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPracticaRealizada(IdEdit)">EDIT</button>
+             <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal" >X</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN Modal EDITAR -->
+
+<!-- Modal ELIMINAR -->
+<div class="modal fade" id="modaleliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">ELIMINAR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>¿SEGURO DESEA ELIMINAR AL PACIENTE?</label>
+                <p> </p>
+                <div class="form-group">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-success" data-bs-dismiss="modal">SI</button>
+                <p> </p>
+                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button style="width: 100%;" class="btn btn-warning" @onclick="() => CalcularTotal()">CALCULAR TOTAL</button>
+
+<p> </p>
+<label style="width: 100%;">TOTAL: $@MostrarTotal </label>
+<p> </p>
+<label style="width: 100%;">%50: $@MostrarTotalPorcentaje </label>
 
 @code {
 
-    private bool CamposValidos => IdPacienteAtendido != 0 && !string.IsNullOrEmpty(PracticaSeleccionada);
+    private bool CamposValidos => IdPacienteAtendido != 0 && IdPracticaSeleccionada != 0;
 
 
     private int IdEdit = 0;
@@ -131,6 +245,11 @@
     private int IdPacienteEditar;
     private string ObraSocialPacienteAtendido = "no cargada";
     private string PracticaSeleccionada;
+    private string OdontologoQueAtendio;
+    private int IdPracticaSeleccionada;
+
+
+
     private void ShowDiv(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
@@ -151,11 +270,79 @@
     public int Precio = 0;
     public int IdEditar = 0;
     public string miString = "";
+    public int MostrarTotal = 0;
+    public int MostrarTotalPorcentaje = 0;
+    string odontologoFiltrado = "BRAIAN";
+
+    public void CalcularTotal()
+    {
+
+        var consultasFiltradas = ListaDePracticasRealizadas.Where(c => c.Odontologo.Contains(odontologoFiltrado));
+
+        // Sumar los precios de las consultas filtradas
+        int totalPrecio = consultasFiltradas.Sum(c => c.Precio);
+
+        MostrarTotal = totalPrecio;
+        MostrarTotalPorcentaje = MostrarTotal / 2;
+
+    }
+
+    public void ActualizaTablaPracticasRealizadas()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        StateHasChanged();
+
+    }
+
+    public void EditarPracticaRealizada(int paciente)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var a = DbContext.Pacientes.Find(IdPacienteAtendido);
+            PacienteAtendido = a.Nombre + a.Apellido;
+            ObraSocialPacienteAtendido = a.ObraSocial;
+            IdPacienteEditar = a.Id;
+        }
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.PracticasRealizadas.Find(paciente);
+
+            prueba.Paciente = PacienteAtendido;
+            prueba.Practica = PracticaSeleccionada;
+            prueba.Precio = Precio;
+            prueba.ObraSocial = ObraSocialPacienteAtendido;
+            prueba.Odontologo = "BRAIAN";
+            prueba.IdPaciente = IdPacienteEditar;
+            db.Update(prueba);
+            db.SaveChanges();
+        }
+
+
+
+        ActualizaTablaPracticasRealizadas();
+    }
+
 
     [Inject]
     private AgregarPracticas agregarPracticas { get; set; }
     [Inject]
     private EliminarPracticaMetod Eliminarla { get; set; }
+
+    private void SeleccionarPracticaRealizada(int seleccionado)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.PracticasRealizadas.Find(seleccionado);
+            IdEdit = prueba.Id;
+            IdPacienteAtendido = prueba.IdPaciente;
+            PracticaSeleccionada = prueba.Practica;
+            PacienteAtendido = prueba.Paciente;
+            ObraSocialPacienteAtendido = prueba.ObraSocial;
+            Practica = prueba.Practica;
+            OdontologoQueAtendio = prueba.Odontologo;
+        }
+    }
     private void EditarPracticaAbrir(int practicaId)
     {
         AbrirModalEdit();
@@ -195,7 +382,7 @@
         {
             var practica = DbContext.PracticasRealizadas.Find(practicaId);
             practica.Paciente = PacienteAtendido;
-            practica.Practica = Practica;
+            practica.Practica = PracticaSeleccionada;
             db.SaveChanges();
             ActualizaTabla();
         }
@@ -227,6 +414,12 @@
             IdPacienteEditar = paciente.Id;
         }
 
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
+            PracticaSeleccionada = p.Practica;
+            Precio = p.Precio;
+        }
         var prueba = new PracticasRealizada();
 
         prueba.Paciente = PacienteAtendido;
