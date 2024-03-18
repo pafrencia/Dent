@@ -1,5 +1,9 @@
 ﻿@page "/Braian"
 @using Dent.Models
+@using System.Globalization
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
 @inject Permisos Permiso
 @inject AgregarPracticas AgregarPracticas
 @inject EliminarPracticaMetod EliminarPracticaMethod
@@ -27,7 +31,7 @@
     </div>
  *@
 <!-- Divs -->
-<div style="display: @(currentDiv == 1 ? "block" : "none")">
+<div style="height: 800px; overflow-y: auto;">
     <br />
     <table class="table">
         <thead>
@@ -43,6 +47,15 @@
             </tr>
         </thead>
         <tbody>
+            <tr class="table-success">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>  <input @oninput="ActualizarFiltroOdontologo" placeholder="Buscar..." /></td>
+                <td></td>
+            </tr>
             @foreach (var practicaRealizada in ListaDePracticasRealizadas)
             {
                 <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
@@ -60,6 +73,98 @@
             }
         </tbody>
     </table>
+</div>
+<br />
+
+
+    <!-- TABLA DE PRUEBA -->
+
+<div style="height: 300px; overflow-y: auto;">
+    <table class="table">
+        <thead>
+            <tr class="table-dark">
+                <th>FECHA</th>
+                <th>PACIENTE</th>
+                <th>PRACTICA</th>
+                <th>OBRA SOCIAL</th>
+                <th>PRECIO</th>
+                <th>ODONTOLOGO</th>
+                <th>
+                    <button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">AGREGAR</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-success">
+                <td>
+                    <select @onchange="MetodoPersonalizado2">
+                        {
+                        <option value=1>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1)</option>
+
+                        <option value=2>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(2)</option>
+
+                        <option value=3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(3)</option>
+
+                        <option value=4>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(4)</option>
+
+                        <option value=5>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(5)</option>
+
+                        <option value=6>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(6)</option>
+
+                        <option value=7>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(7)</option>
+
+                        <option value=8>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(8)</option>
+
+                        <option value=9>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(9)</option>
+
+                        <option value=10>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(10)</option>
+
+                        <option value=11>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(11)</option>
+
+                        <option value=12>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(12)</option>
+                        }
+                    </select>
+
+                    <select @bind="año">
+                        @for (int i = 2023; i <= DateTime.Today.Year; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <select style="width: 100%;" @onchange="MetodoPersonalizado3">
+                        <option value="">Seleccionar</option>
+                        @foreach (var a in ListaDePracticasRealizadas)
+                        {
+                            <option value="@a.Odontologo">@(a.Odontologo)</option>
+                        }
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+            @foreach (var practicaRealizada in registrosFiltrados)
+            {
+                <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
+                    <td>@practicaRealizada.Fecha</td>
+                    <td>@practicaRealizada.Paciente</td>
+                    <td>@practicaRealizada.Practica</td>
+                    <td>@practicaRealizada.ObraSocial</td>
+                    <td>$@practicaRealizada.Precio</td>
+                    <td>@practicaRealizada.Odontologo</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditPaciente">EDIT</button>
+                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- TABLA DE PRUEBA -->
 </div>
 
 <div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
@@ -224,17 +329,12 @@
     </div>
 </div>
 <button style="width: 100%;" class="btn btn-warning" @onclick="() => CalcularTotal()">CALCULAR TOTAL</button>
-
 <p> </p>
-<label style="width: 100%;">TOTAL: $@MostrarTotal </label>
-<p> </p>
-<label style="width: 100%;">%50: $@MostrarTotalPorcentaje </label>
+<label style="width: 100%;">TOTAL: $@MostrarTotal %50: $@MostrarTotalPorcentaje </label> 
 
 @code {
 
     private bool CamposValidos => IdPacienteAtendido != 0 && IdPracticaSeleccionada != 0;
-
-
     private int IdEdit = 0;
     private bool mostrarModalEdit = false;
     private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
@@ -243,11 +343,20 @@
     private int currentDiv = 1;
     private int IdPacienteAtendido;
     private int IdPacienteEditar;
+    private int IdOdontologo;
     private string ObraSocialPacienteAtendido = "no cargada";
     private string PracticaSeleccionada;
     private string OdontologoQueAtendio;
     private int IdPracticaSeleccionada;
+    private DateTime FiltroFecha = DateTime.Today;
+    private DateTime FiltroFechaFin = DateTime.Today;
+    private int mes = DateTime.Today.Month;
+    private int año = DateTime.Today.Year;
+    private int mesSeleccionado = DateTime.Today.Month;
+    private int añoSeleccionado = DateTime.Today.Year;
+    private int meso = 0;
 
+    private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
 
 
     private void ShowDiv(int divNumber)
@@ -263,6 +372,8 @@
         ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
         listaDePacientes = DbContext.Pacientes.ToList();
         ListaDePracticas = DbContext.Practicas.ToList();
+        registrosFiltrados = DbContext.PracticasRealizadas.ToList();
+
 
     }
     public string Practica = "";
@@ -272,12 +383,91 @@
     public string miString = "";
     public int MostrarTotal = 0;
     public int MostrarTotalPorcentaje = 0;
-    string odontologoFiltrado = "BRAIAN";
+    string odontologoFiltrado = " ";
+    private string algo = "valor uno";
 
+
+    public void MetodoPersonalizado3(ChangeEventArgs args)
+    {
+        var o = args.Value.ToString();
+        odontologoFiltrado = o;
+        CargarListaFiltrada();
+    }
+
+    public void CargarListaFiltrada()
+    {
+        registrosFiltrados = ListaDePracticasRealizadas.Where(p => p.Odontologo.Contains(odontologoFiltrado) && p.Fecha >= FiltroFecha && p.Fecha <= FiltroFechaFin
+).ToList();
+        ActualizaTablaPracticasRealizadas();
+        
+    }
+
+    public void MetodoPersonalizado(ChangeEventArgs args)
+    {
+
+        var p = args.Value.ToString();
+        var m = Convert.ToInt32(p);
+        // Definir el rango de fechas
+        DateTime fechaInicio = new DateTime(2024, m, 1);
+        DateTime fechaFin = new DateTime(2024, (m+1), 1);
+        meso = m;
+        FiltroFecha = fechaInicio;
+        // Filtrar la lista por fechas dentro del rango
+        registrosFiltrados = ListaDePracticasRealizadas.Where(r => r.Fecha >= fechaInicio && r.Fecha <= fechaFin).ToList();
+        ActualizaTablaPracticasRealizadas(); 
+    }
+
+    public void MetodoPersonalizado2(ChangeEventArgs args)
+    {
+        var p = args.Value.ToString();
+        var m = Convert.ToInt32(p);
+        // Definir el rango de fechas
+        DateTime fechaInicio = new DateTime(2024, m, 1);
+        DateTime fechaFin = new DateTime(2024, (m + 1), 1);
+        meso = m;
+        FiltroFecha = fechaInicio;
+        FiltroFechaFin = fechaFin;
+        // Filtrar la lista por fechas dentro del rango
+        registrosFiltrados = ListaDePracticasRealizadas.Where(p => p.Odontologo.Contains(odontologoFiltrado) && p.Fecha >= fechaInicio && p.Fecha <= fechaFin
+).ToList();
+        ActualizaTablaPracticasRealizadas();
+    }
+
+    private void ActualizarFiltroOdontologo(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        odontologoFiltrado = algo;
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePracticasRealizadas = ListaDePracticasRealizadas.Where(e => e.Odontologo.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPracticasRealizadas();
+        }
+
+
+    }
+    private void ActualizarFiltroFecha(ChangeEventArgs e)
+    {
+
+        odontologoFiltrado = algo;
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePracticasRealizadas = ListaDePracticasRealizadas.Where(e => e.Odontologo.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPracticasRealizadas();
+        }
+
+
+    }
     public void CalcularTotal()
     {
 
-        var consultasFiltradas = ListaDePracticasRealizadas.Where(c => c.Odontologo.Contains(odontologoFiltrado));
+        var consultasFiltradas = ListaDePracticasRealizadas.Where(p => p.Odontologo.Contains(odontologoFiltrado) && p.Fecha >= FiltroFecha && p.Fecha <= FiltroFechaFin
+    ).ToList();
 
         // Sumar los precios de las consultas filtradas
         int totalPrecio = consultasFiltradas.Sum(c => c.Precio);

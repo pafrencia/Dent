@@ -24,7 +24,7 @@
                     <td><input @oninput="ActualizarFiltroDni"  placeholder="Buscar..."/></td>
                     <td><input @oninput="ActualizarFiltroObraSocial"  placeholder="Buscar..."/></td>
                     <td></td>
-                </tr>
+                    </tr>
             @foreach (var datos in ListaDePacientes)
             {
             <tr class="table-success" @onclick="() => SeleccionarPaciente(datos.Id)">
