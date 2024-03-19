@@ -30,7 +30,7 @@
     <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
     </div>
  *@
-<!-- Divs -->
+<!-- Divs -->@* 
 <div style="height: 800px; overflow-y: auto;">
     <br />
     <table class="table">
@@ -76,10 +76,10 @@
 </div>
 <br />
 
-
+ *@
     <!-- TABLA DE PRUEBA -->
 
-<div style="height: 300px; overflow-y: auto;">
+<div style="height: 800px; overflow-y: auto;">
     <table class="table">
         <thead>
             <tr class="table-dark">
@@ -139,11 +139,20 @@
                 <td>
                     <select style="width: 100%;" @onchange="MetodoPersonalizado3">
                         <option value="">Seleccionar</option>
+                        <option value=BRAIAN>BRAIAN</option>
+                        <option value=CECI>CECI</option>
+                        <option value=AGUS>AGUS</option>
+                    </select>
+                   
+
+
+                  @*   <select style="width: 100%;" @onchange="MetodoPersonalizado3">
+                        <option value="">Seleccionar</option>
                         @foreach (var a in ListaDePracticasRealizadas)
                         {
                             <option value="@a.Odontologo">@(a.Odontologo)</option>
                         }
-                    </select>
+                    </select> *@
                 </td>
                 <td></td>
             </tr>
@@ -357,7 +366,7 @@
     private int meso = 0;
 
     private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
-
+    private List<PracticasRealizada> elementosUnicos = new List<PracticasRealizada>();
 
     private void ShowDiv(int divNumber)
     {
@@ -373,7 +382,7 @@
         listaDePacientes = DbContext.Pacientes.ToList();
         ListaDePracticas = DbContext.Practicas.ToList();
         registrosFiltrados = DbContext.PracticasRealizadas.ToList();
-
+        elementosUnicos = DbContext.PracticasRealizadas.Distinct().ToList();
 
     }
     public string Practica = "";
