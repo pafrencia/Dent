@@ -2,8 +2,22 @@
 @using Dent.Pages
 @inject NavigationManager NavigationManager
 
+<style>
+    .small {
+        width: 25px;
+        height: 25px;
+        background - color: white;
+        color: lightgray;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+    }
+</style>
+
 <PageTitle>Dent</PageTitle>
-<button @onclick="() => ShowNav(1)">X</button>
+
+<button class="small " @onclick="() => ShowNav(1)">@nombraBotonOcultarNav</button>
 <div class="page">
 
     <div class="sidebar" style="display: @(CoultarNav == 1 ? "block" : "none")">
@@ -23,13 +37,19 @@
 
 @code {
     private int CoultarNav = 1;
+    private string nombraBotonOcultarNav = "X";
     public void ShowNav(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
         if (CoultarNav == 1)
+        {
             CoultarNav = 0;
-
-           else
+            nombraBotonOcultarNav = "---------------------------------------------------";
+        }
+        else
+        {
             CoultarNav = 1;
+            nombraBotonOcultarNav = "X";
+        }
     }
 }

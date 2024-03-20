@@ -78,167 +78,211 @@
 
  *@
     <!-- TABLA DE PRUEBA -->
+@if (Permiso.Logueado == 1)
+{
 
-<div style="height: 800px; overflow-y: auto;">
-    <table class="table">
-        <thead>
-            <tr class="table-dark">
-                <th>FECHA</th>
-                <th>PACIENTE</th>
-                <th>PRACTICA</th>
-                <th>OBRA SOCIAL</th>
-                <th>PRECIO</th>
-                <th>ODONTOLOGO</th>
-                <th>
-                    <button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">AGREGAR</button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-success">
-                <td>
-                    <select @onchange="MetodoPersonalizado2">
-                        {
-                        <option value=1>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1)</option>
-
-                        <option value=2>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(2)</option>
-
-                        <option value=3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(3)</option>
-
-                        <option value=4>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(4)</option>
-
-                        <option value=5>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(5)</option>
-
-                        <option value=6>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(6)</option>
-
-                        <option value=7>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(7)</option>
-
-                        <option value=8>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(8)</option>
-
-                        <option value=9>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(9)</option>
-
-                        <option value=10>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(10)</option>
-
-                        <option value=11>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(11)</option>
-
-                        <option value=12>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(12)</option>
-                        }
-                    </select>
-
-                    <select @bind="año">
-                        @for (int i = 2023; i <= DateTime.Today.Year; i++)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <select style="width: 100%;" @onchange="MetodoPersonalizado3">
-                        <option value="">Seleccionar</option>
-                        <option value=BRAIAN>BRAIAN</option>
-                        <option value=CECI>CECI</option>
-                        <option value=AGUS>AGUS</option>
-                    </select>
-                   
-
-
-                  @*   <select style="width: 100%;" @onchange="MetodoPersonalizado3">
-                        <option value="">Seleccionar</option>
-                        @foreach (var a in ListaDePracticasRealizadas)
-                        {
-                            <option value="@a.Odontologo">@(a.Odontologo)</option>
-                        }
-                    </select> *@
-                </td>
-                <td></td>
-            </tr>
-            @foreach (var practicaRealizada in registrosFiltrados)
-            {
-                <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
-                    <td>@practicaRealizada.Fecha</td>
-                    <td>@practicaRealizada.Paciente</td>
-                    <td>@practicaRealizada.Practica</td>
-                    <td>@practicaRealizada.ObraSocial</td>
-                    <td>$@practicaRealizada.Precio</td>
-                    <td>@practicaRealizada.Odontologo</td>
-                    <td>
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditPaciente">EDIT</button>
-                        <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
-                    </td>
+    <div style="height: 800px; overflow-y: auto;">
+        <table class="table">
+            <thead>
+                <tr class="table-dark">
+                    <th>FECHA</th>
+                    <th>PACIENTE</th>
+                    <th>PRACTICA</th>
+                    <th>OBRA SOCIAL</th>
+                    <th>PRECIO</th>
+                    <th>ODONTOLOGO</th>
+                    <th>
+                        <button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">AGREGAR</button>
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <!-- TABLA DE PRUEBA -->
-</div>
+            </thead>
+            <tbody>
+                <tr class="table-success">
+                    <td>
+                        <select @onchange="MetodoPersonalizado2">
+                            {
+                            <option value=1>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1)</option>
 
-<div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
-    <div class="modal-content">
-        <span class="btn btn-danger" @onclick="CerrarModalEdit">CERRAR</span>
-        <h3>EDITAR</h3>
-        <div class="form-group">
-            <label style="width: 100%;">PACIENTE:</label>
-            <select style="width: 100%;" @bind="IdPacienteAtendido">
-                <option value="">Seleccionar</option>
-                @foreach (var paciente in listaDePacientes)
+                            <option value=2>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(2)</option>
+
+                            <option value=3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(3)</option>
+
+                            <option value=4>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(4)</option>
+
+                            <option value=5>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(5)</option>
+
+                            <option value=6>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(6)</option>
+
+                            <option value=7>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(7)</option>
+
+                            <option value=8>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(8)</option>
+
+                            <option value=9>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(9)</option>
+
+                            <option value=10>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(10)</option>
+
+                            <option value=11>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(11)</option>
+
+                            <option value=12>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(12)</option>
+                            }
+                        </select>
+
+                        <select @bind="año">
+                            @for (int i = 2023; i <= DateTime.Today.Year; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <select style="width: 100%;" @onchange="MetodoPersonalizado3">
+                            <option value="">Seleccionar</option>
+                            <option value=BRAIAN>BRAIAN</option>
+                            <option value=CECI>CECI</option>
+                            <option value=AGUS>AGUS</option>
+                        </select>
+
+
+
+                        @*   <select style="width: 100%;" @onchange="MetodoPersonalizado3">
+                    <option value="">Seleccionar</option>
+                    @foreach (var a in ListaDePracticasRealizadas)
+                    {
+                    <option value="@a.Odontologo">@(a.Odontologo)</option>
+                    }
+                    </select> *@
+                    </td>
+                    <td></td>
+                </tr>
+                @foreach (var practicaRealizada in registrosFiltrados)
                 {
-                    <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                    <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
+                        <td>@practicaRealizada.Fecha</td>
+                        <td>@practicaRealizada.Paciente</td>
+                        <td>@practicaRealizada.Practica</td>
+                        <td>@practicaRealizada.ObraSocial</td>
+                        <td>$@practicaRealizada.Precio</td>
+                        <td>@practicaRealizada.Odontologo</td>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditPaciente">EDIT</button>
+                            <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
+                        </td>
+                    </tr>
                 }
-            </select>
-            <p> </p>
-            <label style="width: 100%;">PRACTICA:</label>
-            <select style="width: 100%;" @bind="PracticaSeleccionada">
-                <option value="">Seleccionar</option>
-                @foreach (var practicaseleccion in ListaDePracticas)
-                {
-                    <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
-                }
-            </select>
-            <button style="width: 100%;" class="btn btn-warning" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEditar)">EDITAR</button>
-        </div>
-     </div>
-</div>
+            </tbody>
+        </table>
+        <!-- TABLA DE PRUEBA -->
+    </div>
 
-
-<div class="modal fade" id="modaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal" style="display: @(mostrarModalEdit ? "block" : "none")">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="inputText">Practica:</label>
-                    <input style="width: 100%;" type="text" id="inputText" @bind="Practica" />
-                </div>
-                <div class="form-group">
-                    <label for="inputText">Precio:</label>
-                    <input style="width: 100%;" type="text" id="inputText" @bind="Precio" />
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEdit)">Editar</button>
-                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+            <span class="btn btn-danger" @onclick="CerrarModalEdit">CERRAR</span>
+            <h3>EDITAR</h3>
+            <div class="form-group">
+                <label style="width: 100%;">PACIENTE:</label>
+                <select style="width: 100%;" @bind="IdPacienteAtendido">
+                    <option value="">Seleccionar</option>
+                    @foreach (var paciente in listaDePacientes)
+                    {
+                        <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                    }
+                </select>
+                <p> </p>
+                <label style="width: 100%;">PRACTICA:</label>
+                <select style="width: 100%;" @bind="PracticaSeleccionada">
+                    <option value="">Seleccionar</option>
+                    @foreach (var practicaseleccion in ListaDePracticas)
+                    {
+                        <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
+                    }
+                </select>
+                <button style="width: 100%;" class="btn btn-warning" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEditar)">EDITAR</button>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal AGREGAR -->
-<div class="modal fade" id="modalAgregarPracticaRealizada" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA REALIZADA</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+    <div class="modal fade" id="modaledit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputText">Practica:</label>
+                        <input style="width: 100%;" type="text" id="inputText" @bind="Practica" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputText">Precio:</label>
+                        <input style="width: 100%;" type="text" id="inputText" @bind="Precio" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPractica(IdEdit)">Editar</button>
+                    <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                </div>
             </div>
-            <div class="modal-body">
-                
-<div class="form-group">
+        </div>
+    </div>
+    <!-- Modal AGREGAR -->
+    <div class="modal fade" id="modalAgregarPracticaRealizada" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA REALIZADA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label style="width: 100%;">PACIENTE:</label>
+                            <select style="width: 100%;" @bind="IdPacienteAtendido">
+                                <option value="">Seleccionar</option>
+                                @foreach (var paciente in listaDePacientes)
+                                {
+                                    <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                                }
+                            </select>
+                            <p> </p>
+                            <label style="width: 100%;">PRACTICA:</label>
+                            <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                                <option value="">Seleccionar</option>
+                                @foreach (var practicaseleccion in ListaDePracticas)
+                                {
+                                    <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
+                        <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal EDITAR -->
+    <div class="modal fade" id="modalEditPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="form-group">
+                    <label for="inputText">ID PRACTCA A EDITAR:</label>
+                    <input style="width: 100%;" type="text" id="inputText" @bind="IdEdit" />
+                </div>
+                <div class="modal-body">
+
                     <div class="form-group">
                         <label style="width: 100%;">PACIENTE:</label>
                         <select style="width: 100%;" @bind="IdPacienteAtendido">
@@ -249,98 +293,60 @@
                             }
                         </select>
                         <p> </p>
-                        <label style="width: 100%;">PRACTICA:</label>
-                        <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+
+                        <label style="width: 100%;" for="inputText">PRACTICA ACTUAL:</label>
+                        <input style="width: 100%;" type="text" id="inputText" @bind="PracticaSeleccionada" readonly />
+                        <p> </p>
+                        <label style="width: 100%;">SELECCIONE QUE PRACTICA DESEA PONER:</label>
+                        <select style="width: 100%;" @bind="PracticaSeleccionada">
                             <option value="">Seleccionar</option>
                             @foreach (var practicaseleccion in ListaDePracticas)
                             {
-                                <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
                             }
-                        </select>                                        
+                        </select>
                     </div>
-            </div>
-            <div class="modal-footer">
-                    <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
-                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<!-- Modal EDITAR -->
-<div class="modal fade" id="modalEditPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR PRACTICA</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="form-group">
-                <label for="inputText">ID PRACTCA A EDITAR:</label>
-                <input style="width: 100%;" type="text" id="inputText" @bind="IdEdit" />
-            </div>
-           <div class="modal-body">
-              
-                <div class="form-group">
-                    <label style="width: 100%;">PACIENTE:</label>
-                    <select style="width: 100%;" @bind="IdPacienteAtendido">
-                        <option value="">Seleccionar</option>
-                        @foreach (var paciente in listaDePacientes)
-                        {
-                            <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
-                        }
-                    </select>
-                    <p> </p>
 
-                    <label style="width: 100%;" for="inputText">PRACTICA ACTUAL:</label>
-                    <input style="width: 100%;" type="text" id="inputText" @bind="PracticaSeleccionada" readonly />
-                    <p> </p>
-                    <label style="width: 100%;">SELECCIONE QUE PRACTICA DESEA PONER:</label>
-                    <select style="width: 100%;" @bind="PracticaSeleccionada">
-                        <option value="">Seleccionar</option>
-                        @foreach (var practicaseleccion in ListaDePracticas)
-                        {
-                            <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
-                        }
-                    </select>
                 </div>
-
-            </div>
-            <div class="modal-footer">
-             <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPracticaRealizada(IdEdit)">EDIT</button>
-             <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal" >X</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- FIN Modal EDITAR -->
-
-<!-- Modal ELIMINAR -->
-<div class="modal fade" id="modaleliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">ELIMINAR</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label>¿SEGURO DESEA ELIMINAR AL PACIENTE?</label>
-                <p> </p>
-                <div class="form-group">
+                <div class="modal-footer">
+                    <button style="width: 100%;" class="btn btn-warning" data-bs-dismiss="modal" disabled="@(!CamposValidos)" @onclick="() => EditarPracticaRealizada(IdEdit)">EDIT</button>
+                    <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button style="width: 100%;" class="btn btn-success" data-bs-dismiss="modal">SI</button>
-                <p> </p>
-                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+        </div>
+    </div>
+    <!-- FIN Modal EDITAR -->
+    <!-- Modal ELIMINAR -->
+    <div class="modal fade" id="modaleliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">ELIMINAR</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>¿SEGURO DESEA ELIMINAR AL PACIENTE?</label>
+                    <p> </p>
+                    <div class="form-group">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button style="width: 100%;" class="btn btn-success" data-bs-dismiss="modal">SI</button>
+                    <p> </p>
+                    <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<button style="width: 100%;" class="btn btn-warning" @onclick="() => CalcularTotal()">CALCULAR TOTAL</button>
-<p> </p>
-<label style="width: 100%;">TOTAL: $@MostrarTotal %50: $@MostrarTotalPorcentaje </label> 
+    <button style="width: 100%;" class="btn btn-warning" @onclick="() => CalcularTotal()">CALCULAR TOTAL</button>
+    <p> </p>
+    <label style="width: 100%;">TOTAL: $@MostrarTotal %50: $@MostrarTotalPorcentaje </label>
 
+}
+else
+{
+    <p>No tienes permiso para ver los datos.</p>
+}
 @code {
 
     private bool CamposValidos => IdPacienteAtendido != 0 && IdPracticaSeleccionada != 0;

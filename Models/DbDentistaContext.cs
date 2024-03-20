@@ -15,6 +15,8 @@ public partial class DbDentistaContext : DbContext
     {
     }
 
+    public virtual DbSet<Imprimir> Imprimirs { get; set; }
+
     public virtual DbSet<Login> Logins { get; set; }
 
     public virtual DbSet<Paciente> Pacientes { get; set; }
@@ -31,11 +33,19 @@ public partial class DbDentistaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Imprimir>(entity =>
+        {
+            entity.ToTable("Imprimir");
+        });
+
         modelBuilder.Entity<Login>(entity =>
         {
             entity.ToTable("Login");
 
             entity.Property(e => e.Contraseña)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Rol)
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.Usuario)
@@ -50,6 +60,9 @@ public partial class DbDentistaContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Celular)
                 .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Dni)
+                .HasMaxLength(8)
                 .IsFixedLength();
             entity.Property(e => e.Domicilio)
                 .HasMaxLength(50)
@@ -104,7 +117,7 @@ public partial class DbDentistaContext : DbContext
                 .HasMaxLength(30)
                 .IsFixedLength();
             entity.Property(e => e.Practica)
-                .HasMaxLength(30)
+                .HasMaxLength(50)
                 .IsFixedLength();
         });
 

@@ -1,157 +1,190 @@
 ﻿@page "/Imprimir"
 @using Dent.Models
 @using Dent.Shared
+@inject Permisos Permiso
+@if (Permiso.Logueado == 1)
 
-<button class="btn btn-primary" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
-
-<br />
-<br />
-
-<div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
-
-<div class="form-group">
-    <label for="inputText">% en 3 Cuotas:</label>
-    <input type="text" id="inputText" @bind="TresCuotasPorcentaje" />
-</div>
-<div class="form-group">
-    <label for="inputText">% en 6 Cuotas:</label>
-    <input type="text" id="inputText" @bind="SeisCuotasPorcentaje" />
-
+{
+    <style>
+    .small {
+            width: 25px;
+            height: 25px;
+        background - color: white;
+    color: lightgray;
+    border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 20px;
+    }
+    </style>
+    <style>
+    .input - small {
+    width: 100px;
+            height: 100px;
+    }
+    </style>
+    <style>
+        /* Estilos CSS para el cuadro */
+        .image-container {
+            width: 700px; /* Ancho deseado */
+            height: 100px; /* Altura deseada */
+            overflow: hidden; /* Ocultar el contenido que se desborda */
+        }
+            /* Estilos CSS para la imagen */
+            .image-container img {
+                width: 100%; /* Ancho al 100% del cuadro */
+                height: auto; /* Altura automática para mantener la proporción */
+                display: block; /* Hacer que la imagen sea un bloque */
+            }
+    </style>
+    <button class="btn btn-primary" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
+    <div style="display: @(OcultarImagen == 1 ? "block" : "none")">
+    <div class="image-container">
+            <img src="https://i.gyazo.com/4195baa2e73bef549cfb923918ee9b17.png" alt="Descripción de la imagen">
     </div>
-</div>
-<div  style="width: 100%;">
-<input type="text" id="inputText" @bind="Titulos[0]" readonly />
-<input type="text" id="inputText" @bind="Titulos[1]" size="8" readonly />
-<input type="text" id="inputText" @bind="Titulos[2]" size="8" readonly />
-<input type="text" id="inputText" @bind="Titulos[3]" size="8" readonly />
-<input type="text" id="inputText" @bind="Titulos[4]" size="8" readonly />
-<br />
-<br />
+    </div>
+    <div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
 
-<input type="text" id="inputText" @bind="PracticasArreglo[0]" readonly />
-<input type="text" id="inputText" @bind="PrecioArreglo[0]" size="8" readonly />
-<input type="text" id="inputText" @bind="EfectivoArreglo[0]" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotasArreglo[0]" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotasArreglo[0]" size="8" readonly />
-<button class="btn btn-danger" @onclick="() => EliminarFIla1(1)">X</button>
-<br />
+        <div class="form-group">
+            <label for="inputText">% en 3 Cuotas:</label>
+            <input type="text" id="inputText" @bind="TresCuotasPorcentaje" />
+        </div>
+        <div class="form-group">
+            <label for="inputText">% en 6 Cuotas:</label>
+            <input type="text" id="inputText" @bind="SeisCuotasPorcentaje" />
+        </div>
+    </div>
+    <p> </p>
+    <input type="text" id="inputText" class="input-small" @bind="Titulos[0]" size="36" readonly />
+        <input type="text" id="inputText" @bind="Titulos[1]" size="6" readonly />
+        <input type="text" id="inputText" @bind="Titulos[2]" size="6" readonly />
+        <input type="text" id="inputText" @bind="Titulos[3]" size="6" readonly />
+        <input type="text" id="inputText" @bind="Titulos[4]" size="6" readonly />
+    <br />
+    <input type="text" id="inputText" class="input-small" @bind="PracticasArreglo[0]" size="36" readonly />
+        <input type="text" id="inputText" value="@($"$ {PrecioArreglo[0]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {EfectivoArreglo[0]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {TresCuotasArreglo[0]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {SeisCuotasArreglo[0]}")" size="6" readonly />
+    <button class="small " @onclick="() => EliminarFIla1(1)">X</button>
+        <br />
+    <input type="text" id="inputText" class="input-small" @bind="PracticasArreglo[1]" size="36" readonly />
+    <input type="text" id="inputText" value="@($"$ {PrecioArreglo[1]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {EfectivoArreglo[1]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {TresCuotasArreglo[1]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {SeisCuotasArreglo[1]}")" size="6" readonly />
+    <button class="small " @onclick="() => EliminarFIla1(2)">X</button>
+        <br />
+    <input type="text" id="inputText" class="input-small" @bind="PracticasArreglo[2]" size="36" readonly />
+    <input type="text" id="inputText" value="@($"$ {PrecioArreglo[2]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {EfectivoArreglo[2]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {TresCuotasArreglo[2]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {SeisCuotasArreglo[2]}")" size="6" readonly />
+    <button class="small " @onclick="() => EliminarFIla1(3)">X</button>
+        <br />
+    <input type="text" id="inputText" class="input-small" @bind="PracticasArreglo[3]" size="36" readonly />
+    <input type="text" id="inputText" value="@($"$ {PrecioArreglo[3]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {EfectivoArreglo[3]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {TresCuotasArreglo[3]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {SeisCuotasArreglo[3]}")" size="6" readonly />
+    <button class="small " @onclick="() => EliminarFIla1(4)">X</button>
+        <br />
+    <input type="text" id="inputText" class="input-small" @bind="PracticasArreglo[4]" size="36" readonly />
+    <input type="text" id="inputText" value="@($"$ {PrecioArreglo[4]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {EfectivoArreglo[4]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {TresCuotasArreglo[4]}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {SeisCuotasArreglo[4]}")" size="6" readonly />
+    <button class="small " @onclick="() => EliminarFIla1(5)">X</button>
+        <br />
+    <input type="text" id="inputText" class="input-small" @bind="TotalLabel" size="36" readonly />
+    <input type="text" id="inputText" value="@($"$ {TotalDebito}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {TotalEfectivo}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {Total3Cuotas}")" size="6" readonly />
+    <input type="text" id="inputText" value="@($"$ {Total6Cuotas}")" size="6" readonly />
+        <br />
+        <div style="width: 50%;">
+            <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
+    </div>
 
-<input type="text" id="inputText" @bind="PracticasArreglo[1]" readonly />
-<input type="text" id="inputText" @bind="PrecioArreglo[1]" size="8" readonly />
-<input type="text" id="inputText" @bind="EfectivoArreglo[1]" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotasArreglo[1]" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotasArreglo[1]" size="8" readonly />
-<button class="btn btn-danger" @onclick="() => EliminarFIla1(2)">X</button>
-<br />
-
-<input type="text" id="inputText" @bind="PracticasArreglo[2]" readonly />
-<input type="text" id="inputText" @bind="PrecioArreglo[2]" size="8" readonly />
-<input type="text" id="inputText" @bind="EfectivoArreglo[2]" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotasArreglo[2]" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotasArreglo[2]" size="8" readonly />
-<button class="btn btn-danger" @onclick="() => EliminarFIla1(3)">X</button>
-<br />
-
-<input type="text" id="inputText" @bind="PracticasArreglo[3]" readonly />
-<input type="text" id="inputText" @bind="PrecioArreglo[3]" size="8" readonly />
-<input type="text" id="inputText" @bind="EfectivoArreglo[3]" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotasArreglo[3]" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotasArreglo[3]" size="8" readonly />
-<button class="btn btn-danger" @onclick="() => EliminarFIla1(4)">X</button>
-<br />
-
-<input type="text" id="inputText" @bind="PracticasArreglo[4]" readonly />
-<input type="text" id="inputText" @bind="PrecioArreglo[4]" size="8" readonly />
-<input type="text" id="inputText" @bind="EfectivoArreglo[4]" size="8" readonly />
-<input type="text" id="inputText" @bind="TresCuotasArreglo[4]" size="8" readonly />
-<input type="text" id="inputText" @bind="SeisCuotasArreglo[4]" size="8" readonly />
-<button class="btn btn-danger" @onclick="() => EliminarFIla1(5)">X</button>
-<br />
-
-<input type="text" id="inputText" @bind="TotalLabel" readonly />
-<input type="text" id="inputText" @bind="TotalDebito" size="8" readonly />
-<input type="text" id="inputText" @bind="TotalEfectivo" size="8" readonly />
-<input type="text" id="inputText" @bind="Total3Cuotas" size="8" readonly />
-<input type="text" id="inputText" @bind="Total6Cuotas" size="8" readonly />
-<br />
-<br />
-<div style="width: 50%;">
- <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
-</div>
-</div>
 
 
 
 
 
-<div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
-    <!-- BOTONES POR SI SE NECESITA USAR PRECIOS DIFERENCIADOS POR OBRAS SOCIALES
-    <button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
-    <button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
-    <button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
-    <button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
-    <button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
-    -->
+    <div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
+        <!-- BOTONES POR SI SE NECESITA USAR PRECIOS DIFERENCIADOS POR OBRAS SOCIALES
+        <button class="boton-celeste" @onclick="() => ShowDiv(1)">PARTICULAR</button>
+        <button class="boton-celeste" @onclick="() => ShowDiv(2)">APROSS</button>
+        <button class="boton-celeste" @onclick="() => ShowDiv(3)">OUM</button>
+        <button class="boton-celeste" @onclick="() => ShowDiv(4)">OSDE</button>
+        <button class="boton-celeste" @onclick="() => ShowDiv(5)">OTRAS</button>
+        -->
 
-      
-<div style="display: @(currentDiv == 1 ? "block" : "none")">
-    <table class="table">
-        <thead>
-                <tr class="table-dark">
-                <th>ID</th>
-                <th>Practica</th>
-                <th>Precio</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var practica in ListaDePracticas)
-            {
-                    <tr class="table-success">
-                    <td>@practica.Id</td>
-                    <td>@practica.Practica</td>
-                    <td>@practica.Precio</td>
-                    <td>
-                            <button class="btn btn-success" @onclick="() => Agregar(practica.Id)">Agregar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
 
-<div style="display: @(currentDiv == 2 ? "block" : "none")">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Practica</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var practica in ListaDePracticasApross)
-            {
-                <tr>
-                    <td>@practica.Id</td>
-                    <td>@practica.Practica</td>
-                    <td>@practica.Precio</td>
-                    <td>
-                            <button class="boton-celeste" @onclick="() => Agregar(practica.Id)">Agregar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<script>
-    var hola = "";
-    
+        <div style="display: @(currentDiv == 1 ? "block" : "none")">
+            <table class="table">
+                <thead>
+                    <tr class="table-dark">
+                        <th>ID</th>
+                        <th>Practica</th>
+                        <th>Precio</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var practica in ListaDePracticas)
+                    {
+                        <tr class="table-success">
+                            <td>@practica.Id</td>
+                            <td>@practica.Practica</td>
+                            <td>@practica.Precio</td>
+                            <td>
+                                <button class="btn btn-success" @onclick="() => Agregar(practica.Id)">Agregar</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-    var adios = hola;
+        <div style="display: @(currentDiv == 2 ? "block" : "none")">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Practica</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var practica in ListaDePracticasApross)
+                    {
+                        <tr>
+                            <td>@practica.Id</td>
+                            <td>@practica.Practica</td>
+                            <td>@practica.Precio</td>
+                            <td>
+                                <button class="boton-celeste" @onclick="() => Agregar(practica.Id)">Agregar</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <script>
+            var hola = "";
 
-</script>
-</div>
+
+            var adios = hola;
+
+        </script>
+    </div>
+}
+else
+{
+    <p>No tienes permiso para ver los datos.</p>
+}
+
 
 @code {
 
@@ -175,6 +208,7 @@
     public int SeisCuotas = 0;
     public int Efectivo20Menos = 0;
     public int OcultarTodoValor = 1;
+    public int OcultarImagen = 0;
     string nombreDelBoton = "IMPRIMIR";
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
@@ -185,12 +219,15 @@
     {
         if (OcultarTodoValor  == 1)
         {
+
+            OcultarImagen = 1;
             OcultarTodoValor = 0;
             nombreDelBoton = "PRESUPUESTO VALIDO POR 48hs, Posteriormente SUJETO A MODIFICACIONES";
         }
         else
         {
             OcultarTodoValor = 1;
+            OcultarImagen = 0;
             nombreDelBoton = "IMPRIMIR";
         }
 

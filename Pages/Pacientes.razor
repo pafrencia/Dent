@@ -4,6 +4,9 @@
 @using Dent.Shared
 @using Dent.Pages
 @inject Permisos Permiso
+
+@if (Permiso.Logueado == 1)
+{
     <br />
     <h3>ADMINISTRAR PACIENTES</h3>
     
@@ -73,7 +76,7 @@
     <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
     <input style="width: 100%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" />
 </div>
-<div
+<div>
 
 <label style="width: 100%;" for="miString">EDAD:</label>
 <input style="width: 100%;" id="miString" @bind="edad" />
@@ -162,7 +165,7 @@
     <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
     <input style="width: 100%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" />
 </div>
-<div
+<div>
         <p> </p>
 <label style="width: 100%;" for="miString">EDAD:</label>
 <input style="width: 100%;" id="miString" @bind="edad" />
@@ -309,7 +312,7 @@
     <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
     <input style="width: 90%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" readonly />
 </div>
-<div
+<div>
         <p> </p>
 <label style="width: 100%;" for="miString">EDAD:</label>
 <input style="width: 90%;" id="miString" @bind="edad" readonly />
@@ -359,6 +362,12 @@
         </div>
     </div>
 </div>
+}
+else
+{
+    <p>No tienes permiso para ver los datos.</p>
+}
+
 @code {
     [Inject]
     private DbDentistaContext DbContext { get; set; }

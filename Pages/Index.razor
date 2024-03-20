@@ -2,7 +2,7 @@
 @using Dent.Models
 @inject ServicioAutenticacion ServicioAutenticacion
 @inject NavigationManager NavigationManager
-
+@inject Permisos Permiso
 
 <PageTitle>Index</PageTitle>
 
@@ -10,25 +10,28 @@
 
 <h3>Iniciar Sesión</h3>
 
-<EditForm Model="@usuario"  OnValidSubmit="IniciarSesion" >
-    <DataAnnotationsValidator />
     <div class="form-group" style="width: 50%;">
         <div>
         <label  for="nombreUsuario">Nombre de Usuario:</label>
         <InputText style="width: 100%;" id="nombreUsuario" @bind-Value="nombreUsuario" />
     </div>
+    <p> </p>
     <div>
         <label for="contraseña">Contraseña:</label>
         <InputText style="width: 100%;" id="contraseña" type="password" @bind-Value="contraseña" />
     </div>
+    <p> </p>
     </div>
-    <button class="btn btn-primary"  @onclick="IniciarSesion">Iniciar Sesion</button>
-    <label>@info</label>
-</EditForm>
+    <button class="btn btn-primary"  @onclick="IniciarSesion">INICIAR SESION</button>
 
+<p> </p>
+<button class="btn btn-danger" @onclick="CerrarSesion">CERRAR SESION</button>
+<p> </p>
+<label>@info</label>
+@* 
 <button class="btn btn-primary" @onclick="AbrirModal">Crear Usuario</button>
 
-
+ *@
 <div class="modal" style="display: @(mostrarModal ? "block" : "none")">
     <div class="modal-content">
         <span class="cerrar" @onclick="CerrarModal">&times;</span>
@@ -53,14 +56,10 @@
     [Inject]
     private DbDentistaContext DbContext { get; set; }
     string info = "Ingrese Usuario y contraseña";
-    private bool mostrarModal = false;
+    private static bool mostrarModal = false;
     private string nombreUsuario = "";
     private string contraseña = "";
-
     private Usuario usuario = new Usuario();
-    public static int Logueado = 0;
-
-
     public void CrearUsuario()
     {
         var comparacion = contraseña.Length;
@@ -69,6 +68,7 @@
             var datos = new Login();
             datos.Usuario = nombreUsuario;
             datos.Contraseña = contraseña;
+            datos.Rol = "user";
             using (DbDentistaContext db = new DbDentistaContext())
             {
                 db.Logins.Add(datos);
@@ -85,10 +85,15 @@
     }
 
 
-    private async Task IniciarSesion()
+    private void CerrarSesion()
     {
+        Permiso.Logueado = 0;
+        Permiso.Admin = false;
+        info = "SESSION CERRADA CORRECTAMENTE";
+    }
 
-
+    private void IniciarSesion()
+    {
         var entidad = new Login();
 
         entidad = DbContext.Logins.SingleOrDefault(e => e.Usuario == nombreUsuario);
@@ -99,21 +104,59 @@
 
             if (entidad.Contraseña == contraseña)
 
-            { 
-                info = "USUARIO Y CONTRASEÑA CORRECTA";
-              Logueado = 1;
-
+            {
+                Permiso.Logueado = 1;
+                if (entidad.Rol == "admin     ")
+                {
+                    Permiso.Admin = true;
+                    info = "LOGUEADO CORRECTAMENTE COMO ADMINISTRADOR";
+                }
+                else
+                {
+                    Permiso.Admin = false;
+                    info = "LOGUEADO CORRECTAMENTE";
+                }
+              
+                }
+           else
+               { info = "CONTRASEÑA INCORRECTA"; }
             }
-        else
-            { info = "CONTRASEÑA INCORRECTA"; }
-        }
-        else
-        {
-            info = "EL USUARIO NO EXISTE";
+            else
+             {
+                info = "EL USUARIO NO EXISTE";
 
-        }
-           
+             }
     }
+
+    // private async Task IniciarSesion()
+    // {
+
+
+    //     var entidad = new Login();
+
+    //     entidad = DbContext.Logins.SingleOrDefault(e => e.Usuario == nombreUsuario);
+
+
+    //     if (entidad != null)
+    //     {
+
+    //         if (entidad.Contraseña == contraseña)
+
+    //         { 
+    //             info = "USUARIO Y CONTRASEÑA CORRECTA";
+    //             Permiso.Logueado = 1;
+    //             Permiso.Admin = true;
+    //         }
+    //     else
+    //         { info = "CONTRASEÑA INCORRECTA"; }
+    //     }
+    //     else
+    //     {
+    //         info = "EL USUARIO NO EXISTE";
+
+    //     }
+           
+    // }
     // Método para abrir el modal
     public void AbrirModal()
     {
