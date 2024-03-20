@@ -64,6 +64,10 @@
     <input style="width: 100%;" type="text" id="inputText" @bind="apellido" />
 </div>
 <div class="form-group">
+    <label style="width: 100%;" for="inputText">DNI:</label>
+    <input style="width: 100%;" type="text" id="inputText" @bind="dni" />
+</div>
+<div class="form-group">
     <label style="width: 100%;" for="inputText">Domicilio:</label>
     <input style="width: 100%;" type="text" id="inputText" @bind="domicilio" />
 </div>
@@ -400,6 +404,7 @@ else
     public string pacienteAgregadoCorrectamente = "";
     private int IdEdit = 0;
     private string filtro = "";
+    private string dni = "0";
     [Inject]
     public IJSRuntime JSRuntime { get; set; }
 
@@ -444,7 +449,7 @@ else
         {
             ActualizaTablaPacientes();
         }
-   
+
 
     }
     private void ActualizarFiltroApellido(ChangeEventArgs e)
@@ -458,10 +463,10 @@ else
         {
             ActualizaTablaPacientes();
         }
-   
+
 
     }
-    
+
     private void ActualizarFiltroDni(ChangeEventArgs e)
     {
         algo = e.Value.ToString().ToUpper();
@@ -473,10 +478,10 @@ else
         {
             ActualizaTablaPacientes();
         }
-   
+
 
     }
-    
+
     private void ActualizarFiltroObraSocial(ChangeEventArgs e)
     {
         algo = e.Value.ToString().ToUpper();
@@ -488,26 +493,26 @@ else
         {
             ActualizaTablaPacientes();
         }
-   
+
 
     }
     private void SeleccionarPaciente(int seleccionado)
     {
-              using (DbDentistaContext db = new DbDentistaContext())
+        using (DbDentistaContext db = new DbDentistaContext())
         {
             var prueba = DbContext.Pacientes.Find(seleccionado);
-        IdEdit = prueba.Id;
-        nombrePaciente = prueba.Nombre;
-        apellido =  prueba.Apellido;
-        domicilio =  prueba.Domicilio;
-        celu = prueba.Celular;
-        fechaNacimiento = prueba.FechaDeNacimiento;
-        fechaAlta = prueba.FechaDeAlta;
-        obraSocialGuardar = prueba.ObraSocial;
-        titular = prueba.Titular;
-        plan = prueba.PlanDeObraSocial;
-        afiliado = prueba.NumeroAfiliado;
-        textoMultilinea = prueba.Observaciones;            
+            IdEdit = prueba.Id;
+            nombrePaciente = prueba.Nombre;
+            apellido =  prueba.Apellido;
+            domicilio =  prueba.Domicilio;
+            celu = prueba.Celular;
+            fechaNacimiento = prueba.FechaDeNacimiento;
+            fechaAlta = prueba.FechaDeAlta;
+            obraSocialGuardar = prueba.ObraSocial;
+            titular = prueba.Titular;
+            plan = prueba.PlanDeObraSocial;
+            afiliado = prueba.NumeroAfiliado;
+            textoMultilinea = prueba.Observaciones;            
         }
     }
 
@@ -598,6 +603,7 @@ else
         apellido = "-";
         domicilio = "-";
         celu = "0";
+        dni = "0";
         fechaNacimiento = DateTime.Today;
         fechaAlta = DateTime.Today;
         obraSocialSeleccionada = "0";
@@ -609,30 +615,37 @@ else
 
     public void Agregar()
     {
-        var prueba = new Paciente();
+        if (celu.Length == 10)
+        {   var prueba = new Paciente();
+            prueba.Nombre = nombrePaciente.ToUpper();
+            prueba.Apellido = apellido.ToUpper();
+            prueba.Domicilio = domicilio.ToUpper();
+            prueba.Celular = celu;
+            prueba.FechaDeNacimiento = fechaNacimiento;
+            prueba.FechaDeAlta = DateTime.Today;
+            prueba.ObraSocial = obraSocialGuardar;
+            prueba.Titular = titular.ToUpper();
+            prueba.PlanDeObraSocial = plan;
+            prueba.NumeroAfiliado = afiliado;
+            prueba.Observaciones = textoMultilinea;
+            prueba.Dni = dni;
 
-        prueba.Nombre = nombrePaciente.ToUpper();
-        prueba.Apellido = apellido.ToUpper();
-        prueba.Domicilio = domicilio.ToUpper();
-        prueba.Celular = celu;
-        prueba.FechaDeNacimiento = fechaNacimiento;
-        prueba.FechaDeAlta = DateTime.Today;
-        prueba.ObraSocial = obraSocialGuardar;
-        prueba.Titular = titular.ToUpper();
-        prueba.PlanDeObraSocial = plan;
-        prueba.NumeroAfiliado = afiliado;
-        prueba.Observaciones = textoMultilinea;
 
-
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            db.Pacientes.Add(prueba);
-            db.SaveChanges();
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.Pacientes.Add(prueba);
+                db.SaveChanges();
+            }
+            pacienteAgregadoCorrectamente = "paciente agregado correctamente";
+            ActualizaTablaPacientes();
+            InicializarPacientes();
+            AgregarPacientesMenu(1);
         }
-        pacienteAgregadoCorrectamente = "paciente agregado correctamente";
-        ActualizaTablaPacientes();
-        InicializarPacientes();
-        AgregarPacientesMenu(1);
+        else
+        {
+            
+        }
+
     }
        private void ActualizaTablaPacientes()
     {    
