@@ -1,0 +1,89 @@
+﻿@page "/Odontograma"
+@using Dent.Models
+@using System.Globalization
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@inject Permisos Permiso
+@inject AgregarPracticas AgregarPracticas
+@inject EliminarPracticaMetod EliminarPracticaMethod
+
+<h3>Odontograma</h3>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trapecio Interactivo como Botón</title>
+</head>
+<body>
+    <canvas id="trapecioCanvas" width="400" height="300" style="border:1px solid black;"></canvas>
+
+    <!-- Formulario oculto -->
+    <div id="formulario" style="display:none;">
+        <h2>Formulario de Ejemplo</h2>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre"><br><br>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido"><br><br>
+        <button onclick="guardarDatos()">Guardar</button>
+    </div>
+
+    <script>
+        var canvas = document.getElementById('trapecioCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Definir las coordenadas de los puntos del trapecio
+        var puntoA = { x: 100, y: 50 };
+        var puntoB = { x: 300, y: 50 };
+        var puntoC = { x: 250, y: 150 };
+        var puntoD = { x: 150, y: 150 };
+
+        // Dibujar el trapecio
+        function dibujarTrapecio(color) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+            ctx.beginPath();
+            ctx.moveTo(puntoA.x, puntoA.y);
+            ctx.lineTo(puntoB.x, puntoB.y);
+            ctx.lineTo(puntoC.x, puntoC.y);
+            ctx.lineTo(puntoD.x, puntoD.y);
+            ctx.closePath(); // Cierra el trapecio
+            ctx.fillStyle = color; // Establecer el color
+            ctx.fill(); // Rellenar el trapecio
+        }
+
+        // Función para determinar si las coordenadas del clic están dentro del trapecio
+        function estaDentroDelTrapecio(x, y) {
+            var AB = (puntoB.x - puntoA.x) * (y - puntoA.y) - (puntoB.y - puntoA.y) * (x - puntoA.x);
+            var BC = (puntoC.x - puntoB.x) * (y - puntoB.y) - (puntoC.y - puntoB.y) * (x - puntoB.x);
+            var CD = (puntoD.x - puntoC.x) * (y - puntoC.y) - (puntoD.y - puntoC.y) * (x - puntoC.x);
+            var DA = (puntoA.x - puntoD.x) * (y - puntoD.y) - (puntoA.y - puntoD.y) * (x - puntoD.x);
+
+            return (AB >= 0 && BC >= 0 && CD >= 0 && DA >= 0) || (AB <= 0 && BC <= 0 && CD <= 0 && DA <= 0);
+        }
+
+        // Evento click: Mostrar formulario solo si se hace clic dentro del trapecio
+        canvas.addEventListener('click', function (event) {
+            var rect = canvas.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+
+            if (estaDentroDelTrapecio(x, y)) {
+                document.getElementById('formulario').style.display = 'block';
+            }
+        });
+
+        // Función para guardar los datos del formulario (solo como ejemplo)
+        function guardarDatos() {
+            var nombre = document.getElementById('nombre').value;
+            var apellido = document.getElementById('apellido').value;
+            alert('Datos guardados:\nNombre: ' + nombre + '\nApellido: ' + apellido);
+            // Aquí podrías enviar los datos a través de una petición AJAX, etc.
+        }
+
+        // Dibujar el trapecio inicialmente con color rojo
+        dibujarTrapecio('red');
+    </script>
+</body>
+@code {
+
+}

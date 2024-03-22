@@ -28,11 +28,12 @@ public partial class DbDentistaContext : DbContext
     public virtual DbSet<PracticasRealizada> PracticasRealizadas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      // CADENA DE CONEXION DE MI PC
         //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        //        => optionsBuilder.UseSqlServer("Server=DESKTOP-S5MA4R8; Database=DbDentista; Trusted_Connection=True;TrustServerCertificate=True;");
-
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("workstation id=DbDentista.mssql.somee.com;packet size=4096;user id=pafrencia_SQLLogin_1;pwd=poeci1m7od;data source=DbDentista.mssql.somee.com;persist security info=False;initial catalog=DbDentista;TrustServerCertificate=True");
+                => optionsBuilder.UseSqlServer("Server=DESKTOP-S5MA4R8; Database=DbDentista; Trusted_Connection=True;TrustServerCertificate=True;");
+    // CADENA DE CONEXION DE SERVIDOR SOMEE
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("workstation id=DbDentista.mssql.somee.com;packet size=4096;user id=pafrencia_SQLLogin_1;pwd=poeci1m7od;data source=DbDentista.mssql.somee.com;persist security info=False;initial catalog=DbDentista;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
