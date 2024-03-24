@@ -10,80 +10,345 @@
 
 <h3>Odontograma</h3>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trapecio Interactivo como Botón</title>
-</head>
-<body>
-    <canvas id="trapecioCanvas" width="400" height="300" style="border:1px solid black;"></canvas>
+<style>
+    table {
+        border-collapse: collapse;
+        border-spacing: 0; /* Asegura que no haya espacio entre las celdas */
+    }
 
-    <!-- Formulario oculto -->
-    <div id="formulario" style="display:none;">
-        <h2>Formulario de Ejemplo</h2>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre"><br><br>
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido"><br><br>
-        <button onclick="guardarDatos()">Guardar</button>
+    table, th, td {
+        border: 0px;
+        padding: 0;
+        margin: 0;
+    }
+</style>
+<style>
+    .square-button {
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+    }
+        .square-button:hover {
+            border-color: green;
+        }
+</style>
+<style>
+    .arriba-button {
+        width: 50px;
+        height: 20px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+    }
+        .arriba-button:hover {
+            border-color: green;
+        }
+</style>
+
+<style>
+    .costado-button {
+        width: 23px;
+        height: 50px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+    }
+        .costado-button:hover {
+            border-color: green;
+        }
+</style>
+<table>
+    <thead>
+        <tr class="table-dark">
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>  <button class="costado-button">12</button></td>
+            <td>  <button class="square-button">12</button></td>
+            <td>  <button class="costado-button" style="@($"background-color: {color};")" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">12</button></td>
+
+        </tr>
+        <tr>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<!-- Modal AGREGAR -->
+<div class="modal fade" id="modalAgregarPracticaRealizada" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA REALIZADA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <label style="width: 100%;">PACIENTE:</label>
+                        <select style="width: 100%;">
+                            <option value="">Seleccionar</option>
+                         
+                        </select>
+                        <p> </p>
+                        <label style="width: 100%;">PRACTICA:</label>
+                        <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                            <option value="">Seleccionar</option>
+                            @foreach (var practicaseleccion in ListaDePracticas)
+                            {
+                                <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button style="width: 100%;" class="btn btn-success" >Agregar </button>
+                    <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        var canvas = document.getElementById('trapecioCanvas');
-        var ctx = canvas.getContext('2d');
-
-        // Definir las coordenadas de los puntos del trapecio
-        var puntoA = { x: 100, y: 50 };
-        var puntoB = { x: 300, y: 50 };
-        var puntoC = { x: 250, y: 150 };
-        var puntoD = { x: 150, y: 150 };
-
-        // Dibujar el trapecio
-        function dibujarTrapecio(color) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
-            ctx.beginPath();
-            ctx.moveTo(puntoA.x, puntoA.y);
-            ctx.lineTo(puntoB.x, puntoB.y);
-            ctx.lineTo(puntoC.x, puntoC.y);
-            ctx.lineTo(puntoD.x, puntoD.y);
-            ctx.closePath(); // Cierra el trapecio
-            ctx.fillStyle = color; // Establecer el color
-            ctx.fill(); // Rellenar el trapecio
-        }
-
-        // Función para determinar si las coordenadas del clic están dentro del trapecio
-        function estaDentroDelTrapecio(x, y) {
-            var AB = (puntoB.x - puntoA.x) * (y - puntoA.y) - (puntoB.y - puntoA.y) * (x - puntoA.x);
-            var BC = (puntoC.x - puntoB.x) * (y - puntoB.y) - (puntoC.y - puntoB.y) * (x - puntoB.x);
-            var CD = (puntoD.x - puntoC.x) * (y - puntoC.y) - (puntoD.y - puntoC.y) * (x - puntoC.x);
-            var DA = (puntoA.x - puntoD.x) * (y - puntoD.y) - (puntoA.y - puntoD.y) * (x - puntoD.x);
-
-            return (AB >= 0 && BC >= 0 && CD >= 0 && DA >= 0) || (AB <= 0 && BC <= 0 && CD <= 0 && DA <= 0);
-        }
-
-        // Evento click: Mostrar formulario solo si se hace clic dentro del trapecio
-        canvas.addEventListener('click', function (event) {
-            var rect = canvas.getBoundingClientRect();
-            var x = event.clientX - rect.left;
-            var y = event.clientY - rect.top;
-
-            if (estaDentroDelTrapecio(x, y)) {
-                document.getElementById('formulario').style.display = 'block';
-            }
-        });
-
-        // Función para guardar los datos del formulario (solo como ejemplo)
-        function guardarDatos() {
-            var nombre = document.getElementById('nombre').value;
-            var apellido = document.getElementById('apellido').value;
-            alert('Datos guardados:\nNombre: ' + nombre + '\nApellido: ' + apellido);
-            // Aquí podrías enviar los datos a través de una petición AJAX, etc.
-        }
-
-        // Dibujar el trapecio inicialmente con color rojo
-        dibujarTrapecio('red');
-    </script>
-</body>
 @code {
+    private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
+    private List<Paciente> listaDePacientes = new List<Paciente>();
+    private List<Practica1> ListaDePracticas = new List<Practica1>();
+    string color = "red"; // Variable que contiene el color que deseas aplicar al botón
+  
+    private int IdEdit = 0;
+    private bool mostrarModalEdit = false;
+    private int currentDiv = 1;
+    private int IdPacienteAtendido;
+    private int IdPacienteEditar;
+    private int IdOdontologo;
+    private string ObraSocialPacienteAtendido = "no cargada";
+    private string PracticaSeleccionada;
+    private string OdontologoQueAtendio;
+    private int IdPracticaSeleccionada;
+    private DateTime FiltroFecha = DateTime.Today;
+    private DateTime FiltroFechaFin = DateTime.Today;
+    private int mes = DateTime.Today.Month;
+    private int año = DateTime.Today.Year;
+    private int mesSeleccionado = DateTime.Today.Month;
+    private int añoSeleccionado = DateTime.Today.Year;
+    private int meso = 0;
+    private void CambiaColor()
+    {
+        color = "green";
 
+    }
+
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        listaDePacientes = DbContext.Pacientes.ToList();
+        ListaDePracticas = DbContext.Practicas.ToList();
+      
+    }
+    public string Practica = "";
+    public string PacienteAtendido = "";
+    public int Precio = 0;
+    public int IdEditar = 0;
+    public string miString = "";
+    public int MostrarTotal = 0;
+    public int MostrarTotalPorcentaje = 0;
+    string odontologoFiltrado = " ";
+    private string algo = "valor uno";
+
+
+    public void ActualizaTablaPracticasRealizadas()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        StateHasChanged();
+
+    }
+
+    public void EditarPracticaRealizada(int paciente)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var a = DbContext.Pacientes.Find(IdPacienteAtendido);
+            PacienteAtendido = a.Nombre + a.Apellido;
+            ObraSocialPacienteAtendido = a.ObraSocial;
+            IdPacienteEditar = a.Id;
+        }
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.PracticasRealizadas.Find(paciente);
+
+            prueba.Paciente = PacienteAtendido;
+            prueba.Practica = PracticaSeleccionada;
+            prueba.Precio = Precio;
+            prueba.ObraSocial = ObraSocialPacienteAtendido;
+            prueba.Odontologo = "BRAIAN";
+            prueba.IdPaciente = IdPacienteEditar;
+            db.Update(prueba);
+            db.SaveChanges();
+        }
+
+
+
+        ActualizaTablaPracticasRealizadas();
+    }
+
+
+    [Inject]
+    private AgregarPracticas agregarPracticas { get; set; }
+    [Inject]
+    private EliminarPracticaMetod Eliminarla { get; set; }
+
+    private void SeleccionarPracticaRealizada(int seleccionado)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.PracticasRealizadas.Find(seleccionado);
+            IdEdit = prueba.Id;
+            IdPacienteAtendido = prueba.IdPaciente;
+            PracticaSeleccionada = prueba.Practica;
+            PacienteAtendido = prueba.Paciente;
+            ObraSocialPacienteAtendido = prueba.ObraSocial;
+            Practica = prueba.Practica;
+            OdontologoQueAtendio = prueba.Odontologo;
+        }
+    }
+    private void EditarPracticaAbrir(int practicaId)
+    {
+        AbrirModalEdit();
+
+
+        if (currentDiv == 1)
+        {
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var practica = DbContext.PracticasRealizadas.Find(practicaId);
+                PracticaSeleccionada = practica.Practica;
+                PacienteAtendido = practica.Practica;
+                IdPacienteEditar = practica.IdPaciente;
+            }
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var paciente = DbContext.Pacientes.Find(IdPacienteEditar);
+                IdPacienteAtendido = paciente.Id;
+            }
+        }
+    }
+
+
+    private List<Paciente> listaDeItems;
+    private Paciente selectedItem;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        listaDeItems = DbContext.Pacientes.ToList();
+
+    }
+
+    public void EditarPractica(int practicaId)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var practica = DbContext.PracticasRealizadas.Find(practicaId);
+            practica.Paciente = PacienteAtendido;
+            practica.Practica = PracticaSeleccionada;
+            db.SaveChanges();
+            ActualizaTabla();
+        }
+        CerrarModalEdit();
+
+    }
+    public void EliminarPractica(int practicaId)
+    {
+        //  Eliminarla.Eliminarla(practicaId);
+        var practica = DbContext.PracticasRealizadas.Find(practicaId);
+        if (practica != null)
+        {
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.PracticasRealizadas.Remove(practica);
+                db.SaveChanges();
+            }
+        }
+        ActualizaTabla();
+
+    }
+    private void Agregar()
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
+            PacienteAtendido = paciente.Nombre + paciente.Apellido;
+            ObraSocialPacienteAtendido = paciente.ObraSocial;
+            IdPacienteEditar = paciente.Id;
+        }
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
+            PracticaSeleccionada = p.Practica;
+            Precio = p.Precio;
+        }
+        var prueba = new PracticasRealizada();
+
+        prueba.Paciente = PacienteAtendido;
+        prueba.Practica = PracticaSeleccionada;
+        prueba.ObraSocial = "pendiente";
+        prueba.Precio = Precio;
+        prueba.ObraSocial = ObraSocialPacienteAtendido;
+        prueba.Odontologo = "BRAIAN";
+        prueba.Fecha = DateTime.Now;
+        prueba.IdPaciente = IdPacienteEditar;
+
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.PracticasRealizadas.Add(prueba);
+            db.SaveChanges();
+        }
+        ActualizaTabla();
+    }
+
+    private void ActualizaTabla()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        StateHasChanged();
+
+    }
+
+    public void AbrirModalEdit()
+    {
+        mostrarModalEdit = true;
+    }
+
+    // Método para cerrar el modal
+    public void CerrarModalEdit()
+    {
+        mostrarModalEdit = false;
+    }
 }
