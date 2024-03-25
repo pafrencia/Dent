@@ -15,9 +15,11 @@ public partial class PracticasRealizada
 
     public string Odontologo { get; set; }
 
-    public DateTime? Fecha { get; set; }
+    public DateTime Fecha { get; set; }
 
     public int Precio { get; set; }
 
     public int IdPaciente { get; set; }
+
+    public string Observaciones { get; set; }
 }

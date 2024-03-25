@@ -34,6 +34,20 @@
             border-color: green;
         }
 </style>
+
+<style>
+    .container {
+        width: 1000px;
+        height: 500px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+    }
+
+        .square-button:hover {
+            border-color: green;
+        }
+</style>
 <style>
     .arriba-button {
         width: 50px;
@@ -58,10 +72,21 @@
         .costado-button:hover {
             border-color: green;
         }
+    .1a {
+        background-color: blue;
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+    .custom-row {
+        height: 200px;
+
+    }
 </style>
+
+@* 
 <table>
     <thead>
-        <tr class="table-dark">
+        <tr class="table">
             <th></th>
             <th></th>
             <th></th>
@@ -70,25 +95,77 @@
     <tbody>
         <tr>
             <td></td>
-            <td>  <button class="arriba-button">12</button></td>
+            <td><button class="arriba-button">12</button></td>
             <td></td>
+
         </tr>
         <tr>
             <td>  <button class="costado-button">12</button></td>
             <td>  <button class="square-button">12</button></td>
-            <td>  <button class="costado-button" style="@($"background-color: {color};")" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">12</button></td>
-
+            <td>  <button class="costado-button" style="@($"background-color: {color12c};")" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada" @onclick="color12ccambiar">12</button></td>
         </tr>
         <tr>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
+            <td></td>
+            <td>  <button class="arriba-button">12</button></td>
+            <td></td>
             <td></td>
             <td>  <button class="arriba-button">12</button></td>
             <td></td>
         </tr>
     </tbody>
-</table>
+</table> *@
+@* <div class="container">
+</div>
 
+ *@
 
-
+<div class="container">
+    <div class="1a">
+            Elemento 1
+    </div>
+</div>
 <!-- Modal AGREGAR -->
 <div class="modal fade" id="modalAgregarPracticaRealizada" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -101,24 +178,19 @@
 
                 <div class="form-group">
                     <div class="form-group">
-                        <label style="width: 100%;">PACIENTE:</label>
-                        <select style="width: 100%;">
-                            <option value="">Seleccionar</option>
-                         
-                        </select>
-                        <p> </p>
+
                         <label style="width: 100%;">PRACTICA:</label>
-                        <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                        <select style="width: 100%;" @onchange="CambiaColor">
                             <option value="">Seleccionar</option>
-                            @foreach (var practicaseleccion in ListaDePracticas)
+                            @foreach (var practicaseleccion in ListaDePracticasOdontograma)
                             {
-                                <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                <option value="@practicaseleccion.Color">@practicaseleccion.Practica</option>
                             }
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button style="width: 100%;" class="btn btn-success" >Agregar </button>
+                    <button style="width: 100%;" class="btn btn-success" @onclick="() => AgregarPracticaEnPaciente()">Agregar </button>
                     <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
                 </div>
             </div>
@@ -130,8 +202,10 @@
     private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
     private List<Paciente> listaDePacientes = new List<Paciente>();
     private List<Practica1> ListaDePracticas = new List<Practica1>();
+    private List<PracticasOdontograma> ListaDePracticasOdontograma = new List<PracticasOdontograma>();
     string color = "red"; // Variable que contiene el color que deseas aplicar al botón
-  
+    string color12c = "white";
+    string colorSeleccionado = "";
     private int IdEdit = 0;
     private bool mostrarModalEdit = false;
     private int currentDiv = 1;
@@ -139,7 +213,7 @@
     private int IdPacienteEditar;
     private int IdOdontologo;
     private string ObraSocialPacienteAtendido = "no cargada";
-    private string PracticaSeleccionada;
+    private string IdPracticaSeleccionadaOdontograma;
     private string OdontologoQueAtendio;
     private int IdPracticaSeleccionada;
     private DateTime FiltroFecha = DateTime.Today;
@@ -149,11 +223,17 @@
     private int mesSeleccionado = DateTime.Today.Month;
     private int añoSeleccionado = DateTime.Today.Year;
     private int meso = 0;
-    private void CambiaColor()
+    private string botonSeleccionado = "";
+    private void CambiaColor(ChangeEventArgs args)
     {
-        color = "green";
-
+        var o = args.Value.ToString();
+        colorSeleccionado = o;
     }
+    private void color12ccambiar()
+    {
+        botonSeleccionado = "12c";
+    }
+
 
     private void ShowDiv(int divNumber)
     {
@@ -168,7 +248,8 @@
         ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
         listaDePacientes = DbContext.Pacientes.ToList();
         ListaDePracticas = DbContext.Practicas.ToList();
-      
+        ListaDePracticasOdontograma = DbContext.PracticasOdontogramas.ToList();
+
     }
     public string Practica = "";
     public string PacienteAtendido = "";
@@ -188,35 +269,10 @@
 
     }
 
-    public void EditarPracticaRealizada(int paciente)
+    public void AgregarPracticaEnPaciente()
     {
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var a = DbContext.Pacientes.Find(IdPacienteAtendido);
-            PacienteAtendido = a.Nombre + a.Apellido;
-            ObraSocialPacienteAtendido = a.ObraSocial;
-            IdPacienteEditar = a.Id;
-        }
-
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var prueba = DbContext.PracticasRealizadas.Find(paciente);
-
-            prueba.Paciente = PacienteAtendido;
-            prueba.Practica = PracticaSeleccionada;
-            prueba.Precio = Precio;
-            prueba.ObraSocial = ObraSocialPacienteAtendido;
-            prueba.Odontologo = "BRAIAN";
-            prueba.IdPaciente = IdPacienteEditar;
-            db.Update(prueba);
-            db.SaveChanges();
-        }
-
-
-
-        ActualizaTablaPracticasRealizadas();
+        color12c = colorSeleccionado;
     }
-
 
     [Inject]
     private AgregarPracticas agregarPracticas { get; set; }
@@ -230,7 +286,7 @@
             var prueba = DbContext.PracticasRealizadas.Find(seleccionado);
             IdEdit = prueba.Id;
             IdPacienteAtendido = prueba.IdPaciente;
-            PracticaSeleccionada = prueba.Practica;
+
             PacienteAtendido = prueba.Paciente;
             ObraSocialPacienteAtendido = prueba.ObraSocial;
             Practica = prueba.Practica;
@@ -247,7 +303,7 @@
             using (DbDentistaContext db = new DbDentistaContext())
             {
                 var practica = DbContext.PracticasRealizadas.Find(practicaId);
-                PracticaSeleccionada = practica.Practica;
+
                 PacienteAtendido = practica.Practica;
                 IdPacienteEditar = practica.IdPaciente;
             }
@@ -276,7 +332,7 @@
         {
             var practica = DbContext.PracticasRealizadas.Find(practicaId);
             practica.Paciente = PacienteAtendido;
-            practica.Practica = PracticaSeleccionada;
+
             db.SaveChanges();
             ActualizaTabla();
         }
@@ -311,13 +367,13 @@
         using (DbDentistaContext db = new DbDentistaContext())
         {
             var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
-            PracticaSeleccionada = p.Practica;
+
             Precio = p.Precio;
         }
         var prueba = new PracticasRealizada();
 
         prueba.Paciente = PacienteAtendido;
-        prueba.Practica = PracticaSeleccionada;
+
         prueba.ObraSocial = "pendiente";
         prueba.Precio = Precio;
         prueba.ObraSocial = ObraSocialPacienteAtendido;

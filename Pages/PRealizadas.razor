@@ -82,10 +82,10 @@
 {
 
     <div style="height: 800px; overflow-y: auto;">
-        <table class="table">
+        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
             <thead>
                 <tr class="table-dark">
-                    <th>FECHA</th>
+                    <th>FECHA</th> 
                     <th>PACIENTE</th>
                     <th>PRACTICA</th>
                     <th>OBRA SOCIAL</th>
@@ -140,7 +140,7 @@
                     <td></td>
                     <td>
                         <select style="width: 100%;" @onchange="MetodoPersonalizado3">
-                            <option value="">Seleccionar</option>
+                            <option value="">TODOS</option>
                             <option value=BRAIAN>BRAIAN</option>
                             <option value=CECI>CECI</option>
                             <option value=AGUS>AGUS</option>
@@ -270,6 +270,9 @@
                                     <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
                                 }
                             </select>
+                            <div style="width: 100%;">
+                                <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -381,6 +384,7 @@ else
     private int mesSeleccionado = DateTime.Today.Month;
     private int añoSeleccionado = DateTime.Today.Year;
     private int meso = 0;
+    private string textoMultilinea = "observacioes del paciente";
 
     private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
     private List<PracticasRealizada> elementosUnicos = new List<PracticasRealizada>();
@@ -400,7 +404,6 @@ else
         ListaDePracticas = DbContext.Practicas.ToList();
         registrosFiltrados = DbContext.PracticasRealizadas.ToList();
         elementosUnicos = DbContext.PracticasRealizadas.Distinct().ToList();
-        CalcularTotal();
     }
     public string Practica = "";
     public string PacienteAtendido = "";
@@ -530,9 +533,6 @@ else
             db.Update(prueba);
             db.SaveChanges();
         }
-
-
-
         ActualizaTablaPracticasRealizadas();
     }
 
@@ -619,6 +619,10 @@ else
     }
     private void Agregar()
     {
+        if (textoMultilinea == "")
+        {
+            textoMultilinea = "no hay observaciones";
+        }
         using (DbDentistaContext db = new DbDentistaContext())
         {
             var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
@@ -643,21 +647,31 @@ else
         prueba.Odontologo = "BRAIAN";
         prueba.Fecha = DateTime.Now;
         prueba.IdPaciente = IdPacienteEditar;
-
+        prueba.Observaciones = textoMultilinea;
 
         using (DbDentistaContext db = new DbDentistaContext())
         {
             db.PracticasRealizadas.Add(prueba);
             db.SaveChanges();
-        }         
+        }
         ActualizaTabla();
+        IncicializarTodo();
+        
+        
+
     }
+
+    private void IncicializarTodo()
+    { textoMultilinea = "observacioes del paciente"; }
 
     private void ActualizaTabla()
     {
         ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        listaDePacientes = DbContext.Pacientes.ToList();
+        ListaDePracticas = DbContext.Practicas.ToList();
+        registrosFiltrados = DbContext.PracticasRealizadas.ToList();
+        elementosUnicos = DbContext.PracticasRealizadas.Distinct().ToList();
         StateHasChanged();
-
     }
 
     public void AbrirModalEdit()

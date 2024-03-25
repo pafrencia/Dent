@@ -33,6 +33,34 @@
         </table>
     </div>
 
+
+    <h1>PRACTICAS PARA ODONTOGRMA</h1>
+    <!-- Divs -->
+    <div style="display: @(currentDiv == 1 ? "block" : "none")">
+        <table class="table" id="tablepracticas">
+            <thead>
+                <tr class="table-dark">
+                    <th>PRACTICA</th>
+                    <th>COLOR</th>
+                    <th><button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalagregarodontograma">AGREGAR</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var practica in ListaDePracticasOdontograma)
+                {
+                    <tr class="table-success" @onclick="() => SeleccionarPractica(practica.Id)">
+                        <td>@practica.Practica</td>
+                        <td>@practica.Color</td>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDIT</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modaleliminar">X</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
     <!-- Modal AGREGAR -->
 
     <div class="modal fade" id="modalagregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -133,6 +161,39 @@
         </div>
     </div>
 
+    <!-- Modal AGREGAR PRACTIPA PARA ODONTROGRAMA -->
+
+    <div class="modal fade" id="modalagregarodontograma" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="width: 100%;">
+                        <label for="inputText" style="width: 100%;">Practica:</label>
+                        <input type="text" id="inputText" style="width: 100%;" @bind="Practica" />
+                        <p> </p>
+                        <select style="width: 100%;" @onchange="ElegirColor">
+                            <option value="">Seleccionar</option>
+                            <option value=BLUE style="background-color: blue;">AZUL</option>
+                            <option value=RED style="background-color: red;">ROJO</option>
+                            <option value=GREY style="background-color: grey;">GRIS</option>
+                            <option value=YELLOW style="background-color: yellow;">AMARILLO</option>
+                            <option value=DARKORANGE style="background-color: darkorange;">NARANJA</option>
+                            <option value=GREEN style="background-color: green;">VERDE</option>
+                            <option value=DARKVIOLET style="background-color: darkviolet;">VIOLETA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos2)" @onclick="AgregarCategoriaOdontorgama">Agregar </button>
+                    <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 else
 {
@@ -140,12 +201,15 @@ else
 }
 
 @code {
+    private bool CamposValidos2 => !string.IsNullOrEmpty(color) && !string.IsNullOrEmpty(Practica);
     private bool CamposValidos => Precio != 0 && !string.IsNullOrEmpty(Practica);
     private bool mostrarModalEdit = false;
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
     private List<Paciente> ListaDePacientes = new List<Paciente>();
+    private List<PracticasOdontograma> ListaDePracticasOdontograma = new List<PracticasOdontograma>();
     private int currentDiv = 1;
+    private string color = "";
     private void ShowDiv(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
@@ -158,7 +222,7 @@ else
     {
         ListaDePracticas = DbContext.Practicas.ToList();
         ListaDePracticasApross = DbContext.PracticasApros.ToList();
-
+        ListaDePracticasOdontograma = DbContext.PracticasOdontogramas.ToList();
     }
     public string Practica = "";
     public int Precio = 0;
@@ -169,6 +233,23 @@ else
     private AgregarPracticas agregarPracticas { get; set; }
     [Inject]
     private EliminarPracticaMetod Eliminarla { get; set; }
+    private void ElegirColor(ChangeEventArgs args)
+    {
+        var col = args.Value.ToString();
+        color = col;
+}
+    private void AgregarCategoriaOdontorgama()
+    {
+        var prueba = new PracticasOdontograma();
+        prueba.Practica = Practica.ToUpper();
+        prueba.Color = color;
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.PracticasOdontogramas.Add(prueba);
+            db.SaveChanges();
+        }
+    }
+
     private void EditarPracticaAbrir(int practicaId)
     {
         AbrirModalEdit();

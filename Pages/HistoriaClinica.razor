@@ -1,0 +1,429 @@
+﻿@page "/HistoriaClinica"
+@using Dent.Models
+@using System.Globalization
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@inject AgregarPracticas AgregarPracticas
+@inject EliminarPracticaMetod EliminarPracticaMethod
+@using Dent.Shared
+@using Dent.Pages
+@inject Permisos Permiso
+@if (Permiso.Logueado == 1)
+{
+
+
+    <br />
+    <h3>HOSTORIAS CLINICAS</h3>
+    <p>Seleccionar Paciente:</p>
+    <div style="height: 200px; overflow-y: auto;">
+        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+        <thead>
+        <tr class="table-dark">
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>DNI</th>
+                <th>OBRA SOCIAL</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+                    <tr class="table-success">                       
+                    <td>  <input @oninput="ActualizarFiltroNombre"  placeholder="Buscar..."/></td>
+                    <td><input @oninput="ActualizarFiltroApellido"  placeholder="Buscar..."/></td>
+                    <td><input @oninput="ActualizarFiltroDni"  placeholder="Buscar..."/></td>
+                    <td><input @oninput="ActualizarFiltroObraSocial"  placeholder="Buscar..."/></td>
+                    <td></td>
+                    </tr>
+            @foreach (var datos in ListaDePacientes)
+            {
+                    <tr class="table-success" @onclick="() => MostrarHistoriaClinica(datos.Id)">
+                    <td>@datos.Nombre</td>
+                    <td>@datos.Apellido</td>
+                    <td>@datos.Dni</td>
+                    <td>@datos.ObraSocial</td>
+                    <td>
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalinfo">INFO</button>@* 
+                    <button type="button" class="btn btn-warning" @onclick="() => MostrarHistoriaClinica(datos.Id)">✓</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+<!-- Modal MAS INFO (DATOS) -->
+
+<div class="modal fade" id="modalinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">DATOS DEL PACIENTE</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                               
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Nombre:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="nombrePaciente" readonly/>
+    <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(nombrePaciente)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Apellido:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="apellido" readonly/>
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(apellido)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Domicilio:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="domicilio" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(domicilio)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Celular:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="celu" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(celu)">&#128203</button>
+</div>
+    <br />
+<div class="form-group">
+    <label style="width: 100%;" for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input style="width: 90%;" type="date" id="fechaNacimiento" @bind="fechaNacimiento" class="form-control" readonly />
+</div>
+<div>
+        <p> </p>
+<label style="width: 100%;" for="miString">EDAD:</label>
+<input style="width: 90%;" id="miString" @bind="edad" readonly />
+    <p> </p>
+<button class="btn btn-info" @onclick="CalcularEdad">CALCULAR </button>
+</div>
+    <p> </p>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">OBRA SOCIAL ACTUAL:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="obraSocialGuardar" readonly/>
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(obraSocialGuardar)">&#128203</button>
+    <p> </p>
+
+<!-- Divs -->
+<div style="">
+<!-- DATOS PARA OBJETO DE BASE DE DATOS AFILIADO -->
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Nº Afiliado:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="afiliado" readonly/>
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(afiliado)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">Plan:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="plan" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(plan)">&#128203</button>
+</div>
+<div class="form-group">
+    <label style="width: 100%;" for="inputText">PARENTESCO:</label>
+    <input style="width: 90%;" type="text" id="inputText" @bind="titular" readonly />
+        <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(titular)">&#128203</button>
+</div>
+</div>
+    <br />
+<div  style="width: 100%;">
+ <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea" readonly ></textarea>
+     <button class="btn-outline-dark" @onclick="() => CopiarAlPortapapeles(textoMultilinea)">&#128203</button>
+</div>
+</div>
+                <p> </p>
+                <div class="form-group">
+
+                </div>
+          </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-dark" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div style="height: 800px; overflow-y: auto;">
+    <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+        <thead>
+            <tr class="table-dark">
+                <th>FECHA</th>
+                <th>PACIENTE</th>
+                <th>PRACTICA</th>
+                <th>OBRA SOCIAL</th>
+                <th>ODONTOLOGO</th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-success">
+            </tr>
+            @foreach (var practicaRealizada in registrosFiltrados)
+            {
+                <tr class="table-success" @onclick="() => CargarPacienteSeleccionado(practicaRealizada.Observaciones)">
+                    <td>@practicaRealizada.Fecha</td>
+                    <td>@practicaRealizada.Paciente</td>
+                    <td>@practicaRealizada.Practica</td>
+                    <td>@practicaRealizada.ObraSocial</td>
+                    <td>@practicaRealizada.Odontologo</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalobservaciones">&#128065</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- TABLA DE PRUEBA -->
+</div>
+
+<!-- Modal OBSERVACIONES -->
+<div class="modal fade" id="modalobservaciones" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">OBSERVACIONES DE ESTA VISITA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p> </p>
+                <div style="width: 100%;">
+                    <textarea rows="4" cols= style="width: 100%;" @bind="observaciones"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-dark" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+else
+{
+    <p>No tienes permiso para ver los datos.</p>
+}
+
+@code {
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+    private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
+    private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
+    protected override void OnInitialized()
+    {
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        registrosFiltrados = DbContext.PracticasRealizadas.ToList();
+        ListaDePacientes = DbContext.Pacientes.ToList();
+    }
+    private string algo = "valor uno";
+    private string observaciones = "";
+    public string nombreDelBotonPacientes = "AGREGAR PACIENTE";
+    public string nombrePaciente = "-";
+    public string apellido = "-";
+    public string domicilio = "-";
+    public string celu = "0";
+    private DateTime fechaNacimiento = DateTime.Today;
+    private DateTime fechaAlta = DateTime.Today;
+    private string obraSocialSeleccionada;
+    public string obraSocialGuardar = "ninguna";
+    public string titular = "TITULAR";
+    public string plan = "-";
+    public string afiliado = "0";
+    private string textoMultilinea = "observacioes del paciente";
+    private bool CamposValidos => !string.IsNullOrEmpty(apellido) && !string.IsNullOrEmpty(nombrePaciente);
+    private bool mostrarModalEdit = false;
+    private List<Paciente> ListaDePacientes = new List<Paciente>();
+    private int PacienteIdEdit = 0;
+    private int currentDiv = 0;
+    public int edad = 0;
+    public int currentDivPacientes = 0;
+    public string pacienteAgregadoCorrectamente = "";
+    private int IdEdit = 0;
+    private string filtro = "";
+    private string dni = "0";
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    async Task CopiarAlPortapapeles(string texto)
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", texto);
+    }
+  
+    private void SeleccionarPaciente(int seleccionado)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.Pacientes.Find(seleccionado);
+            IdEdit = prueba.Id;
+            nombrePaciente = prueba.Nombre;
+            apellido = prueba.Apellido;
+            domicilio = prueba.Domicilio;
+            celu = prueba.Celular;
+            fechaNacimiento = prueba.FechaDeNacimiento;
+            fechaAlta = prueba.FechaDeAlta;
+            obraSocialGuardar = prueba.ObraSocial;
+            titular = prueba.Titular;
+            plan = prueba.PlanDeObraSocial;
+            afiliado = prueba.NumeroAfiliado;
+            textoMultilinea = prueba.Observaciones;
+        }
+    }
+
+    private void ActualizarFiltroNombre(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Nombre.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+    private void ActualizarFiltroApellido(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Apellido.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+
+    private void ActualizarFiltroDni(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Dni.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+
+    private void ActualizarFiltroObraSocial(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.ObraSocial.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+ 
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
+
+
+
+
+    private void ActualizaTabla()
+    {
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
+
+    private void CalcularEdad()
+    {
+
+        DateTime fechaActual = DateTime.Today;
+        edad = fechaActual.Year - fechaNacimiento.Year;
+
+        // Verifica si aún no ha cumplido años en el año actual
+        if (fechaActual.Month < fechaNacimiento.Month || (fechaActual.Month == fechaNacimiento.Month && fechaActual.Day < fechaNacimiento.Day))
+        {
+            edad--;
+        }    
+    }
+
+    private void MetodoPersonalizado(ChangeEventArgs args)
+    {
+        obraSocialSeleccionada = args.Value.ToString();
+        // Lógica del método personalizado
+        if (obraSocialSeleccionada == "particular")
+        {
+            obraSocialGuardar = "particular";
+            ShowDiv(0);
+            titular = "TITULAR";
+            plan = "-";
+            afiliado = "0";
+        }
+        else if (obraSocialSeleccionada == "0")
+        {
+            obraSocialGuardar = obraSocialSeleccionada;
+            ShowDiv(0);
+        }
+        else
+        {
+            obraSocialGuardar = obraSocialSeleccionada;
+            ShowDiv(1);
+        }        
+    }
+    public void InicializarPacientes()
+    {
+        nombrePaciente = "-";
+        apellido = "-";
+        domicilio = "-";
+        celu = "0";
+        dni = "0";
+        fechaNacimiento = DateTime.Today;
+        fechaAlta = DateTime.Today;
+        obraSocialSeleccionada = "0";
+        obraSocialGuardar = "ninguna";
+        titular = "TITULAR";
+        plan = "-";
+        afiliado = "0";
+    }
+
+    private void ActualizaTablaPacientes()
+    {    
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
+
+    private void MostrarHistoriaClinica(int IdPacienteSeleccionado)
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.Pacientes.Find(IdPacienteSeleccionado);
+            IdEdit = prueba.Id;
+            nombrePaciente = prueba.Nombre;
+            apellido = prueba.Apellido;
+            domicilio = prueba.Domicilio;
+            celu = prueba.Celular;
+            fechaNacimiento = prueba.FechaDeNacimiento;
+            fechaAlta = prueba.FechaDeAlta;
+            obraSocialGuardar = prueba.ObraSocial;
+            titular = prueba.Titular;
+            plan = prueba.PlanDeObraSocial;
+            afiliado = prueba.NumeroAfiliado;
+            textoMultilinea = prueba.Observaciones;
+        }
+        var inter = IdPacienteSeleccionado;
+        registrosFiltrados = ListaDePracticasRealizadas.Where(e => e.IdPaciente == inter).ToList();
+    }
+
+    private void CargarPacienteSeleccionado(string observacionepasada)
+    {
+        observaciones = observacionepasada;
+    }
+
+
+}
