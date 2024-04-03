@@ -11,8 +11,7 @@
 @inject Permisos Permiso
 @if (Permiso.Logueado == 1)
 {
-
-
+      
     <br />
     <h3>HOSTORIAS CLINICAS</h3>
     <p>Seleccionar Paciente:</p>
@@ -136,7 +135,11 @@
         </div>
     </div>
 </div>
-
+    <p></p>
+    <!-- Divs -->
+    <div style="display: @(currentDiv == 1 ? "block" : "none")">
+        
+ 
 
 
 <div style="height: 800px; overflow-y: auto;">
@@ -149,6 +152,7 @@
                 <th>OBRA SOCIAL</th>
                 <th>ODONTOLOGO</th>
                 <th>
+                <button type="button" class="btn btn-danger" @onclick="CerrarDiv">X</button>
                 </th>
             </tr>
         </thead>
@@ -193,6 +197,7 @@
         </div>
     </div>
 </div>
+    </div>
 }
 else
 {
@@ -200,6 +205,17 @@ else
 }
 
 @code {
+    private int currentDiv = 0;
+    private void CerrarDiv()
+    {
+        currentDiv = 0;
+    }
+
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
     [Inject]
     private DbDentistaContext DbContext { get; set; }
     private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
@@ -229,7 +245,6 @@ else
     private bool mostrarModalEdit = false;
     private List<Paciente> ListaDePacientes = new List<Paciente>();
     private int PacienteIdEdit = 0;
-    private int currentDiv = 0;
     public int edad = 0;
     public int currentDivPacientes = 0;
     public string pacienteAgregadoCorrectamente = "";
@@ -243,7 +258,7 @@ else
     {
         await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", texto);
     }
-  
+
     private void SeleccionarPaciente(int seleccionado)
     {
         using (DbDentistaContext db = new DbDentistaContext())
@@ -322,16 +337,6 @@ else
 
 
     }
- 
-    private void ShowDiv(int divNumber)
-    {
-        // Cambiar el número del div actual al hacer clic en el botón correspondiente
-        currentDiv = divNumber;
-    }
-
-
-
-
     private void ActualizaTabla()
     {
         ListaDePacientes = DbContext.Pacientes.ToList();
@@ -418,6 +423,7 @@ else
         }
         var inter = IdPacienteSeleccionado;
         registrosFiltrados = ListaDePracticasRealizadas.Where(e => e.IdPaciente == inter).ToList();
+        ShowDiv(1);
     }
 
     private void CargarPacienteSeleccionado(string observacionepasada)

@@ -8,75 +8,7 @@
 @inject AgregarPracticas AgregarPracticas
 @inject EliminarPracticaMetod EliminarPracticaMethod
 
-@* <div class="form-group">
-    <label style="width: 100%;" >PACIENTE:</label>
-    <select style="width: 100%;" @bind="IdPacienteAtendido">
-        <option value="">Seleccionar</option>
-        @foreach (var paciente in listaDePacientes)
-        {
-            <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
-        }
-    </select>
-    <p> </p>
-    <label style="width: 100%;">PRACTICA:</label>
-    <select style="width: 100%;" @bind="PracticaSeleccionada">
-        <option value="">Seleccionar</option>
-        @foreach (var practicaseleccion in ListaDePracticas)
-        {
-            <option value="@practicaseleccion.Practica">@practicaseleccion.Practica</option>
-        }
-    </select>
 
-    <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" @onclick="Agregar">Agregar </button>
-    </div>
- *@
-<!-- Divs -->@* 
-<div style="height: 800px; overflow-y: auto;">
-    <br />
-    <table class="table">
-        <thead>
-            <tr class="table-dark">
-                <th>FECHA</th>
-                <th>PACIENTE</th>
-                <th>PRACTICA</th>
-                <th>OBRA SOCIAL</th>
-                <th>PRECIO</th>
-                <th>ODONTOLOGO</th>
-                <th><button style="width: 100%;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregarPracticaRealizada">AGREGAR</button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-success">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>  <input @oninput="ActualizarFiltroOdontologo" placeholder="Buscar..." /></td>
-                <td></td>
-            </tr>
-            @foreach (var practicaRealizada in ListaDePracticasRealizadas)
-            {
-                <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
-                    <td>@practicaRealizada.Fecha</td>
-                    <td>@practicaRealizada.Paciente</td>
-                    <td>@practicaRealizada.Practica</td>
-                    <td>@practicaRealizada.ObraSocial</td>
-                    <td>$@practicaRealizada.Precio</td>
-                    <td>@practicaRealizada.Odontologo</td>
-                    <td>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditPaciente">EDIT</button>
-                    <button class="btn btn-danger" @onclick="() => EliminarPractica(practicaRealizada.Id)">X</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<br />
-
- *@
     <!-- TABLA DE PRUEBA -->
 @if (Permiso.Logueado == 1)
 {
@@ -144,6 +76,7 @@
                             <option value=BRAIAN>BRAIAN</option>
                             <option value=CECI>CECI</option>
                             <option value=AGUS>AGUS</option>
+                            <option value=ROMI>ROMI</option>
                         </select>
 
 
@@ -250,7 +183,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <select style="width: 100%;" @onchange="SeleccionarOdontologo">
+                        <option value="">TODOS</option>
+                        <option value=BRAIAN>BRAIAN</option>
+                        <option value=CECI>CECI</option>
+                        <option value=AGUS>AGUS</option>
+                        <option value=ROMI>ROMI</option>
+                    </select>
                     <div class="form-group">
                         <div class="form-group">
                             <label style="width: 100%;">PACIENTE:</label>
@@ -407,6 +346,7 @@ else
     }
     public string Practica = "";
     public string PacienteAtendido = "";
+    private string odontologoSeleccionado = "";
     public int Precio = 0;
     public int IdEditar = 0;
     public string miString = "";
@@ -416,6 +356,12 @@ else
     private string algo = "valor uno";
 
 
+    public void SeleccionarOdontologo(ChangeEventArgs args)
+    {
+        var odo = args.Value.ToString();
+        odontologoSeleccionado = odo;
+        CargarListaFiltrada();
+    }
     public void MetodoPersonalizado3(ChangeEventArgs args)
     {
         var o = args.Value.ToString();
@@ -644,7 +590,7 @@ else
         prueba.ObraSocial = "pendiente";
         prueba.Precio = Precio;
         prueba.ObraSocial = ObraSocialPacienteAtendido;
-        prueba.Odontologo = "BRAIAN";
+        prueba.Odontologo = odontologoSeleccionado;
         prueba.Fecha = DateTime.Now;
         prueba.IdPaciente = IdPacienteEditar;
         prueba.Observaciones = textoMultilinea;

@@ -14,6 +14,7 @@ builder.Services.AddSingleton<EliminarPracticaMetod>();
 builder.Services.AddSingleton<DbDentistaContext>();
 builder.Services.AddSingleton<ServicioAutenticacion>();
 builder.Services.AddSingleton<Permisos>();
+builder.Services.AddHttpClient();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
