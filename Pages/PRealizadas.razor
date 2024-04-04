@@ -94,7 +94,7 @@
                 @foreach (var practicaRealizada in registrosFiltrados)
                 {
                     <tr class="table-success" @onclick="() => SeleccionarPracticaRealizada(practicaRealizada.Id)">
-                        <td>@practicaRealizada.Fecha</td>
+                        <td>@practicaRealizada.Fecha.ToString("dd/MM/yyyy")</td>
                         <td>@practicaRealizada.Paciente</td>
                         <td>@practicaRealizada.Practica</td>
                         <td>@practicaRealizada.ObraSocial</td>

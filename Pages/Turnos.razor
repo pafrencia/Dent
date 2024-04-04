@@ -232,11 +232,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">TURNO AGENDADO</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">ELIMINAR TURNO</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <label>¿SEGURO DESEA ELIMINAR EL TURNO?
+                    </label>
+                    <p> </p>
+                    <p>PACIENTE: @PacienteAtendido </p>
+                    <p>DIA: @selectedDate.ToString("dd/MM")</p>
+                    <p>HORA: @Hora.ToString("hh\\:mm") </p>
                     <div class="modal-footer">
                         <button style="width: 100%;" class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" @onclick="() => Borrar(IdEdit)">ELIMINAR</button>
                         <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
@@ -352,12 +357,8 @@
     private int IdPracticaSeleccionada;
     private DateTime FiltroFecha = DateTime.Today;
     private DateTime FiltroFechaFin = DateTime.Today;
-    private int mes = DateTime.Today.Month;
-    private int año = DateTime.Today.Year;
-    private int mesSeleccionado = DateTime.Today.Month;
-    private int añoSeleccionado = DateTime.Today.Year;
     private int meso = 0;
-    private string textoMultilinea = "observacioes del paciente";
+    private string textoMultilinea = "Observaciones sobre la Consulta";
     public string Practica = "";
     public string PacienteAtendido = "";
     private string odontologoSeleccionado = "";
@@ -375,6 +376,7 @@
     private int IdTurno = 12;
     private int? IdPaciente = 0;
     private string Observaciones = "";
+
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
@@ -530,6 +532,7 @@
 
     private void SeleccionarTurno(string horapasada, int seleccionado)
     {
+
         TimeSpan.TryParse(horapasada, out TimeSpan horaConvertida);
         Hora = horaConvertida;
 
@@ -542,8 +545,17 @@
             IdPacienteAtendido = turno.IdPaciente;
             IdOdontologoSeleccionado = turno.IdOdontologo;
             textoMultilinea = turno.Observaciones;
+            selectedDate = turno.DiaMesAño;
+            Hora = turno.Hora;
 
         }
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
+            PacienteAtendido = paciente.Nombre + paciente.Apellido;
+            IdPacienteEditar = paciente.Id;
+        }
+
     }
     private void Editar(int idturno)
     {
