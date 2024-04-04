@@ -11,11 +11,11 @@ public partial class Turno
 
     public TimeSpan Hora { get; set; }
 
-    public int? IdOdontologo { get; set; }
+    public int IdOdontologo { get; set; }
 
-    public int? IdPaciente { get; set; }
+    public int IdPaciente { get; set; }
 
-    public string? Observaciones { get; set; }
+    public string Observaciones { get; set; }
 
-    public string? Practica { get; set; }
+    public string Practica { get; set; }
 }
