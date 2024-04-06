@@ -2,23 +2,20 @@
 
 
 
-<div class="top-row ps-3 navbar navbar-light " style="background-color: #87CEEB;">
+@* <div class="top-row ps-3 navbar navbar-light " style="background-color: #87CEEB;">
     <div class="container-fluid">
-
-        <a class="navbar-brand" href="">
-            <div style="width: 100%; height: 100%;">
-                <h1>DENT</h1>
-            </div>
-        </a>
-
+        <img src="DENTAPP.png">
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-</div>
+</div> *@
 
 <div class="@NavMenuCssClass nav-scrollable " @onclick="ToggleNavMenu">
     <nav class="flex-column">
+        <div class="nav-item px-0">
+            <img src="DENTAPPinvertido.png">
+        </div>
         <div class="nav-item px-1">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
