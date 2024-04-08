@@ -7,6 +7,10 @@ public partial class Paciente
 {
     public int Id { get; set; }
 
+    public int IdOdontograma { get; set; }
+
+    public int IdOdontogramaNiño { get; set; }
+
     public string? Nombre { get; set; }
 
     public string? Apellido { get; set; }
@@ -30,4 +34,6 @@ public partial class Paciente
     public string? Observaciones { get; set; }
 
     public string? Dni { get; set; }
+
+    
 }

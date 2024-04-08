@@ -31,6 +31,8 @@ public partial class Odontograma
 
     public string? Estado17 { get; set; }
 
+    public string? Centro17 { get; set; }
+    
     public string? Arriba16 { get; set; }
 
     public string? Abajo16 { get; set; }
