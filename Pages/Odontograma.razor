@@ -70,26 +70,36 @@
         }
 
     .square-button {
+        position: relative;
+        top: 0px;
+        left: 0px;
         vertical-align: top;
         width: 50px;
         height: 50px;
-        font-size: 22px; /* Tamaño del texto dentro del boton central en píxeles */
+        line-height: 50px; /* Alineación vertical del texto */
+        text-align: center; /* Alineación horizontal del texto */
+        font-family: Arial;
+        font-size: 48px; /* Tamaño del texto dentro del boton central en píxeles */
         background-color: white;
         border: 2px solid white;
-        padding: 0px;
+        padding: 0; /* Sin márgenes */
         transition: border-color 0.3s ease;
         margin: 0;
-    }
-
-        .square-button:hover {
+        z-index: 1;
+        
+    }}
+         .square-button:hover {
             border-color: green;
         }
     .squareselected-button {
+        line-height: 50px; /* Alineación vertical del texto */
+        text-align: center; /* Alineación horizontal del texto */
         vertical-align: top;
         border-radius: 15px;
         width: 50px;
         height: 50px;
-        font-size: 22px; /* Tamaño del texto dentro del boton central en píxeles */
+        font-family: Arial;
+        font-size: 48px;
         background-color: white;
         border: 2px solid black;
         padding: 0px;
@@ -102,10 +112,14 @@
         }
 
     .squarewhite-button {
+        line-height: 50px; /* Alineación vertical del texto */
+        text-align: center; /* Alineación horizontal del texto */
         vertical-align: top;
         border-radius: 15px;
         width: 50px;
         height: 50px;
+        font-family: Arial;
+        font-size: 48px;
         background-color: white;
         border: 2px solid black;
         padding: 0px;
@@ -202,9 +216,7 @@
         transition: border-color 0.3s ease;
         margin: 0;
     }
-</style>
 
-<style>
     .container {
         width: 1600px;
         height: 500px;
@@ -213,16 +225,16 @@
         transition: border-color 0.3s ease;
     }
 
-        .square-button:hover {
-            border-color: green;
-        }
-         .containerChico {
+    .square-button:hover {
+        border-color: green;
+    }
+
+    .containerChico {
         background-color: white;
         border: 0px solid black;
         margin: 0 auto;
     }
-</style>
-<style>
+    
     .arriba-button {
         vertical-align: bottom;
         border-top-left-radius: 6px;
@@ -251,9 +263,8 @@
         .abajo-button:hover {
             border-color: green;
         }
-</style>
 
-<style>
+
     .izquierda-button {
         vertical-align: top;
         width: 20px;
@@ -265,17 +276,19 @@
         border-bottom-left-radius: 6px;
         border-top-left-radius: 6px;
     }
+
         .izquierda-button:hover {
             border-color: green;
         }
+
     .1a {
         background-color: blue;
         grid-column: 1/2;
         grid-row: 2/3;
     }
-     
-</style>
-<style>
+
+
+
     .derecha-button {
         vertical-align: top;
         width: 20px;
@@ -306,8 +319,7 @@
         justify-content: center;
         justify-items: center;
     }
-</style>
-<style>
+
     /* Estilo para la tabla sin márgenes internos */
     table {
         border-collapse: collapse; /* Combinar bordes de celda */
@@ -2621,44 +2633,10 @@
 <button class="squarewhite-button" @onclick="() => SeleccionarColor(white, vacio)"></button>
 <button class="squarewhite-button" @onclick="() => SeleccionarEstado(X)">X</button>
 <button class="squarewhite-button" @onclick="() => SeleccionarEstado(O)">O</button>
-<button class="squarewhite-button" @onclick="() => SeleccionarEstado(TC)">TC</button>
-<button class="squarewhite-button" @onclick="() => SeleccionarEstado(vacio)">vacio</button>
-<button class="squarewhite-button" @onclick="() => BorrarTodos()">BORRAR TODO</button>
+<button class="squarewhite-button" @onclick="() => SeleccionarEstado(TC)">T</button>
+<button class="squarewhite-button" @onclick="() => SeleccionarEstado(vacio)"></button>
 <p>SELECCIONADO</p>
  <button class="squareselected-button" style="@($"background-color: {colorSeleccionado};")">@estadoSeleccionado</button>
-
-<!-- Modal AGREGAR -->
-<div class="modal fade" id="modalAgregarPracticaRealizada" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">AGREGAR PRACTICA REALIZADA</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="form-group">
-                    <div class="form-group">
-
-                        <label style="width: 100%;">PRACTICA:</label>
-                        <select style="width: 100%;" @onchange="CambiaColor">
-                            <option value="">Seleccionar</option>
-                            @foreach (var practicaseleccion in ListaDePracticasOdontograma)
-                            {
-                                <option value="@practicaseleccion.Color">@practicaseleccion.Practica</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button style="width: 100%;" class="btn btn-success" @onclick="() => CambiarColor()">Agregar </button>
-                    <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 @code {
     private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
     private List<Paciente> listaDePacientes = new List<Paciente>();
@@ -2985,26 +2963,10 @@
     string white = "white";
     string X = "X";
     string O = "O";
-    string TC = "TC";
+    string TC = "T";
     string vacio = "";
-    private int IdEdit = 0;
-    private bool mostrarModalEdit = false;
     private int divAdulto = 1;
     private int divNiño = 0;
-    private int IdPacienteAtendido;
-    private int IdPacienteEditar;
-    private int IdOdontologo;
-    private string ObraSocialPacienteAtendido = "no cargada";
-    private string IdPracticaSeleccionadaOdontograma;
-    private string OdontologoQueAtendio;
-    private int IdPracticaSeleccionada;
-    private DateTime FiltroFecha = DateTime.Today;
-    private DateTime FiltroFechaFin = DateTime.Today;
-    private int mes = DateTime.Today.Month;
-    private int año = DateTime.Today.Year;
-    private int mesSeleccionado = DateTime.Today.Month;
-    private int añoSeleccionado = DateTime.Today.Year;
-    private int meso = 0;
     private string botonSeleccionado = "";
     string estadoSeleccionado = "";
     private void PintarBoton(string botonRecibido)
@@ -3025,10 +2987,6 @@
     {
         divAdulto = 1;
         divNiño = 1;
-    }
-    private void BorrarTodos()
-    {
-        
     }
 
     private void SeleccionarEstado(string estado)
@@ -3056,35 +3014,6 @@
         botonSeleccionado = boton;
     }
 
-  
-    [Inject]
-    private DbDentistaContext DbContext { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
-        listaDePacientes = DbContext.Pacientes.ToList();
-        ListaDePracticas = DbContext.Practicas.ToList();
-        ListaDePracticasOdontograma = DbContext.PracticasOdontogramas.ToList();
-
-    }
-    public string Practica = "";
-    public string PacienteAtendido = "";
-    public int Precio = 0;
-    public int IdEditar = 0;
-    public string miString = "";
-    public int MostrarTotal = 0;
-    public int MostrarTotalPorcentaje = 0;
-    string odontologoFiltrado = " ";
-    private string algo = "valor uno";
-
-
-    public void ActualizaTablaPracticasRealizadas()
-    {
-        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
-        StateHasChanged();
-
-    }
     private void SeleccionarBoton18()
     {
         estado18 = estadoSeleccionado;
@@ -3347,118 +3276,5 @@
     public void CambiarColor()
     {
         color12c = colorSeleccionado;
-    }
-
-    [Inject]
-    private AgregarPracticas agregarPracticas { get; set; }
-    [Inject]
-    private EliminarPracticaMetod Eliminarla { get; set; }
-
-    private void SeleccionarPracticaRealizada(int seleccionado)
-    {
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var prueba = DbContext.PracticasRealizadas.Find(seleccionado);
-            IdEdit = prueba.Id;
-            IdPacienteAtendido = prueba.IdPaciente;
-
-            PacienteAtendido = prueba.Paciente;
-            ObraSocialPacienteAtendido = prueba.ObraSocial;
-            Practica = prueba.Practica;
-            OdontologoQueAtendio = prueba.Odontologo;
-        }
-    }
-   
-
-    private List<Paciente> listaDeItems;
-    private Paciente selectedItem;
-
-    protected override async Task OnInitializedAsync()
-    {
-
-        listaDeItems = DbContext.Pacientes.ToList();
-
-    }
-
-    public void EditarPractica(int practicaId)
-    {
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var practica = DbContext.PracticasRealizadas.Find(practicaId);
-            practica.Paciente = PacienteAtendido;
-
-            db.SaveChanges();
-            ActualizaTabla();
-        }
-        CerrarModalEdit();
-
-    }
-    public void EliminarPractica(int practicaId)
-    {
-        //  Eliminarla.Eliminarla(practicaId);
-        var practica = DbContext.PracticasRealizadas.Find(practicaId);
-        if (practica != null)
-        {
-            using (DbDentistaContext db = new DbDentistaContext())
-            {
-                db.PracticasRealizadas.Remove(practica);
-                db.SaveChanges();
-            }
-        }
-        ActualizaTabla();
-
-    }
-    private void Agregar()
-    {
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
-            PacienteAtendido = paciente.Nombre + paciente.Apellido;
-            ObraSocialPacienteAtendido = paciente.ObraSocial;
-            IdPacienteEditar = paciente.Id;
-        }
-
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
-
-            Precio = p.Precio;
-        }
-        var prueba = new PracticasRealizada();
-
-        prueba.Paciente = PacienteAtendido;
-
-        prueba.ObraSocial = "pendiente";
-        prueba.Precio = Precio;
-        prueba.ObraSocial = ObraSocialPacienteAtendido;
-        prueba.Odontologo = "BRAIAN";
-        prueba.Fecha = DateTime.Now;
-        prueba.IdPaciente = IdPacienteEditar;
-
-
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            db.PracticasRealizadas.Add(prueba);
-            db.SaveChanges();
-        }
-        ActualizaTabla();
-    }
-
-    private void ActualizaTabla()
-    {
-        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
-        StateHasChanged();
-
-    }
-
-    public void AbrirModalEdit()
-    {
-        mostrarModalEdit = true;
-    }
-
-    // Método para cerrar el modal
-    public void CerrarModalEdit()
-    {
-        mostrarModalEdit = false;
     }
 }

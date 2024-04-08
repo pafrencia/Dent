@@ -4,13 +4,388 @@
 @using Dent.Shared
 @using Dent.Pages
 @inject Permisos Permiso
+
+<style>
+
+    .tabla-fija {
+    width: 1490px; /* Establece el ancho fijo que desees */
+}
+    .paginaSinMargenes {
+    margin: 0; /* Elimina los márgenes */
+    padding: 0; /* Establece el relleno a 0 */
+}
+
+    .niño-button {
+        vertical-align: top;
+        border-radius: 15px;
+        width: 100px;
+        height: 35px;
+        vertical-align: center;
+        font-weight: bold; /* Texto en negrita */
+        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+        background-color: gold;
+        border: 2px solid black;
+        padding: 3px;
+        transition: border-color 0.3s ease;
+        margin: 0 auto;
+
+    }
+        .niño-button:hover {
+            border-color: green;
+            background-color: goldenrod;
+        }
+
+   .mixto-button {
+        vertical-align: top;
+        border-radius: 15px;
+                font-weight: bold; /* Texto en negrita */
+        width: 100px;
+        height: 35px;
+        vertical-align: center;
+        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+        background-color: violet;
+        border: 2px solid black;
+        padding: 3px;
+        transition: border-color 0.3s ease;
+        margin: 0 auto;
+    }
+
+        .mixto-button:hover {
+            border-color: green;
+            background-color: palevioletred;
+        }
+        
+   .odontograma-button {
+        vertical-align: top;
+        border-radius: 15px;
+                font-weight: bold; /* Texto en negrita */
+        width: 100px;
+        height: 35px;
+        vertical-align: center;
+        color:aliceblue;
+        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+        background-color: black;
+        border: 2px solid black;
+        padding: 3px;
+        transition: border-color 0.3s ease;
+        margin: 0 auto;
+    }
+
+        .odontograma-button:hover {
+            border-color: green;
+            background-color: grey;
+        }
+        .adulto-button {
+        width: 100px;
+        height: 35px;
+        font-weight: bold; /* Texto en negrita */
+        vertical-align: center;
+        border-radius: 15px;
+        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+        background-color: skyblue;
+        border: 2px solid black;
+        padding: 3px;
+        transition: border-color 0.3s ease;
+        margin: 0 auto;
+
+    }
+        .adulto-button:hover {
+            border-color: green;
+            background-color: royalblue;
+        }
+
+    .square-button {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        vertical-align: top;
+        width: 50px;
+        height: 50px;
+        line-height: 50px; /* Alineación vertical del texto */
+        text-align: center; /* Alineación horizontal del texto */
+        font-family: Arial;
+        font-size: 48px; /* Tamaño del texto dentro del boton central en píxeles */
+        background-color: white;
+        border: 2px solid white;
+        padding: 0; /* Sin márgenes */
+        transition: border-color 0.3s ease;
+        margin: 0;
+        z-index: 1;
+        
+    }}
+         .square-button:hover {
+            border-color: green;
+        }
+    .squareselected-button {
+        line-height: 50px; /* Alineación vertical del texto */
+        text-align: center; /* Alineación horizontal del texto */
+        vertical-align: top;
+        border-radius: 15px;
+        width: 50px;
+        height: 50px;
+        font-family: Arial;
+        font-size: 48px;
+        background-color: white;
+        border: 2px solid black;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+        .square-button:hover {
+            border-color: green;
+        }
+
+    .squarewhite-button {
+        line-height: 50px; /* Alineación vertical del texto */
+        text-align: center; /* Alineación horizontal del texto */
+        vertical-align: top;
+        border-radius: 15px;
+        width: 50px;
+        height: 50px;
+        font-family: Arial;
+        font-size: 48px;
+        background-color: white;
+        border: 2px solid black;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+        .squarered-button:hover {
+            border-color: yellow;
+        }
+
+    .squarered-button {
+        vertical-align: top;
+        border-radius: 15px;
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        border: 2px solid black;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+        .squarered-button:hover {
+            border-color: yellow;
+        }
+
+    .squareblue-button {
+        vertical-align: top;
+        border-radius: 15px;
+        width: 50px;
+        height: 50px;
+        background-color: blue;
+        border: 2px solid black;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+        .squareblue-button:hover {
+            border-color: yellow;
+        }
+    .barralarga {
+        vertical-align: central;
+        width: 50px;
+        height: 1px;
+        background-color: white;
+        border: 1px solid grey;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+    .barracorta {
+        vertical-align: central;
+        width: 20px;
+        height: 1px;
+        background-color: white;
+        border: 1px solid grey;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+    .barraverticalcortaarriba {
+        vertical-align: bottom;
+        width: 1px;
+        height: 20px;
+        background-color: white;
+        border: 1px solid grey;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+    .barraverticallarga {
+        vertical-align: top;
+        width: 1px;
+        height: 50px;
+        background-color: white;
+        border: 1px solid grey;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+    .barraverticalcorta {
+        vertical-align: top;
+        width: 1px;
+        height: 20px;
+        background-color: white;
+        border: 1px solid grey;
+        padding: 0px;
+        transition: border-color 0.3s ease;
+        margin: 0;
+    }
+
+    .container {
+        width: 1600px;
+        height: 500px;
+        background-color: white;
+        border: 0px solid black;
+        transition: border-color 0.3s ease;
+    }
+
+    .square-button:hover {
+        border-color: green;
+    }
+
+    .containerChico {
+        background-color: white;
+        border: 0px solid black;
+        margin: 0 auto;
+        justify-content: center;
+        justify-items: center;
+
+    }
+    
+    .arriba-button {
+        vertical-align: bottom;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        width: 50px;
+        height: 20px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+    }
+        .arriba-button:hover {
+            border-color: green;
+        }
+
+    .abajo-button {
+        vertical-align: top;
+        width: 50px;
+        height: 20px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+
+        .abajo-button:hover {
+            border-color: green;
+        }
+
+
+    .izquierda-button {
+        vertical-align: top;
+        width: 20px;
+        height: 50px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+        margin: 0;
+        border-bottom-left-radius: 6px;
+        border-top-left-radius: 6px;
+    }
+
+        .izquierda-button:hover {
+            border-color: green;
+        }
+
+    .1a {
+        background-color: blue;
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+
+
+
+    .derecha-button {
+        vertical-align: top;
+        width: 20px;
+        height: 50px;
+        background-color: white;
+        border: 2px solid black;
+        transition: border-color 0.3s ease;
+        margin: 0;
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+        .derecha-button:hover {
+        border-color: green;
+    }
+
+    .1a {
+        background-color: blue;
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+    /* Establecer un ancho fijo de 200px para el div */
+    .divFijo {
+        width: 1532px;
+        border: 1px solid black; /* Solo para visualización */
+        padding: 0px; /* Añade espacio alrededor del contenido */
+        margin: 0 auto; /* Centra el div horizontalmente */
+        justify-content: center;
+        justify-items: center;
+    }
+        .divFijoConFlow {
+        width: 1532px;
+        border: 1px solid black; /* Solo para visualización */
+        padding: 0px; /* Añade espacio alrededor del contenido */
+        margin: 0 auto; /* Centra el div horizontalmente */
+        justify-content: center;
+        justify-items: center;
+        height: 300px;
+        overflow-y: auto;
+    }
+    .centrado {
+        width:420px;
+        border: 0px solid black; /* Solo para visualización */
+        padding: 0px; /* Añade espacio alrededor del contenido */
+        margin: 0 auto; /* Centra el div horizontalmente */
+        justify-content: center;
+        justify-items: center;
+    }
+    /* Estilo para la tabla sin márgenes internos */
+    table {
+        border-collapse: collapse; /* Combinar bordes de celda */
+        border-spacing: 0; /* Eliminar el espacio entre celdas */
+        border: 1px solid black;
+        margin: 0 auto;
+    }
+    /* Estilo para las celdas de la tabla */
+    td, th {
+        text-align: center;
+        border: 0px solid black; /* Borde para las celdas */
+        padding:0px; /* Relleno interno de las celdas (opcional) */
+        margin: 0; /* Margen de las celdas */
+    }
+</style>
+<div class="paginaSinMargenes">
 <PageTitle>PACIENTES</PageTitle>
 @if (Permiso.Logueado == 1)
 {
-    <br />
-    <h3>ADMINISTRAR PACIENTES</h3>
-    
-    <table class="table">
+<div class="divFijoConFlow">
+        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
         <thead>
         <tr class="table-dark">
                 <th>NOMBRE</th>
@@ -40,11 +415,16 @@
                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalinfo">INFO</button>
                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDIT</button>
                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modaleliminar">X</button>
+                       <button type="button" class="btn btn-dark fas fa-teeth" @onclick="() => MostrarOdontograma(1)"></button>
+                       <button type="button" class="btn btn-secondary fas fa-folder-open"></button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    </div>
+    <p></p>
+    <p></p>
 <!-- Modal AGREGAR -->
 <div class="modal fade" id="modalagregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -366,12 +746,2319 @@
         </div>
     </div>
 </div>
+<div style="display: @(divOdontograma == 1 ? "block" : "none")">
+<div class="divFijo">
+                    <p> </p>
+    <div class="centrado">
+        <button class="adulto-button" @onclick="() => MostrarAdulto()">ADULTO</button>     <button class="niño-button" @onclick="() => MostrarNiño()">NIÑO</button>  <button class="mixto-button" @onclick="() => MostrarAmbos()">MIXTO</button> <button class="odontograma-button" @onclick="() => MostrarOdontograma(0)">OCULTAR</button>
+    </div>
+    <p></p>
+
+    <div style="display: @(divAdulto == 1 ? "block" : "none")">
+
+        <table>
+    <thead>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 50px;>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+                <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>18</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>17</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>16</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>15</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>14</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>13</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>12</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>11</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>21</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>22</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>23</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>24</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>25</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>26</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>27</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>28</th>
+                    <th width: 20px;></th>
+                    <th width: 10px;></th>
+        </tr>
+    </thead>
+    <tbody>
+                <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color18a};")"
+                @onclick="() => color18a = colorSeleccionado"></button></td>  <!-- 18 -->
+            <td></td>
+            <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color17a};")"
+                @onclick="() => color17a = colorSeleccionado"></button></td>  <!-- 17 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color16a};")"
+                @onclick="() => color16a = colorSeleccionado"></button></td> <!-- 16 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color15a};")"
+                @onclick="() => color15a = colorSeleccionado"></button></td> <!-- 15 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color14a};")"
+                @onclick="() => color14a = colorSeleccionado"></button></td> <!-- 14 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color13a};")"
+                @onclick="() => color13a = colorSeleccionado"></button></td> <!-- 13 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color12a};")"
+                @onclick="() => color12a = colorSeleccionado"></button></td> <!-- 12 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color11a};")"
+                @onclick="() => color11a = colorSeleccionado"></button></td> <!-- 11 -->
+                    <td></td>
+                    <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color21a};")" 
+                @onclick="() => color21a = colorSeleccionado"></button></td> <!-- 21 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color22a};")"
+               @onclick="() => color22a = colorSeleccionado"></button></td> <!-- 22 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color23a};")"
+               @onclick="() => color23a = colorSeleccionado"></button></td> <!-- 23 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color24a};")"
+                        @onclick="() => color24a = colorSeleccionado"></button></td> <!-- 24 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color25a};")"
+                        @onclick="() => color25a = colorSeleccionado"></button></td> <!-- 25 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color26a};")"
+                        @onclick="() => color26a = colorSeleccionado"></button></td> <!-- 26 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color27a};")"
+                        @onclick="() => color27a = colorSeleccionado"></button></td> <!-- 27 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color28a};")"
+                        @onclick="() => color28a = colorSeleccionado"></button></td> <!-- 28 -->
+                    <td></td>
+                    <td></td>
+        </tr>
+                <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color18i};")"
+                        @onclick="() => color18i = colorSeleccionado"></button><!-- 18 -->
+            </td>
+            <td>
+				<button class="square-button" style="@($"background-color: {color18};")"
+                        @onclick="() => SeleccionarBoton18()">@estado18</button> <!-- 18 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color18d};")"
+						@onclick="() => color18d = colorSeleccionado"></button><!-- 18 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color17i};")"
+						@onclick="() => color17i = colorSeleccionado"></button><!-- 17 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color17};")"
+                        @onclick="() => SeleccionarBoton17()">@estado17</button><!-- 17 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color17d};")"
+						@onclick="() => color17d = colorSeleccionado"></button><!-- 17 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color16i};")"
+						@onclick="() => color16i = colorSeleccionado"></button> <!-- 16 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color16};")"
+						@onclick="() =>  SeleccionarBoton16()">@estado16</button><!-- 16 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color16d};")"
+						@onclick="() => color16d = colorSeleccionado"></button><!-- 16 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color15i};")"
+						@onclick="() => color15i = colorSeleccionado"></button><!-- 15 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color15};")"
+						@onclick="() =>  SeleccionarBoton15()">@estado15</button><!-- 15 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color15d};")"
+						@onclick="() => color15d = colorSeleccionado"></button><!-- 15 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color14i};")"
+                        @onclick="() => color14i = colorSeleccionado"></button><!-- 14 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color14};")"
+						@onclick="() =>  SeleccionarBoton14()">@estado14</button><!-- 14 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color14d};")"
+						@onclick="() => color14d = colorSeleccionado"></button><!-- 14 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color13i};")"
+						@onclick="() => color13i = colorSeleccionado"></button><!-- 13 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color13};")"
+                        @onclick="() =>  SeleccionarBoton13()">@estado13</button><!-- 13 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color13d};")"
+						@onclick="() => color13d = colorSeleccionado"></button><!-- 13 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color12i};")"
+                        @onclick="() => color12i = colorSeleccionado"></button><!-- 12 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color12};")"
+						@onclick="() =>  SeleccionarBoton12()">@estado12</button><!-- 12 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color12d};")"
+						@onclick="() => color12d = colorSeleccionado"></button><!-- 12 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color11i};")"
+						@onclick="() => color11i = colorSeleccionado"></button><!-- 11 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color11};")"
+						@onclick="() =>  SeleccionarBoton11()">@estado11</button><!-- 11 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color11d};")"
+						@onclick="() => color11d = colorSeleccionado"></button><!-- 11 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color21i};")"
+                        @onclick="() => color21i = colorSeleccionado"></button><!-- 21 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color21};")"
+                        @onclick="() =>  SeleccionarBoton21()">@estado21</button><!-- 21 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color21d};")"
+                        @onclick="() => color21d = colorSeleccionado"></button><!-- 21 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color22i};")"
+                        @onclick="() => color22i = colorSeleccionado"></button><!-- 22 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color22};")"
+                        @onclick="() =>  SeleccionarBoton22()">@estado22</button><!-- 22 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color22d};")"
+                        @onclick="() => color22d = colorSeleccionado"></button><!-- 22 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color23i};")"
+                        @onclick="() => color23i = colorSeleccionado"></button><!-- 23 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color23};")"
+                        @onclick="() =>  SeleccionarBoton23()">@estado23</button><!-- 23 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color23d};")"
+                        @onclick="() => color23d = colorSeleccionado"></button><!-- 23 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color24i};")"
+                        @onclick="() => color24i = colorSeleccionado"></button><!-- 24 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color24};")"
+                        @onclick="() =>  SeleccionarBoton24()">@estado24</button><!-- 24 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color24d};")"
+                        @onclick="() => color24d = colorSeleccionado"></button><!-- 24 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color25i};")"
+                        @onclick="() => color25i = colorSeleccionado"></button><!-- 25 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color25};")"
+                        @onclick="() =>  SeleccionarBoton25()">@estado25</button><!-- 25 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color25d};")"
+                        @onclick="() => color25d = colorSeleccionado"></button><!-- 25 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color26i};")"
+                        @onclick="() => color26i = colorSeleccionado"></button><!-- 26 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color26};")"
+                        @onclick="() =>  SeleccionarBoton26()">@estado26</button><!-- 26 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color26d};")"
+                        @onclick="() => color26d = colorSeleccionado"></button><!-- 26 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color27i};")"
+                        @onclick="() => color27i = colorSeleccionado"></button><!-- 27 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color27};")"
+                        @onclick="() =>  SeleccionarBoton27()">@estado27</button><!-- 27 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color27d};")"
+                        @onclick="() => color27d = colorSeleccionado"></button><!-- 27 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color28i};")"
+                        @onclick="() => color28i = colorSeleccionado"></button><!-- 28 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color28};")"
+                        @onclick="() =>  SeleccionarBoton28()">@estado28</button><!-- 28 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color28d};")"
+                        @onclick="() => color28d = colorSeleccionado"></button><!-- 28 -->
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color18ab};")"
+                        @onclick="() => color18ab = colorSeleccionado"></button>
+            </td>  <!-- 18 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color17ab};")"
+                        @onclick="() => color17ab = colorSeleccionado"></button>
+            </td>  <!-- 17 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color16ab};")"
+                        @onclick="() => color16ab = colorSeleccionado"></button>
+            </td> <!-- 16 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color15ab};")"
+                        @onclick="() => color15ab = colorSeleccionado"></button>
+            </td> <!-- 15 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color14ab};")"
+                        @onclick="() => color14ab = colorSeleccionado"></button>
+            </td> <!-- 14 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color13ab};")"
+                        @onclick="() => color13ab = colorSeleccionado"></button>
+            </td> <!-- 13 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color12ab};")"
+                        @onclick="() => color12ab = colorSeleccionado"></button>
+            </td> <!-- 12 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color11ab};")"
+                        @onclick="() => color11ab = colorSeleccionado"></button>
+            </td> <!-- 11 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color21ab};")"
+                        @onclick="() => color21ab = colorSeleccionado"></button>
+            </td> <!-- 21 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color22ab};")"
+                        @onclick="() => color22ab = colorSeleccionado"></button>
+            </td> <!-- 22 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color23ab};")"
+                        @onclick="() => color23ab = colorSeleccionado"></button>
+            </td> <!-- 23 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color24ab};")"
+                        @onclick="() => color24ab = colorSeleccionado"></button>
+            </td> <!-- 24 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color25ab};")"
+                        @onclick="() => color25ab = colorSeleccionado"></button>
+            </td> <!-- 25 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color26ab};")"
+                        @onclick="() => color26ab = colorSeleccionado"></button>
+            </td> <!-- 26 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color27ab};")"
+                        @onclick="() => color27ab = colorSeleccionado"></button>
+            </td> <!-- 27 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color28ab};")"
+                        @onclick="() => color28ab = colorSeleccionado"></button>
+            </td> <!-- 28 -->
+            <td></td>
+            <td></td>
+        </tr>
+            <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcorta"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>48</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>47</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>46</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>45</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>44</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>43</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>42</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>41</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>31</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>32</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>33</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>34</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>35</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>36</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>37</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>38</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color48a};")"
+                        @onclick="() => color48a = colorSeleccionado"></button>
+            </td>  <!-- 48 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color47a};")"
+                        @onclick="() => color47a = colorSeleccionado"></button>
+            </td>  <!-- 47 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color46a};")"
+                        @onclick="() => color46a = colorSeleccionado"></button>
+            </td> <!-- 46 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color45a};")"
+                        @onclick="() => color45a = colorSeleccionado"></button>
+            </td> <!-- 45 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color44a};")"
+                        @onclick="() => color44a = colorSeleccionado"></button>
+            </td> <!-- 44 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color43a};")"
+                        @onclick="() => color43a = colorSeleccionado"></button>
+            </td> <!-- 43 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color42a};")"
+                        @onclick="() => color42a = colorSeleccionado"></button>
+            </td> <!-- 42 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color41a};")"
+                        @onclick="() => color41a = colorSeleccionado"></button>
+            </td> <!-- 41 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color31a};")"
+                        @onclick="() => color31a = colorSeleccionado"></button>
+            </td> <!-- 31 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color32a};")"
+                        @onclick="() => color32a = colorSeleccionado"></button>
+            </td> <!-- 32 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color33a};")"
+                        @onclick="() => color33a = colorSeleccionado"></button>
+            </td> <!-- 33 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color34a};")"
+                        @onclick="() => color34a = colorSeleccionado"></button>
+            </td> <!-- 34 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color35a};")"
+                        @onclick="() => color35a = colorSeleccionado"></button>
+            </td> <!-- 35 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color36a};")"
+                        @onclick="() => color36a = colorSeleccionado"></button>
+            </td> <!-- 36 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color37a};")"
+                        @onclick="() => color37a = colorSeleccionado"></button>
+            </td> <!-- 37 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color38a};")"
+                        @onclick="() => color38a = colorSeleccionado"></button>
+            </td> <!-- 38 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color48i};")"
+                        @onclick="() => color48i = colorSeleccionado"></button><!-- 48 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color48};")"
+                        @onclick="() =>  SeleccionarBoton48()">@estado48</button> <!-- 48 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color48d};")"
+                        @onclick="() => color48d = colorSeleccionado"></button><!-- 48 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color47i};")"
+                        @onclick="() => color47i = colorSeleccionado"></button><!-- 47 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color47};")"
+                        @onclick="() =>  SeleccionarBoton47()">@estado47</button><!-- 47 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color47d};")"
+                        @onclick="() => color47d = colorSeleccionado"></button><!-- 47 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color46i};")"
+                        @onclick="() => color46i = colorSeleccionado"></button> <!-- 46 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color46};")"
+                        @onclick="() =>  SeleccionarBoton46()">@estado46</button><!-- 46 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color46d};")"
+                        @onclick="() => color46d = colorSeleccionado"></button><!-- 46 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color45i};")"
+                        @onclick="() => color45i = colorSeleccionado"></button><!-- 45 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color45};")"
+                        @onclick="() =>  SeleccionarBoton45()">@estado45</button><!-- 45 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color45d};")"
+                        @onclick="() => color45d = colorSeleccionado"></button><!-- 45 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color44i};")"
+                        @onclick="() => color44i = colorSeleccionado"></button><!-- 44 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color44};")"
+                        @onclick="() =>  SeleccionarBoton44()">@estado44</button><!-- 44 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color44d};")"
+                        @onclick="() => color44d = colorSeleccionado"></button><!-- 44 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color43i};")"
+                        @onclick="() => color43i = colorSeleccionado"></button><!-- 43 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color43};")"
+                        @onclick="() =>  SeleccionarBoton43()">@estado43</button><!-- 43 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color43d};")"
+                        @onclick="() => color43d = colorSeleccionado"></button><!-- 43 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color42i};")"
+                        @onclick="() => color42i = colorSeleccionado"></button><!-- 42 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color42};")"
+                        @onclick="() =>  SeleccionarBoton42()">@estado42</button><!-- 42 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color42d};")"
+                        @onclick="() => color42d = colorSeleccionado"></button><!-- 42 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color41i};")"
+                        @onclick="() => color41i = colorSeleccionado"></button><!-- 41 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color41};")"
+                        @onclick="() =>  SeleccionarBoton41()">@estado41</button><!-- 41 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color41d};")"
+                        @onclick="() => color41d = colorSeleccionado"></button><!-- 41 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color31i};")"
+                        @onclick="() => color31i = colorSeleccionado"></button><!-- 31 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color31};")"
+                        @onclick="() =>  SeleccionarBoton31()">@estado31</button><!-- 31 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color31d};")"
+                        @onclick="() => color31d = colorSeleccionado"></button><!-- 31 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color32i};")"
+                        @onclick="() => color32i = colorSeleccionado"></button><!-- 32 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color32};")"
+                        @onclick="() =>  SeleccionarBoton32()">@estado32</button><!-- 32 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color32d};")"
+                        @onclick="() => color32d = colorSeleccionado"></button><!-- 32 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color33i};")"
+                        @onclick="() => color33i = colorSeleccionado"></button><!-- 33 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color33};")"
+                        @onclick="() =>  SeleccionarBoton33()">@estado33</button><!-- 33 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color33d};")"
+                        @onclick="() => color33d = colorSeleccionado"></button><!-- 33 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color34i};")"
+                        @onclick="() => color34i = colorSeleccionado"></button><!-- 34 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color34};")"
+                        @onclick="() =>  SeleccionarBoton34()">@estado34</button><!-- 34 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color34d};")"
+                        @onclick="() => color34d = colorSeleccionado"></button><!-- 34 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color35i};")"
+                        @onclick="() => color35i = colorSeleccionado"></button><!-- 35 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color35};")"
+                        @onclick="() =>  SeleccionarBoton35()">@estado35</button><!-- 35 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color35d};")"
+                        @onclick="() => color35d = colorSeleccionado"></button><!-- 35 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color36i};")"
+                        @onclick="() => color36i = colorSeleccionado"></button><!-- 36 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color36};")"
+                        @onclick="() =>  SeleccionarBoton36()">@estado36</button><!-- 36 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color36d};")"
+                        @onclick="() => color36d = colorSeleccionado"></button><!-- 36 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color37i};")"
+                        @onclick="() => color37i = colorSeleccionado"></button><!-- 37 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color37};")"
+                        @onclick="() =>  SeleccionarBoton37()">@estado37</button><!-- 37 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color37d};")"
+                        @onclick="() => color37d = colorSeleccionado"></button><!-- 37 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color38i};")"
+                        @onclick="() => color38i = colorSeleccionado"></button><!-- 38 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color38};")"
+                        @onclick="() =>  SeleccionarBoton38()">@estado38</button><!-- 38 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color38d};")"
+                        @onclick="() => color38d = colorSeleccionado"></button><!-- 38 -->
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color48ab};")"
+                        @onclick="() => color48ab = colorSeleccionado"></button>
+            </td>  <!-- 48 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color47ab};")"
+                        @onclick="() => color47ab = colorSeleccionado"></button>
+            </td>  <!-- 47 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color46ab};")"
+                        @onclick="() => color46ab = colorSeleccionado"></button>
+            </td> <!-- 46 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color45ab};")"
+                        @onclick="() => color45ab = colorSeleccionado"></button>
+            </td> <!-- 45 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color44ab};")"
+                        @onclick="() => color44ab = colorSeleccionado"></button>
+            </td> <!-- 44 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color43ab};")"
+                        @onclick="() => color43ab = colorSeleccionado"></button>
+            </td> <!-- 43 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color42ab};")"
+                        @onclick="() => color42ab = colorSeleccionado"></button>
+            </td> <!-- 42 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color41ab};")"
+                        @onclick="() => color41ab = colorSeleccionado"></button>
+            </td> <!-- 41 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color31ab};")"
+                        @onclick="() => color31ab = colorSeleccionado"></button>
+            </td> <!-- 31 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color32ab};")"
+                        @onclick="() => color32ab = colorSeleccionado"></button>
+            </td> <!-- 32 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color33ab};")"
+                        @onclick="() => color33ab = colorSeleccionado"></button>
+            </td> <!-- 33 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color34ab};")"
+                        @onclick="() => color34ab = colorSeleccionado"></button>
+            </td> <!-- 34 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color35ab};")"
+                        @onclick="() => color35ab = colorSeleccionado"></button>
+            </td> <!-- 35 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color36ab};")"
+                        @onclick="() => color36ab = colorSeleccionado"></button>
+            </td> <!-- 36 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color37ab};")"
+                        @onclick="() => color37ab = colorSeleccionado"></button>
+            </td> <!-- 37 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color38ab};")"
+                        @onclick="() => color38ab = colorSeleccionado"></button>
+            </td> <!-- 38 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 50px;>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+    </tbody>
+</table>
+    </div>
+    <p></p>
+    <p></p>
+       <div style="display: @(divNiño == 1 ? "block" : "none")">
+<table>
+    <thead>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 50px;>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>55</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>54</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>53</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>52</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>51</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>61</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>62</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>63</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>64</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>65</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color55a};")"
+                        @onclick="() => color55a = colorSeleccionado"></button>
+            </td> <!-- 55 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color54a};")"
+                        @onclick="() => color54a = colorSeleccionado"></button>
+            </td> <!-- 54 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color53a};")"
+                        @onclick="() => color53a = colorSeleccionado"></button>
+            </td> <!-- 53 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color52a};")"
+                        @onclick="() => color52a = colorSeleccionado"></button>
+            </td> <!-- 52 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color51a};")"
+                        @onclick="() => color51a = colorSeleccionado"></button>
+            </td> <!-- 51 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color61a};")"
+                        @onclick="() => color61a = colorSeleccionado"></button>
+            </td> <!-- 61 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color62a};")"
+                        @onclick="() => color62a = colorSeleccionado"></button>
+            </td> <!-- 62 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color63a};")"
+                        @onclick="() => color63a = colorSeleccionado"></button>
+            </td> <!-- 63 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color64a};")"
+                        @onclick="() => color64a = colorSeleccionado"></button>
+            </td> <!-- 64 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color65a};")"
+                        @onclick="() => color65a = colorSeleccionado"></button>
+            </td> <!-- 65 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color55i};")"
+                        @onclick="() => color55i = colorSeleccionado"></button><!-- 55 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color55};")"
+                        @onclick="() =>  SeleccionarBoton55()">
+                    @estado55
+                </button><!-- 55 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color55d};")"
+                        @onclick="() => color55d = colorSeleccionado"></button><!-- 55 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color54i};")"
+                        @onclick="() => color54i = colorSeleccionado"></button><!-- 54 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color54};")"
+                        @onclick="() =>  SeleccionarBoton54()">
+                    @estado54
+                </button><!-- 54 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color54d};")"
+                        @onclick="() => color54d = colorSeleccionado"></button><!-- 54 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color53i};")"
+                        @onclick="() => color53i = colorSeleccionado"></button><!-- 53 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color53};")"
+                        @onclick="() =>  SeleccionarBoton53()">
+                    @estado53
+                </button><!-- 53 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color53d};")"
+                        @onclick="() => color53d = colorSeleccionado"></button><!-- 53 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color52i};")"
+                        @onclick="() => color52i = colorSeleccionado"></button><!-- 52 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color52};")"
+                        @onclick="() =>  SeleccionarBoton52()">
+                    @estado52
+                </button><!-- 52 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color52d};")"
+                        @onclick="() => color52d = colorSeleccionado"></button><!-- 52 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color51i};")"
+                        @onclick="() => color51i = colorSeleccionado"></button><!-- 51 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color51};")"
+                        @onclick="() =>  SeleccionarBoton51()">
+                    @estado51
+                </button><!-- 51 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color51d};")"
+                        @onclick="() => color51d = colorSeleccionado"></button><!-- 51 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color61i};")"
+                        @onclick="() => color61i = colorSeleccionado"></button><!-- 61 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color61};")"
+                        @onclick="() =>  SeleccionarBoton61()">
+                    @estado61
+                </button><!-- 61 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color61d};")"
+                        @onclick="() => color61d = colorSeleccionado"></button><!-- 61 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color62i};")"
+                        @onclick="() => color62i = colorSeleccionado"></button><!-- 62 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color62};")"
+                        @onclick="() =>  SeleccionarBoton62()">
+                    @estado62
+                </button><!-- 62 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color62d};")"
+                        @onclick="() => color62d = colorSeleccionado"></button><!-- 62 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color63i};")"
+                        @onclick="() => color63i = colorSeleccionado"></button><!-- 63 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color63};")"
+                        @onclick="() =>  SeleccionarBoton63()">
+                    @estado63
+                </button><!-- 63 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color63d};")"
+                        @onclick="() => color63d = colorSeleccionado"></button><!-- 63 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color64i};")"
+                        @onclick="() => color64i = colorSeleccionado"></button><!-- 64 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color64};")"
+                        @onclick="() =>  SeleccionarBoton64()">
+                    @estado64
+                </button><!-- 64 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color64d};")"
+                        @onclick="() => color64d = colorSeleccionado"></button><!-- 64 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color65i};")"
+                        @onclick="() => color65i = colorSeleccionado"></button><!-- 65 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color65};")"
+                        @onclick="() =>  SeleccionarBoton65()">
+                    @estado65
+                </button><!-- 65 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color65d};")"
+                        @onclick="() => color65d = colorSeleccionado"></button><!-- 65 -->
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color55ab};")"
+                        @onclick="() => color55ab = colorSeleccionado"></button>
+            </td> <!-- 55 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color54ab};")"
+                        @onclick="() => color54ab = colorSeleccionado"></button>
+            </td> <!-- 54 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color53ab};")"
+                        @onclick="() => color53ab = colorSeleccionado"></button>
+            </td> <!-- 53 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color52ab};")"
+                        @onclick="() => color52ab = colorSeleccionado"></button>
+            </td> <!-- 52 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color51ab};")"
+                        @onclick="() => color51ab = colorSeleccionado"></button>
+            </td> <!-- 51 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color61ab};")"
+                        @onclick="() => color61ab = colorSeleccionado"></button>
+            </td> <!-- 61 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color62ab};")"
+                        @onclick="() => color62ab = colorSeleccionado"></button>
+            </td> <!-- 62 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color63ab};")"
+                        @onclick="() => color63ab = colorSeleccionado"></button>
+            </td> <!-- 63 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color64ab};")"
+                        @onclick="() => color64ab = colorSeleccionado"></button>
+            </td> <!-- 64 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color65ab};")"
+                        @onclick="() => color65ab = colorSeleccionado"></button>
+            </td> <!-- 65 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcorta"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+              <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>85</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>84</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>83</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>82</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>81</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>71</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>72</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>73</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>74</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>75</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color85a};")"
+                        @onclick="() => color85a = colorSeleccionado"></button>
+            </td> <!-- 85 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color84a};")"
+                        @onclick="() => color84a = colorSeleccionado"></button>
+            </td> <!-- 84 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color83a};")"
+                        @onclick="() => color83a = colorSeleccionado"></button>
+            </td> <!-- 83 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color82a};")"
+                        @onclick="() => color82a = colorSeleccionado"></button>
+            </td> <!-- 82 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color81a};")"
+                        @onclick="() => color81a = colorSeleccionado"></button>
+            </td> <!-- 81 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color71a};")"
+                        @onclick="() => color71a = colorSeleccionado"></button>
+            </td> <!-- 71 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color72a};")"
+                        @onclick="() => color72a = colorSeleccionado"></button>
+            </td> <!-- 72 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color73a};")"
+                        @onclick="() => color73a = colorSeleccionado"></button>
+            </td> <!-- 73 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color74a};")"
+                        @onclick="() => color74a = colorSeleccionado"></button>
+            </td> <!-- 74 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color75a};")"
+                        @onclick="() => color75a = colorSeleccionado"></button>
+            </td> <!-- 75 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color85i};")"
+                        @onclick="() => color85i = colorSeleccionado"></button><!-- 85 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color85};")"
+                        @onclick="() =>  SeleccionarBoton85()">
+                    @estado85
+                </button><!-- 85 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color85d};")"
+                        @onclick="() => color85d = colorSeleccionado"></button><!-- 85 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color84i};")"
+                        @onclick="() => color84i = colorSeleccionado"></button><!-- 84 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color84};")"
+                        @onclick="() =>  SeleccionarBoton84()">
+                    @estado84
+                </button><!-- 84 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color84d};")"
+                        @onclick="() => color84d = colorSeleccionado"></button><!-- 84 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color83i};")"
+                        @onclick="() => color83i = colorSeleccionado"></button><!-- 83 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color83};")"
+                        @onclick="() =>  SeleccionarBoton83()">
+                    @estado83
+                </button><!-- 83 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color83d};")"
+                        @onclick="() => color83d = colorSeleccionado"></button><!-- 83 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color82i};")"
+                        @onclick="() => color82i = colorSeleccionado"></button><!-- 82 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color82};")"
+                        @onclick="() =>  SeleccionarBoton82()">
+                    @estado82
+                </button><!-- 82 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color82d};")"
+                        @onclick="() => color82d = colorSeleccionado"></button><!-- 82 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color81i};")"
+                        @onclick="() => color81i = colorSeleccionado"></button><!-- 81 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color81};")"
+                        @onclick="() =>  SeleccionarBoton81()">
+                    @estado81
+                </button><!-- 81 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color81d};")"
+                        @onclick="() => color81d = colorSeleccionado"></button><!-- 81 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color71i};")"
+                        @onclick="() => color71i = colorSeleccionado"></button><!-- 71 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color71};")"
+                        @onclick="() =>  SeleccionarBoton71()">
+                    @estado71
+                </button><!-- 71 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color71d};")"
+                        @onclick="() => color71d = colorSeleccionado"></button><!-- 71 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color72i};")"
+                        @onclick="() => color72i = colorSeleccionado"></button><!-- 72 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color72};")"
+                        @onclick="() =>  SeleccionarBoton72()">
+                    @estado72
+                </button><!-- 72 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color72d};")"
+                        @onclick="() => color72d = colorSeleccionado"></button><!-- 72 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color73i};")"
+                        @onclick="() => color73i = colorSeleccionado"></button><!-- 73 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color73};")"
+                        @onclick="() =>  SeleccionarBoton73()">
+                    @estado73
+                </button><!-- 73 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color73d};")"
+                        @onclick="() => color73d = colorSeleccionado"></button><!-- 73 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color74i};")"
+                        @onclick="() => color74i = colorSeleccionado"></button><!-- 74 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color74};")"
+                        @onclick="() =>  SeleccionarBoton74()">
+                    @estado74
+                </button><!-- 74 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color74d};")"
+                        @onclick="() => color74d = colorSeleccionado"></button><!-- 74 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color75i};")"
+                        @onclick="() => color75i = colorSeleccionado"></button><!-- 75 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color75};")"
+                        @onclick="() =>  SeleccionarBoton75()">
+                    @estado75
+                </button><!-- 75 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color75d};")"
+                        @onclick="() => color75d = colorSeleccionado"></button><!-- 75 -->
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color85ab};")"
+                        @onclick="() => color85ab = colorSeleccionado"></button>
+            </td> <!-- 85 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color84ab};")"
+                        @onclick="() => color84ab = colorSeleccionado"></button>
+            </td> <!-- 84 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color83ab};")"
+                        @onclick="() => color83ab = colorSeleccionado"></button>
+            </td> <!-- 83 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color82ab};")"
+                        @onclick="() => color82ab = colorSeleccionado"></button>
+            </td> <!-- 82 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color81ab};")"
+                        @onclick="() => color81ab = colorSeleccionado"></button>
+            </td> <!-- 81 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color71ab};")"
+                        @onclick="() => color71ab = colorSeleccionado"></button>
+            </td> <!-- 71 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color72ab};")"
+                        @onclick="() => color72ab = colorSeleccionado"></button>
+            </td> <!-- 72 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color73ab};")"
+                        @onclick="() => color73ab = colorSeleccionado"></button>
+            </td> <!-- 73 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color74ab};")"
+                        @onclick="() => color74ab = colorSeleccionado"></button>
+            </td> <!-- 74 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color75ab};")"
+                        @onclick="() => color75ab = colorSeleccionado"></button>
+            </td> <!-- 75 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcorta"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="centrado">
+<button class="squarered-button" @onclick="() => SeleccionarColor(red, vacio)"></button>
+<button class="squareblue-button" @onclick="() => SeleccionarColor(blue, vacio)"></button>
+<button class="squarewhite-button" @onclick="() => SeleccionarColor(white, vacio)"></button>
+<button class="squarewhite-button" @onclick="() => SeleccionarEstado(X)">X</button>
+<button class="squarewhite-button" @onclick="() => SeleccionarEstado(O)">O</button>
+<button class="squarewhite-button" @onclick="() => SeleccionarEstado(TC)">T</button>
+<button class="squarewhite-button" @onclick="() => SeleccionarEstado(vacio)"></button>
+<p>SELECCIONADO</p>
+ <button class="squareselected-button" style="@($"background-color: {colorSeleccionado};")">@estadoSeleccionado</button>
+</div>
+</div>
+</div>
 }
 else
 {
     <p>No tienes permiso para ver los datos.</p>
 }
-
+ </div>
 @code {
     [Inject]
     private DbDentistaContext DbContext { get; set; }
@@ -643,16 +3330,656 @@ else
         }
         else
         {
-            
+
         }
 
     }
-       private void ActualizaTablaPacientes()
+    private void ActualizaTablaPacientes()
     {    
         ListaDePacientes = DbContext.Pacientes.ToList();
         StateHasChanged();
 
     }
 
+    string color = "red"; // Variable que contiene el color que deseas aplicar al botón
+    string color12c = "white";
+    string color18a = "white";
+    string color17a = "white";
+    string color16a = "white";
+    string color15a = "white";
+    string color14a = "white";
+    string color13a = "white";
+    string color12a = "white";
+    string color11a = "white";
+    string color21a = "white";
+    string color22a = "white";
+    string color23a = "white";
+    string color24a = "white";
+    string color25a = "white";
+    string color26a = "white";
+    string color27a = "white";
+    string color28a = "white";
+    string color18 = "white";
+    string color17 = "white";
+    string color16 = "white";
+    string color15 = "white";
+    string color14 = "white";
+    string color13 = "white";
+    string color12 = "white";
+    string color11 = "white";
+    string color21 = "white";
+    string color22 = "white";
+    string color23 = "white";
+    string color24 = "white";
+    string color25 = "white";
+    string color26 = "white";
+    string color27 = "white";
+    string color28 = "white";
+    string color18i = "white";
+    string color17i = "white";
+    string color16i = "white";
+    string color15i = "white";
+    string color14i = "white";
+    string color13i = "white";
+    string color12i = "white";
+    string color11i = "white";
+    string color21i = "white";
+    string color22i = "white";
+    string color23i = "white";
+    string color24i = "white";
+    string color25i = "white";
+    string color26i = "white";
+    string color27i = "white";
+    string color28i = "white";
+    string color18d = "white";
+    string color17d = "white";
+    string color16d = "white";
+    string color15d = "white";
+    string color14d = "white";
+    string color13d = "white";
+    string color12d = "white";
+    string color11d = "white";
+    string color21d = "white";
+    string color22d = "white";
+    string color23d = "white";
+    string color24d = "white";
+    string color25d = "white";
+    string color26d = "white";
+    string color27d = "white";
+    string color28d = "white";
+    string color18ab = "white";
+    string color17ab = "white";
+    string color16ab = "white";
+    string color15ab = "white";
+    string color14ab = "white";
+    string color13ab = "white";
+    string color12ab = "white";
+    string color11ab = "white";
+    string color21ab = "white";
+    string color22ab = "white";
+    string color23ab = "white";
+    string color24ab = "white";
+    string color25ab = "white";
+    string color26ab = "white";
+    string color27ab = "white";
+    string color28ab = "white";
+    string estado18 = "";
+    string estado17 = "";
+    string estado16 = "";
+    string estado15 = "";
+    string estado14 = "";
+    string estado13 = "";
+    string estado12 = "";
+    string estado11 = "";
+    string estado21 = "";
+    string estado22 = "";
+    string estado23 = "";
+    string estado24 = "";
+    string estado25 = "";
+    string estado26 = "";
+    string estado27 = "";
+    string estado28 = "";
+    string color48a = "white";
+    string color47a = "white";
+    string color46a = "white";
+    string color45a = "white";
+    string color44a = "white";
+    string color43a = "white";
+    string color42a = "white";
+    string color41a = "white";
+    string color31a = "white";
+    string color32a = "white";
+    string color33a = "white";
+    string color34a = "white";
+    string color35a = "white";
+    string color36a = "white";
+    string color37a = "white";
+    string color38a = "white";
+    string color48 = "white";
+    string color47 = "white";
+    string color46 = "white";
+    string color45 = "white";
+    string color44 = "white";
+    string color43 = "white";
+    string color42 = "white";
+    string color41 = "white";
+    string color31 = "white";
+    string color32 = "white";
+    string color33 = "white";
+    string color34 = "white";
+    string color35 = "white";
+    string color36 = "white";
+    string color37 = "white";
+    string color38 = "white";
+    string color48i = "white";
+    string color47i = "white";
+    string color46i = "white";
+    string color45i = "white";
+    string color44i = "white";
+    string color43i = "white";
+    string color42i = "white";
+    string color41i = "white";
+    string color31i = "white";
+    string color32i = "white";
+    string color33i = "white";
+    string color34i = "white";
+    string color35i = "white";
+    string color36i = "white";
+    string color37i = "white";
+    string color38i = "white";
+    string color48d = "white";
+    string color47d = "white";
+    string color46d = "white";
+    string color45d = "white";
+    string color44d = "white";
+    string color43d = "white";
+    string color42d = "white";
+    string color41d = "white";
+    string color31d = "white";
+    string color32d = "white";
+    string color33d = "white";
+    string color34d = "white";
+    string color35d = "white";
+    string color36d = "white";
+    string color37d = "white";
+    string color38d = "white";
+    string color48ab = "white";
+    string color47ab = "white";
+    string color46ab = "white";
+    string color45ab = "white";
+    string color44ab = "white";
+    string color43ab = "white";
+    string color42ab = "white";
+    string color41ab = "white";
+    string color31ab = "white";
+    string color32ab = "white";
+    string color33ab = "white";
+    string color34ab = "white";
+    string color35ab = "white";
+    string color36ab = "white";
+    string color37ab = "white";
+    string color38ab = "white";
+    string estado48 = "";
+    string estado47 = "";
+    string estado46 = "";
+    string estado45 = "";
+    string estado44 = "";
+    string estado43 = "";
+    string estado42 = "";
+    string estado41 = "";
+    string estado31 = "";
+    string estado32 = "";
+    string estado33 = "";
+    string estado34 = "";
+    string estado35 = "";
+    string estado36 = "";
+    string estado37 = "";
+    string estado38 = "";    
+    string color55i = "white";
+    string color54i = "white";
+    string color53i = "white";
+    string color52i = "white";
+    string color51i = "white";
+    string color61i = "white";
+    string color62i = "white";
+    string color63i = "white";
+    string color64i = "white";
+    string color65i = "white";
+    string color85i = "white";
+    string color84i = "white";
+    string color83i = "white";
+    string color82i = "white";
+    string color81i = "white";
+    string color71i = "white";
+    string color72i = "white";
+    string color73i = "white";
+    string color74i = "white";
+    string color75i = "white";    
+    string color55d = "white";
+    string color54d = "white";
+    string color53d = "white";
+    string color52d = "white";
+    string color51d = "white";
+    string color61d = "white";
+    string color62d = "white";
+    string color63d = "white";
+    string color64d = "white";
+    string color65d = "white";
+    string color85d = "white";
+    string color84d = "white";
+    string color83d = "white";
+    string color82d = "white";
+    string color81d = "white";
+    string color71d = "white";
+    string color72d = "white";
+    string color73d = "white";
+    string color74d = "white";
+    string color75d = "white";
+    string color55 = "white";
+    string color54 = "white";
+    string color53 = "white";
+    string color52 = "white";
+    string color51 = "white";
+    string color61 = "white";
+    string color62 = "white";
+    string color63 = "white";
+    string color64 = "white";
+    string color65 = "white";
+    string color85 = "white";
+    string color84 = "white";
+    string color83 = "white";
+    string color82 = "white";
+    string color81 = "white";
+    string color71 = "white";
+    string color72 = "white";
+    string color73 = "white";
+    string color74 = "white";
+    string color75 = "white";
+    string color55a = "white";
+    string color54a = "white";
+    string color53a = "white";
+    string color52a = "white";
+    string color51a = "white";
+    string color61a = "white";
+    string color62a = "white";
+    string color63a = "white";
+    string color64a = "white";
+    string color65a = "white";
+    string color85a = "white";
+    string color84a = "white";
+    string color83a = "white";
+    string color82a = "white";
+    string color81a = "white";
+    string color71a = "white";
+    string color72a = "white";
+    string color73a = "white";
+    string color74a = "white";
+    string color75a = "white";    
+    string color55ab = "white";
+    string color54ab = "white";
+    string color53ab = "white";
+    string color52ab = "white";
+    string color51ab = "white";
+    string color61ab = "white";
+    string color62ab = "white";
+    string color63ab = "white";
+    string color64ab = "white";
+    string color65ab = "white";
+    string color85ab = "white";
+    string color84ab = "white";
+    string color83ab = "white";
+    string color82ab = "white";
+    string color81ab = "white";
+    string color71ab = "white";
+    string color72ab = "white";
+    string color73ab = "white";
+    string color74ab = "white";
+    string color75ab = "white";
+    string estado55 = "";
+    string estado54 = "";
+    string estado53 = "";
+    string estado52 = "";
+    string estado51 = "";
+    string estado61 = "";
+    string estado62 = "";
+    string estado63 = "";
+    string estado64 = "";
+    string estado65 = "";
+    string estado85 = "";
+    string estado84 = "";
+    string estado83 = "";
+    string estado82 = "";
+    string estado81 = "";
+    string estado71 = "";
+    string estado72 = "";
+    string estado73 = "";
+    string estado74 = "";
+    string estado75 = "";
+    string colorSeleccionado = "";
+    string estadoBoton = "";
+    string red = "red";
+    string blue = "blue";
+    string white = "white";
+    string X = "X";
+    string O = "O";
+    string TC = "T";
+    string vacio = "";
+    private int divAdulto = 1;
+    private int divNiño = 0;
+    private int divOdontograma = 0;
+    private string botonSeleccionado = "";
+    string estadoSeleccionado = "";
+    private void MostrarOdontograma(int dato)
+    {
+        divOdontograma = dato;        
+    }
+    private void PintarBoton(string botonRecibido)
+    {
+
+    }
+    private void MostrarAdulto()
+    {
+    divAdulto = 1;
+    divNiño = 0;
+    }
+    private void MostrarNiño()
+    {
+        divAdulto = 0;
+        divNiño = 1;
+    }
+    private void MostrarAmbos()
+    {
+        divAdulto = 1;
+        divNiño = 1;
+    }
+
+    private void SeleccionarEstado(string estado)
+    {
+        estadoSeleccionado = estado;
+    }
+    private void SeleccionarColor(string colorRecibido, string estado)
+    {
+        estadoBoton = estado;
+        colorSeleccionado = colorRecibido;
+    }
+
+    private void CambiaColor(ChangeEventArgs args)
+    {
+        var o = args.Value.ToString();
+        colorSeleccionado = o;
+    }
+    private void color12ccambiar()
+    {
+        botonSeleccionado = "12c";
+    }
+
+    private void SeleccionarBoton(string boton)
+    {
+        botonSeleccionado = boton;
+    }
+
+    private void SeleccionarBoton18()
+    {
+        estado18 = estadoSeleccionado;
+        color18 = colorSeleccionado;
+    }
+    private void SeleccionarBoton17()
+    {
+        estado17 = estadoSeleccionado;
+        color17 = colorSeleccionado;
+    }
+    private void SeleccionarBoton16()
+    {
+        estado16 = estadoSeleccionado;
+        color16 = colorSeleccionado;
+    }
+     private void SeleccionarBoton15()
+    {
+        estado15 = estadoSeleccionado;
+        color15 = colorSeleccionado;
+    }
+     private void SeleccionarBoton14()
+    {
+        estado14 = estadoSeleccionado;
+        color14 = colorSeleccionado;
+    }
+     private void SeleccionarBoton13()
+    {
+        estado13 = estadoSeleccionado;
+        color13 = colorSeleccionado;
+    }
+     private void SeleccionarBoton12()
+    {
+        estado12 = estadoSeleccionado;
+        color12 = colorSeleccionado;
+    }
+    private void SeleccionarBoton11()
+    {
+        estado11 = estadoSeleccionado;
+        color11 = colorSeleccionado;
+    }
+    private void SeleccionarBoton28()
+    {
+        estado28 = estadoSeleccionado;
+        color28 = colorSeleccionado;
+    }
+    private void SeleccionarBoton27()
+    {
+        estado27 = estadoSeleccionado;
+        color27 = colorSeleccionado;
+    }
+    private void SeleccionarBoton26()
+    {
+        estado26 = estadoSeleccionado;
+        color26 = colorSeleccionado;
+    }
+    private void SeleccionarBoton25()
+    {
+        estado25 = estadoSeleccionado;
+        color25 = colorSeleccionado;
+    }
+    private void SeleccionarBoton24()
+    {
+        estado24 = estadoSeleccionado;
+        color24 = colorSeleccionado;
+    }
+    private void SeleccionarBoton23()
+    {
+        estado23 = estadoSeleccionado;
+        color23 = colorSeleccionado;
+    }
+    private void SeleccionarBoton22()
+    {
+        estado22 = estadoSeleccionado;
+        color22 = colorSeleccionado;
+    }
+    private void SeleccionarBoton21()
+    {
+        estado21 = estadoSeleccionado;
+        color21 = colorSeleccionado;
+    }
+    private void SeleccionarBoton48()
+    {
+        estado48 = estadoSeleccionado;
+        color48 = colorSeleccionado;
+    }
+    private void SeleccionarBoton47()
+    {
+        estado47 = estadoSeleccionado;
+        color47 = colorSeleccionado;
+    }
+    private void SeleccionarBoton46()
+    {
+        estado46 = estadoSeleccionado;
+        color46 = colorSeleccionado;
+    }
+    private void SeleccionarBoton45()
+    {
+        estado45 = estadoSeleccionado;
+        color45 = colorSeleccionado;
+    }
+    private void SeleccionarBoton44()
+    {
+        estado44 = estadoSeleccionado;
+        color44 = colorSeleccionado;
+    }
+    private void SeleccionarBoton43()
+    {
+        estado43 = estadoSeleccionado;
+        color43 = colorSeleccionado;
+    }
+    private void SeleccionarBoton42()
+    {
+        estado42 = estadoSeleccionado;
+        color42 = colorSeleccionado;
+    }
+    private void SeleccionarBoton41()
+    {
+        estado41 = estadoSeleccionado;
+        color41 = colorSeleccionado;
+    }
+    private void SeleccionarBoton38()
+    {
+        estado38 = estadoSeleccionado;
+        color38 = colorSeleccionado;
+    }
+    private void SeleccionarBoton37()
+    {
+        estado37 = estadoSeleccionado;
+        color37 = colorSeleccionado;
+    }
+    private void SeleccionarBoton36()
+    {
+        estado36 = estadoSeleccionado;
+        color36 = colorSeleccionado;
+    }
+    private void SeleccionarBoton35()
+    {
+        estado35 = estadoSeleccionado;
+        color35 = colorSeleccionado;
+    }
+    private void SeleccionarBoton34()
+    {
+        estado34 = estadoSeleccionado;
+        color34 = colorSeleccionado;
+    }
+    private void SeleccionarBoton33()
+    {
+        estado33 = estadoSeleccionado;
+        color33 = colorSeleccionado;
+    }
+    private void SeleccionarBoton32()
+    {
+        estado32 = estadoSeleccionado;
+        color32 = colorSeleccionado;
+    }
+    private void SeleccionarBoton31()
+    {
+        estado31 = estadoSeleccionado;
+        color31 = colorSeleccionado;
+    }
+    private void SeleccionarBoton55()
+    {
+        estado55 = estadoSeleccionado;
+        color55 = colorSeleccionado;
+    }
+        private void SeleccionarBoton54()
+    {
+        estado54 = estadoSeleccionado;
+        color54 = colorSeleccionado;
+    }
+            private void SeleccionarBoton53()
+    {
+        estado53 = estadoSeleccionado;
+        color53 = colorSeleccionado;
+    }
+            private void SeleccionarBoton52()
+    {
+        estado52 = estadoSeleccionado;
+        color52 = colorSeleccionado;
+    }        private void SeleccionarBoton51()
+    {
+        estado51 = estadoSeleccionado;
+        color51 = colorSeleccionado;
+    }
+            private void SeleccionarBoton61()
+    {
+        estado61 = estadoSeleccionado;
+        color61 = colorSeleccionado;
+    }
+                private void SeleccionarBoton62()
+    {
+        estado62 = estadoSeleccionado;
+        color62 = colorSeleccionado;
+    }
+                private void SeleccionarBoton63()
+    {
+        estado63 = estadoSeleccionado;
+        color63 = colorSeleccionado;
+    }
+                private void SeleccionarBoton64()
+    {
+        estado64 = estadoSeleccionado;
+        color64 = colorSeleccionado;
+    }
+                private void SeleccionarBoton65()
+    {
+        estado65 = estadoSeleccionado;
+        color65 = colorSeleccionado;
+    }
+                private void SeleccionarBoton85()
+    {
+        estado85 = estadoSeleccionado;
+        color85 = colorSeleccionado;
+    }
+                    private void SeleccionarBoton84()
+    {
+        estado84 = estadoSeleccionado;
+        color84 = colorSeleccionado;
+    }
+                    private void SeleccionarBoton83()
+    {
+        estado83 = estadoSeleccionado;
+        color83 = colorSeleccionado;
+    }
+                    private void SeleccionarBoton82()
+    {
+        estado82 = estadoSeleccionado;
+        color82 = colorSeleccionado;
+    }
+                private void SeleccionarBoton81()
+    {
+        estado81 = estadoSeleccionado;
+        color81 = colorSeleccionado;
+    }
+                    private void SeleccionarBoton71()
+    {
+        estado71 = estadoSeleccionado;
+        color71 = colorSeleccionado;
+    }
+                        private void SeleccionarBoton72()
+    {
+        estado72 = estadoSeleccionado;
+        color72 = colorSeleccionado;
+    }
+                        private void SeleccionarBoton73()
+    {
+        estado73 = estadoSeleccionado;
+        color73 = colorSeleccionado;
+    }
+                        private void SeleccionarBoton74()
+    {
+        estado74 = estadoSeleccionado;
+        color74 = colorSeleccionado;
+    }
+                        private void SeleccionarBoton75()
+    {
+        estado75 = estadoSeleccionado;
+        color75 = colorSeleccionado;
+    }
+    public void CambiarColor()
+    {
+        color12c = colorSeleccionado;
+    }
 
 }
