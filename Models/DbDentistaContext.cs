@@ -186,8 +186,7 @@ public partial class DbDentistaContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Arriba15)
                 .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("arriba15");
+                .IsFixedLength();
             entity.Property(e => e.Arriba16)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -287,6 +286,9 @@ public partial class DbDentistaContext : DbContext
             entity.Property(e => e.Centro16)
                 .HasMaxLength(10)
                 .IsFixedLength();
+            entity.Property(e => e.Centro17)
+                .HasMaxLength(10)
+                .IsFixedLength();
             entity.Property(e => e.Centro18)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -360,6 +362,102 @@ public partial class DbDentistaContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.Centro48)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color11)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color12)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color13)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color14)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color15)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color16)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color17)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color18)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color21)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color22)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color23)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color24)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color25)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color26)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color27)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color28)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color31)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color32)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color33)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color34)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color35)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color36)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color37)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color38)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color41)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color42)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color43)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color44)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color45)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color46)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color47)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color48)
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.Derecha11)

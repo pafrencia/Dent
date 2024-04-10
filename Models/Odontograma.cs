@@ -9,6 +9,8 @@ public partial class Odontograma
 
     public int? IdPaciente { get; set; }
 
+    public string? Color18 { get; set; }
+
     public string? Arriba18 { get; set; }
 
     public string? Abajo18 { get; set; }
@@ -21,6 +23,8 @@ public partial class Odontograma
 
     public string? Estado18 { get; set; }
 
+    public string? Color17 { get; set; }
+
     public string? Arriba17 { get; set; }
 
     public string? Abajo17 { get; set; }
@@ -29,10 +33,12 @@ public partial class Odontograma
 
     public string? Derecha17 { get; set; }
 
+    public string? Centro17 { get; set; }
+
     public string? Estado17 { get; set; }
 
-    public string? Centro17 { get; set; }
-    
+    public string? Color16 { get; set; }
+
     public string? Arriba16 { get; set; }
 
     public string? Abajo16 { get; set; }
@@ -44,6 +50,8 @@ public partial class Odontograma
     public string? Centro16 { get; set; }
 
     public string? Estado16 { get; set; }
+
+    public string? Color15 { get; set; }
 
     public string? Arriba15 { get; set; }
 
@@ -57,6 +65,8 @@ public partial class Odontograma
 
     public string? Estado15 { get; set; }
 
+    public string? Color14 { get; set; }
+
     public string? Arriba14 { get; set; }
 
     public string? Abajo14 { get; set; }
@@ -68,6 +78,8 @@ public partial class Odontograma
     public string? Centro14 { get; set; }
 
     public string? Estado14 { get; set; }
+
+    public string? Color13 { get; set; }
 
     public string? Arriba13 { get; set; }
 
@@ -81,6 +93,8 @@ public partial class Odontograma
 
     public string? Estado13 { get; set; }
 
+    public string? Color12 { get; set; }
+
     public string? Arriba12 { get; set; }
 
     public string? Abajo12 { get; set; }
@@ -92,6 +106,8 @@ public partial class Odontograma
     public string? Centro12 { get; set; }
 
     public string? Estado12 { get; set; }
+
+    public string? Color11 { get; set; }
 
     public string? Arriba11 { get; set; }
 
@@ -105,6 +121,8 @@ public partial class Odontograma
 
     public string? Estado11 { get; set; }
 
+    public string? Color21 { get; set; }
+
     public string? Arriba21 { get; set; }
 
     public string? Abajo21 { get; set; }
@@ -117,6 +135,8 @@ public partial class Odontograma
 
     public string? Estado21 { get; set; }
 
+    public string? Color22 { get; set; }
+
     public string? Arriba22 { get; set; }
 
     public string? Abajo22 { get; set; }
@@ -126,6 +146,8 @@ public partial class Odontograma
     public string? Derecha22 { get; set; }
 
     public string? Centro22 { get; set; }
+
+    public string? Color23 { get; set; }
 
     public string? Estado22 { get; set; }
 
@@ -141,6 +163,8 @@ public partial class Odontograma
 
     public string? Estado23 { get; set; }
 
+    public string? Color24 { get; set; }
+
     public string? Arriba24 { get; set; }
 
     public string? Abajo24 { get; set; }
@@ -152,6 +176,8 @@ public partial class Odontograma
     public string? Centro24 { get; set; }
 
     public string? Estado24 { get; set; }
+
+    public string? Color25 { get; set; }
 
     public string? Arriba25 { get; set; }
 
@@ -165,6 +191,8 @@ public partial class Odontograma
 
     public string? Estado25 { get; set; }
 
+    public string? Color26 { get; set; }
+
     public string? Arriba26 { get; set; }
 
     public string? Abajo26 { get; set; }
@@ -176,6 +204,8 @@ public partial class Odontograma
     public string? Centro26 { get; set; }
 
     public string? Estado26 { get; set; }
+
+    public string? Color27 { get; set; }
 
     public string? Arriba27 { get; set; }
 
@@ -189,6 +219,8 @@ public partial class Odontograma
 
     public string? Estado27 { get; set; }
 
+    public string? Color28 { get; set; }
+
     public string? Arriba28 { get; set; }
 
     public string? Abajo28 { get; set; }
@@ -200,6 +232,8 @@ public partial class Odontograma
     public string? Centro28 { get; set; }
 
     public string? Estado28 { get; set; }
+
+    public string? Color48 { get; set; }
 
     public string? Arriba48 { get; set; }
 
@@ -213,6 +247,8 @@ public partial class Odontograma
 
     public string? Estado48 { get; set; }
 
+    public string? Color47 { get; set; }
+
     public string? Arriba47 { get; set; }
 
     public string? Abajo47 { get; set; }
@@ -224,6 +260,8 @@ public partial class Odontograma
     public string? Centro47 { get; set; }
 
     public string? Estado47 { get; set; }
+
+    public string? Color46 { get; set; }
 
     public string? Arriba46 { get; set; }
 
@@ -237,6 +275,8 @@ public partial class Odontograma
 
     public string? Estado46 { get; set; }
 
+    public string? Color45 { get; set; }
+
     public string? Arriba45 { get; set; }
 
     public string? Abajo45 { get; set; }
@@ -248,6 +288,8 @@ public partial class Odontograma
     public string? Centro45 { get; set; }
 
     public string? Estado45 { get; set; }
+
+    public string? Color44 { get; set; }
 
     public string? Arriba44 { get; set; }
 
@@ -261,6 +303,8 @@ public partial class Odontograma
 
     public string? Estado44 { get; set; }
 
+    public string? Color43 { get; set; }
+
     public string? Arriba43 { get; set; }
 
     public string? Abajo43 { get; set; }
@@ -272,6 +316,8 @@ public partial class Odontograma
     public string? Centro43 { get; set; }
 
     public string? Estado43 { get; set; }
+
+    public string? Color42 { get; set; }
 
     public string? Arriba42 { get; set; }
 
@@ -285,6 +331,8 @@ public partial class Odontograma
 
     public string? Estado42 { get; set; }
 
+    public string? Color41 { get; set; }
+
     public string? Arriba41 { get; set; }
 
     public string? Abajo41 { get; set; }
@@ -296,6 +344,8 @@ public partial class Odontograma
     public string? Centro41 { get; set; }
 
     public string? Estado41 { get; set; }
+
+    public string? Color31 { get; set; }
 
     public string? Arriba31 { get; set; }
 
@@ -309,6 +359,8 @@ public partial class Odontograma
 
     public string? Estado31 { get; set; }
 
+    public string? Color32 { get; set; }
+
     public string? Arriba32 { get; set; }
 
     public string? Abajo32 { get; set; }
@@ -320,6 +372,8 @@ public partial class Odontograma
     public string? Centro32 { get; set; }
 
     public string? Estado32 { get; set; }
+
+    public string? Color33 { get; set; }
 
     public string? Arriba33 { get; set; }
 
@@ -333,6 +387,8 @@ public partial class Odontograma
 
     public string? Estado33 { get; set; }
 
+    public string? Color34 { get; set; }
+
     public string? Arriba34 { get; set; }
 
     public string? Abajo34 { get; set; }
@@ -345,15 +401,19 @@ public partial class Odontograma
 
     public string? Estado34 { get; set; }
 
+    public string? Color35 { get; set; }
+
     public string? Arriba35 { get; set; }
 
     public string? Abajo35 { get; set; }
 
-    public string? Izquierda35 { get; set; }
+    public string Izquierda35 { get; set; } = null!;
 
     public string? Derecha35 { get; set; }
 
     public string? Centro35 { get; set; }
+
+    public string? Color36 { get; set; }
 
     public string? Estado35 { get; set; }
 
@@ -369,6 +429,8 @@ public partial class Odontograma
 
     public string? Estado36 { get; set; }
 
+    public string? Color37 { get; set; }
+
     public string? Arriba37 { get; set; }
 
     public string? Abajo37 { get; set; }
@@ -380,6 +442,8 @@ public partial class Odontograma
     public string? Centro37 { get; set; }
 
     public string? Estado37 { get; set; }
+
+    public string? Color38 { get; set; }
 
     public string? Arriba38 { get; set; }
 

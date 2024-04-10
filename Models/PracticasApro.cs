@@ -7,7 +7,7 @@ public partial class PracticasApro
 {
     public int Id { get; set; }
 
-    public string? Practica { get; set; }
+    public string Practica { get; set; }
 
     public int Precio { get; set; }
 }

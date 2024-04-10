@@ -38,6 +38,408 @@ a, .btn-link {
     color: red;
 }
 
+.tabla-fija {
+    width: 1490px; /* Establece el ancho fijo que desees */
+}
+
+.paginaSinMargenes {
+    margin: 0; /* Elimina los márgenes */
+    padding: 0; /* Establece el relleno a 0 */
+}
+
+.nino-button {
+    vertical-align: top;
+    border-radius: 15px;
+    width: 100px;
+    height: 35px;
+    vertical-align: center;
+    font-weight: bold; /* Texto en negrita */
+    font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: gold;
+    border: 2px solid black;
+    padding: 3px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .nino-button:hover {
+        border-color: green;
+        background-color: goldenrod;
+    }
+
+.mixto-button {
+    vertical-align: top;
+    border-radius: 15px;
+    font-weight: bold; /* Texto en negrita */
+    width: 100px;
+    height: 35px;
+    vertical-align: center;
+    font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: violet;
+    border: 2px solid black;
+    padding: 3px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .mixto-button:hover {
+        border-color: green;
+        background-color: palevioletred;
+    }
+
+.guardar-button {
+    vertical-align: top;
+    border-radius: 15px;
+    font-weight: bold; /* Texto en negrita */
+    width: 100px;
+    height: 35px;
+    vertical-align: center;
+    font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: lightgreen;
+    border: 2px solid black;
+    padding: 3px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .guardar-button:hover {
+        border-color: green;
+        background-color: limegreen;
+    }
+
+.odontograma-button {
+    vertical-align: top;
+    border-radius: 15px;
+    font-weight: bold; /* Texto en negrita */
+    width: 100px;
+    height: 35px;
+    vertical-align: center;
+    color: aliceblue;
+    font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: black;
+    border: 2px solid black;
+    padding: 3px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .odontograma-button:hover {
+        border-color: green;
+        background-color: grey;
+    }
+
+.adulto-button {
+    width: 100px;
+    height: 35px;
+    font-weight: bold; /* Texto en negrita */
+    vertical-align: center;
+    border-radius: 15px;
+    font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: skyblue;
+    border: 2px solid black;
+    padding: 3px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .adulto-button:hover {
+        border-color: green;
+        background-color: royalblue;
+    }
+
+.square-button {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    vertical-align: top;
+    width: 50px;
+    height: 50px;
+    line-height: 50px; /* Alineación vertical del texto */
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    font-size: 48px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: white;
+    border: 2px solid white;
+    padding: 0; /* Sin márgenes */
+    transition: border-color 0.3s ease;
+    margin: 0;
+    z-index: 1;
+}
+
+}
+
+.square-button:hover {
+    border-color: green;
+}
+
+.squareselected-button {
+    line-height: 50px; /* Alineación vertical del texto */
+    text-align: center; /* Alineación horizontal del texto */
+    vertical-align: top;
+    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    font-family: Arial;
+    font-size: 48px;
+    background-color: white;
+    border: 2px solid black;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+.square-button:hover {
+    border-color: green;
+}
+
+.squarewhite-button {
+    line-height: 50px; /* Alineación vertical del texto */
+    text-align: center; /* Alineación horizontal del texto */
+    vertical-align: top;
+    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    font-family: Arial;
+    font-size: 48px;
+    background-color: white;
+    border: 2px solid black;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+    .squarewhite-button:hover {
+        border-color: yellow;
+    }
+
+.squarered-button {
+    vertical-align: top;
+    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border: 2px solid black;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+    .squarered-button:hover {
+        border-color: yellow;
+    }
+
+.squareblue-button {
+    vertical-align: top;
+    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    border: 2px solid black;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+    .squareblue-button:hover {
+        border-color: yellow;
+    }
+
+.barralarga {
+    vertical-align: central;
+    width: 50px;
+    height: 1px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+.barracorta {
+    vertical-align: central;
+    width: 20px;
+    height: 1px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+.barraverticalcortaarriba {
+    vertical-align: bottom;
+    width: 1px;
+    height: 20px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+.barraverticallarga {
+    vertical-align: top;
+    width: 1px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+.barraverticalcorta {
+    vertical-align: top;
+    width: 1px;
+    height: 20px;
+    background-color: white;
+    border: 1px solid grey;
+    padding: 0px;
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+.container {
+    width: 1600px;
+    height: 500px;
+    background-color: white;
+    border: 0px solid black;
+    transition: border-color 0.3s ease;
+}
+
+.square-button:hover {
+    border-color: green;
+}
+
+.containerChico {
+    background-color: white;
+    border: 0px solid black;
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+}
+
+.arriba-button {
+    vertical-align: bottom;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    width: 50px;
+    height: 20px;
+    background-color: white;
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+}
+
+    .arriba-button:hover {
+        border-color: green;
+    }
+
+.abajo-button {
+    vertical-align: top;
+    width: 50px;
+    height: 20px;
+    background-color: white;
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+    .abajo-button:hover {
+        border-color: green;
+    }
+
+
+.izquierda-button {
+    vertical-align: top;
+    width: 20px;
+    height: 50px;
+    background-color: white;
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+    margin: 0;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+    .izquierda-button:hover {
+        border-color: green;
+    }
+
+.1a {
+    background-color: blue;
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+
+
+.derecha-button {
+    vertical-align: top;
+    width: 20px;
+    height: 50px;
+    background-color: white;
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+    margin: 0;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+    .derecha-button:hover {
+        border-color: green;
+    }
+
+.1a {
+    background-color: blue;
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+/* Establecer un ancho fijo de 200px para el div */
+.divFijo {
+    width: 1532px;
+    border: 1px solid black; /* Solo para visualización */
+    padding: 0px; /* Añade espacio alrededor del contenido */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    justify-content: center;
+    justify-items: center;
+}
+
+.divFijoConFlow {
+    width: 1532px;
+    border: 1px solid black; /* Solo para visualización */
+    padding: 0px; /* Añade espacio alrededor del contenido */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    justify-content: center;
+    justify-items: center;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.centrado {
+    width: 600px;
+    border: 0px solid black; /* Solo para visualización */
+    padding: 0px; /* Añade espacio alrededor del contenido */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    justify-content: center;
+    justify-items: center;
+}
+/* Estilo para la tabla sin márgenes internos */
+table {
+    border-collapse: collapse; /* Combinar bordes de celda */
+    border-spacing: 0; /* Eliminar el espacio entre celdas */
+    border: 1px solid black;
+    margin: 0 auto;
+}
+/* Estilo para las celdas de la tabla */
+td, th {
+    text-align: center;
+    border: 0px solid black; /* Borde para las celdas */
+    padding: 0px; /* Relleno interno de las celdas (opcional) */
+    margin: 0; /* Margen de las celdas */
+}
+
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

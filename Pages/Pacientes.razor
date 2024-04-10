@@ -5,401 +5,6 @@
 @using Dent.Pages
 @inject Permisos Permiso
 
-<style>
-
-    .tabla-fija {
-    width: 1490px; /* Establece el ancho fijo que desees */
-}
-    .paginaSinMargenes {
-    margin: 0; /* Elimina los márgenes */
-    padding: 0; /* Establece el relleno a 0 */
-}
-
-    .niño-button {
-        vertical-align: top;
-        border-radius: 15px;
-        width: 100px;
-        height: 35px;
-        vertical-align: center;
-        font-weight: bold; /* Texto en negrita */
-        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
-        background-color: gold;
-        border: 2px solid black;
-        padding: 3px;
-        transition: border-color 0.3s ease;
-        margin: 0 auto;
-
-    }
-        .niño-button:hover {
-            border-color: green;
-            background-color: goldenrod;
-        }
-
-   .mixto-button {
-        vertical-align: top;
-        border-radius: 15px;
-                font-weight: bold; /* Texto en negrita */
-        width: 100px;
-        height: 35px;
-        vertical-align: center;
-        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
-        background-color: violet;
-        border: 2px solid black;
-        padding: 3px;
-        transition: border-color 0.3s ease;
-        margin: 0 auto;
-    }
-
-        .mixto-button:hover {
-            border-color: green;
-            background-color: palevioletred;
-        }
-        
-   .guardar-button {
-        vertical-align: top;
-        border-radius: 15px;
-                font-weight: bold; /* Texto en negrita */
-        width: 100px;
-        height: 35px;
-        vertical-align: center;
-        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
-        background-color: lightgreen;
-        border: 2px solid black;
-        padding: 3px;
-        transition: border-color 0.3s ease;
-        margin: 0 auto;
-    }
-
-        .guardar-button:hover {
-            border-color: green;
-            background-color: limegreen;
-        }
-        
-   .odontograma-button {
-        vertical-align: top;
-        border-radius: 15px;
-                font-weight: bold; /* Texto en negrita */
-        width: 100px;
-        height: 35px;
-        vertical-align: center;
-        color:aliceblue;
-        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
-        background-color: black;
-        border: 2px solid black;
-        padding: 3px;
-        transition: border-color 0.3s ease;
-        margin: 0 auto;
-    }
-
-        .odontograma-button:hover {
-            border-color: green;
-            background-color: grey;
-        }
-        .adulto-button {
-        width: 100px;
-        height: 35px;
-        font-weight: bold; /* Texto en negrita */
-        vertical-align: center;
-        border-radius: 15px;
-        font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
-        background-color: skyblue;
-        border: 2px solid black;
-        padding: 3px;
-        transition: border-color 0.3s ease;
-        margin: 0 auto;
-
-    }
-        .adulto-button:hover {
-            border-color: green;
-            background-color: royalblue;
-        }
-
-    .square-button {
-        position: relative;
-        top: 0px;
-        left: 0px;
-        vertical-align: top;
-        width: 50px;
-        height: 50px;
-        line-height: 50px; /* Alineación vertical del texto */
-        text-align: center; /* Alineación horizontal del texto */
-        font-family: Arial;
-        font-size: 48px; /* Tamaño del texto dentro del boton central en píxeles */
-        background-color: white;
-        border: 2px solid white;
-        padding: 0; /* Sin márgenes */
-        transition: border-color 0.3s ease;
-        margin: 0;
-        z-index: 1;
-        
-    }}
-         .square-button:hover {
-            border-color: green;
-        }
-    .squareselected-button {
-        line-height: 50px; /* Alineación vertical del texto */
-        text-align: center; /* Alineación horizontal del texto */
-        vertical-align: top;
-        border-radius: 15px;
-        width: 50px;
-        height: 50px;
-        font-family: Arial;
-        font-size: 48px;
-        background-color: white;
-        border: 2px solid black;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-        .square-button:hover {
-            border-color: green;
-        }
-
-    .squarewhite-button {
-        line-height: 50px; /* Alineación vertical del texto */
-        text-align: center; /* Alineación horizontal del texto */
-        vertical-align: top;
-        border-radius: 15px;
-        width: 50px;
-        height: 50px;
-        font-family: Arial;
-        font-size: 48px;
-        background-color: white;
-        border: 2px solid black;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-        .squarewhite-button:hover {
-            border-color: yellow;
-        }
-
-    .squarered-button {
-        vertical-align: top;
-        border-radius: 15px;
-        width: 50px;
-        height: 50px;
-        background-color: red;
-        border: 2px solid black;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-        .squarered-button:hover {
-            border-color: yellow;
-        }
-
-    .squareblue-button {
-        vertical-align: top;
-        border-radius: 15px;
-        width: 50px;
-        height: 50px;
-        background-color: blue;
-        border: 2px solid black;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-        .squareblue-button:hover {
-            border-color: yellow;
-        }
-    .barralarga {
-        vertical-align: central;
-        width: 50px;
-        height: 1px;
-        background-color: white;
-        border: 1px solid grey;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-    .barracorta {
-        vertical-align: central;
-        width: 20px;
-        height: 1px;
-        background-color: white;
-        border: 1px solid grey;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-    .barraverticalcortaarriba {
-        vertical-align: bottom;
-        width: 1px;
-        height: 20px;
-        background-color: white;
-        border: 1px solid grey;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-    .barraverticallarga {
-        vertical-align: top;
-        width: 1px;
-        height: 50px;
-        background-color: white;
-        border: 1px solid grey;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-    .barraverticalcorta {
-        vertical-align: top;
-        width: 1px;
-        height: 20px;
-        background-color: white;
-        border: 1px solid grey;
-        padding: 0px;
-        transition: border-color 0.3s ease;
-        margin: 0;
-    }
-
-    .container {
-        width: 1600px;
-        height: 500px;
-        background-color: white;
-        border: 0px solid black;
-        transition: border-color 0.3s ease;
-    }
-
-    .square-button:hover {
-        border-color: green;
-    }
-
-    .containerChico {
-        background-color: white;
-        border: 0px solid black;
-        margin: 0 auto;
-        justify-content: center;
-        justify-items: center;
-
-    }
-    
-    .arriba-button {
-        vertical-align: bottom;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-        width: 50px;
-        height: 20px;
-        background-color: white;
-        border: 2px solid black;
-        transition: border-color 0.3s ease;
-    }
-        .arriba-button:hover {
-            border-color: green;
-        }
-
-    .abajo-button {
-        vertical-align: top;
-        width: 50px;
-        height: 20px;
-        background-color: white;
-        border: 2px solid black;
-        transition: border-color 0.3s ease;
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
-    }
-
-        .abajo-button:hover {
-            border-color: green;
-        }
-
-
-    .izquierda-button {
-        vertical-align: top;
-        width: 20px;
-        height: 50px;
-        background-color: white;
-        border: 2px solid black;
-        transition: border-color 0.3s ease;
-        margin: 0;
-        border-bottom-left-radius: 6px;
-        border-top-left-radius: 6px;
-    }
-
-        .izquierda-button:hover {
-            border-color: green;
-        }
-
-    .1a {
-        background-color: blue;
-        grid-column: 1/2;
-        grid-row: 2/3;
-    }
-
-
-
-    .derecha-button {
-        vertical-align: top;
-        width: 20px;
-        height: 50px;
-        background-color: white;
-        border: 2px solid black;
-        transition: border-color 0.3s ease;
-        margin: 0;
-        border-bottom-right-radius: 6px;
-        border-top-right-radius: 6px;
-    }
-
-        .derecha-button:hover {
-        border-color: green;
-    }
-
-    .1a {
-        background-color: blue;
-        grid-column: 1/2;
-        grid-row: 2/3;
-    }
-    /* Establecer un ancho fijo de 200px para el div */
-    .divFijo {
-        width: 1532px;
-        border: 1px solid black; /* Solo para visualización */
-        padding: 0px; /* Añade espacio alrededor del contenido */
-        margin: 0 auto; /* Centra el div horizontalmente */
-        justify-content: center;
-        justify-items: center;
-    }
-        .divFijoConFlow {
-        width: 1532px;
-        border: 1px solid black; /* Solo para visualización */
-        padding: 0px; /* Añade espacio alrededor del contenido */
-        margin: 0 auto; /* Centra el div horizontalmente */
-        justify-content: center;
-        justify-items: center;
-        height: 300px;
-        overflow-y: auto;
-    }
-    .centrado {
-        width:520px;
-        border: 0px solid black; /* Solo para visualización */
-        padding: 0px; /* Añade espacio alrededor del contenido */
-        margin: 0 auto; /* Centra el div horizontalmente */
-        justify-content: center;
-        justify-items: center;
-    }
-    /* Estilo para la tabla sin márgenes internos */
-    table {
-        border-collapse: collapse; /* Combinar bordes de celda */
-        border-spacing: 0; /* Eliminar el espacio entre celdas */
-        border: 1px solid black;
-        margin: 0 auto;
-    }
-    /* Estilo para las celdas de la tabla */
-    td, th {
-        text-align: center;
-        border: 0px solid black; /* Borde para las celdas */
-        padding:0px; /* Relleno interno de las celdas (opcional) */
-        margin: 0; /* Margen de las celdas */
-    }
-</style>
 <div class="paginaSinMargenes">
 <PageTitle>PACIENTES</PageTitle>
 @if (Permiso.Logueado == 1)
@@ -770,7 +375,7 @@
 <div class="divFijo">
                     <p> </p>
     <div class="centrado">
-        <button class="adulto-button" @onclick="() => MostrarAdulto()">ADULTO</button>     <button class="niño-button" @onclick="() => MostrarNiño()">NIÑO</button>  <button class="mixto-button" @onclick="() => MostrarAmbos()">MIXTO</button> <button class="guardar-button" @onclick="() => GuardarOdontograma()">GUARDAR</button> <button class="odontograma-button" @onclick="() => MostrarOdontograma(0)">OCULTAR</button>
+        <button class="adulto-button" @onclick="() => MostrarAdulto()">ADULTO</button>     <button class="nino-button" @onclick="() => MostrarNiño()">NIÑO</button>  <button class="mixto-button" @onclick="() => MostrarAmbos()">MIXTO</button> <button class="guardar-button" @onclick="() => GuardarOdontograma()">GUARDAR</button> <button class="odontograma-button" @onclick="() => MostrarOdontograma(0)">OCULTAR</button>
     </div>
     <p></p>
     
@@ -3402,229 +3007,261 @@ else
 
             var odontogramaseleccionado = DbContext.Odontogramas.Find(IdOdontogramaSeleccionado);
 
-            color18ab = odontogramaseleccionado.Abajo18;
-            color18a = odontogramaseleccionado.Arriba18;
-            color18i = odontogramaseleccionado.Izquierda18;
-            color18d = odontogramaseleccionado.Derecha18;
-            color18 = odontogramaseleccionado.Centro18;
-            estado18 = odontogramaseleccionado.Estado18;
+colorLetra18 = odontogramaseleccionado.Color18;
+color18ab = odontogramaseleccionado.Abajo18;
+color18a = odontogramaseleccionado.Arriba18;
+color18i = odontogramaseleccionado.Izquierda18;
+color18d = odontogramaseleccionado.Derecha18;
+color18 = odontogramaseleccionado.Centro18;
+estado18 = odontogramaseleccionado.Estado18;
 
-            color17ab = odontogramaseleccionado.Abajo17;
-            color17a = odontogramaseleccionado.Arriba17;
-            color17i = odontogramaseleccionado.Izquierda17;
-            color17d = odontogramaseleccionado.Derecha17;
-            color17 = odontogramaseleccionado.Centro17;
-            estado17 = odontogramaseleccionado.Estado17;
+colorLetra17 = odontogramaseleccionado.Color17;
+color17ab = odontogramaseleccionado.Abajo17;
+color17a = odontogramaseleccionado.Arriba17;
+color17i = odontogramaseleccionado.Izquierda17;
+color17d = odontogramaseleccionado.Derecha17;
+color17 = odontogramaseleccionado.Centro17;
+estado17 = odontogramaseleccionado.Estado17;
 
-            color16ab = odontogramaseleccionado.Abajo16;
-            color16a = odontogramaseleccionado.Arriba16;
-            color16i = odontogramaseleccionado.Izquierda16;
-            color16d = odontogramaseleccionado.Derecha16;
-            color16 = odontogramaseleccionado.Centro16;
-            estado16 = odontogramaseleccionado.Estado16;
+colorLetra16 = odontogramaseleccionado.Color16;
+color16ab = odontogramaseleccionado.Abajo16;
+color16a = odontogramaseleccionado.Arriba16;
+color16i = odontogramaseleccionado.Izquierda16;
+color16d = odontogramaseleccionado.Derecha16;
+color16 = odontogramaseleccionado.Centro16;
+estado16 = odontogramaseleccionado.Estado16;
 
-            color15ab = odontogramaseleccionado.Abajo15;
-            color15a = odontogramaseleccionado.Arriba15;
-            color15i = odontogramaseleccionado.Izquierda15;
-            color15d = odontogramaseleccionado.Derecha15;
-            color15 = odontogramaseleccionado.Centro15;
-            estado15 = odontogramaseleccionado.Estado15;
+colorLetra15 = odontogramaseleccionado.Color15;
+color15ab = odontogramaseleccionado.Abajo15;
+color15a = odontogramaseleccionado.Arriba15;
+color15i = odontogramaseleccionado.Izquierda15;
+color15d = odontogramaseleccionado.Derecha15;
+color15 = odontogramaseleccionado.Centro15;
+estado15 = odontogramaseleccionado.Estado15;
 
-            color14ab = odontogramaseleccionado.Abajo14;
-            color14a = odontogramaseleccionado.Arriba14;
-            color14i = odontogramaseleccionado.Izquierda14;
-            color14d = odontogramaseleccionado.Derecha14;
-            color14 = odontogramaseleccionado.Centro14;
-            estado14 = odontogramaseleccionado.Estado14;
+colorLetra14 = odontogramaseleccionado.Color14;
+color14ab = odontogramaseleccionado.Abajo14;
+color14a = odontogramaseleccionado.Arriba14;
+color14i = odontogramaseleccionado.Izquierda14;
+color14d = odontogramaseleccionado.Derecha14;
+color14 = odontogramaseleccionado.Centro14;
+estado14 = odontogramaseleccionado.Estado14;
 
-            color13ab = odontogramaseleccionado.Abajo13;
-            color13a = odontogramaseleccionado.Arriba13;
-            color13i = odontogramaseleccionado.Izquierda13;
-            color13d = odontogramaseleccionado.Derecha13;
-            color13 = odontogramaseleccionado.Centro13;
-            estado13 = odontogramaseleccionado.Estado13;
+colorLetra13 = odontogramaseleccionado.Color13;
+color13ab = odontogramaseleccionado.Abajo13;
+color13a = odontogramaseleccionado.Arriba13;
+color13i = odontogramaseleccionado.Izquierda13;
+color13d = odontogramaseleccionado.Derecha13;
+color13 = odontogramaseleccionado.Centro13;
+estado13 = odontogramaseleccionado.Estado13;
 
-            color12ab = odontogramaseleccionado.Abajo12;
-            color12a = odontogramaseleccionado.Arriba12;
-            color12i = odontogramaseleccionado.Izquierda12;
-            color12d = odontogramaseleccionado.Derecha12;
-            color12 = odontogramaseleccionado.Centro12;
-            estado12 = odontogramaseleccionado.Estado12;
+colorLetra12 = odontogramaseleccionado.Color12;
+color12ab = odontogramaseleccionado.Abajo12;
+color12a = odontogramaseleccionado.Arriba12;
+color12i = odontogramaseleccionado.Izquierda12;
+color12d = odontogramaseleccionado.Derecha12;
+color12 = odontogramaseleccionado.Centro12;
+estado12 = odontogramaseleccionado.Estado12;
 
-            color11ab = odontogramaseleccionado.Abajo11;
-            color11a = odontogramaseleccionado.Arriba11;
-            color11i = odontogramaseleccionado.Izquierda11;
-            color11d = odontogramaseleccionado.Derecha11;
-            color11 = odontogramaseleccionado.Centro11;
-            estado11 = odontogramaseleccionado.Estado11;
+colorLetra11 = odontogramaseleccionado.Color11;
+color11ab = odontogramaseleccionado.Abajo11;
+color11a = odontogramaseleccionado.Arriba11;
+color11i = odontogramaseleccionado.Izquierda11;
+color11d = odontogramaseleccionado.Derecha11;
+color11 = odontogramaseleccionado.Centro11;
+estado11 = odontogramaseleccionado.Estado11;
 
-            color21ab = odontogramaseleccionado.Abajo21;
-            color21a = odontogramaseleccionado.Arriba21;
-            color21i = odontogramaseleccionado.Izquierda21;
-            color21d = odontogramaseleccionado.Derecha21;
-            color21 = odontogramaseleccionado.Centro21;
-            estado21 = odontogramaseleccionado.Estado21;
+colorLetra21 = odontogramaseleccionado.Color21;
+color21ab = odontogramaseleccionado.Abajo21;
+color21a = odontogramaseleccionado.Arriba21;
+color21i = odontogramaseleccionado.Izquierda21;
+color21d = odontogramaseleccionado.Derecha21;
+color21 = odontogramaseleccionado.Centro21;
+estado21 = odontogramaseleccionado.Estado21;
 
-            color22ab = odontogramaseleccionado.Abajo22;
-            color22a = odontogramaseleccionado.Arriba22;
-            color22i = odontogramaseleccionado.Izquierda22;
-            color22d = odontogramaseleccionado.Derecha22;
-            color22 = odontogramaseleccionado.Centro22;
-            estado22 = odontogramaseleccionado.Estado22;
+colorLetra22 = odontogramaseleccionado.Color22;
+color22ab = odontogramaseleccionado.Abajo22;
+color22a = odontogramaseleccionado.Arriba22;
+color22i = odontogramaseleccionado.Izquierda22;
+color22d = odontogramaseleccionado.Derecha22;
+color22 = odontogramaseleccionado.Centro22;
+estado22 = odontogramaseleccionado.Estado22;
 
-            color23ab = odontogramaseleccionado.Abajo23;
-            color23a = odontogramaseleccionado.Arriba23;
-            color23i = odontogramaseleccionado.Izquierda23;
-            color23d = odontogramaseleccionado.Derecha23;
-            color23 = odontogramaseleccionado.Centro23;
-            estado23 = odontogramaseleccionado.Estado23;
+colorLetra23 = odontogramaseleccionado.Color23;
+color23ab = odontogramaseleccionado.Abajo23;
+color23a = odontogramaseleccionado.Arriba23;
+color23i = odontogramaseleccionado.Izquierda23;
+color23d = odontogramaseleccionado.Derecha23;
+color23 = odontogramaseleccionado.Centro23;
+estado23 = odontogramaseleccionado.Estado23;
 
-            color24ab = odontogramaseleccionado.Abajo24;
-            color24a = odontogramaseleccionado.Arriba24;
-            color24i = odontogramaseleccionado.Izquierda24;
-            color24d = odontogramaseleccionado.Derecha24;
-            color24 = odontogramaseleccionado.Centro24;
-            estado24 = odontogramaseleccionado.Estado24;
+colorLetra24 = odontogramaseleccionado.Color24;
+color24ab = odontogramaseleccionado.Abajo24;
+color24a = odontogramaseleccionado.Arriba24;
+color24i = odontogramaseleccionado.Izquierda24;
+color24d = odontogramaseleccionado.Derecha24;
+color24 = odontogramaseleccionado.Centro24;
+estado24 = odontogramaseleccionado.Estado24;
 
-            color25ab = odontogramaseleccionado.Abajo25;
-            color25a = odontogramaseleccionado.Arriba25;
-            color25i = odontogramaseleccionado.Izquierda25;
-            color25d = odontogramaseleccionado.Derecha25;
-            color25 = odontogramaseleccionado.Centro25;
-            estado25 = odontogramaseleccionado.Estado25;
+colorLetra25 = odontogramaseleccionado.Color25;
+color25ab = odontogramaseleccionado.Abajo25;
+color25a = odontogramaseleccionado.Arriba25;
+color25i = odontogramaseleccionado.Izquierda25;
+color25d = odontogramaseleccionado.Derecha25;
+color25 = odontogramaseleccionado.Centro25;
+estado25 = odontogramaseleccionado.Estado25;
 
-            color26ab = odontogramaseleccionado.Abajo26;
-            color26a = odontogramaseleccionado.Arriba26;
-            color26i = odontogramaseleccionado.Izquierda26;
-            color26d = odontogramaseleccionado.Derecha26;
-            color26 = odontogramaseleccionado.Centro26;
-            estado26 = odontogramaseleccionado.Estado26;
+colorLetra26 = odontogramaseleccionado.Color26;
+color26ab = odontogramaseleccionado.Abajo26;
+color26a = odontogramaseleccionado.Arriba26;
+color26i = odontogramaseleccionado.Izquierda26;
+color26d = odontogramaseleccionado.Derecha26;
+color26 = odontogramaseleccionado.Centro26;
+estado26 = odontogramaseleccionado.Estado26;
 
-            color27ab = odontogramaseleccionado.Abajo27;
-            color27a = odontogramaseleccionado.Arriba27;
-            color27i = odontogramaseleccionado.Izquierda27;
-            color27d = odontogramaseleccionado.Derecha27;
-            color27 = odontogramaseleccionado.Centro27;
-            estado27 = odontogramaseleccionado.Estado27;
+colorLetra27 = odontogramaseleccionado.Color27;
+color27ab = odontogramaseleccionado.Abajo27;
+color27a = odontogramaseleccionado.Arriba27;
+color27i = odontogramaseleccionado.Izquierda27;
+color27d = odontogramaseleccionado.Derecha27;
+color27 = odontogramaseleccionado.Centro27;
+estado27 = odontogramaseleccionado.Estado27;
 
-            color28ab = odontogramaseleccionado.Abajo28;
-            color28a = odontogramaseleccionado.Arriba28;
-            color28i = odontogramaseleccionado.Izquierda28;
-            color28d = odontogramaseleccionado.Derecha28;
-            color28 = odontogramaseleccionado.Centro28;
-            estado28 = odontogramaseleccionado.Estado28;
+colorLetra28 = odontogramaseleccionado.Color28;
+color28ab = odontogramaseleccionado.Abajo28;
+color28a = odontogramaseleccionado.Arriba28;
+color28i = odontogramaseleccionado.Izquierda28;
+color28d = odontogramaseleccionado.Derecha28;
+color28 = odontogramaseleccionado.Centro28;
+estado28 = odontogramaseleccionado.Estado28;
 
-            color48ab = odontogramaseleccionado.Abajo48;
-            color48a = odontogramaseleccionado.Arriba48;
-            color48i = odontogramaseleccionado.Izquierda48;
-            color48d = odontogramaseleccionado.Derecha48;
-            color48 = odontogramaseleccionado.Centro48;
-            estado48 = odontogramaseleccionado.Estado48;
+colorLetra48 = odontogramaseleccionado.Color48;
+color48ab = odontogramaseleccionado.Abajo48;
+color48a = odontogramaseleccionado.Arriba48;
+color48i = odontogramaseleccionado.Izquierda48;
+color48d = odontogramaseleccionado.Derecha48;
+color48 = odontogramaseleccionado.Centro48;
+estado48 = odontogramaseleccionado.Estado48;
 
-            color47ab = odontogramaseleccionado.Abajo47;
-            color47a = odontogramaseleccionado.Arriba47;
-            color47i = odontogramaseleccionado.Izquierda47;
-            color47d = odontogramaseleccionado.Derecha47;
-            color47 = odontogramaseleccionado.Centro47;
-            estado47 = odontogramaseleccionado.Estado47;
+colorLetra47 = odontogramaseleccionado.Color47;
+color47ab = odontogramaseleccionado.Abajo47;
+color47a = odontogramaseleccionado.Arriba47;
+color47i = odontogramaseleccionado.Izquierda47;
+color47d = odontogramaseleccionado.Derecha47;
+color47 = odontogramaseleccionado.Centro47;
+estado47 = odontogramaseleccionado.Estado47;
 
-            color46ab = odontogramaseleccionado.Abajo46;
-            color46a = odontogramaseleccionado.Arriba46;
-            color46i = odontogramaseleccionado.Izquierda46;
-            color46d = odontogramaseleccionado.Derecha46;
-            color46 = odontogramaseleccionado.Centro46;
-            estado46 = odontogramaseleccionado.Estado46;
+colorLetra46 = odontogramaseleccionado.Color46;
+color46ab = odontogramaseleccionado.Abajo46;
+color46a = odontogramaseleccionado.Arriba46;
+color46i = odontogramaseleccionado.Izquierda46;
+color46d = odontogramaseleccionado.Derecha46;
+color46 = odontogramaseleccionado.Centro46;
+estado46 = odontogramaseleccionado.Estado46;
 
-            color45ab = odontogramaseleccionado.Abajo45;
-            color45a = odontogramaseleccionado.Arriba45;
-            color45i = odontogramaseleccionado.Izquierda45;
-            color45d = odontogramaseleccionado.Derecha45;
-            color45 = odontogramaseleccionado.Centro45;
-            estado45 = odontogramaseleccionado.Estado45;
+colorLetra45 = odontogramaseleccionado.Color45;
+color45ab = odontogramaseleccionado.Abajo45;
+color45a = odontogramaseleccionado.Arriba45;
+color45i = odontogramaseleccionado.Izquierda45;
+color45d = odontogramaseleccionado.Derecha45;
+color45 = odontogramaseleccionado.Centro45;
+estado45 = odontogramaseleccionado.Estado45;
 
-            color44ab = odontogramaseleccionado.Abajo44;
-            color44a = odontogramaseleccionado.Arriba44;
-            color44i = odontogramaseleccionado.Izquierda44;
-            color44d = odontogramaseleccionado.Derecha44;
-            color44 = odontogramaseleccionado.Centro44;
-            estado44 = odontogramaseleccionado.Estado44;
+colorLetra44 = odontogramaseleccionado.Color44;
+color44ab = odontogramaseleccionado.Abajo44;
+color44a = odontogramaseleccionado.Arriba44;
+color44i = odontogramaseleccionado.Izquierda44;
+color44d = odontogramaseleccionado.Derecha44;
+color44 = odontogramaseleccionado.Centro44;
+estado44 = odontogramaseleccionado.Estado44;
 
-            color43ab = odontogramaseleccionado.Abajo43;
-            color43a = odontogramaseleccionado.Arriba43;
-            color43i = odontogramaseleccionado.Izquierda43;
-            color43d = odontogramaseleccionado.Derecha43;
-            color43 = odontogramaseleccionado.Centro43;
-            estado43 = odontogramaseleccionado.Estado43;
+colorLetra43 = odontogramaseleccionado.Color43;
+color43ab = odontogramaseleccionado.Abajo43;
+color43a = odontogramaseleccionado.Arriba43;
+color43i = odontogramaseleccionado.Izquierda43;
+color43d = odontogramaseleccionado.Derecha43;
+color43 = odontogramaseleccionado.Centro43;
+estado43 = odontogramaseleccionado.Estado43;
 
-            color42ab = odontogramaseleccionado.Abajo42;
-            color42a = odontogramaseleccionado.Arriba42;
-            color42i = odontogramaseleccionado.Izquierda42;
-            color42d = odontogramaseleccionado.Derecha42;
-            color42 = odontogramaseleccionado.Centro42;
-            estado42 = odontogramaseleccionado.Estado42;
+colorLetra42 = odontogramaseleccionado.Color42;
+color42ab = odontogramaseleccionado.Abajo42;
+color42a = odontogramaseleccionado.Arriba42;
+color42i = odontogramaseleccionado.Izquierda42;
+color42d = odontogramaseleccionado.Derecha42;
+color42 = odontogramaseleccionado.Centro42;
+estado42 = odontogramaseleccionado.Estado42;
 
-            color41ab = odontogramaseleccionado.Abajo41;
-            color41a = odontogramaseleccionado.Arriba41;
-            color41i = odontogramaseleccionado.Izquierda41;
-            color41d = odontogramaseleccionado.Derecha41;
-            color41 = odontogramaseleccionado.Centro41;
-            estado41 = odontogramaseleccionado.Estado41;
+colorLetra41 = odontogramaseleccionado.Color41;
+color41ab = odontogramaseleccionado.Abajo41;
+color41a = odontogramaseleccionado.Arriba41;
+color41i = odontogramaseleccionado.Izquierda41;
+color41d = odontogramaseleccionado.Derecha41;
+color41 = odontogramaseleccionado.Centro41;
+estado41 = odontogramaseleccionado.Estado41;
 
-            color31ab = odontogramaseleccionado.Abajo31;
-            color31a = odontogramaseleccionado.Arriba31;
-            color31i = odontogramaseleccionado.Izquierda31;
-            color31d = odontogramaseleccionado.Derecha31;
-            color31 = odontogramaseleccionado.Centro31;
-            estado31 = odontogramaseleccionado.Estado31;
+colorLetra31 = odontogramaseleccionado.Color31;
+color31ab = odontogramaseleccionado.Abajo31;
+color31a = odontogramaseleccionado.Arriba31;
+color31i = odontogramaseleccionado.Izquierda31;
+color31d = odontogramaseleccionado.Derecha31;
+color31 = odontogramaseleccionado.Centro31;
+estado31 = odontogramaseleccionado.Estado31;
 
-            color32ab = odontogramaseleccionado.Abajo32;
-            color32a = odontogramaseleccionado.Arriba32;
-            color32i = odontogramaseleccionado.Izquierda32;
-            color32d = odontogramaseleccionado.Derecha32;
-            color32 = odontogramaseleccionado.Centro32;
-            estado32 = odontogramaseleccionado.Estado32;
+colorLetra32 = odontogramaseleccionado.Color32;
+color32ab = odontogramaseleccionado.Abajo32;
+color32a = odontogramaseleccionado.Arriba32;
+color32i = odontogramaseleccionado.Izquierda32;
+color32d = odontogramaseleccionado.Derecha32;
+color32 = odontogramaseleccionado.Centro32;
+estado32 = odontogramaseleccionado.Estado32;
 
-            color33ab = odontogramaseleccionado.Abajo33;
-            color33a = odontogramaseleccionado.Arriba33;
-            color33i = odontogramaseleccionado.Izquierda33;
-            color33d = odontogramaseleccionado.Derecha33;
-            color33 = odontogramaseleccionado.Centro33;
-            estado33 = odontogramaseleccionado.Estado33;
+colorLetra33 = odontogramaseleccionado.Color33;
+color33ab = odontogramaseleccionado.Abajo33;
+color33a = odontogramaseleccionado.Arriba33;
+color33i = odontogramaseleccionado.Izquierda33;
+color33d = odontogramaseleccionado.Derecha33;
+color33 = odontogramaseleccionado.Centro33;
+estado33 = odontogramaseleccionado.Estado33;
 
-            color34ab = odontogramaseleccionado.Abajo34;
-            color34a = odontogramaseleccionado.Arriba34;
-            color34i = odontogramaseleccionado.Izquierda34;
-            color34d = odontogramaseleccionado.Derecha34;
-            color34 = odontogramaseleccionado.Centro34;
-            estado34 = odontogramaseleccionado.Estado34;
+colorLetra34 = odontogramaseleccionado.Color34;
+color34ab = odontogramaseleccionado.Abajo34;
+color34a = odontogramaseleccionado.Arriba34;
+color34i = odontogramaseleccionado.Izquierda34;
+color34d = odontogramaseleccionado.Derecha34;
+color34 = odontogramaseleccionado.Centro34;
+estado34 = odontogramaseleccionado.Estado34;
 
-            color35ab = odontogramaseleccionado.Abajo35;
-            color35a = odontogramaseleccionado.Arriba35;
-            color35i = odontogramaseleccionado.Izquierda35;
-            color35d = odontogramaseleccionado.Derecha35;
-            color35 = odontogramaseleccionado.Centro35;
-            estado35 = odontogramaseleccionado.Estado35;
+colorLetra35 = odontogramaseleccionado.Color35;
+color35ab = odontogramaseleccionado.Abajo35;
+color35a = odontogramaseleccionado.Arriba35;
+color35i = odontogramaseleccionado.Izquierda35;
+color35d = odontogramaseleccionado.Derecha35;
+color35 = odontogramaseleccionado.Centro35;
+estado35 = odontogramaseleccionado.Estado35;
 
-            color36ab = odontogramaseleccionado.Abajo36;
-            color36a = odontogramaseleccionado.Arriba36;
-            color36i = odontogramaseleccionado.Izquierda36;
-            color36d = odontogramaseleccionado.Derecha36;
-            color36 = odontogramaseleccionado.Centro36;
-            estado36 = odontogramaseleccionado.Estado36;
+colorLetra36 = odontogramaseleccionado.Color36;
+color36ab = odontogramaseleccionado.Abajo36;
+color36a = odontogramaseleccionado.Arriba36;
+color36i = odontogramaseleccionado.Izquierda36;
+color36d = odontogramaseleccionado.Derecha36;
+color36 = odontogramaseleccionado.Centro36;
+estado36 = odontogramaseleccionado.Estado36;
 
-            color37ab = odontogramaseleccionado.Abajo37;
-            color37a = odontogramaseleccionado.Arriba37;
-            color37i = odontogramaseleccionado.Izquierda37;
-            color37d = odontogramaseleccionado.Derecha37;
-            color37 = odontogramaseleccionado.Centro37;
-            estado37 = odontogramaseleccionado.Estado37;
+colorLetra37 = odontogramaseleccionado.Color37;
+color37ab = odontogramaseleccionado.Abajo37;
+color37a = odontogramaseleccionado.Arriba37;
+color37i = odontogramaseleccionado.Izquierda37;
+color37d = odontogramaseleccionado.Derecha37;
+color37 = odontogramaseleccionado.Centro37;
+estado37 = odontogramaseleccionado.Estado37;
 
-            color38ab = odontogramaseleccionado.Abajo38;
-            color38a = odontogramaseleccionado.Arriba38;
-            color38i = odontogramaseleccionado.Izquierda38;
-            color38d = odontogramaseleccionado.Derecha38;
-            color38 = odontogramaseleccionado.Centro38;
-            estado38 = odontogramaseleccionado.Estado38;
+colorLetra38 = odontogramaseleccionado.Color38;
+color38ab = odontogramaseleccionado.Abajo38;
+color38a = odontogramaseleccionado.Arriba38;
+color38i = odontogramaseleccionado.Izquierda38;
+color38d = odontogramaseleccionado.Derecha38;
+color38 = odontogramaseleccionado.Centro38;
+estado38 = odontogramaseleccionado.Estado38;
         }
 
     }
@@ -4044,10 +3681,8 @@ else
     public void Agregar()
     {
         InicializarOdontograma();
-
-
-        if (celu.Length == 10)
-        {   var prueba = new Paciente();
+        
+        var prueba = new Paciente();
             prueba.Nombre = nombrePaciente.ToUpper();
             prueba.Apellido = apellido.ToUpper();
             prueba.Domicilio = domicilio.ToUpper();
@@ -4071,229 +3706,261 @@ else
 
             odontrogramanuevo.IdPaciente = prueba.Id;
 
-            odontrogramanuevo.Abajo18 = color18ab;
-            odontrogramanuevo.Arriba18 = color18a;
-            odontrogramanuevo.Izquierda18 = color18i;
-            odontrogramanuevo.Derecha18 = color18d;
-            odontrogramanuevo.Centro18 = color18;
-            odontrogramanuevo.Estado18 = estado18;
+        odontrogramanuevo.Abajo18 = color18ab;
+        odontrogramanuevo.Arriba18 = color18a;
+        odontrogramanuevo.Izquierda18 = color18i;
+        odontrogramanuevo.Derecha18 = color18d;
+        odontrogramanuevo.Centro18 = color18;
+        odontrogramanuevo.Estado18 = estado18;
+        odontrogramanuevo.Color18 = colorLetra18;
 
-            odontrogramanuevo.Abajo17 = color17ab;
-            odontrogramanuevo.Arriba17 = color17a;
-            odontrogramanuevo.Izquierda17 = color17i;
-            odontrogramanuevo.Derecha17 = color17d;
-            odontrogramanuevo.Centro17 = color17;
-            odontrogramanuevo.Estado17 = estado17;
+odontrogramanuevo.Abajo17 = color17ab;
+odontrogramanuevo.Arriba17 = color17a;
+odontrogramanuevo.Izquierda17 = color17i;
+odontrogramanuevo.Derecha17 = color17d;
+odontrogramanuevo.Centro17 = color17;
+odontrogramanuevo.Estado17 = estado17;
+odontrogramanuevo.Color17 = colorLetra17;
 
-            odontrogramanuevo.Abajo16 = color16ab;
-            odontrogramanuevo.Arriba16 = color16a;
-            odontrogramanuevo.Izquierda16 = color16i;
-            odontrogramanuevo.Derecha16 = color16d;
-            odontrogramanuevo.Centro16 = color16;
-            odontrogramanuevo.Estado16 = estado16;
+odontrogramanuevo.Abajo16 = color16ab;
+odontrogramanuevo.Arriba16 = color16a;
+odontrogramanuevo.Izquierda16 = color16i;
+odontrogramanuevo.Derecha16 = color16d;
+odontrogramanuevo.Centro16 = color16;
+odontrogramanuevo.Estado16 = estado16;
+odontrogramanuevo.Color16 = colorLetra16;
 
-            odontrogramanuevo.Abajo15 = color15ab;
-            odontrogramanuevo.Arriba15 = color15a;
-            odontrogramanuevo.Izquierda15 = color15i;
-            odontrogramanuevo.Derecha15 = color15d;
-            odontrogramanuevo.Centro15 = color15;
-            odontrogramanuevo.Estado15 = estado15;
+odontrogramanuevo.Abajo15 = color15ab;
+odontrogramanuevo.Arriba15 = color15a;
+odontrogramanuevo.Izquierda15 = color15i;
+odontrogramanuevo.Derecha15 = color15d;
+odontrogramanuevo.Centro15 = color15;
+odontrogramanuevo.Estado15 = estado15;
+odontrogramanuevo.Color15 = colorLetra15;
 
-            odontrogramanuevo.Abajo14 = color14ab;
-            odontrogramanuevo.Arriba14 = color14a;
-            odontrogramanuevo.Izquierda14 = color14i;
-            odontrogramanuevo.Derecha14 = color14d;
-            odontrogramanuevo.Centro14 = color14;
-            odontrogramanuevo.Estado14 = estado14;
+odontrogramanuevo.Abajo14 = color14ab;
+odontrogramanuevo.Arriba14 = color14a;
+odontrogramanuevo.Izquierda14 = color14i;
+odontrogramanuevo.Derecha14 = color14d;
+odontrogramanuevo.Centro14 = color14;
+odontrogramanuevo.Estado14 = estado14;
+odontrogramanuevo.Color14 = colorLetra14;
 
-            odontrogramanuevo.Abajo13 = color13ab;
-            odontrogramanuevo.Arriba13 = color13a;
-            odontrogramanuevo.Izquierda13 = color13i;
-            odontrogramanuevo.Derecha13 = color13d;
-            odontrogramanuevo.Centro13 = color13;
-            odontrogramanuevo.Estado13 = estado13;
+odontrogramanuevo.Abajo13 = color13ab;
+odontrogramanuevo.Arriba13 = color13a;
+odontrogramanuevo.Izquierda13 = color13i;
+odontrogramanuevo.Derecha13 = color13d;
+odontrogramanuevo.Centro13 = color13;
+odontrogramanuevo.Estado13 = estado13;
+odontrogramanuevo.Color13 = colorLetra13;
 
-            odontrogramanuevo.Abajo12 = color12ab;
-            odontrogramanuevo.Arriba12 = color12a;
-            odontrogramanuevo.Izquierda12 = color12i;
-            odontrogramanuevo.Derecha12 = color12d;
-            odontrogramanuevo.Centro12 = color12;
-            odontrogramanuevo.Estado12 = estado12;
+odontrogramanuevo.Abajo12 = color12ab;
+odontrogramanuevo.Arriba12 = color12a;
+odontrogramanuevo.Izquierda12 = color12i;
+odontrogramanuevo.Derecha12 = color12d;
+odontrogramanuevo.Centro12 = color12;
+odontrogramanuevo.Estado12 = estado12;
+odontrogramanuevo.Color12 = colorLetra12;
 
-            odontrogramanuevo.Abajo11 = color11ab;
-            odontrogramanuevo.Arriba11 = color11a;
-            odontrogramanuevo.Izquierda11 = color11i;
-            odontrogramanuevo.Derecha11 = color11d;
-            odontrogramanuevo.Centro11 = color11;
-            odontrogramanuevo.Estado11 = estado11;
+odontrogramanuevo.Abajo11 = color11ab;
+odontrogramanuevo.Arriba11 = color11a;
+odontrogramanuevo.Izquierda11 = color11i;
+odontrogramanuevo.Derecha11 = color11d;
+odontrogramanuevo.Centro11 = color11;
+odontrogramanuevo.Estado11 = estado11;
+odontrogramanuevo.Color11 = colorLetra11;
 
-            odontrogramanuevo.Abajo21 = color21ab;
-            odontrogramanuevo.Arriba21 = color21a;
-            odontrogramanuevo.Izquierda21 = color21i;
-            odontrogramanuevo.Derecha21 = color21d;
-            odontrogramanuevo.Centro21 = color21;
-            odontrogramanuevo.Estado21 = estado21;
+odontrogramanuevo.Abajo21 = color21ab;
+odontrogramanuevo.Arriba21 = color21a;
+odontrogramanuevo.Izquierda21 = color21i;
+odontrogramanuevo.Derecha21 = color21d;
+odontrogramanuevo.Centro21 = color21;
+odontrogramanuevo.Estado21 = estado21;
+odontrogramanuevo.Color21 = colorLetra21;
 
-            odontrogramanuevo.Abajo22 = color22ab;
-            odontrogramanuevo.Arriba22 = color22a;
-            odontrogramanuevo.Izquierda22 = color22i;
-            odontrogramanuevo.Derecha22 = color22d;
-            odontrogramanuevo.Centro22 = color22;
-            odontrogramanuevo.Estado22 = estado22;
+odontrogramanuevo.Abajo22 = color22ab;
+odontrogramanuevo.Arriba22 = color22a;
+odontrogramanuevo.Izquierda22 = color22i;
+odontrogramanuevo.Derecha22 = color22d;
+odontrogramanuevo.Centro22 = color22;
+odontrogramanuevo.Estado22 = estado22;
+odontrogramanuevo.Color22 = colorLetra22;
 
-            odontrogramanuevo.Abajo23 = color23ab;
-            odontrogramanuevo.Arriba23 = color23a;
-            odontrogramanuevo.Izquierda23 = color23i;
-            odontrogramanuevo.Derecha23 = color23d;
-            odontrogramanuevo.Centro23 = color23;
-            odontrogramanuevo.Estado23 = estado23;
+odontrogramanuevo.Abajo23 = color23ab;
+odontrogramanuevo.Arriba23 = color23a;
+odontrogramanuevo.Izquierda23 = color23i;
+odontrogramanuevo.Derecha23 = color23d;
+odontrogramanuevo.Centro23 = color23;
+odontrogramanuevo.Estado23 = estado23;
+odontrogramanuevo.Color23 = colorLetra23;
 
-            odontrogramanuevo.Abajo24 = color24ab;
-            odontrogramanuevo.Arriba24 = color24a;
-            odontrogramanuevo.Izquierda24 = color24i;
-            odontrogramanuevo.Derecha24 = color24d;
-            odontrogramanuevo.Centro24 = color24;
-            odontrogramanuevo.Estado24 = estado24;
+        odontrogramanuevo.Abajo24 = color24ab;
+        odontrogramanuevo.Arriba24 = color24a;
+        odontrogramanuevo.Izquierda24 = color24i;
+        odontrogramanuevo.Derecha24 = color24d;
+        odontrogramanuevo.Centro24 = color24;
+        odontrogramanuevo.Estado24 = estado24;
+        odontrogramanuevo.Color24 = colorLetra24;
 
-            odontrogramanuevo.Abajo25 = color25ab;
-            odontrogramanuevo.Arriba25 = color25a;
-            odontrogramanuevo.Izquierda25 = color25i;
-            odontrogramanuevo.Derecha25 = color25d;
-            odontrogramanuevo.Centro25 = color25;
-            odontrogramanuevo.Estado25 = estado25;
+        odontrogramanuevo.Abajo25 = color25ab;
+        odontrogramanuevo.Arriba25 = color25a;
+        odontrogramanuevo.Izquierda25 = color25i;
+        odontrogramanuevo.Derecha25 = color25d;
+        odontrogramanuevo.Centro25 = color25;
+        odontrogramanuevo.Estado25 = estado25;
+        odontrogramanuevo.Color25 = colorLetra25;
 
-            odontrogramanuevo.Abajo26 = color26ab;
-            odontrogramanuevo.Arriba26 = color26a;
-            odontrogramanuevo.Izquierda26 = color26i;
-            odontrogramanuevo.Derecha26 = color26d;
-            odontrogramanuevo.Centro26 = color26;
-            odontrogramanuevo.Estado26 = estado26;
+        odontrogramanuevo.Abajo26 = color26ab;
+        odontrogramanuevo.Arriba26 = color26a;
+        odontrogramanuevo.Izquierda26 = color26i;
+        odontrogramanuevo.Derecha26 = color26d;
+        odontrogramanuevo.Centro26 = color26;
+        odontrogramanuevo.Estado26 = estado26;
+        odontrogramanuevo.Color26 = colorLetra26;
 
-            odontrogramanuevo.Abajo27 = color27ab;
-            odontrogramanuevo.Arriba27 = color27a;
-            odontrogramanuevo.Izquierda27 = color27i;
-            odontrogramanuevo.Derecha27 = color27d;
-            odontrogramanuevo.Centro27 = color27;
-            odontrogramanuevo.Estado27 = estado27;
+        odontrogramanuevo.Abajo27 = color27ab;
+        odontrogramanuevo.Arriba27 = color27a;
+        odontrogramanuevo.Izquierda27 = color27i;
+        odontrogramanuevo.Derecha27 = color27d;
+        odontrogramanuevo.Centro27 = color27;
+        odontrogramanuevo.Estado27 = estado27;
+        odontrogramanuevo.Color27 = colorLetra27;
 
-            odontrogramanuevo.Abajo28 = color28ab;
-            odontrogramanuevo.Arriba28 = color28a;
-            odontrogramanuevo.Izquierda28 = color28i;
-            odontrogramanuevo.Derecha28 = color28d;
-            odontrogramanuevo.Centro28 = color28;
-            odontrogramanuevo.Estado28 = estado28;
+        odontrogramanuevo.Abajo28 = color28ab;
+        odontrogramanuevo.Arriba28 = color28a;
+        odontrogramanuevo.Izquierda28 = color28i;
+        odontrogramanuevo.Derecha28 = color28d;
+        odontrogramanuevo.Centro28 = color28;
+        odontrogramanuevo.Estado28 = estado28;
+        odontrogramanuevo.Color28 = colorLetra28;
 
-            odontrogramanuevo.Abajo48 = color48ab;
-            odontrogramanuevo.Arriba48 = color48a;
-            odontrogramanuevo.Izquierda48 = color48i;
-            odontrogramanuevo.Derecha48 = color48d;
-            odontrogramanuevo.Centro48 = color48;
-            odontrogramanuevo.Estado48 = estado48;
+        odontrogramanuevo.Abajo48 = color48ab;
+        odontrogramanuevo.Arriba48 = color48a;
+        odontrogramanuevo.Izquierda48 = color48i;
+        odontrogramanuevo.Derecha48 = color48d;
+        odontrogramanuevo.Centro48 = color48;
+        odontrogramanuevo.Estado48 = estado48;
+        odontrogramanuevo.Color48 = colorLetra48;
 
-            odontrogramanuevo.Abajo47 = color47ab;
-            odontrogramanuevo.Arriba47 = color47a;
-            odontrogramanuevo.Izquierda47 = color47i;
-            odontrogramanuevo.Derecha47 = color47d;
-            odontrogramanuevo.Centro47 = color47;
-            odontrogramanuevo.Estado47 = estado47;
+        odontrogramanuevo.Abajo47 = color47ab;
+        odontrogramanuevo.Arriba47 = color47a;
+        odontrogramanuevo.Izquierda47 = color47i;
+        odontrogramanuevo.Derecha47 = color47d;
+        odontrogramanuevo.Centro47 = color47;
+        odontrogramanuevo.Estado47 = estado47;
+        odontrogramanuevo.Color47 = colorLetra47;
 
-            odontrogramanuevo.Abajo46 = color46ab;
-            odontrogramanuevo.Arriba46 = color46a;
-            odontrogramanuevo.Izquierda46 = color46i;
-            odontrogramanuevo.Derecha46 = color46d;
-            odontrogramanuevo.Centro46 = color46;
-            odontrogramanuevo.Estado46 = estado46;
+        odontrogramanuevo.Abajo46 = color46ab;
+        odontrogramanuevo.Arriba46 = color46a;
+        odontrogramanuevo.Izquierda46 = color46i;
+        odontrogramanuevo.Derecha46 = color46d;
+        odontrogramanuevo.Centro46 = color46;
+        odontrogramanuevo.Estado46 = estado46;
+        odontrogramanuevo.Color46 = colorLetra46;
 
-            odontrogramanuevo.Abajo45 = color45ab;
-            odontrogramanuevo.Arriba45 = color45a;
-            odontrogramanuevo.Izquierda45 = color45i;
-            odontrogramanuevo.Derecha45 = color45d;
-            odontrogramanuevo.Centro45 = color45;
-            odontrogramanuevo.Estado45 = estado45;
+        odontrogramanuevo.Abajo45 = color45ab;
+        odontrogramanuevo.Arriba45 = color45a;
+        odontrogramanuevo.Izquierda45 = color45i;
+        odontrogramanuevo.Derecha45 = color45d;
+        odontrogramanuevo.Centro45 = color45;
+        odontrogramanuevo.Estado45 = estado45;
+        odontrogramanuevo.Color45 = colorLetra45;
 
-            odontrogramanuevo.Abajo44 = color44ab;
-            odontrogramanuevo.Arriba44 = color44a;
-            odontrogramanuevo.Izquierda44 = color44i;
-            odontrogramanuevo.Derecha44 = color44d;
-            odontrogramanuevo.Centro44 = color44;
-            odontrogramanuevo.Estado44 = estado44;
+        odontrogramanuevo.Abajo44 = color44ab;
+        odontrogramanuevo.Arriba44 = color44a;
+        odontrogramanuevo.Izquierda44 = color44i;
+        odontrogramanuevo.Derecha44 = color44d;
+        odontrogramanuevo.Centro44 = color44;
+        odontrogramanuevo.Estado44 = estado44;
+        odontrogramanuevo.Color44 = colorLetra44;
 
-            odontrogramanuevo.Abajo43 = color43ab;
-            odontrogramanuevo.Arriba43 = color43a;
-            odontrogramanuevo.Izquierda43 = color43i;
-            odontrogramanuevo.Derecha43 = color43d;
-            odontrogramanuevo.Centro43 = color43;
-            odontrogramanuevo.Estado43 = estado43;
+        odontrogramanuevo.Abajo43 = color43ab;
+        odontrogramanuevo.Arriba43 = color43a;
+        odontrogramanuevo.Izquierda43 = color43i;
+        odontrogramanuevo.Derecha43 = color43d;
+        odontrogramanuevo.Centro43 = color43;
+        odontrogramanuevo.Estado43 = estado43;
+        odontrogramanuevo.Color43 = colorLetra43;
 
-            odontrogramanuevo.Abajo42 = color42ab;
-            odontrogramanuevo.Arriba42 = color42a;
-            odontrogramanuevo.Izquierda42 = color42i;
-            odontrogramanuevo.Derecha42 = color42d;
-            odontrogramanuevo.Centro42 = color42;
-            odontrogramanuevo.Estado42 = estado42;
+        odontrogramanuevo.Abajo42 = color42ab;
+        odontrogramanuevo.Arriba42 = color42a;
+        odontrogramanuevo.Izquierda42 = color42i;
+        odontrogramanuevo.Derecha42 = color42d;
+        odontrogramanuevo.Centro42 = color42;
+        odontrogramanuevo.Estado42 = estado42;
+        odontrogramanuevo.Color42 = colorLetra42;
 
-            odontrogramanuevo.Abajo41 = color41ab;
-            odontrogramanuevo.Arriba41 = color41a;
-            odontrogramanuevo.Izquierda41 = color41i;
-            odontrogramanuevo.Derecha41 = color41d;
-            odontrogramanuevo.Centro41 = color41;
-            odontrogramanuevo.Estado41 = estado41;
+        odontrogramanuevo.Abajo41 = color41ab;
+        odontrogramanuevo.Arriba41 = color41a;
+        odontrogramanuevo.Izquierda41 = color41i;
+        odontrogramanuevo.Derecha41 = color41d;
+        odontrogramanuevo.Centro41 = color41;
+        odontrogramanuevo.Estado41 = estado41;
+        odontrogramanuevo.Color41 = colorLetra41;
 
-            odontrogramanuevo.Abajo31 = color31ab;
-            odontrogramanuevo.Arriba31 = color31a;
-            odontrogramanuevo.Izquierda31 = color31i;
-            odontrogramanuevo.Derecha31 = color31d;
-            odontrogramanuevo.Centro31 = color31;
-            odontrogramanuevo.Estado31 = estado31;
+        odontrogramanuevo.Abajo31 = color31ab;
+        odontrogramanuevo.Arriba31 = color31a;
+        odontrogramanuevo.Izquierda31 = color31i;
+        odontrogramanuevo.Derecha31 = color31d;
+        odontrogramanuevo.Centro31 = color31;
+        odontrogramanuevo.Estado31 = estado31;
+        odontrogramanuevo.Color31 = colorLetra31;
 
-            odontrogramanuevo.Abajo32 = color32ab;
-            odontrogramanuevo.Arriba32 = color32a;
-            odontrogramanuevo.Izquierda32 = color32i;
-            odontrogramanuevo.Derecha32 = color32d;
-            odontrogramanuevo.Centro32 = color32;
-            odontrogramanuevo.Estado32 = estado32;
+        odontrogramanuevo.Abajo32 = color32ab;
+        odontrogramanuevo.Arriba32 = color32a;
+        odontrogramanuevo.Izquierda32 = color32i;
+        odontrogramanuevo.Derecha32 = color32d;
+        odontrogramanuevo.Centro32 = color32;
+        odontrogramanuevo.Estado32 = estado32;
+        odontrogramanuevo.Color32 = colorLetra32;
 
-            odontrogramanuevo.Abajo33 = color33ab;
-            odontrogramanuevo.Arriba33 = color33a;
-            odontrogramanuevo.Izquierda33 = color33i;
-            odontrogramanuevo.Derecha33 = color33d;
-            odontrogramanuevo.Centro33 = color33;
-            odontrogramanuevo.Estado33 = estado33;
+        odontrogramanuevo.Abajo33 = color33ab;
+        odontrogramanuevo.Arriba33 = color33a;
+        odontrogramanuevo.Izquierda33 = color33i;
+        odontrogramanuevo.Derecha33 = color33d;
+        odontrogramanuevo.Centro33 = color33;
+        odontrogramanuevo.Estado33 = estado33;
+        odontrogramanuevo.Color33 = colorLetra33;
 
-            odontrogramanuevo.Abajo34 = color34ab;
-            odontrogramanuevo.Arriba34 = color34a;
-            odontrogramanuevo.Izquierda34 = color34i;
-            odontrogramanuevo.Derecha34 = color34d;
-            odontrogramanuevo.Centro34 = color34;
-            odontrogramanuevo.Estado34 = estado34;
+        odontrogramanuevo.Abajo34 = color34ab;
+        odontrogramanuevo.Arriba34 = color34a;
+        odontrogramanuevo.Izquierda34 = color34i;
+        odontrogramanuevo.Derecha34 = color34d;
+        odontrogramanuevo.Centro34 = color34;
+        odontrogramanuevo.Estado34 = estado34;
+        odontrogramanuevo.Color34 = colorLetra34;
 
-            odontrogramanuevo.Abajo35 = color35ab;
-            odontrogramanuevo.Arriba35 = color35a;
-            odontrogramanuevo.Izquierda35 = color35i;
-            odontrogramanuevo.Derecha35 = color35d;
-            odontrogramanuevo.Centro35 = color35;
-            odontrogramanuevo.Estado35 = estado35;
+        odontrogramanuevo.Abajo35 = color35ab;
+        odontrogramanuevo.Arriba35 = color35a;
+        odontrogramanuevo.Izquierda35 = color35i;
+        odontrogramanuevo.Derecha35 = color35d;
+        odontrogramanuevo.Centro35 = color35;
+        odontrogramanuevo.Estado35 = estado35;
+        odontrogramanuevo.Color35 = colorLetra35;
 
-            odontrogramanuevo.Abajo36 = color36ab;
-            odontrogramanuevo.Arriba36 = color36a;
-            odontrogramanuevo.Izquierda36 = color36i;
-            odontrogramanuevo.Derecha36 = color36d;
-            odontrogramanuevo.Centro36 = color36;
-            odontrogramanuevo.Estado36 = estado36;
+        odontrogramanuevo.Abajo36 = color36ab;
+        odontrogramanuevo.Arriba36 = color36a;
+        odontrogramanuevo.Izquierda36 = color36i;
+        odontrogramanuevo.Derecha36 = color36d;
+        odontrogramanuevo.Centro36 = color36;
+        odontrogramanuevo.Estado36 = estado36;
+        odontrogramanuevo.Color36 = colorLetra36;
 
-            odontrogramanuevo.Abajo37 = color37ab;
-            odontrogramanuevo.Arriba37 = color37a;
-            odontrogramanuevo.Izquierda37 = color37i;
-            odontrogramanuevo.Derecha37 = color37d;
-            odontrogramanuevo.Centro37 = color37;
-            odontrogramanuevo.Estado37 = estado37;
+        odontrogramanuevo.Abajo37 = color37ab;
+        odontrogramanuevo.Arriba37 = color37a;
+        odontrogramanuevo.Izquierda37 = color37i;
+        odontrogramanuevo.Derecha37 = color37d;
+        odontrogramanuevo.Centro37 = color37;
+        odontrogramanuevo.Estado37 = estado37;
+        odontrogramanuevo.Color37 = colorLetra37;
 
-            odontrogramanuevo.Abajo38 = color38ab;
-            odontrogramanuevo.Arriba38 = color38a;
-            odontrogramanuevo.Izquierda38 = color38i;
-            odontrogramanuevo.Derecha38 = color38d;
-            odontrogramanuevo.Centro38 = color38;
-            odontrogramanuevo.Estado38 = estado38;
+        odontrogramanuevo.Abajo38 = color38ab;
+        odontrogramanuevo.Arriba38 = color38a;
+        odontrogramanuevo.Izquierda38 = color38i;
+        odontrogramanuevo.Derecha38 = color38d;
+        odontrogramanuevo.Centro38 = color38;
+        odontrogramanuevo.Estado38 = estado38;
+        odontrogramanuevo.Color38 = colorLetra38;
 
             using (DbDentistaContext db = new DbDentistaContext())
             {
@@ -4454,11 +4121,7 @@ else
             ActualizaTablaPacientes();
             InicializarPacientes();
             AgregarPacientesMenu(1);
-        }
-        else
-        {
-
-        }
+        
 
     }
     private void ActualizaTablaPacientes()
@@ -4880,76 +4543,87 @@ else
         odontrogramanuevo.Derecha18 = color18d;
         odontrogramanuevo.Centro18 = color18;
         odontrogramanuevo.Estado18 = estado18;
+        odontrogramanuevo.Color18 = colorLetra18;
 
-        odontrogramanuevo.Abajo17 = color17ab;
-        odontrogramanuevo.Arriba17 = color17a;
-        odontrogramanuevo.Izquierda17 = color17i;
-        odontrogramanuevo.Derecha17 = color17d;
-        odontrogramanuevo.Centro17 = color17;
-        odontrogramanuevo.Estado17 = estado17;
+odontrogramanuevo.Abajo17 = color17ab;
+odontrogramanuevo.Arriba17 = color17a;
+odontrogramanuevo.Izquierda17 = color17i;
+odontrogramanuevo.Derecha17 = color17d;
+odontrogramanuevo.Centro17 = color17;
+odontrogramanuevo.Estado17 = estado17;
+odontrogramanuevo.Color17 = colorLetra17;
 
-        odontrogramanuevo.Abajo16 = color16ab;
-        odontrogramanuevo.Arriba16 = color16a;
-        odontrogramanuevo.Izquierda16 = color16i;
-        odontrogramanuevo.Derecha16 = color16d;
-        odontrogramanuevo.Centro16 = color16;
-        odontrogramanuevo.Estado16 = estado16;
+odontrogramanuevo.Abajo16 = color16ab;
+odontrogramanuevo.Arriba16 = color16a;
+odontrogramanuevo.Izquierda16 = color16i;
+odontrogramanuevo.Derecha16 = color16d;
+odontrogramanuevo.Centro16 = color16;
+odontrogramanuevo.Estado16 = estado16;
+odontrogramanuevo.Color16 = colorLetra16;
 
-        odontrogramanuevo.Abajo15 = color15ab;
-        odontrogramanuevo.Arriba15 = color15a;
-        odontrogramanuevo.Izquierda15 = color15i;
-        odontrogramanuevo.Derecha15 = color15d;
-        odontrogramanuevo.Centro15 = color15;
-        odontrogramanuevo.Estado15 = estado15;
+odontrogramanuevo.Abajo15 = color15ab;
+odontrogramanuevo.Arriba15 = color15a;
+odontrogramanuevo.Izquierda15 = color15i;
+odontrogramanuevo.Derecha15 = color15d;
+odontrogramanuevo.Centro15 = color15;
+odontrogramanuevo.Estado15 = estado15;
+odontrogramanuevo.Color15 = colorLetra15;
 
-        odontrogramanuevo.Abajo14 = color14ab;
-        odontrogramanuevo.Arriba14 = color14a;
-        odontrogramanuevo.Izquierda14 = color14i;
-        odontrogramanuevo.Derecha14 = color14d;
-        odontrogramanuevo.Centro14 = color14;
-        odontrogramanuevo.Estado14 = estado14;
+odontrogramanuevo.Abajo14 = color14ab;
+odontrogramanuevo.Arriba14 = color14a;
+odontrogramanuevo.Izquierda14 = color14i;
+odontrogramanuevo.Derecha14 = color14d;
+odontrogramanuevo.Centro14 = color14;
+odontrogramanuevo.Estado14 = estado14;
+odontrogramanuevo.Color14 = colorLetra14;
 
-        odontrogramanuevo.Abajo13 = color13ab;
-        odontrogramanuevo.Arriba13 = color13a;
-        odontrogramanuevo.Izquierda13 = color13i;
-        odontrogramanuevo.Derecha13 = color13d;
-        odontrogramanuevo.Centro13 = color13;
-        odontrogramanuevo.Estado13 = estado13;
+odontrogramanuevo.Abajo13 = color13ab;
+odontrogramanuevo.Arriba13 = color13a;
+odontrogramanuevo.Izquierda13 = color13i;
+odontrogramanuevo.Derecha13 = color13d;
+odontrogramanuevo.Centro13 = color13;
+odontrogramanuevo.Estado13 = estado13;
+odontrogramanuevo.Color13 = colorLetra13;
 
-        odontrogramanuevo.Abajo12 = color12ab;
-        odontrogramanuevo.Arriba12 = color12a;
-        odontrogramanuevo.Izquierda12 = color12i;
-        odontrogramanuevo.Derecha12 = color12d;
-        odontrogramanuevo.Centro12 = color12;
-        odontrogramanuevo.Estado12 = estado12;
+odontrogramanuevo.Abajo12 = color12ab;
+odontrogramanuevo.Arriba12 = color12a;
+odontrogramanuevo.Izquierda12 = color12i;
+odontrogramanuevo.Derecha12 = color12d;
+odontrogramanuevo.Centro12 = color12;
+odontrogramanuevo.Estado12 = estado12;
+odontrogramanuevo.Color12 = colorLetra12;
 
-        odontrogramanuevo.Abajo11 = color11ab;
-        odontrogramanuevo.Arriba11 = color11a;
-        odontrogramanuevo.Izquierda11 = color11i;
-        odontrogramanuevo.Derecha11 = color11d;
-        odontrogramanuevo.Centro11 = color11;
-        odontrogramanuevo.Estado11 = estado11;
+odontrogramanuevo.Abajo11 = color11ab;
+odontrogramanuevo.Arriba11 = color11a;
+odontrogramanuevo.Izquierda11 = color11i;
+odontrogramanuevo.Derecha11 = color11d;
+odontrogramanuevo.Centro11 = color11;
+odontrogramanuevo.Estado11 = estado11;
+odontrogramanuevo.Color11 = colorLetra11;
 
-        odontrogramanuevo.Abajo21 = color21ab;
-        odontrogramanuevo.Arriba21 = color21a;
-        odontrogramanuevo.Izquierda21 = color21i;
-        odontrogramanuevo.Derecha21 = color21d;
-        odontrogramanuevo.Centro21 = color21;
-        odontrogramanuevo.Estado21 = estado21;
+odontrogramanuevo.Abajo21 = color21ab;
+odontrogramanuevo.Arriba21 = color21a;
+odontrogramanuevo.Izquierda21 = color21i;
+odontrogramanuevo.Derecha21 = color21d;
+odontrogramanuevo.Centro21 = color21;
+odontrogramanuevo.Estado21 = estado21;
+odontrogramanuevo.Color21 = colorLetra21;
 
-        odontrogramanuevo.Abajo22 = color22ab;
-        odontrogramanuevo.Arriba22 = color22a;
-        odontrogramanuevo.Izquierda22 = color22i;
-        odontrogramanuevo.Derecha22 = color22d;
-        odontrogramanuevo.Centro22 = color22;
-        odontrogramanuevo.Estado22 = estado22;
+odontrogramanuevo.Abajo22 = color22ab;
+odontrogramanuevo.Arriba22 = color22a;
+odontrogramanuevo.Izquierda22 = color22i;
+odontrogramanuevo.Derecha22 = color22d;
+odontrogramanuevo.Centro22 = color22;
+odontrogramanuevo.Estado22 = estado22;
+odontrogramanuevo.Color22 = colorLetra22;
 
-        odontrogramanuevo.Abajo23 = color23ab;
-        odontrogramanuevo.Arriba23 = color23a;
-        odontrogramanuevo.Izquierda23 = color23i;
-        odontrogramanuevo.Derecha23 = color23d;
-        odontrogramanuevo.Centro23 = color23;
-        odontrogramanuevo.Estado23 = estado23;
+odontrogramanuevo.Abajo23 = color23ab;
+odontrogramanuevo.Arriba23 = color23a;
+odontrogramanuevo.Izquierda23 = color23i;
+odontrogramanuevo.Derecha23 = color23d;
+odontrogramanuevo.Centro23 = color23;
+odontrogramanuevo.Estado23 = estado23;
+odontrogramanuevo.Color23 = colorLetra23;
 
         odontrogramanuevo.Abajo24 = color24ab;
         odontrogramanuevo.Arriba24 = color24a;
@@ -4957,6 +4631,7 @@ else
         odontrogramanuevo.Derecha24 = color24d;
         odontrogramanuevo.Centro24 = color24;
         odontrogramanuevo.Estado24 = estado24;
+        odontrogramanuevo.Color24 = colorLetra24;
 
         odontrogramanuevo.Abajo25 = color25ab;
         odontrogramanuevo.Arriba25 = color25a;
@@ -4964,6 +4639,7 @@ else
         odontrogramanuevo.Derecha25 = color25d;
         odontrogramanuevo.Centro25 = color25;
         odontrogramanuevo.Estado25 = estado25;
+        odontrogramanuevo.Color25 = colorLetra25;
 
         odontrogramanuevo.Abajo26 = color26ab;
         odontrogramanuevo.Arriba26 = color26a;
@@ -4971,6 +4647,7 @@ else
         odontrogramanuevo.Derecha26 = color26d;
         odontrogramanuevo.Centro26 = color26;
         odontrogramanuevo.Estado26 = estado26;
+        odontrogramanuevo.Color26 = colorLetra26;
 
         odontrogramanuevo.Abajo27 = color27ab;
         odontrogramanuevo.Arriba27 = color27a;
@@ -4978,6 +4655,7 @@ else
         odontrogramanuevo.Derecha27 = color27d;
         odontrogramanuevo.Centro27 = color27;
         odontrogramanuevo.Estado27 = estado27;
+        odontrogramanuevo.Color27 = colorLetra27;
 
         odontrogramanuevo.Abajo28 = color28ab;
         odontrogramanuevo.Arriba28 = color28a;
@@ -4985,6 +4663,7 @@ else
         odontrogramanuevo.Derecha28 = color28d;
         odontrogramanuevo.Centro28 = color28;
         odontrogramanuevo.Estado28 = estado28;
+        odontrogramanuevo.Color28 = colorLetra28;
 
         odontrogramanuevo.Abajo48 = color48ab;
         odontrogramanuevo.Arriba48 = color48a;
@@ -4992,6 +4671,7 @@ else
         odontrogramanuevo.Derecha48 = color48d;
         odontrogramanuevo.Centro48 = color48;
         odontrogramanuevo.Estado48 = estado48;
+        odontrogramanuevo.Color48 = colorLetra48;
 
         odontrogramanuevo.Abajo47 = color47ab;
         odontrogramanuevo.Arriba47 = color47a;
@@ -4999,6 +4679,7 @@ else
         odontrogramanuevo.Derecha47 = color47d;
         odontrogramanuevo.Centro47 = color47;
         odontrogramanuevo.Estado47 = estado47;
+        odontrogramanuevo.Color47 = colorLetra47;
 
         odontrogramanuevo.Abajo46 = color46ab;
         odontrogramanuevo.Arriba46 = color46a;
@@ -5006,6 +4687,7 @@ else
         odontrogramanuevo.Derecha46 = color46d;
         odontrogramanuevo.Centro46 = color46;
         odontrogramanuevo.Estado46 = estado46;
+        odontrogramanuevo.Color46 = colorLetra46;
 
         odontrogramanuevo.Abajo45 = color45ab;
         odontrogramanuevo.Arriba45 = color45a;
@@ -5013,6 +4695,7 @@ else
         odontrogramanuevo.Derecha45 = color45d;
         odontrogramanuevo.Centro45 = color45;
         odontrogramanuevo.Estado45 = estado45;
+        odontrogramanuevo.Color45 = colorLetra45;
 
         odontrogramanuevo.Abajo44 = color44ab;
         odontrogramanuevo.Arriba44 = color44a;
@@ -5020,6 +4703,7 @@ else
         odontrogramanuevo.Derecha44 = color44d;
         odontrogramanuevo.Centro44 = color44;
         odontrogramanuevo.Estado44 = estado44;
+        odontrogramanuevo.Color44 = colorLetra44;
 
         odontrogramanuevo.Abajo43 = color43ab;
         odontrogramanuevo.Arriba43 = color43a;
@@ -5027,6 +4711,7 @@ else
         odontrogramanuevo.Derecha43 = color43d;
         odontrogramanuevo.Centro43 = color43;
         odontrogramanuevo.Estado43 = estado43;
+        odontrogramanuevo.Color43 = colorLetra43;
 
         odontrogramanuevo.Abajo42 = color42ab;
         odontrogramanuevo.Arriba42 = color42a;
@@ -5034,6 +4719,7 @@ else
         odontrogramanuevo.Derecha42 = color42d;
         odontrogramanuevo.Centro42 = color42;
         odontrogramanuevo.Estado42 = estado42;
+        odontrogramanuevo.Color42 = colorLetra42;
 
         odontrogramanuevo.Abajo41 = color41ab;
         odontrogramanuevo.Arriba41 = color41a;
@@ -5041,6 +4727,7 @@ else
         odontrogramanuevo.Derecha41 = color41d;
         odontrogramanuevo.Centro41 = color41;
         odontrogramanuevo.Estado41 = estado41;
+        odontrogramanuevo.Color41 = colorLetra41;
 
         odontrogramanuevo.Abajo31 = color31ab;
         odontrogramanuevo.Arriba31 = color31a;
@@ -5048,6 +4735,7 @@ else
         odontrogramanuevo.Derecha31 = color31d;
         odontrogramanuevo.Centro31 = color31;
         odontrogramanuevo.Estado31 = estado31;
+        odontrogramanuevo.Color31 = colorLetra31;
 
         odontrogramanuevo.Abajo32 = color32ab;
         odontrogramanuevo.Arriba32 = color32a;
@@ -5055,6 +4743,7 @@ else
         odontrogramanuevo.Derecha32 = color32d;
         odontrogramanuevo.Centro32 = color32;
         odontrogramanuevo.Estado32 = estado32;
+        odontrogramanuevo.Color32 = colorLetra32;
 
         odontrogramanuevo.Abajo33 = color33ab;
         odontrogramanuevo.Arriba33 = color33a;
@@ -5062,6 +4751,7 @@ else
         odontrogramanuevo.Derecha33 = color33d;
         odontrogramanuevo.Centro33 = color33;
         odontrogramanuevo.Estado33 = estado33;
+        odontrogramanuevo.Color33 = colorLetra33;
 
         odontrogramanuevo.Abajo34 = color34ab;
         odontrogramanuevo.Arriba34 = color34a;
@@ -5069,6 +4759,7 @@ else
         odontrogramanuevo.Derecha34 = color34d;
         odontrogramanuevo.Centro34 = color34;
         odontrogramanuevo.Estado34 = estado34;
+        odontrogramanuevo.Color34 = colorLetra34;
 
         odontrogramanuevo.Abajo35 = color35ab;
         odontrogramanuevo.Arriba35 = color35a;
@@ -5076,6 +4767,7 @@ else
         odontrogramanuevo.Derecha35 = color35d;
         odontrogramanuevo.Centro35 = color35;
         odontrogramanuevo.Estado35 = estado35;
+        odontrogramanuevo.Color35 = colorLetra35;
 
         odontrogramanuevo.Abajo36 = color36ab;
         odontrogramanuevo.Arriba36 = color36a;
@@ -5083,6 +4775,7 @@ else
         odontrogramanuevo.Derecha36 = color36d;
         odontrogramanuevo.Centro36 = color36;
         odontrogramanuevo.Estado36 = estado36;
+        odontrogramanuevo.Color36 = colorLetra36;
 
         odontrogramanuevo.Abajo37 = color37ab;
         odontrogramanuevo.Arriba37 = color37a;
@@ -5090,6 +4783,7 @@ else
         odontrogramanuevo.Derecha37 = color37d;
         odontrogramanuevo.Centro37 = color37;
         odontrogramanuevo.Estado37 = estado37;
+        odontrogramanuevo.Color37 = colorLetra37;
 
         odontrogramanuevo.Abajo38 = color38ab;
         odontrogramanuevo.Arriba38 = color38a;
@@ -5097,6 +4791,7 @@ else
         odontrogramanuevo.Derecha38 = color38d;
         odontrogramanuevo.Centro38 = color38;
         odontrogramanuevo.Estado38 = estado38;
+        odontrogramanuevo.Color38 = colorLetra38;
         using (DbDentistaContext db = new DbDentistaContext())
         {
             db.Update(odontrogramanuevo);
