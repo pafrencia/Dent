@@ -9,6 +9,8 @@ public partial class OdontrogramaNiño
 
     public int? IdPaciente { get; set; }
 
+    public string? Color55 { get; set; }
+
     public string? Arriba55 { get; set; }
 
     public string? Abajo55 { get; set; }
@@ -20,6 +22,8 @@ public partial class OdontrogramaNiño
     public string? Centro55 { get; set; }
 
     public string? Estado55 { get; set; }
+
+    public string? Color54 { get; set; }
 
     public string? Arriba54 { get; set; }
 
@@ -33,6 +37,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado54 { get; set; }
 
+    public string? Color53 { get; set; }
+
     public string? Arriba53 { get; set; }
 
     public string? Abajo53 { get; set; }
@@ -44,6 +50,8 @@ public partial class OdontrogramaNiño
     public string? Centro53 { get; set; }
 
     public string? Estado53 { get; set; }
+
+    public string? Color52 { get; set; }
 
     public string? Arriba52 { get; set; }
 
@@ -57,6 +65,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado52 { get; set; }
 
+    public string? Color51 { get; set; }
+
     public string? Arriba51 { get; set; }
 
     public string? Abajo51 { get; set; }
@@ -68,6 +78,8 @@ public partial class OdontrogramaNiño
     public string? Centro51 { get; set; }
 
     public string? Estado51 { get; set; }
+
+    public string? Color65 { get; set; }
 
     public string? Arriba65 { get; set; }
 
@@ -81,6 +93,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado65 { get; set; }
 
+    public string? Color64 { get; set; }
+
     public string? Arriba64 { get; set; }
 
     public string? Abajo64 { get; set; }
@@ -92,6 +106,8 @@ public partial class OdontrogramaNiño
     public string? Centro64 { get; set; }
 
     public string? Estado64 { get; set; }
+
+    public string? Color63 { get; set; }
 
     public string? Arriba63 { get; set; }
 
@@ -105,6 +121,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado63 { get; set; }
 
+    public string? Color62 { get; set; }
+
     public string? Arriba62 { get; set; }
 
     public string? Abajo62 { get; set; }
@@ -116,6 +134,8 @@ public partial class OdontrogramaNiño
     public string? Centro62 { get; set; }
 
     public string? Estado62 { get; set; }
+
+    public string? Color61 { get; set; }
 
     public string? Arriba61 { get; set; }
 
@@ -129,6 +149,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado61 { get; set; }
 
+    public string? Color75 { get; set; }
+
     public string? Arriba75 { get; set; }
 
     public string? Abajo75 { get; set; }
@@ -140,6 +162,8 @@ public partial class OdontrogramaNiño
     public string? Centro75 { get; set; }
 
     public string? Estado75 { get; set; }
+
+    public string? Color74 { get; set; }
 
     public string? Arriba74 { get; set; }
 
@@ -153,6 +177,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado74 { get; set; }
 
+    public string? Color73 { get; set; }
+
     public string? Arriba73 { get; set; }
 
     public string? Abajo73 { get; set; }
@@ -164,6 +190,8 @@ public partial class OdontrogramaNiño
     public string? Centro73 { get; set; }
 
     public string? Estado73 { get; set; }
+
+    public string? Color72 { get; set; }
 
     public string? Arriba72 { get; set; }
 
@@ -177,6 +205,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado72 { get; set; }
 
+    public string? Color71 { get; set; }
+
     public string? Arriba71 { get; set; }
 
     public string? Abajo71 { get; set; }
@@ -188,6 +218,8 @@ public partial class OdontrogramaNiño
     public string? Centro71 { get; set; }
 
     public string? Estado71 { get; set; }
+
+    public string? Color85 { get; set; }
 
     public string? Arriba85 { get; set; }
 
@@ -201,6 +233,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado85 { get; set; }
 
+    public string? Color84 { get; set; }
+
     public string? Arriba84 { get; set; }
 
     public string? Abajo84 { get; set; }
@@ -212,6 +246,8 @@ public partial class OdontrogramaNiño
     public string? Centro84 { get; set; }
 
     public string? Estado84 { get; set; }
+
+    public string? Color83 { get; set; }
 
     public string? Arriba83 { get; set; }
 
@@ -225,6 +261,8 @@ public partial class OdontrogramaNiño
 
     public string? Estado83 { get; set; }
 
+    public string? Color82 { get; set; }
+
     public string? Arriba82 { get; set; }
 
     public string? Abajo82 { get; set; }
@@ -236,6 +274,8 @@ public partial class OdontrogramaNiño
     public string? Centro82 { get; set; }
 
     public string? Estado82 { get; set; }
+
+    public string? Color81 { get; set; }
 
     public string? Arriba81 { get; set; }
 

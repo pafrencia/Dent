@@ -40,8 +40,6 @@
                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalinfo">INFO</button>
                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">EDIT</button>
                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modaleliminar">X</button>
-                       <button type="button" class="btn btn-dark fas fa-teeth" @onclick="() => MostrarOdontograma(1)"></button>
-                       <button type="button" class="btn btn-secondary fas fa-folder-open"></button>
                     </td>
                 </tr>
             }
@@ -371,7 +369,26 @@
         </div>
     </div>
 </div>
+<div class="divFijo">
+    <p>
+        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
+        <thead>
+        <tr class="table-dark">
+                <th style=" width: 306px;">NOMBRE: @nombrePaciente </th>
+                <th style="width: 306px;">APELLIDO: @apellido </th>
+                <th style="width: 306px;">DNI: @dni</th>
+                <th style="width: 306px;">OBRA SOCIAL: @obraSocialGuardar </th>
+            <th style="width: 308px;">                       
+                <button type="button" class="btn btn-light fas fa-teeth" @onclick="() => MostrarOdontograma(1)"></button>
+                <button type="button" class="btn btn-secondary fas fa-folder-open"></button>
+             </th>
+        </tr>
+        </thead>
+    </table>
+    </p>
+</div>
 <div style="display: @(divOdontograma == 1 ? "block" : "none")">
+
 <div class="divFijo">
                     <p> </p>
     <div class="centrado">
@@ -2857,6 +2874,7 @@ else
             nombrePaciente = prueba.Nombre;
             apellido =  prueba.Apellido;
             domicilio =  prueba.Domicilio;
+            dni = prueba.Dni;
             celu = prueba.Celular;
             fechaNacimiento = prueba.FechaDeNacimiento;
             fechaAlta = prueba.FechaDeAlta;
@@ -2871,139 +2889,165 @@ else
 
             var odontogramaseleccionadoN = DbContext.OdontrogramaNiños.Find(IdOdontogramaSeleccionadoN);
 
-            color55ab = odontogramaseleccionadoN.Abajo55;
-            color55a = odontogramaseleccionadoN.Arriba55;
-            color55i = odontogramaseleccionadoN.Izquierda55;
-            color55d = odontogramaseleccionadoN.Derecha55;
-            color55 = odontogramaseleccionadoN.Centro55;
-            estado55 = odontogramaseleccionadoN.Estado55;
+colorLetra55 = odontogramaseleccionadoN.Color55;
+color55ab = odontogramaseleccionadoN.Abajo55;
+color55a = odontogramaseleccionadoN.Arriba55;
+color55i = odontogramaseleccionadoN.Izquierda55;
+color55d = odontogramaseleccionadoN.Derecha55;
+color55 = odontogramaseleccionadoN.Centro55;
+estado55 = odontogramaseleccionadoN.Estado55;
 
-            color54ab = odontogramaseleccionadoN.Abajo54;
-            color54a = odontogramaseleccionadoN.Arriba54;
-            color54i = odontogramaseleccionadoN.Izquierda54;
-            color54d = odontogramaseleccionadoN.Derecha54;
-            color54 = odontogramaseleccionadoN.Centro54;
-            estado54 = odontogramaseleccionadoN.Estado54;
+colorLetra54 = odontogramaseleccionadoN.Color54;
+color54ab = odontogramaseleccionadoN.Abajo54;
+color54a = odontogramaseleccionadoN.Arriba54;
+color54i = odontogramaseleccionadoN.Izquierda54;
+color54d = odontogramaseleccionadoN.Derecha54;
+color54 = odontogramaseleccionadoN.Centro54;
+estado54 = odontogramaseleccionadoN.Estado54;
 
-            color53ab = odontogramaseleccionadoN.Abajo53;
-            color53a = odontogramaseleccionadoN.Arriba53;
-            color53i = odontogramaseleccionadoN.Izquierda53;
-            color53d = odontogramaseleccionadoN.Derecha53;
-            color53 = odontogramaseleccionadoN.Centro53;
-            estado53 = odontogramaseleccionadoN.Estado53;
+colorLetra53 = odontogramaseleccionadoN.Color53;
+color53ab = odontogramaseleccionadoN.Abajo53;
+color53a = odontogramaseleccionadoN.Arriba53;
+color53i = odontogramaseleccionadoN.Izquierda53;
+color53d = odontogramaseleccionadoN.Derecha53;
+color53 = odontogramaseleccionadoN.Centro53;
+estado53 = odontogramaseleccionadoN.Estado53;
 
-            color52ab = odontogramaseleccionadoN.Abajo52;
-            color52a = odontogramaseleccionadoN.Arriba52;
-            color52i = odontogramaseleccionadoN.Izquierda52;
-            color52d = odontogramaseleccionadoN.Derecha52;
-            color52 = odontogramaseleccionadoN.Centro52;
-            estado52 = odontogramaseleccionadoN.Estado52;
+colorLetra52 = odontogramaseleccionadoN.Color52;
+color52ab = odontogramaseleccionadoN.Abajo52;
+color52a = odontogramaseleccionadoN.Arriba52;
+color52i = odontogramaseleccionadoN.Izquierda52;
+color52d = odontogramaseleccionadoN.Derecha52;
+color52 = odontogramaseleccionadoN.Centro52;
+estado52 = odontogramaseleccionadoN.Estado52;
 
-            color51ab = odontogramaseleccionadoN.Abajo51;
-            color51a = odontogramaseleccionadoN.Arriba51;
-            color51i = odontogramaseleccionadoN.Izquierda51;
-            color51d = odontogramaseleccionadoN.Derecha51;
-            color51 = odontogramaseleccionadoN.Centro51;
-            estado51 = odontogramaseleccionadoN.Estado51;
+colorLetra51 = odontogramaseleccionadoN.Color51;
+color51ab = odontogramaseleccionadoN.Abajo51;
+color51a = odontogramaseleccionadoN.Arriba51;
+color51i = odontogramaseleccionadoN.Izquierda51;
+color51d = odontogramaseleccionadoN.Derecha51;
+color51 = odontogramaseleccionadoN.Centro51;
+estado51 = odontogramaseleccionadoN.Estado51;
 
-            color61ab = odontogramaseleccionadoN.Abajo61;
-            color61a = odontogramaseleccionadoN.Arriba61;
-            color61i = odontogramaseleccionadoN.Izquierda61;
-            color61d = odontogramaseleccionadoN.Derecha61;
-            color61 = odontogramaseleccionadoN.Centro61;
-            estado61 = odontogramaseleccionadoN.Estado61;
+colorLetra61 = odontogramaseleccionadoN.Color61;
+color61ab = odontogramaseleccionadoN.Abajo61;
+color61a = odontogramaseleccionadoN.Arriba61;
+color61i = odontogramaseleccionadoN.Izquierda61;
+color61d = odontogramaseleccionadoN.Derecha61;
+color61 = odontogramaseleccionadoN.Centro61;
+estado61 = odontogramaseleccionadoN.Estado61;
 
-            color62ab = odontogramaseleccionadoN.Abajo62;
-            color62a = odontogramaseleccionadoN.Arriba62;
-            color62i = odontogramaseleccionadoN.Izquierda62;
-            color62d = odontogramaseleccionadoN.Derecha62;
-            color62 = odontogramaseleccionadoN.Centro62;
-            estado62 = odontogramaseleccionadoN.Estado62;
+colorLetra62 = odontogramaseleccionadoN.Color62;
+color62ab = odontogramaseleccionadoN.Abajo62;
+color62a = odontogramaseleccionadoN.Arriba62;
+color62i = odontogramaseleccionadoN.Izquierda62;
+color62d = odontogramaseleccionadoN.Derecha62;
+color62 = odontogramaseleccionadoN.Centro62;
+estado62 = odontogramaseleccionadoN.Estado62;
 
-            color63ab = odontogramaseleccionadoN.Abajo63;
-            color63a = odontogramaseleccionadoN.Arriba63;
-            color63i = odontogramaseleccionadoN.Izquierda63;
-            color63d = odontogramaseleccionadoN.Derecha63;
-            color63 = odontogramaseleccionadoN.Centro63;
-            estado63 = odontogramaseleccionadoN.Estado63;
+colorLetra63 = odontogramaseleccionadoN.Color63;
+color63ab = odontogramaseleccionadoN.Abajo63;
+color63a = odontogramaseleccionadoN.Arriba63;
+color63i = odontogramaseleccionadoN.Izquierda63;
+color63d = odontogramaseleccionadoN.Derecha63;
+color63 = odontogramaseleccionadoN.Centro63;
+estado63 = odontogramaseleccionadoN.Estado63;
 
-            color64ab = odontogramaseleccionadoN.Abajo64;
-            color64a = odontogramaseleccionadoN.Arriba64;
-            color64i = odontogramaseleccionadoN.Izquierda64;
-            color64d = odontogramaseleccionadoN.Derecha64;
-            color64 = odontogramaseleccionadoN.Centro64;
-            estado64 = odontogramaseleccionadoN.Estado64;
+colorLetra64 = odontogramaseleccionadoN.Color64;
+color64ab = odontogramaseleccionadoN.Abajo64;
+color64a = odontogramaseleccionadoN.Arriba64;
+color64i = odontogramaseleccionadoN.Izquierda64;
+color64d = odontogramaseleccionadoN.Derecha64;
+color64 = odontogramaseleccionadoN.Centro64;
+estado64 = odontogramaseleccionadoN.Estado64;
 
-            color65ab = odontogramaseleccionadoN.Abajo65;
-            color65a = odontogramaseleccionadoN.Arriba65;
-            color65i = odontogramaseleccionadoN.Izquierda65;
-            color65d = odontogramaseleccionadoN.Derecha65;
-            color65 = odontogramaseleccionadoN.Centro65;
-            estado65 = odontogramaseleccionadoN.Estado65;
+colorLetra65 = odontogramaseleccionadoN.Color65;
+color65ab = odontogramaseleccionadoN.Abajo65;
+color65a = odontogramaseleccionadoN.Arriba65;
+color65i = odontogramaseleccionadoN.Izquierda65;
+color65d = odontogramaseleccionadoN.Derecha65;
+color65 = odontogramaseleccionadoN.Centro65;
+estado65 = odontogramaseleccionadoN.Estado65;
 
-            color85ab = odontogramaseleccionadoN.Abajo85;
-            color85a = odontogramaseleccionadoN.Arriba85;
-            color85i = odontogramaseleccionadoN.Izquierda85;
-            color85d = odontogramaseleccionadoN.Derecha85;
-            color85 = odontogramaseleccionadoN.Centro85;
-            estado85 = odontogramaseleccionadoN.Estado85;
+colorLetra85 = odontogramaseleccionadoN.Color85;
+color85ab = odontogramaseleccionadoN.Abajo85;
+color85a = odontogramaseleccionadoN.Arriba85;
+color85i = odontogramaseleccionadoN.Izquierda85;
+color85d = odontogramaseleccionadoN.Derecha85;
+color85 = odontogramaseleccionadoN.Centro85;
+estado85 = odontogramaseleccionadoN.Estado85;
 
-            color84ab = odontogramaseleccionadoN.Abajo84;
-            color84a = odontogramaseleccionadoN.Arriba84;
-            color84i = odontogramaseleccionadoN.Izquierda84;
-            color84d = odontogramaseleccionadoN.Derecha84;
-            color84 = odontogramaseleccionadoN.Centro84;
-            estado84 = odontogramaseleccionadoN.Estado84;
+colorLetra84 = odontogramaseleccionadoN.Color84;
+color84ab = odontogramaseleccionadoN.Abajo84;
+color84a = odontogramaseleccionadoN.Arriba84;
+color84i = odontogramaseleccionadoN.Izquierda84;
+color84d = odontogramaseleccionadoN.Derecha84;
+color84 = odontogramaseleccionadoN.Centro84;
+estado84 = odontogramaseleccionadoN.Estado84;
 
-            color83ab = odontogramaseleccionadoN.Abajo83;
-            color83a = odontogramaseleccionadoN.Arriba83;
-            color83i = odontogramaseleccionadoN.Izquierda83;
-            color83d = odontogramaseleccionadoN.Derecha83;
-            color83 = odontogramaseleccionadoN.Centro83;
-            estado83 = odontogramaseleccionadoN.Estado83;
+colorLetra83 = odontogramaseleccionadoN.Color83;
+color83ab = odontogramaseleccionadoN.Abajo83;
+color83a = odontogramaseleccionadoN.Arriba83;
+color83i = odontogramaseleccionadoN.Izquierda83;
+color83d = odontogramaseleccionadoN.Derecha83;
+color83 = odontogramaseleccionadoN.Centro83;
+estado83 = odontogramaseleccionadoN.Estado83;
 
-            color82ab = odontogramaseleccionadoN.Abajo82;
-            color82a = odontogramaseleccionadoN.Arriba82;
-            color82i = odontogramaseleccionadoN.Izquierda82;
-            color82d = odontogramaseleccionadoN.Derecha82;
-            color82 = odontogramaseleccionadoN.Centro82;
-            estado82 = odontogramaseleccionadoN.Estado82;
+colorLetra82 = odontogramaseleccionadoN.Color82;
+color82ab = odontogramaseleccionadoN.Abajo82;
+color82a = odontogramaseleccionadoN.Arriba82;
+color82i = odontogramaseleccionadoN.Izquierda82;
+color82d = odontogramaseleccionadoN.Derecha82;
+color82 = odontogramaseleccionadoN.Centro82;
+estado82 = odontogramaseleccionadoN.Estado82;
 
-            color81ab = odontogramaseleccionadoN.Abajo81;
-            color81a = odontogramaseleccionadoN.Arriba81;
-            color81i = odontogramaseleccionadoN.Izquierda81;
-            color81d = odontogramaseleccionadoN.Derecha81;
-            color81 = odontogramaseleccionadoN.Centro81;
-            estado81 = odontogramaseleccionadoN.Estado81;
+colorLetra81 = odontogramaseleccionadoN.Color81;
+color81ab = odontogramaseleccionadoN.Abajo81;
+color81a = odontogramaseleccionadoN.Arriba81;
+color81i = odontogramaseleccionadoN.Izquierda81;
+color81d = odontogramaseleccionadoN.Derecha81;
+color81 = odontogramaseleccionadoN.Centro81;
+estado81 = odontogramaseleccionadoN.Estado81;
 
-            color71ab = odontogramaseleccionadoN.Abajo71;
-            color71a = odontogramaseleccionadoN.Arriba71;
-            color71i = odontogramaseleccionadoN.Izquierda71;
-            color71d = odontogramaseleccionadoN.Derecha71;
-            color71 = odontogramaseleccionadoN.Centro71;
-            estado71 = odontogramaseleccionadoN.Estado71;
+colorLetra71 = odontogramaseleccionadoN.Color71;
+color71ab = odontogramaseleccionadoN.Abajo71;
+color71a = odontogramaseleccionadoN.Arriba71;
+color71i = odontogramaseleccionadoN.Izquierda71;
+color71d = odontogramaseleccionadoN.Derecha71;
+color71 = odontogramaseleccionadoN.Centro71;
+estado71 = odontogramaseleccionadoN.Estado71;
 
-            color72ab = odontogramaseleccionadoN.Abajo72;
-            color72a = odontogramaseleccionadoN.Arriba72;
-            color72i = odontogramaseleccionadoN.Izquierda72;
-            color72d = odontogramaseleccionadoN.Derecha72;
-            color72 = odontogramaseleccionadoN.Centro72;
-            estado72 = odontogramaseleccionadoN.Estado72;
+colorLetra72 = odontogramaseleccionadoN.Color72;
+color72ab = odontogramaseleccionadoN.Abajo72;
+color72a = odontogramaseleccionadoN.Arriba72;
+color72i = odontogramaseleccionadoN.Izquierda72;
+color72d = odontogramaseleccionadoN.Derecha72;
+color72 = odontogramaseleccionadoN.Centro72;
+estado72 = odontogramaseleccionadoN.Estado72;
 
-            color73ab = odontogramaseleccionadoN.Abajo73;
-            color73a = odontogramaseleccionadoN.Arriba73;
-            color73i = odontogramaseleccionadoN.Izquierda73;
-            color73d = odontogramaseleccionadoN.Derecha73;
-            color73 = odontogramaseleccionadoN.Centro73;
-            estado73 = odontogramaseleccionadoN.Estado73;
+colorLetra73 = odontogramaseleccionadoN.Color73;
+color73ab = odontogramaseleccionadoN.Abajo73;
+color73a = odontogramaseleccionadoN.Arriba73;
+color73i = odontogramaseleccionadoN.Izquierda73;
+color73d = odontogramaseleccionadoN.Derecha73;
+color73 = odontogramaseleccionadoN.Centro73;
+estado73 = odontogramaseleccionadoN.Estado73;
 
-            color74ab = odontogramaseleccionadoN.Abajo74;
-            color74a = odontogramaseleccionadoN.Arriba74;
-            color74i = odontogramaseleccionadoN.Izquierda74;
-            color74d = odontogramaseleccionadoN.Derecha74;
-            color74 = odontogramaseleccionadoN.Centro74;
-            estado74 = odontogramaseleccionadoN.Estado74;
+colorLetra74 = odontogramaseleccionadoN.Color74;
+color74ab = odontogramaseleccionadoN.Abajo74;
+color74a = odontogramaseleccionadoN.Arriba74;
+color74i = odontogramaseleccionadoN.Izquierda74;
+color74d = odontogramaseleccionadoN.Derecha74;
+color74 = odontogramaseleccionadoN.Centro74;
+estado74 = odontogramaseleccionadoN.Estado74;
 
+colorLetra75 = odontogramaseleccionadoN.Color75;
+color75ab = odontogramaseleccionadoN.Abajo75;
+color75a = odontogramaseleccionadoN.Arriba75;
+color75i = odontogramaseleccionadoN.Izquierda75;
+color75d = odontogramaseleccionadoN.Derecha75;
+color75 = odontogramaseleccionadoN.Centro75;
+estado75 = odontogramaseleccionadoN.Estado75;
 
             var odontogramaseleccionado = DbContext.Odontogramas.Find(IdOdontogramaSeleccionado);
 
@@ -4800,138 +4844,166 @@ odontrogramanuevo.Color23 = colorLetra23;
 
         var odontrogramanuevoN = DbContext.OdontrogramaNiños.Find(IdOdontogramaSeleccionadoN);
 
-        odontrogramanuevoN.Abajo55 = color55ab;
-        odontrogramanuevoN.Arriba55 = color55a;
-        odontrogramanuevoN.Izquierda55 = color55i;
-        odontrogramanuevoN.Derecha55 = color55d;
-        odontrogramanuevoN.Centro55 = color55;
-        odontrogramanuevoN.Estado55 = estado55;
+        
+        odontrogramanuevoN.Color55 = colorLetra55;
+odontrogramanuevoN.Abajo55 = color55ab;
+odontrogramanuevoN.Arriba55 = color55a;
+odontrogramanuevoN.Izquierda55 = color55i;
+odontrogramanuevoN.Derecha55 = color55d;
+odontrogramanuevoN.Centro55 = color55;
+odontrogramanuevoN.Estado55 = estado55;
 
-        odontrogramanuevoN.Abajo54 = color54ab;
-        odontrogramanuevoN.Arriba54 = color54a;
-        odontrogramanuevoN.Izquierda54 = color54i;
-        odontrogramanuevoN.Derecha54 = color54d;
-        odontrogramanuevoN.Centro54 = color54;
-        odontrogramanuevoN.Estado54 = estado54;
+odontrogramanuevoN.Color54 = colorLetra54;
+odontrogramanuevoN.Abajo54 = color54ab;
+odontrogramanuevoN.Arriba54 = color54a;
+odontrogramanuevoN.Izquierda54 = color54i;
+odontrogramanuevoN.Derecha54 = color54d;
+odontrogramanuevoN.Centro54 = color54;
+odontrogramanuevoN.Estado54 = estado54;
 
-        odontrogramanuevoN.Abajo53 = color53ab;
-        odontrogramanuevoN.Arriba53 = color53a;
-        odontrogramanuevoN.Izquierda53 = color53i;
-        odontrogramanuevoN.Derecha53 = color53d;
-        odontrogramanuevoN.Centro53 = color53;
-        odontrogramanuevoN.Estado53 = estado53;
+odontrogramanuevoN.Color53 = colorLetra53;
+odontrogramanuevoN.Abajo53 = color53ab;
+odontrogramanuevoN.Arriba53 = color53a;
+odontrogramanuevoN.Izquierda53 = color53i;
+odontrogramanuevoN.Derecha53 = color53d;
+odontrogramanuevoN.Centro53 = color53;
+odontrogramanuevoN.Estado53 = estado53;
 
-        odontrogramanuevoN.Abajo52 = color52ab;
-        odontrogramanuevoN.Arriba52 = color52a;
-        odontrogramanuevoN.Izquierda52 = color52i;
-        odontrogramanuevoN.Derecha52 = color52d;
-        odontrogramanuevoN.Centro52 = color52;
-        odontrogramanuevoN.Estado52 = estado52;
+odontrogramanuevoN.Color52 = colorLetra52;
+odontrogramanuevoN.Abajo52 = color52ab;
+odontrogramanuevoN.Arriba52 = color52a;
+odontrogramanuevoN.Izquierda52 = color52i;
+odontrogramanuevoN.Derecha52 = color52d;
+odontrogramanuevoN.Centro52 = color52;
+odontrogramanuevoN.Estado52 = estado52;
 
-        odontrogramanuevoN.Abajo51 = color51ab;
-        odontrogramanuevoN.Arriba51 = color51a;
-        odontrogramanuevoN.Izquierda51 = color51i;
-        odontrogramanuevoN.Derecha51 = color51d;
-        odontrogramanuevoN.Centro51 = color51;
-        odontrogramanuevoN.Estado51 = estado51;
+odontrogramanuevoN.Color51 = colorLetra51;
+odontrogramanuevoN.Abajo51 = color51ab;
+odontrogramanuevoN.Arriba51 = color51a;
+odontrogramanuevoN.Izquierda51 = color51i;
+odontrogramanuevoN.Derecha51 = color51d;
+odontrogramanuevoN.Centro51 = color51;
+odontrogramanuevoN.Estado51 = estado51;
 
-        odontrogramanuevoN.Abajo61 = color61ab;
-        odontrogramanuevoN.Arriba61 = color61a;
-        odontrogramanuevoN.Izquierda61 = color61i;
-        odontrogramanuevoN.Derecha61 = color61d;
-        odontrogramanuevoN.Centro61 = color61;
-        odontrogramanuevoN.Estado61 = estado61;
+odontrogramanuevoN.Color61 = colorLetra61;
+odontrogramanuevoN.Abajo61 = color61ab;
+odontrogramanuevoN.Arriba61 = color61a;
+odontrogramanuevoN.Izquierda61 = color61i;
+odontrogramanuevoN.Derecha61 = color61d;
+odontrogramanuevoN.Centro61 = color61;
+odontrogramanuevoN.Estado61 = estado61;
 
-        odontrogramanuevoN.Abajo62 = color62ab;
-        odontrogramanuevoN.Arriba62 = color62a;
-        odontrogramanuevoN.Izquierda62 = color62i;
-        odontrogramanuevoN.Derecha62 = color62d;
-        odontrogramanuevoN.Centro62 = color62;
-        odontrogramanuevoN.Estado62 = estado62;
+odontrogramanuevoN.Color62 = colorLetra62;
+odontrogramanuevoN.Abajo62 = color62ab;
+odontrogramanuevoN.Arriba62 = color62a;
+odontrogramanuevoN.Izquierda62 = color62i;
+odontrogramanuevoN.Derecha62 = color62d;
+odontrogramanuevoN.Centro62 = color62;
+odontrogramanuevoN.Estado62 = estado62;
 
-        odontrogramanuevoN.Abajo63 = color63ab;
-        odontrogramanuevoN.Arriba63 = color63a;
-        odontrogramanuevoN.Izquierda63 = color63i;
-        odontrogramanuevoN.Derecha63 = color63d;
-        odontrogramanuevoN.Centro63 = color63;
-        odontrogramanuevoN.Estado63 = estado63;
+odontrogramanuevoN.Color63 = colorLetra63;
+odontrogramanuevoN.Abajo63 = color63ab;
+odontrogramanuevoN.Arriba63 = color63a;
+odontrogramanuevoN.Izquierda63 = color63i;
+odontrogramanuevoN.Derecha63 = color63d;
+odontrogramanuevoN.Centro63 = color63;
+odontrogramanuevoN.Estado63 = estado63;
 
-        odontrogramanuevoN.Abajo64 = color64ab;
-        odontrogramanuevoN.Arriba64 = color64a;
-        odontrogramanuevoN.Izquierda64 = color64i;
-        odontrogramanuevoN.Derecha64 = color64d;
-        odontrogramanuevoN.Centro64 = color64;
-        odontrogramanuevoN.Estado64 = estado64;
+odontrogramanuevoN.Color64 = colorLetra64;
+odontrogramanuevoN.Abajo64 = color64ab;
+odontrogramanuevoN.Arriba64 = color64a;
+odontrogramanuevoN.Izquierda64 = color64i;
+odontrogramanuevoN.Derecha64 = color64d;
+odontrogramanuevoN.Centro64 = color64;
+odontrogramanuevoN.Estado64 = estado64;
 
-        odontrogramanuevoN.Abajo65 = color65ab;
-        odontrogramanuevoN.Arriba65 = color65a;
-        odontrogramanuevoN.Izquierda65 = color65i;
-        odontrogramanuevoN.Derecha65 = color65d;
-        odontrogramanuevoN.Centro65 = color65;
-        odontrogramanuevoN.Estado65 = estado65;
+odontrogramanuevoN.Color65 = colorLetra65;
+odontrogramanuevoN.Abajo65 = color65ab;
+odontrogramanuevoN.Arriba65 = color65a;
+odontrogramanuevoN.Izquierda65 = color65i;
+odontrogramanuevoN.Derecha65 = color65d;
+odontrogramanuevoN.Centro65 = color65;
+odontrogramanuevoN.Estado65 = estado65;
 
-        odontrogramanuevoN.Abajo85 = color85ab;
-        odontrogramanuevoN.Arriba85 = color85a;
-        odontrogramanuevoN.Izquierda85 = color85i;
-        odontrogramanuevoN.Derecha85 = color85d;
-        odontrogramanuevoN.Centro85 = color85;
-        odontrogramanuevoN.Estado85 = estado85;
+odontrogramanuevoN.Color85 = colorLetra85;
+odontrogramanuevoN.Abajo85 = color85ab;
+odontrogramanuevoN.Arriba85 = color85a;
+odontrogramanuevoN.Izquierda85 = color85i;
+odontrogramanuevoN.Derecha85 = color85d;
+odontrogramanuevoN.Centro85 = color85;
+odontrogramanuevoN.Estado85 = estado85;
 
-        odontrogramanuevoN.Abajo84 = color84ab;
-        odontrogramanuevoN.Arriba84 = color84a;
-        odontrogramanuevoN.Izquierda84 = color84i;
-        odontrogramanuevoN.Derecha84 = color84d;
-        odontrogramanuevoN.Centro84 = color84;
-        odontrogramanuevoN.Estado84 = estado84;
+odontrogramanuevoN.Color84 = colorLetra84;
+odontrogramanuevoN.Abajo84 = color84ab;
+odontrogramanuevoN.Arriba84 = color84a;
+odontrogramanuevoN.Izquierda84 = color84i;
+odontrogramanuevoN.Derecha84 = color84d;
+odontrogramanuevoN.Centro84 = color84;
+odontrogramanuevoN.Estado84 = estado84;
 
-        odontrogramanuevoN.Abajo83 = color83ab;
-        odontrogramanuevoN.Arriba83 = color83a;
-        odontrogramanuevoN.Izquierda83 = color83i;
-        odontrogramanuevoN.Derecha83 = color83d;
-        odontrogramanuevoN.Centro83 = color83;
-        odontrogramanuevoN.Estado83 = estado83;
+odontrogramanuevoN.Color83 = colorLetra83;
+odontrogramanuevoN.Abajo83 = color83ab;
+odontrogramanuevoN.Arriba83 = color83a;
+odontrogramanuevoN.Izquierda83 = color83i;
+odontrogramanuevoN.Derecha83 = color83d;
+odontrogramanuevoN.Centro83 = color83;
+odontrogramanuevoN.Estado83 = estado83;
 
-        odontrogramanuevoN.Abajo82 = color82ab;
-        odontrogramanuevoN.Arriba82 = color82a;
-        odontrogramanuevoN.Izquierda82 = color82i;
-        odontrogramanuevoN.Derecha82 = color82d;
-        odontrogramanuevoN.Centro82 = color82;
-        odontrogramanuevoN.Estado82 = estado82;
+odontrogramanuevoN.Color82 = colorLetra82;
+odontrogramanuevoN.Abajo82 = color82ab;
+odontrogramanuevoN.Arriba82 = color82a;
+odontrogramanuevoN.Izquierda82 = color82i;
+odontrogramanuevoN.Derecha82 = color82d;
+odontrogramanuevoN.Centro82 = color82;
+odontrogramanuevoN.Estado82 = estado82;
 
-        odontrogramanuevoN.Abajo81 = color81ab;
-        odontrogramanuevoN.Arriba81 = color81a;
-        odontrogramanuevoN.Izquierda81 = color81i;
-        odontrogramanuevoN.Derecha81 = color81d;
-        odontrogramanuevoN.Centro81 = color81;
-        odontrogramanuevoN.Estado81 = estado81;
+odontrogramanuevoN.Color81 = colorLetra81;
+odontrogramanuevoN.Abajo81 = color81ab;
+odontrogramanuevoN.Arriba81 = color81a;
+odontrogramanuevoN.Izquierda81 = color81i;
+odontrogramanuevoN.Derecha81 = color81d;
+odontrogramanuevoN.Centro81 = color81;
+odontrogramanuevoN.Estado81 = estado81;
 
-        odontrogramanuevoN.Abajo71 = color71ab;
-        odontrogramanuevoN.Arriba71 = color71a;
-        odontrogramanuevoN.Izquierda71 = color71i;
-        odontrogramanuevoN.Derecha71 = color71d;
-        odontrogramanuevoN.Centro71 = color71;
-        odontrogramanuevoN.Estado71 = estado71;
+odontrogramanuevoN.Color71 = colorLetra71;
+odontrogramanuevoN.Abajo71 = color71ab;
+odontrogramanuevoN.Arriba71 = color71a;
+odontrogramanuevoN.Izquierda71 = color71i;
+odontrogramanuevoN.Derecha71 = color71d;
+odontrogramanuevoN.Centro71 = color71;
+odontrogramanuevoN.Estado71 = estado71;
 
-        odontrogramanuevoN.Abajo72 = color72ab;
-        odontrogramanuevoN.Arriba72 = color72a;
-        odontrogramanuevoN.Izquierda72 = color72i;
-        odontrogramanuevoN.Derecha72 = color72d;
-        odontrogramanuevoN.Centro72 = color72;
-        odontrogramanuevoN.Estado72 = estado72;
+odontrogramanuevoN.Color72 = colorLetra72;
+odontrogramanuevoN.Abajo72 = color72ab;
+odontrogramanuevoN.Arriba72 = color72a;
+odontrogramanuevoN.Izquierda72 = color72i;
+odontrogramanuevoN.Derecha72 = color72d;
+odontrogramanuevoN.Centro72 = color72;
+odontrogramanuevoN.Estado72 = estado72;
 
-        odontrogramanuevoN.Abajo73 = color73ab;
-        odontrogramanuevoN.Arriba73 = color73a;
-        odontrogramanuevoN.Izquierda73 = color73i;
-        odontrogramanuevoN.Derecha73 = color73d;
-        odontrogramanuevoN.Centro73 = color73;
-        odontrogramanuevoN.Estado73 = estado73;
+odontrogramanuevoN.Color73 = colorLetra73;
+odontrogramanuevoN.Abajo73 = color73ab;
+odontrogramanuevoN.Arriba73 = color73a;
+odontrogramanuevoN.Izquierda73 = color73i;
+odontrogramanuevoN.Derecha73 = color73d;
+odontrogramanuevoN.Centro73 = color73;
+odontrogramanuevoN.Estado73 = estado73;
 
-        odontrogramanuevoN.Abajo74 = color74ab;
-        odontrogramanuevoN.Arriba74 = color74a;
-        odontrogramanuevoN.Izquierda74 = color74i;
-        odontrogramanuevoN.Derecha74 = color74d;
-        odontrogramanuevoN.Centro74 = color74;
-        odontrogramanuevoN.Estado74 = estado74;
+odontrogramanuevoN.Color74 = colorLetra74;
+odontrogramanuevoN.Abajo74 = color74ab;
+odontrogramanuevoN.Arriba74 = color74a;
+odontrogramanuevoN.Izquierda74 = color74i;
+odontrogramanuevoN.Derecha74 = color74d;
+odontrogramanuevoN.Centro74 = color74;
+odontrogramanuevoN.Estado74 = estado74;
+
+odontrogramanuevoN.Color75 = colorLetra75;
+odontrogramanuevoN.Abajo75 = color75ab;
+odontrogramanuevoN.Arriba75 = color75a;
+odontrogramanuevoN.Izquierda75 = color75i;
+odontrogramanuevoN.Derecha75 = color75d;
+odontrogramanuevoN.Centro75 = color75;
+odontrogramanuevoN.Estado75 = estado75;
 
         using (DbDentistaContext db = new DbDentistaContext())
         {

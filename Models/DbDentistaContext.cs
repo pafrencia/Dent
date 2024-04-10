@@ -934,6 +934,66 @@ public partial class DbDentistaContext : DbContext
             entity.Property(e => e.Centro85)
                 .HasMaxLength(10)
                 .IsFixedLength();
+            entity.Property(e => e.Color51)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color52)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color53)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color54)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color55)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color61)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color62)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color63)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color64)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color65)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color71)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color72)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color73)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color74)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color75)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color81)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color82)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color83)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color84)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.Color85)
+                .HasMaxLength(10)
+                .IsFixedLength();
             entity.Property(e => e.Derecha51)
                 .HasMaxLength(10)
                 .IsFixedLength();
