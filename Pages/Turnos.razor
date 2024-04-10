@@ -9,6 +9,8 @@
 @inject EliminarPracticaMetod EliminarPracticaMethod
 @inject HttpClient httpClient
 @using System.Net.Http.Json
+@if (Permiso.Logueado == 1)
+{
 <PageTitle>TURNOS</PageTitle>
 <style>
     table {
@@ -61,7 +63,7 @@
 <h3>Selecciona un día:</h3>
 <input type="date" @onchange="HandleDateChange" />
 <h3>Horarios para el día @(selectedDate.ToString("dd/MM/yyyy"))</h3>
-@{
+
     List<string> horas = new List<string>();
 
     DateTime horaInicio = DateTime.Today.AddHours(8); // Hora de inicio: 8:00 AM
@@ -72,7 +74,7 @@
         horas.Add(horaInicio.ToString("HH:mm")); // Agrega la hora formateada a la lista
         horaInicio = horaInicio.AddMinutes(30); // Incrementa 30 minutos
     }
-}
+
 
   <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
   <thead>
@@ -336,7 +338,11 @@
         </div>
     </div>
 }
-
+}
+else
+{
+    <p>No tienes permiso para ver los datos.</p>
+}
 @code {
     private bool condicionCumplida = false;
     private string dia = "lunes";

@@ -1,0 +1,142 @@
+﻿@page "/Login1"
+@using Dent.Models
+@inject ServicioAutenticacion ServicioAutenticacion
+@inject NavigationManager NavigationManager
+@inject Permisos Permiso
+
+<PageTitle>LOGIN</PageTitle>
+<h3>Iniciar Sesión</h3>
+
+<div class="form-group" style="width: 50%;">
+    <div>
+        <label for="nombreUsuario">Nombre de Usuario:</label>
+        <InputText style="width: 100%;" id="nombreUsuario" @bind-Value="nombreUsuario" />
+    </div>
+    <p> </p>
+    <div>
+        <label for="contraseña">Contraseña:</label>
+        <InputText style="width: 100%;" id="contraseña" type="password" @bind-Value="contraseña" />
+    </div>
+    <p> </p>
+</div>
+<button class="btn btn-primary" @onclick="IniciarSesion">INICIAR SESION</button>
+
+<p> </p>
+<button class="btn btn-danger" @onclick="CerrarSesion">CERRAR SESION</button>
+<p> </p>
+<label>@info</label>
+@*
+<button class="btn btn-primary" @onclick="AbrirModal">Crear Usuario</button>
+
+ *@
+<div class="modal" style="display: @(mostrarModal ? "block" : "none")">
+    <div class="modal-content">
+        <span class="cerrar" @onclick="CerrarModal">&times;</span>
+        <h3>Iniciar Sesión</h3>
+
+        <div>
+            <label for="nombreUsuario">Nombre de Usuario:</label>
+            <input id="nombreUsuario" @bind="nombreUsuario" />
+        </div>
+
+        <div>
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" @bind="contraseña" />
+        </div>
+
+        <button class="btn btn-primary" @onclick="CrearUsuario">Crear Usuario</button>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+
+@code {
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+    string info = "Ingrese Usuario y contraseña";
+    private static bool mostrarModal = false;
+    private string nombreUsuario = "";
+    private string contraseña = "";
+    private Usuario usuario = new Usuario();
+    public void CrearUsuario()
+    {
+        var comparacion = contraseña.Length;
+        if (comparacion == 10)
+        {
+            var datos = new Login();
+            datos.Usuario = nombreUsuario;
+            datos.Contraseña = contraseña;
+            datos.Rol = "user";
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                db.Logins.Add(datos);
+                db.SaveChanges();
+            }
+            info = "El Usuario se creo correctamente, ya puede ingresar";
+        }
+        else
+        {
+            info = "LA CONTRASEÑA DEBE TENER 10 CARACTERES";
+        }
+        CerrarModal();
+
+    }
+
+
+    private void CerrarSesion()
+    {
+        Permiso.Logueado = 0;
+        Permiso.Admin = false;
+        info = "SESSION CERRADA CORRECTAMENTE";
+    }
+
+    private void IniciarSesion()
+    {
+        var entidad = new Login();
+
+        entidad = DbContext.Logins.SingleOrDefault(e => e.Usuario == nombreUsuario);
+
+
+        if (entidad != null)
+        {
+
+            if (entidad.Contraseña == contraseña)
+
+            {
+                Permiso.Logueado = 1;
+                if (entidad.Rol == "admin     ")
+                {
+                    Permiso.Admin = true;
+                    info = "LOGUEADO CORRECTAMENTE COMO ADMINISTRADOR";
+                }
+                else
+                {
+                    Permiso.Admin = false;
+                    info = "LOGUEADO CORRECTAMENTE";
+                }
+
+            }
+            else
+            { info = "CONTRASEÑA INCORRECTA"; }
+        }
+        else
+        {
+            info = "EL USUARIO NO EXISTE";
+
+        }
+    }
+
+    public void AbrirModal()
+    {
+        mostrarModal = true;
+    }
+
+    // Método para cerrar el modal
+    public void CerrarModal()
+    {
+        mostrarModal = false;
+    }
+}
