@@ -146,6 +146,16 @@ a, .btn-link {
         border-color: green;
         background-color: royalblue;
     }
+.subTitulos {
+    width: 100%;
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    font-size: 30px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: #E5E7E9;
+    border: 1px solid black;
+    padding: 0; /* Sin márgenes */
+    margin: 0;
+}
 
 .square-button {
     position: relative;
@@ -164,8 +174,6 @@ a, .btn-link {
     transition: border-color 0.3s ease;
     margin: 0;
     z-index: 1;
-}
-
 }
 
 .square-button:hover {
@@ -398,16 +406,17 @@ a, .btn-link {
 /* Establecer un ancho fijo de 200px para el div */
 .divFijo {
     width: 1532px;
-    border: 1px solid black; /* Solo para visualización */
+    border: 0px solid black; /* Solo para visualización */
     padding: 0px; /* Añade espacio alrededor del contenido */
     margin: 0 auto; /* Centra el div horizontalmente */
     justify-content: center;
     justify-items: center;
+    background-color: #F8F9F9;
 }
 
 .divFijoConFlow {
     width: 1532px;
-    border: 1px solid black; /* Solo para visualización */
+    border: 0px solid black; /* Solo para visualización */
     padding: 0px; /* Añade espacio alrededor del contenido */
     margin: 0 auto; /* Centra el div horizontalmente */
     justify-content: center;

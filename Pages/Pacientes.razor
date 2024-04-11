@@ -388,8 +388,8 @@
     </p>
 </div>
 <div style="display: @(divOdontograma == 1 ? "block" : "none")">
-
 <div class="divFijo">
+            <div class="subTitulos">ODONTOGRAMA</div>
                     <p> </p>
     <div class="centrado">
         <button class="adulto-button" @onclick="() => MostrarAdulto()">ADULTO</button>     <button class="nino-button" @onclick="() => MostrarNiño()">NIÑO</button>  <button class="mixto-button" @onclick="() => MostrarAmbos()">MIXTO</button> <button class="guardar-button" @onclick="() => GuardarOdontograma()">GUARDAR</button> <button class="odontograma-button" @onclick="() => MostrarOdontograma()">OCULTAR</button>
@@ -2701,6 +2701,7 @@
 
 <div style="display: @(divHistoriaClinica == 1 ? "block" : "none")">
 <div class= "divFijo">
+    <div class="subTitulos">HISTORIA CLINICA</div>
     <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
         <thead>
             <tr class="table-dark">
