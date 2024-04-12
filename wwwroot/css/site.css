@@ -135,7 +135,7 @@ a, .btn-link {
     vertical-align: center;
     border-radius: 15px;
     font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
-    background-color: skyblue;
+    background-color: #85C1E9;
     border: 2px solid black;
     padding: 3px;
     transition: border-color 0.3s ease;
@@ -153,6 +153,11 @@ a, .btn-link {
     font-size: 30px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: #E5E7E9;
     border: 1px solid black;
+    padding: 0; /* Sin márgenes */
+    margin: 0;
+}
+
+.ceroMargen {
     padding: 0; /* Sin márgenes */
     margin: 0;
 }
@@ -307,6 +312,16 @@ a, .btn-link {
     margin: 0;
 }
 
+.fondoNegro {
+    background-color: black;
+}
+.fondoGrisClaro {
+    background-color: lightgray;
+}
+.fondoAzul {
+    background-color: #040054;
+    height: auto;
+}
 .container {
     width: 1600px;
     height: 500px;
@@ -432,6 +447,29 @@ a, .btn-link {
     margin: 0 auto; /* Centra el div horizontalmente */
     justify-content: center;
     justify-items: center;
+}
+
+.centradoalMedio {
+    justify-content: center;
+    justify-items: center;
+    vertical-align: middle;
+}
+
+.centrado2 {
+    width: 900px;
+    padding: 0px; /* Añade espacio alrededor del contenido */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    align-content: center;
+    align-items: center;
+}
+
+.textSize {
+    font-size: 20px;
+}
+
+.ceroMargen {
+    padding: 5px; /* Añade espacio alrededor del contenido */
+    margin: 5 auto; /* Centra el div horizontalmente */
 }
 /* Estilo para la tabla sin márgenes internos */
 table {

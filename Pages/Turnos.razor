@@ -33,6 +33,24 @@
         }
 
 
+        .calendar-button {
+            text-align: center; /* Alineación horizontal del texto */
+            width: 120px;
+            height: 35px;
+            font-weight: bold; /* Texto en negrita */
+            vertical-align: center;
+            border-radius: 15px;
+            font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
+            background-color: #85C1E9;
+            border: 2px solid black;
+            padding: 3px;
+            transition: border-color 0.3s ease;
+            margin: 0 auto;
+        }
+
+            .calendar-button:hover {
+                border-color: #21618C;
+            }
     *,
     *:before,
     *:after {
@@ -62,7 +80,17 @@
 
 <h3>Selecciona un día:</h3>
 <input type="date" @onchange="HandleDateChange" />
-<h3>Horarios para el día @(selectedDate.ToString("dd/MM/yyyy"))</h3>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">◀</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">LUNES</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">MARTES</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">MIERCOLES</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">JUEVES</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">VIERNES</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">SABADO</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">DOMINGO</button>
+    <button class="calendar-button" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">▶</button>
+
+@* <h3>Horarios para el día @(selectedDate.ToString("dd/MM/yyyy"))</h3> *@
 
     List<string> horas = new List<string>();
 
@@ -132,7 +160,235 @@
             condicionCumplida = false;
         }
     </tbody>
-    </table>  
+    </table>
+
+    <!-- SEGUNDA TABLA -->
+
+    <div class="row">
+        <div class="col">
+            <!--aqui va la primera tabla-->
+            <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 30px;">HORA</th>
+                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hora in horas)
+                    {
+                        @foreach (var turno in TurnosFiltrados)
+                        {
+                            TimeSpan horareal = TimeSpan.Parse(hora);
+                            @if (horareal == turno.Hora)
+                            {
+                                cargarFila(hora);
+                                <tr class="table-primary" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                    <td>@horareal.ToString("hh\\:mm")</td>
+                                </tr>
+                                condicionCumplida = true;
+                                break;
+                            }
+
+                        }
+
+                        @if (condicionCumplida == false)
+                        {
+                            <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno)">
+                                <td>@hora</td>
+                            </tr>
+                        }
+                        condicionCumplida = false;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <!--aqui va la segunda tabla del div-->
+            <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 80px;">@nombreDia @(selectedDate.ToString("dd/MM"))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hora in horas)
+                    {
+                        @foreach (var turno in TurnosFiltrados)
+                        {
+                            TimeSpan horareal = TimeSpan.Parse(hora);
+                            @if (horareal == turno.Hora)
+                            {
+                                cargarFila(hora);
+                                <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                    <td>"AGENDADO"</td>
+                                </tr>
+                                condicionCumplida = true;
+                                break;
+                            }
+
+                        }
+
+                        @if (condicionCumplida == false)
+                        {
+                            <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno)">
+                                <td>DISPONIBLE</td>
+                            </tr>
+                        }
+                        condicionCumplida = false;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <!--aqui va la tercera tabla del div-->
+            <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 80px;">@nombreDia1  @(selectedDate1.ToString("dd/MM"))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hora in horas)
+                    {
+                        @foreach (var turno in TurnosFiltrados1)
+                        {
+                            TimeSpan horareal = TimeSpan.Parse(hora);
+                            @if (horareal == turno.Hora)
+                            {
+                                cargarFila(hora);
+                                <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                    <td>"AGENDADO"</td>
+                                </tr>
+                                condicionCumplida = true;
+                                break;
+                            }
+
+                        }
+
+                        @if (condicionCumplida == false)
+                        {
+                            <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno)">
+                                <td>DISPONIBLE</td>
+                            </tr>
+                        }
+                        condicionCumplida = false;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <!--aqui va la tercera tabla del div-->
+            <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 80px;">@nombreDia2  @(selectedDate2.ToString("dd/MM"))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hora in horas)
+                    {
+                        @foreach (var turno in TurnosFiltrados2)
+                        {
+                            TimeSpan horareal = TimeSpan.Parse(hora);
+                            @if (horareal == turno.Hora)
+                            {
+                                cargarFila(hora);
+                                <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                    <td>"AGENDADO"</td>
+                                </tr>
+                                condicionCumplida = true;
+                                break;
+                            }
+
+                        }
+
+                        @if (condicionCumplida == false)
+                        {
+                            <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno)">
+                                <td>DISPONIBLE</td>
+                            </tr>
+                        }
+                        condicionCumplida = false;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <!--aqui va la cuarta tabla del div-->
+            <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 80px;">@nombreDia3  @(selectedDate3.ToString("dd/MM"))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hora in horas)
+                    {
+                        @foreach (var turno in TurnosFiltrados3)
+                        {
+                            TimeSpan horareal = TimeSpan.Parse(hora);
+                            @if (horareal == turno.Hora)
+                            {
+                                cargarFila(hora);
+                                <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                    <td>"AGENDADO"</td>
+                                </tr>
+                                condicionCumplida = true;
+                                break;
+                            }
+
+                        }
+
+                        @if (condicionCumplida == false)
+                        {
+                            <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno)">
+                                <td>DISPONIBLE</td>
+                            </tr>
+                        }
+                        condicionCumplida = false;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <!--aqui va la quinta tabla del div-->
+            <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 80px;">@nombreDia4  @(selectedDate4.ToString("dd/MM"))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hora in horas)
+                    {
+                        @foreach (var turno in TurnosFiltrados4)
+                        {
+                            TimeSpan horareal = TimeSpan.Parse(hora);
+                            @if (horareal == turno.Hora)
+                            {
+                                cargarFila(hora);
+                                <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                    <td>"AGENDADO"</td>
+                                </tr>
+                                condicionCumplida = true;
+                                break;
+                            }
+
+                        }
+
+                        @if (condicionCumplida == false)
+                        {
+                            <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno)">
+                                <td>DISPONIBLE</td>
+                            </tr>
+                        }
+                        condicionCumplida = false;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- FIN SEGUNDA TABLA -->
 
 <div style="display: @(currentDiv == 0 ? "block" : "none")">
 
@@ -399,8 +655,27 @@ else
     private List<PracticasRealizada> elementosUnicos = new List<PracticasRealizada>();
     private List<Turno> ListaDeTurnos = new List<Turno>();
     private List<Turno> TurnosFiltrados = new List<Turno>();
+    private List<Turno> TurnosFiltrados1 = new List<Turno>();
+    private List<Turno> TurnosFiltrados2 = new List<Turno>();
+    private List<Turno> TurnosFiltrados3 = new List<Turno>();
+    private List<Turno> TurnosFiltrados4 = new List<Turno>();
+    private List<Turno> TurnosFiltrados5 = new List<Turno>();
     private Turno elementoEncontrado;
-
+    private string nombreDia = "";
+    private string nombreDia1 = "";
+    private string nombreDia2 = "";
+    private string nombreDia3 = "";
+    private string nombreDia4 = "";
+    private string nombreDia5 = "";
+    private string nombreDia6 = "";
+    private string nombreDia7 = "";
+    DateTime selectedDate7 { get; set; }
+    DateTime selectedDate6 { get; set; }
+    DateTime selectedDate5 { get; set; }
+    DateTime selectedDate4 { get; set; }
+    DateTime selectedDate3 { get; set; }
+    DateTime selectedDate2 { get; set; }
+    DateTime selectedDate1 { get; set; }
     DateTime selectedDate { get; set; }
     TimeSpan Hora = new TimeSpan(20,30,00);
     List<DateTime> horarios { get; set; }
@@ -423,6 +698,22 @@ else
         if (DateTime.TryParse(e.Value.ToString(), out DateTime result))
         {
             selectedDate = result;
+            nombreDia = selectedDate.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate1 = selectedDate.AddDays(1);
+            nombreDia1 = selectedDate.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate2 = selectedDate.AddDays(2);
+            nombreDia2 = selectedDate2.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate3 = selectedDate.AddDays(3);
+            nombreDia3 = selectedDate3.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate4 = selectedDate.AddDays(4);
+            nombreDia4 = selectedDate4.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate5 = selectedDate.AddDays(5);
+            nombreDia5 = selectedDate5.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate6 = selectedDate.AddDays(6);
+            nombreDia6 = selectedDate6.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+            selectedDate7 = selectedDate.AddDays(7);
+            nombreDia7 = selectedDate7.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToUpper();
+
         }
         else
         {
@@ -472,7 +763,11 @@ else
     private void ActualizarTablaAlDia()
     {
         TurnosFiltrados = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate).ToList();
-
+        TurnosFiltrados1 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate1).ToList();
+        TurnosFiltrados2 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate2).ToList();
+        TurnosFiltrados3 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate3).ToList();
+        TurnosFiltrados4 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate4).ToList();
+        TurnosFiltrados5 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate5).ToList();
     }
 
 

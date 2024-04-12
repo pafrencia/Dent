@@ -4,19 +4,22 @@
 @inject NavigationManager NavigationManager
 @inject Permisos Permiso
 
+
 <PageTitle>LOGIN</PageTitle>
+<p> </p>
+<div class="centrado2">
 <h3>Iniciar Sesión</h3>
 
-<div class="form-group" style="width: 50%;">
-    <div>
-        <label for="nombreUsuario">Nombre de Usuario:</label>
-        <InputText style="width: 100%;" id="nombreUsuario" @bind-Value="nombreUsuario" />
-    </div>
+    <div class="centrado3">
+
+        <label for="nombreUsuario">USER:</label>
+        <InputText style="width: 200px;" id="nombreUsuario" @bind-Value="nombreUsuario" />
+
     <p> </p>
-    <div>
-        <label for="contraseña">Contraseña:</label>
-        <InputText style="width: 100%;" id="contraseña" type="password" @bind-Value="contraseña" />
-    </div>
+
+        <label for="contraseña">PASS:</label>
+        <InputText style="width: 200px;" id="contraseña" type="password" @bind-Value="contraseña" />
+
     <p> </p>
 </div>
 <button class="btn btn-primary" @onclick="IniciarSesion">INICIAR SESION</button>
@@ -47,11 +50,7 @@
         <button class="btn btn-primary" @onclick="CrearUsuario">Crear Usuario</button>
     </div>
 </div>
-
-
-<script>
-
-</script>
+</div>
 
 @code {
     [Inject]

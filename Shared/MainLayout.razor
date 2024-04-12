@@ -3,21 +3,37 @@
 @inject NavigationManager NavigationManager
 
 <style>
-    .small2 {
+
+    .small2-button {
         width: 100%;
         height: 25px;
-        background - color: white;
-        color: lightgray;
+        background - color: #85C1E9;
+        color: #21618C;
         border: none;
         padding: 0;
         margin: 0;
         font-size: 20px;
     }
+
+        .small2-button:hover {
+            border-color: yellow;
+            background - color: #21618C;
+        }
 </style>
 
 <PageTitle>Dent</PageTitle>
+<div class="container-fluid ceroMargen centradoalMedio">
+    <!-- Navbar -->
+    <NavMenu />
 
-<button class="small2 " @onclick="() => ShowNav(1)">@nombraBotonOcultarNav</button>
+    <div class="row fondoGrisclaro">
+        <div class="col fondoGrisclaro">
+            <!-- Contenido -->
+            @Body
+        </div>
+    </div>
+</div>@* 
+<button class="small2-button" @onclick="() => ShowNav(1)">@nombraBotonOcultarNav</button>
 <div class="page">
 
     <div class="sidebar" style="display: @(CoultarNav == 1 ? "block" : "none")">
@@ -26,30 +42,27 @@
 
     </div>
 
-    <main>
-
-        <article class="content px-0">
+    <main class="ceroMargen">
             @Body
-        </article>
     </main>
-</div>
+</div> *@
 
 
 @code {
     private int CoultarNav = 1;
-    private string nombraBotonOcultarNav = "X APLICACION CREADA CON BLAZOR EN c# By Pablo Ariel Frencia";
+    private string nombraBotonOcultarNav = "❮❮❮ OCULTAR MENU ❮❮❮";
     public void ShowNav(int divNumber)
     {
         // Cambiar el número del div actual al hacer clic en el botón correspondiente
         if (CoultarNav == 1)
         {
             CoultarNav = 0;
-            nombraBotonOcultarNav = "---------------------------------------------------";
+            nombraBotonOcultarNav = "❯❯❯MOSTRAR MENU LATERAL ❯❯❯";
         }
         else
         {
             CoultarNav = 1;
-            nombraBotonOcultarNav = "X APLICACION CREADA CON BLAZOR EN c# By Pablo Ariel Frencia";
+            nombraBotonOcultarNav = "❮❮❮ OCULTAR MENU ❮❮❮";
         }
     }
 }
