@@ -52,7 +52,7 @@ a, .btn-link {
     border-radius: 15px;
     width: 100px;
     height: 35px;
-    vertical-align: center;
+    vertical-align: central;
     font-weight: bold; /* Texto en negrita */
     font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: gold;
@@ -85,6 +85,49 @@ a, .btn-link {
     .mixto-button:hover {
         border-color: green;
         background-color: palevioletred;
+    }
+
+
+.dia-button {
+    border-radius: 15px;
+    font-weight: bold; /* Texto en negrita */
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    font-size: 23px; /* Tamaño del texto dentro del boton central en píxeles */
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+    background-color: darkblue;
+    color: white;
+}
+
+    .dia-button:hover {
+        border-color: green;
+        background-color: dodgerblue;
+        color: black;
+    }
+
+
+
+.flecha-button {
+    border-radius: 15px;
+    font-weight: bold; /* Texto en negrita */
+    width: 50px;
+    height: 50px;
+    vertical-align: central;
+    line-height: 50px;
+    text-align: center;
+    font-size: 40px; /* Tamaño del texto dentro del boton central en píxeles */
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+    background-color: darkblue;
+    color: white;
+}
+
+    .flecha-button:hover {
+        border-color: green;
+        background-color: dodgerblue;
+        color: black;
     }
 
 .guardar-button {
@@ -157,6 +200,13 @@ a, .btn-link {
     margin: 0;
 }
 
+
+.ceroMargenTextocentrado {
+    /* Sin márgenes */
+    text-align: center;
+    margin: 0;
+}
+
 .ceroMargen {
     padding: 0; /* Sin márgenes */
     margin: 0;
@@ -185,6 +235,68 @@ a, .btn-link {
     border-color: green;
 }
 
+.eliminar-button {
+    background-color: white;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    font-size: 10px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: #FF0049;
+    border: 1px solid black;
+    padding: 0; /* Sin márgenes */
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+    .eliminar-button:hover {
+        border-color: yellow;
+        background-color: #D52631;
+    }
+
+.observaciones-button {
+    background-color: white;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    font-size: 10px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: #DDDDDD;
+    color: black;
+    border: 1px solid black;
+    padding: 0; /* Sin márgenes */
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+    .observaciones-button:hover {
+        border-color: yellow;
+        background-color: #565656;
+        color: white;
+    }
+.mas-button {
+    background-color: white;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    font-size: 10px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: lightgreen;
+    border: 1px solid black;
+    padding: 0; /* Sin márgenes */
+    transition: border-color 0.3s ease;
+    margin: 0;
+}
+
+    .mas-button:hover {
+        border-color: yellow;
+    }
 .squareselected-button {
     line-height: 50px; /* Alineación vertical del texto */
     text-align: center; /* Alineación horizontal del texto */
@@ -256,6 +368,22 @@ a, .btn-link {
     .squareblue-button:hover {
         border-color: yellow;
     }
+
+.centradoVertical {
+    vertical-align: center;
+    padding: 0px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+
+}
+.centradoHorizontal {
+
+    text-align: center;
+}
+.colordefondoazul {
+    background-color: skyblue;
+}
 
 .barralarga {
     vertical-align: central;
