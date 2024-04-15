@@ -18,4 +18,6 @@ public partial class Turno
     public string Observaciones { get; set; }
 
     public string Practica { get; set; }
+
+    public string Sobreturno { get; set; }
 }

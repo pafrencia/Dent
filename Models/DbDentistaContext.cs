@@ -1269,6 +1269,9 @@ public partial class DbDentistaContext : DbContext
             entity.Property(e => e.Practica)
                 .HasMaxLength(40)
                 .IsFixedLength();
+            entity.Property(e => e.Sobreturno)
+                .HasMaxLength(2)
+                .IsFixedLength();
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -7,7 +7,7 @@ public partial class PracticasOdontograma
 {
     public int Id { get; set; }
 
-    public string Practica { get; set; }
+    public string? Practica { get; set; }
 
-    public string Color { get; set; }
+    public string? Color { get; set; }
 }

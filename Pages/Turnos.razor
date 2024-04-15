@@ -956,7 +956,7 @@ else
         ListaDeOdontologos = DbContext.Logins.ToList();
         ListaDeTurnos = DbContext.Turnos.ToList();
         ListaDeOdontologos = ListaDeOdontologos.Where(p => p.Rol == "odon      ").ToList();
-        
+
 
         DateTime horaInicio = DateTime.Today.AddHours(horaInicioSeleccionada); // Hora de inicio: 8:00 AM
         DateTime horaFin = DateTime.Today.AddHours(horaFinSeleccionada);   // Hora de fin: 9:00 PM
@@ -1223,12 +1223,12 @@ else
         }
         else { 
             MostrarBotones = "SI";
-        IdOdontologoSeleccionado = Convert.ToInt32(odontologoSeleccionadoNombre);
-        using (DbDentistaContext db = new DbDentistaContext())
-        {
-            var Odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
-            nombreOdontologo = Odontologo.Usuario;
-        }
+            IdOdontologoSeleccionado = Convert.ToInt32(odontologoSeleccionadoNombre);
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var Odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
+                nombreOdontologo = Odontologo.Usuario;
+            }
 
         }
     }
@@ -1259,7 +1259,7 @@ else
         prueba.Hora = Hora;
         prueba.IdPaciente = IdPacienteEditar;
         prueba.Observaciones = textoMultilinea;
-
+        prueba.Sobreturno = "NO";
         using (DbDentistaContext db = new DbDentistaContext())
         {
             db.Turnos.Add(prueba);
@@ -1281,6 +1281,7 @@ else
         prueba.Hora = Hora;
         prueba.IdPaciente = 0;
         prueba.Observaciones = textoMultilinea;
+        prueba.Sobreturno = "NO";
 
         using (DbDentistaContext db = new DbDentistaContext())
         {
