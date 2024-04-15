@@ -571,9 +571,8 @@
             @foreach (var turno in TurnosFiltrados)
             {
                 TimeSpan horareal = TimeSpan.Parse(hora);
-                @if (horareal == turno.Hora)
+                                @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
                 {
-                    if (turno.IdOdontologo == IdOdontologoSeleccionado)
                                     @if (turno.IdPaciente == 0)
                                     {
                                         <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -589,7 +588,7 @@
 
                                     }
                                     else
-                                    {
+                                    { 
                     cargarFila(hora);
                     <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
                         <td>@horareal.ToString("hh\\:mm")</td>
@@ -605,12 +604,11 @@
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button>
                     </td>
                 </tr>
-                }
-                    condicionCumplida = true;
-                    break;
-                }
-
-            }
+                                            condicionCumplida = true;
+                                            break;
+                                        } 
+                                        }
+                  }
 
             @if (condicionCumplida == false)
             {
@@ -1210,6 +1208,7 @@ else
         if (odontologoSeleccionadoNombre == "1234567890")
         {
             MostrarBotones = "NO";
+            mostrarPagina = "NO";
         }
         else { 
             MostrarBotones = "SI";
@@ -1266,7 +1265,7 @@ else
         var prueba = new Turno();
 
         prueba.Practica = "";
-        prueba.IdOdontologo = 0;
+        prueba.IdOdontologo = IdOdontologoSeleccionado;
         prueba.DiaMesAño = selectedDate;
         prueba.Hora = Hora;
         prueba.IdPaciente = 0;
