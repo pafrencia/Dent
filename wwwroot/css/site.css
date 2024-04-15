@@ -88,6 +88,26 @@ a, .btn-link {
     }
 
 
+
+.select-odont {
+    border-radius: 15px;
+    font-weight: bold; /* Texto en negrita */
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    font-size: 23px; /* Tamaño del texto dentro del boton central en píxeles */
+    border: 2px solid black;
+    transition: border-color 0.3s ease;
+    background-color: #F4D03F;
+    color: black;
+}
+
+    .select-odont:hover {
+        border-color: green;
+        background-color: #F39C12;
+    }
+
+
 .dia-button {
     border-radius: 15px;
     font-weight: bold; /* Texto en negrita */
@@ -97,14 +117,14 @@ a, .btn-link {
     font-size: 23px; /* Tamaño del texto dentro del boton central en píxeles */
     border: 2px solid black;
     transition: border-color 0.3s ease;
-    background-color: darkblue;
-    color: white;
+    background-color: #F4D03F;
+    color: black;
 }
 
     .dia-button:hover {
         border-color: green;
-        background-color: dodgerblue;
-        color: black;
+        background-color: #F7DC6F;
+        color: white;
     }
 
 
@@ -120,11 +140,34 @@ a, .btn-link {
     font-size: 40px; /* Tamaño del texto dentro del boton central en píxeles */
     border: 2px solid black;
     transition: border-color 0.3s ease;
-    background-color: darkblue;
-    color: white;
+    background-color: #F4D03F;
+    color: black;
 }
 
     .flecha-button:hover {
+        border-color: green;
+        background-color: #F7DC6F;
+        color: white;
+    }
+
+.flechachica-button {
+    background-color: white;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    font-size: 10px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: darkblue;
+    border: 1px solid black;
+    padding: 0; /* Sin márgenes */
+    transition: border-color 0.3s ease;
+    margin: 0;
+    color: white;
+}
+
+    .flechachica-button:hover {
         border-color: green;
         background-color: dodgerblue;
         color: black;
@@ -556,7 +599,9 @@ a, .btn-link {
     justify-items: center;
     background-color: #F8F9F9;
 }
-
+.divaltofijo {
+    height: 1000px;
+}
 .divFijoConFlow {
     width: 1532px;
     border: 0px solid black; /* Solo para visualización */
@@ -576,6 +621,13 @@ a, .btn-link {
     justify-content: center;
     justify-items: center;
 }
+.justificado {
+    border: 0px solid black; /* Solo para visualización */
+    padding: 20px; /* Añade espacio alrededor del contenido */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    justify-content: space-between;
+}
+
 
 .centradoalMedio {
     justify-content: center;

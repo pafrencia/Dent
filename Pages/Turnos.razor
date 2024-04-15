@@ -78,9 +78,14 @@
     }
 </style>
     <div class="colordefondoazul">
-    <div class="centrado centradoVertical">
-<input type="date" @onchange="HandleDateChange" />
-
+        <div class="centradoVertical">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
+            @if (MostrarBotones == "NO")
+            { }
+            else
+            {
             <button class="flecha-button" @onclick="() => AtrasarDia()">🡄</button>
             @if (mostrarPagina == "SI")
             {<button class="dia-button">@nombreDia @(selectedDate.ToString("dd/MM"))</button>}
@@ -89,7 +94,29 @@
                 <button class="dia-button" @onclick="() => DiaActual()">HOY</button>
             }
             <button class="flecha-button" @onclick="() => AdelantarDia()">🡆</button>
+            }
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="date" @onchange="HandleDateChange" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
+            @if (MostrarBotones == "NO")
+            { }
+            else
+            {
+            <button class="dia-button" @onclick="() => OcultarSemana()">@semana</button>
+            }
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
 
+            <select class="select-odont" @onchange="CambiarIdOdontologoSeleccionado">
+                <option value=1234567890>ODONTOLOGO</option>
+                @foreach (var odontologo in ListaDeOdontologos)
+                {
+                    <option value="@odontologo.Id">@(odontologo.Usuario)</option>
+                }
+            </select>
     </div>
     </div>
     List<string> horas = new List<string>();
@@ -108,8 +135,9 @@
 
 
         <!-- SEGUNDA TABLA -->
-
-        <div class="row">
+        @if (semana == "OCULTAR SEMANA")
+        {
+        <div class="row divaltofijo">
             <div class="col">
                 <!--aqui va la primera tabla-->
                 <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
@@ -147,47 +175,60 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col">
-                <!--aqui va la segunda tabla del div-->
-                <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
-                    <thead>
-                        <tr class="table-dark">
-                            <th style="width: 80px;">@nombreDia0 @(selectedDate0.ToString("dd/MM"))</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var hora in horas)
-                        {
-                            @foreach (var turno in TurnosFiltrados0)
+                <div class="col">
+                    <!--aqui va la segunda tabla del div-->
+                    <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                        <thead>
+                            <tr class="table-dark">
+                                <th style="width: 80px; background-color: #F4D03F; color:black">@nombreDia0  @(selectedDate0.ToString("dd/MM"))</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var hora in horas)
                             {
-                                TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
+                                @foreach (var turno in TurnosFiltrados0)
                                 {
-                                    cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>
-                                            "AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button><button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
-                                        </td>
-                                    </tr>
-                                    condicionCumplida = true;
-                                    break;
+                                    TimeSpan horareal = TimeSpan.Parse(hora);
+                                    @if (horareal == turno.Hora)
+                                    {
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
+                                            cargarFila(hora);
+                                            <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        condicionCumplida = true;
+                                        break;
+
+                                    }
+
                                 }
 
+                                @if (condicionCumplida == false)
+                                {
+                                    <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate0)">
+                                        <td>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
+                                        </td>
+                                    </tr>
+                                }
+                                condicionCumplida = false;
                             }
-
-                            @if (condicionCumplida == false)
-                            {
-                                <tr class="table-primary " @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate)">
-                                    <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
-                                    </td>
-                                </tr>
-                            }
-                            condicionCumplida = false;
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
             <div class="col">
                 <!--aqui va la tercera tabla del div-->
                 <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
@@ -204,12 +245,27 @@
                                 TimeSpan horareal = TimeSpan.Parse(hora);
                                 @if (horareal == turno.Hora)
                                 {
-                                    cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>"AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button></td>
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+                                        
+                                        }
+                                        else
+                                        {
+                                        cargarFila(hora);
+                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                        <td>
+                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                        </td>
                                     </tr>
+                                    }
                                     condicionCumplida = true;
                                     break;
+                                    
                                 }
 
                             }
@@ -218,7 +274,7 @@
                             {
                                 <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate1)">
                                     <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                                     </td>
                                 </tr>
                             }
@@ -243,10 +299,24 @@
                                 TimeSpan horareal = TimeSpan.Parse(hora);
                                 @if (horareal == turno.Hora)
                                 {
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
                                     cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>"AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button></td>
+                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                        <td>
+                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                        </td>
                                     </tr>
+                                    }
                                     condicionCumplida = true;
                                     break;
                                 }
@@ -257,7 +327,7 @@
                             {
                                 <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate2)">
                                     <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                                     </td>
                                 </tr>
                             }
@@ -282,10 +352,24 @@
                                 TimeSpan horareal = TimeSpan.Parse(hora);
                                 @if (horareal == turno.Hora)
                                 {
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
                                     cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>"AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button></td>
+                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                        <td>
+                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                        </td>
                                     </tr>
+                                    }
                                     condicionCumplida = true;
                                     break;
                                 }
@@ -296,7 +380,7 @@
                             {
                                 <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate3)">
                                     <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                                     </td>
                                 </tr>
                             }
@@ -321,10 +405,24 @@
                                 TimeSpan horareal = TimeSpan.Parse(hora);
                                 @if (horareal == turno.Hora)
                                 {
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
                                     cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>"AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button></td>
+                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                        <td>
+                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                        </td>
                                     </tr>
+                                    }
                                     condicionCumplida = true;
                                     break;
                                 }
@@ -335,7 +433,7 @@
                             {
                                 <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate4)">
                                     <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                                     </td>
                                 </tr>
                             }
@@ -360,10 +458,24 @@
                                 TimeSpan horareal = TimeSpan.Parse(hora);
                                 @if (horareal == turno.Hora)
                                 {
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
                                     cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>"AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button></td>
+                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                        <td>
+                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                        </td>
                                     </tr>
+                                    }
                                     condicionCumplida = true;
                                     break;
                                 }
@@ -374,7 +486,7 @@
                             {
                                 <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate5)">
                                     <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                                     </td>
                                 </tr>
                             }
@@ -399,10 +511,24 @@
                                 TimeSpan horareal = TimeSpan.Parse(hora);
                                 @if (horareal == turno.Hora)
                                 {
+                                        @if (turno.IdPaciente == 0)
+                                        {
+                                            <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    BLOQUEADO <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
                                     cargarFila(hora);
-                                    <tr class="table-dark" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>"AGENDADO" <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button></td>
+                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                        <td>
+                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                        </td>
                                     </tr>
+                                    }
                                     condicionCumplida = true;
                                     break;
                                 }
@@ -413,7 +539,7 @@
                             {
                                 <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate6)">
                                     <td>
-                                        @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button>
+                                            @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                                     </td>
                                 </tr>
                             }
@@ -423,16 +549,16 @@
                 </table>
             </div>
         </div>
-
+        }
         <!-- FIN SEGUNDA TABLA -->
-
-
-
+        @if (semana == "MOSTRAR SEMANA")
+        {
+        <div class="divaltofijo">
   <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
   <thead>
             <tr class="table-dark">
                 <th style="width: 30px;">HORA</th>
-            <th style="width: 80px;">DIA @(selectedDate.ToString("dd/MM"))</th>
+                    <th style="width: 80px;">DIA @(selectedDate.ToString("dd/MM"))</th>
             <th style="width: 250px;">PACIENTE</th>
             <th style="width: 100px;">ODONTOLOGO</th>
             <th style="width: 250px;">TRATAMIENTO</th>
@@ -447,6 +573,23 @@
                 TimeSpan horareal = TimeSpan.Parse(hora);
                 @if (horareal == turno.Hora)
                 {
+                    if (turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    @if (turno.IdPaciente == 0)
+                                    {
+                                        <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                            <td>@hora</td>
+                                            <td>BLOQUEADO</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
+                                            </td>                                           
+                                        </tr>
+
+                                    }
+                                    else
+                                    {
                     cargarFila(hora);
                     <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
                         <td>@horareal.ToString("hh\\:mm")</td>
@@ -462,6 +605,7 @@
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button>
                     </td>
                 </tr>
+                }
                     condicionCumplida = true;
                     break;
                 }
@@ -478,6 +622,7 @@
                     <td></td>
                     <td>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">AGENDAR</button>
+                                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
                     </td>
                 </tr>
             }
@@ -485,7 +630,8 @@
         }
     </tbody>
     </table>
-
+        </div>
+        }
 <div style="display: @(currentDiv == 0 ? "block" : "none")">
 
 <div class="form-group">
@@ -525,15 +671,8 @@
                 </div>
                 <div class="modal-body">
 
-                    <label style="width: 100%;">ODONTOLOGO:</label>
-                    <select style="width: 100%;" @bind="IdOdontologoSeleccionado">
-                        <option value="">Seleccionar</option>
-                        @foreach (var odontologo in ListaDeOdontologos)
-                        {
-                            <option value="@odontologo.Id">@(odontologo.Usuario)</option>
-                        }
-                    </select>
-                    <div class="form-group">
+                            <label style="width: 100%;">ODONTOLOGO: @nombreOdontologo </label>
+                        <div class="form-group">
                         <div class="form-group">
                             <label style="width: 100%;">PACIENTE:</label>
                             <select style="width: 100%;" @bind="IdPacienteAtendido">
@@ -581,6 +720,68 @@
             </div>
         </div>
     </div>
+            <!-- Modal BLOQUEAR -->
+            <div class="modal fade" id="modalBloquearTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">BLOQUEAR TURNO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label>
+                                ¿SEGURO DESEA BLOQUEAR EL TURNO?
+                            </label>
+                            <p> </p>
+                            <p>DIA: @selectedDate.ToString("dd/MM")</p>
+                            <p>HORA: @Hora.ToString("hh\\:mm") </p>
+                            <div class="modal-footer">
+                                <button style="width: 100%;" class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" @onclick="Bloquear">BLOQUEAR</button>
+                                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="elTurnoFueAgendado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">TURNO AGENDADO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="modal-footer">
+                                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal DESBLOQUEAR -->
+            <div class="modal fade" id="modalDesbloquearTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">DESBLOQUEAR TURNO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label>
+                                ¿SEGURO DESEA DESBLOQUEAR EL TURNO?
+                            </label>
+                            <p> </p>
+                            <p>DIA: @selectedDate.ToString("dd/MM")</p>
+                            <p>HORA: @Hora.ToString("hh\\:mm") </p>
+                            <div class="modal-footer">
+                                <button style="width: 100%;" class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" @onclick="() => Borrar(IdEdit)">DESBLOQUEAR</button>
+                                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     <!-- Modal BORRAR -->
     <div class="modal fade" id="modalBorrarTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -716,7 +917,7 @@ else
     private int currentDiv = 1;
     private int IdPacienteAtendido;
     private int IdPacienteEditar;
-    private int IdOdontologoSeleccionado;
+    private int IdOdontologoSeleccionado = 1234567890;
     private string ObraSocialPacienteAtendido = "no cargada";
     private string PracticaSeleccionada;
     private string OdontologoQueAtendio;
@@ -743,7 +944,9 @@ else
     private int? IdPaciente = 0;
     private string Observaciones = "";
     private string NombrePracticaSeleccionada = "";
-
+    private string semana = "MOSTRAR SEMANA";
+    private string odontologoSeleccionadoNombre = "";
+    private string MostrarBotones = "NO";
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
@@ -910,6 +1113,20 @@ else
         StateHasChanged();
     }
 
+
+    private void OcultarSemana()
+    {
+        if (semana == "OCULTAR SEMANA")
+        {
+            semana = "MOSTRAR SEMANA";
+        }
+        else
+        {
+            semana = "OCULTAR SEMANA";
+        }
+    }
+
+
     private void cargarFila(string horaRecibida)
     {
         if (TimeSpan.TryParse(horaRecibida, out TimeSpan horaConvertida))
@@ -923,19 +1140,24 @@ else
         elementoEncontrado = TurnosFiltrados.FirstOrDefault(objeto => objeto.Hora == horaConvertida);
         if (elementoEncontrado != null)
         {
-            estado = "Agendado";
-            using (DbDentistaContext db = new DbDentistaContext())
+            if (elementoEncontrado.IdPaciente == 0)
+            { estado = "BLOQUEADO"; }
+            else
             {
-                var paciente = DbContext.Pacientes.Find(elementoEncontrado.IdPaciente);
-                nombrePaciente = paciente.Nombre + paciente.Apellido;
+                estado = "Agendado";
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var paciente = DbContext.Pacientes.Find(elementoEncontrado.IdPaciente);
+                    nombrePaciente = paciente.Nombre + paciente.Apellido;
+                }
+                using (DbDentistaContext db = new DbDentistaContext())
+                {
+                    var Odontologo = DbContext.Logins.Find(elementoEncontrado.IdOdontologo);
+                    nombreOdontologo = Odontologo.Usuario;
+                }
+                nombreTratamiento = elementoEncontrado.Practica;
+                IdTurno = elementoEncontrado.Id;
             }
-            using (DbDentistaContext db = new DbDentistaContext())
-            {
-                var Odontologo = DbContext.Logins.Find(elementoEncontrado.IdOdontologo);
-                nombreOdontologo = Odontologo.Usuario;
-            }
-            nombreTratamiento = elementoEncontrado.Practica;
-            IdTurno = elementoEncontrado.Id;
         }
         else
         {
@@ -982,7 +1204,24 @@ else
         Hora = horaConvertida;
         selectedDate = diaPasado;
     }
+    private void CambiarIdOdontologoSeleccionado(ChangeEventArgs e)
+    {
+        odontologoSeleccionadoNombre = e.Value.ToString();
+        if (odontologoSeleccionadoNombre == "1234567890")
+        {
+            MostrarBotones = "NO";
+        }
+        else { 
+            MostrarBotones = "SI";
+        IdOdontologoSeleccionado = Convert.ToInt32(odontologoSeleccionadoNombre);
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var Odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
+            nombreOdontologo = Odontologo.Usuario;
+        }
 
+        }
+    }
     public void SeleccionarOdontologo(ChangeEventArgs args)
     {
         var odo = args.Value.ToString();
@@ -1021,6 +1260,28 @@ else
         StateHasChanged();
     }
 
+    private void Bloquear()
+    {
+
+        var prueba = new Turno();
+
+        prueba.Practica = "";
+        prueba.IdOdontologo = 0;
+        prueba.DiaMesAño = selectedDate;
+        prueba.Hora = Hora;
+        prueba.IdPaciente = 0;
+        prueba.Observaciones = textoMultilinea;
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Turnos.Add(prueba);
+            db.SaveChanges();
+        }
+        OnInitialized();
+        ActualizarTablaAlDia();
+        StateHasChanged();
+    }
+
     private void SeleccionarTurno(string horapasada, int seleccionado)
     {
 
@@ -1041,19 +1302,24 @@ else
             Hora = turno.Hora;
 
         }
-        using (DbDentistaContext db = new DbDentistaContext())
+        if (IdPacienteAtendido == 0)
         {
-            var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
-            PacienteAtendido = paciente.Nombre + paciente.Apellido;
-            IdPacienteEditar = paciente.Id;
         }
-
-        using (DbDentistaContext db = new DbDentistaContext())
+        else
         {
-            var odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
-            nombreOdontologo = odontologo.Usuario;
-        }
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
+                PacienteAtendido = paciente.Nombre + paciente.Apellido;
+                IdPacienteEditar = paciente.Id;
+            }
 
+            using (DbDentistaContext db = new DbDentistaContext())
+            {
+                var odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
+                nombreOdontologo = odontologo.Usuario;
+            }
+        }
     }
     private void Editar(int idturno)
     {
