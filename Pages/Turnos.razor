@@ -96,7 +96,12 @@
             <button class="flecha-button" @onclick="() => AdelantarDia()">🡆</button>
             }
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="date" @onchange="HandleDateChange" />
+            @if (MostrarBotones == "NO")
+            { }
+            else
+            {
+                <input type="date" @onchange="HandleDateChange" />
+            }
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;
@@ -121,13 +126,13 @@
     </div>
     List<string> horas = new List<string>();
 
-    DateTime horaInicio = DateTime.Today.AddHours(8); // Hora de inicio: 8:00 AM
-    DateTime horaFin = DateTime.Today.AddHours(21);   // Hora de fin: 9:00 PM
+    DateTime horaInicio = DateTime.Today.AddHours(horaInicioSeleccionada); // Hora de inicio: 8:00 AM
+    DateTime horaFin = DateTime.Today.AddHours(horaFinSeleccionada);   // Hora de fin: 9:00 PM
 
     while (horaInicio <= horaFin)
     {
         horas.Add(horaInicio.ToString("HH:mm")); // Agrega la hora formateada a la lista
-        horaInicio = horaInicio.AddMinutes(30); // Incrementa 30 minutos
+        horaInicio = horaInicio.AddMinutes(intervaloSeleccionado); // Incrementa 30 minutos
     }
 
     @if (mostrarPagina == "SI")
@@ -189,7 +194,7 @@
                                 @foreach (var turno in TurnosFiltrados0)
                                 {
                                     TimeSpan horareal = TimeSpan.Parse(hora);
-                                    @if (horareal == turno.Hora)
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
                                     {
                                         @if (turno.IdPaciente == 0)
                                         {
@@ -243,8 +248,8 @@
                             @foreach (var turno in TurnosFiltrados1)
                             {
                                 TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
-                                {
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    {
                                         @if (turno.IdPaciente == 0)
                                         {
                                             <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -297,8 +302,8 @@
                             @foreach (var turno in TurnosFiltrados2)
                             {
                                 TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
-                                {
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    {
                                         @if (turno.IdPaciente == 0)
                                         {
                                             <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -350,8 +355,8 @@
                             @foreach (var turno in TurnosFiltrados3)
                             {
                                 TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
-                                {
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    {
                                         @if (turno.IdPaciente == 0)
                                         {
                                             <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -391,20 +396,20 @@
             </div>
             <div class="col">
                 <!--aqui va la sexta tabla del div-->
-                <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
-                    <thead>
-                        <tr class="table-dark">
-                            <th style="width: 80px;">@nombreDia4  @(selectedDate4.ToString("dd/MM"))</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var hora in horas)
-                        {
-                            @foreach (var turno in TurnosFiltrados4)
+                    <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+                        <thead>
+                            <tr class="table-dark">
+                                <th style="width: 80px;">@nombreDia4  @(selectedDate4.ToString("dd/MM"))</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var hora in horas)
                             {
-                                TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
+                                @foreach (var turno in TurnosFiltrados4)
                                 {
+                                    TimeSpan horareal = TimeSpan.Parse(hora);
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    {
                                         @if (turno.IdPaciente == 0)
                                         {
                                             <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -416,33 +421,33 @@
                                         }
                                         else
                                         {
-                                    cargarFila(hora);
-                                    <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                        <td>
-                                            AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
-                                        </td>
-                                    </tr>
+                                            cargarFila(hora);
+                                            <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                                <td>
+                                                    AGENDADO <button class="eliminar-button" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button> <button class="observaciones-button" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        condicionCumplida = true;
+                                        break;
                                     }
-                                    condicionCumplida = true;
-                                    break;
+
                                 }
 
-                            }
-
-                            @if (condicionCumplida == false)
-                            {
-                                <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate4)">
-                                    <td>
+                                @if (condicionCumplida == false)
+                                {
+                                    <tr class="table-primary" @onclick="() => SeleccionarHora(hora, IdTurno, selectedDate5)">
+                                        <td>
                                             @hora LIBRE <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarTurno">+</button> <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalBloquearTurno">&#x1F513</button>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                }
+                                condicionCumplida = false;
                             }
-                            condicionCumplida = false;
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="col">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
                 <!--aqui va la septima tabla del div-->
                 <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
                     <thead>
@@ -456,8 +461,8 @@
                             @foreach (var turno in TurnosFiltrados5)
                             {
                                 TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
-                                {
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    {
                                         @if (turno.IdPaciente == 0)
                                         {
                                             <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -509,8 +514,9 @@
                             @foreach (var turno in TurnosFiltrados6)
                             {
                                 TimeSpan horareal = TimeSpan.Parse(hora);
-                                @if (horareal == turno.Hora)
-                                {
+
+                                    @if (horareal == turno.Hora && turno.IdOdontologo == IdOdontologoSeleccionado)
+                                    {
                                         @if (turno.IdPaciente == 0)
                                         {
                                             <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
@@ -668,8 +674,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                            <label style="width: 100%;">ODONTOLOGO: @nombreOdontologo </label>
+                            <p>ODONTOLOGO: @nombreOdontologo</p>
                         <div class="form-group">
                         <div class="form-group">
                             <label style="width: 100%;">PACIENTE:</label>
@@ -945,6 +950,9 @@ else
     private string semana = "MOSTRAR SEMANA";
     private string odontologoSeleccionadoNombre = "";
     private string MostrarBotones = "NO";
+    private int horaInicioSeleccionada = 8;
+    private int horaFinSeleccionada = 17;
+    private int intervaloSeleccionado = 30;
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
@@ -1148,11 +1156,11 @@ else
                     var paciente = DbContext.Pacientes.Find(elementoEncontrado.IdPaciente);
                     nombrePaciente = paciente.Nombre + paciente.Apellido;
                 }
-                using (DbDentistaContext db = new DbDentistaContext())
-                {
-                    var Odontologo = DbContext.Logins.Find(elementoEncontrado.IdOdontologo);
-                    nombreOdontologo = Odontologo.Usuario;
-                }
+                // using (DbDentistaContext db = new DbDentistaContext())
+                // {
+                //     var Odontologo = DbContext.Logins.Find(elementoEncontrado.IdOdontologo);
+                //     nombreOdontologo = Odontologo.Usuario;
+                // }
                 nombreTratamiento = elementoEncontrado.Practica;
                 IdTurno = elementoEncontrado.Id;
             }
@@ -1161,7 +1169,6 @@ else
         {
             estado = "Disponible";
             nombrePaciente = "";
-            nombreOdontologo = "";
             nombreTratamiento = "";
             IdTurno = 0;
         }
@@ -1201,6 +1208,7 @@ else
         IdTurno = idturno;
         Hora = horaConvertida;
         selectedDate = diaPasado;
+
     }
     private void CambiarIdOdontologoSeleccionado(ChangeEventArgs e)
     {
@@ -1295,7 +1303,6 @@ else
             NombrePracticaSeleccionada = turno.Practica;
             IdPracticaSeleccionada = 0;
             IdPacienteAtendido = turno.IdPaciente;
-            IdOdontologoSeleccionado = turno.IdOdontologo;
             textoMultilinea = turno.Observaciones;
             selectedDate = turno.DiaMesAño;
             Hora = turno.Hora;
@@ -1313,11 +1320,11 @@ else
                 IdPacienteEditar = paciente.Id;
             }
 
-            using (DbDentistaContext db = new DbDentistaContext())
-            {
-                var odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
-                nombreOdontologo = odontologo.Usuario;
-            }
+            // using (DbDentistaContext db = new DbDentistaContext())
+            // {
+            //     var odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
+            //     nombreOdontologo = odontologo.Usuario;
+            // }
         }
     }
     private void Editar(int idturno)
