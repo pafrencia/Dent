@@ -124,17 +124,7 @@
             </select>
     </div>
     </div>
-    List<string> horas = new List<string>();
-
-    DateTime horaInicio = DateTime.Today.AddHours(horaInicioSeleccionada); // Hora de inicio: 8:00 AM
-    DateTime horaFin = DateTime.Today.AddHours(horaFinSeleccionada);   // Hora de fin: 9:00 PM
-
-    while (horaInicio <= horaFin)
-    {
-        horas.Add(horaInicio.ToString("HH:mm")); // Agrega la hora formateada a la lista
-        horaInicio = horaInicio.AddMinutes(intervaloSeleccionado); // Incrementa 30 minutos
-    }
-
+  
     @if (mostrarPagina == "SI")
     {
 
@@ -591,7 +581,8 @@
                                                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
                                             </td>                                           
                                         </tr>
-
+                                        condicionCumplida = true;
+                                        break;
                                     }
                                     else
                                     { 
@@ -917,6 +908,7 @@ else
     private List<Paciente> listaDePacientes = new List<Paciente>();
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<Login> ListaDeOdontologos = new List<Login>();
+    private List<string> horas = new List<string>();
     private int currentDiv = 1;
     private int IdPacienteAtendido;
     private int IdPacienteEditar;
@@ -964,6 +956,17 @@ else
         ListaDeOdontologos = DbContext.Logins.ToList();
         ListaDeTurnos = DbContext.Turnos.ToList();
         ListaDeOdontologos = ListaDeOdontologos.Where(p => p.Rol == "odon      ").ToList();
+        
+
+        DateTime horaInicio = DateTime.Today.AddHours(horaInicioSeleccionada); // Hora de inicio: 8:00 AM
+        DateTime horaFin = DateTime.Today.AddHours(horaFinSeleccionada);   // Hora de fin: 9:00 PM
+
+        while (horaInicio <= horaFin)
+        {
+            horas.Add(horaInicio.ToString("HH:mm")); // Agrega la hora formateada a la lista
+            horaInicio = horaInicio.AddMinutes(intervaloSeleccionado); // Incrementa 30 minutos
+        }
+
     }
     private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
     private List<PracticasRealizada> elementosUnicos = new List<PracticasRealizada>();
