@@ -553,7 +553,7 @@
   <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
   <thead>
             <tr class="table-dark">
-                <th style="width: 30px;">HORA</th>
+                            <th style="width: 30px;">HORA <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></th>
                     <th style="width: 80px;">DIA @(selectedDate.ToString("dd/MM"))</th>
             <th style="width: 250px;">PACIENTE</th>
             <th style="width: 100px;">ODONTOLOGO</th>
@@ -572,7 +572,7 @@
                                     @if (turno.IdPaciente == 0)
                                     {
                                         <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                            <td>@hora</td>
+                                            <td>@hora <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></td>
                                             <td>BLOQUEADO</td>
                                             <td></td>
                                             <td></td>
@@ -588,7 +588,7 @@
                                     { 
                     cargarFila(hora);
                     <tr class="table-danger" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                        <td>@horareal.ToString("hh\\:mm")</td>
+                                            <td>@horareal.ToString("hh\\:mm") <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button> </td>
                     <td>"AGENDADO"</td>
                     <td>@nombrePaciente
                             <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">&#128065</button>
@@ -714,6 +714,154 @@
             </div>
         </div>
     </div>
+
+            <!-- Modal AGENDAR SOBRETURNO -->
+            <div class="modal fade" id="modalAgendarSobreTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">AGENDAR TURNO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>ODONTOLOGO: @nombreOdontologo</p>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label style="width: 100%;">PACIENTE:</label>
+                                    <select style="width: 100%;" @bind="IdPacienteAtendido">
+                                        <option value="">Seleccionar</option>
+                                        @foreach (var paciente in listaDePacientes)
+                                        {
+                                            <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                                        }
+                                    </select>
+                                    <p> </p>
+                                    <label for="horas">Horas:</label>
+                                    <select id="horas" @bind="horaSeleccionadoSobreTurno">
+                                        <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                    </select>
+                                    <label for="minutos">Minutos:</label>
+                                    <select id="minutos" @bind="minutosSeleccionadoSobreTurno">
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                        <option value="29">29</option>
+                                        <option value="31">31</option>
+                                        <option value="32">32</option>
+                                        <option value="33">33</option>
+                                        <option value="34">34</option>
+                                        <option value="35">35</option>
+                                        <option value="36">36</option>
+                                        <option value="37">37</option>
+                                        <option value="38">38</option>
+                                        <option value="39">39</option>
+                                        <option value="40">40</option>
+                                        <option value="41">41</option>
+                                        <option value="42">42</option>
+                                        <option value="43">43</option>
+                                        <option value="44">44</option>
+                                        <option value="45">45</option>
+                                        <option value="46">46</option>
+                                        <option value="47">47</option>
+                                        <option value="48">48</option>
+                                        <option value="49">49</option>
+                                        <option value="50">50</option>
+                                        <option value="51">51</option>
+                                        <option value="52">52</option>
+                                        <option value="53">53</option>
+                                        <option value="54">54</option>
+                                        <option value="55">55</option>
+                                        <option value="56">56</option>
+                                        <option value="57">57</option>
+                                        <option value="58">58</option>
+                                        <option value="59">59</option>
+                                    </select>
+                                    <p> </p>
+                                    <label style="width: 100%;">PRACTICA:</label>
+                                    <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                                        <option value="">Seleccionar</option>
+                                        @foreach (var practicaseleccion in ListaDePracticas)
+                                        {
+                                            <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                        }
+                                    </select>
+                                    <div style="width: 100%;">
+                                        <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="AgendarSobreTurno">Agendar</button>
+                                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="elTurnoFueAgendado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">TURNO AGENDADO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="modal-footer">
+                                <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal BLOQUEAR -->
             <div class="modal fade" id="modalBloquearTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -945,6 +1093,8 @@ else
     private int horaInicioSeleccionada = 8;
     private int horaFinSeleccionada = 17;
     private int intervaloSeleccionado = 30;
+    private string minutosSeleccionadoSobreTurno = "00";
+    private string horaSeleccionadoSobreTurno = "00";
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
@@ -1000,6 +1150,7 @@ else
     DateTime selectedDate { get; set; }
     DateTime diaSeleccionado { get; set; }
     TimeSpan Hora = new TimeSpan(20,30,00);
+    TimeSpan HoraSobreTurno = new TimeSpan(00, 00, 00);
     List<DateTime> horarios { get; set; }
 
     [Inject]
@@ -1260,6 +1411,40 @@ else
         prueba.IdPaciente = IdPacienteEditar;
         prueba.Observaciones = textoMultilinea;
         prueba.Sobreturno = "NO";
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Turnos.Add(prueba);
+            db.SaveChanges();
+        }
+        OnInitialized();
+        ActualizarTablaAlDia();
+        StateHasChanged();
+    }
+    private void AgendarSobreTurno()
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
+            PacienteAtendido = paciente.Nombre + paciente.Apellido;
+            IdPacienteEditar = paciente.Id;
+        }
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
+            PracticaSeleccionada = p.Practica;
+        }
+        string horacompleta = horaSeleccionadoSobreTurno + ":" + minutosSeleccionadoSobreTurno+":00";
+        TimeSpan horasobreturno = TimeSpan.Parse(horacompleta, CultureInfo.InvariantCulture);
+        var prueba = new Turno();
+
+        prueba.Practica = PracticaSeleccionada;
+        prueba.IdOdontologo = IdOdontologoSeleccionado;
+        prueba.DiaMesAño = selectedDate;
+        prueba.Hora = horasobreturno;
+        prueba.IdPaciente = IdPacienteEditar;
+        prueba.Observaciones = textoMultilinea;
+        prueba.Sobreturno = "SI";
         using (DbDentistaContext db = new DbDentistaContext())
         {
             db.Turnos.Add(prueba);
