@@ -572,7 +572,7 @@
                                     @if (turno.IdPaciente == 0)
                                     {
                                         <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
-                                            <td>@hora <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></td>
+                                            <td>@horareal.ToString("hh\\:mm") <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></td>
                                             <td>BLOQUEADO</td>
                                             <td></td>
                                             <td></td>
@@ -580,6 +580,25 @@
                                             <td>
                                                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDesbloquearTurno">&#x1F511</button>
                                             </td>                                           
+                                        </tr>
+                                        condicionCumplida = true;
+                                        break;
+                                    }
+                                    else if ( turno.Sobreturno == "SI")
+                                    {
+                                        <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
+                                            <td>@horareal.ToString("hh\\:mm") <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></td>
+                                            <td>SOBRETURNO</td>
+                                            <td>
+                                                @nombrePaciente
+                                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalInfoPaciente">&#128065</button>
+                                            </td>
+                                            <td>@nombreOdontologo</td>
+                                            <td>@turno.Practica</td>
+                                            <td>
+                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalObservaciones">&#128065</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalBorrarTurno">X</button>
+                                            </td>
                                         </tr>
                                         condicionCumplida = true;
                                         break;
@@ -1091,7 +1110,7 @@ else
     private string odontologoSeleccionadoNombre = "";
     private string MostrarBotones = "NO";
     private int horaInicioSeleccionada = 8;
-    private int horaFinSeleccionada = 17;
+    private int horaFinSeleccionada = 21;
     private int intervaloSeleccionado = 30;
     private string minutosSeleccionadoSobreTurno = "00";
     private string horaSeleccionadoSobreTurno = "00";
@@ -1106,8 +1125,12 @@ else
         ListaDeOdontologos = DbContext.Logins.ToList();
         ListaDeTurnos = DbContext.Turnos.ToList();
         ListaDeOdontologos = ListaDeOdontologos.Where(p => p.Rol == "odon      ").ToList();
+        InicializarHoras();
 
-
+    }
+    private void InicializarHoras()
+    {
+        horas.Clear();
         DateTime horaInicio = DateTime.Today.AddHours(horaInicioSeleccionada); // Hora de inicio: 8:00 AM
         DateTime horaFin = DateTime.Today.AddHours(horaFinSeleccionada);   // Hora de fin: 9:00 PM
 
@@ -1116,10 +1139,10 @@ else
             horas.Add(horaInicio.ToString("HH:mm")); // Agrega la hora formateada a la lista
             horaInicio = horaInicio.AddMinutes(intervaloSeleccionado); // Incrementa 30 minutos
         }
-
     }
     private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
     private List<PracticasRealizada> elementosUnicos = new List<PracticasRealizada>();
+    private List<Turno> ListaDeTurnosconSobreturnos = new List<Turno>();
     private List<Turno> ListaDeTurnos = new List<Turno>();
     private List<Turno> TurnosFiltrados = new List<Turno>();
     private List<Turno> TurnosFiltrados0 = new List<Turno>();
@@ -1330,7 +1353,17 @@ else
 
     private void ActualizarTablaAlDia()
     {
+        horas.Clear();
+        InicializarHoras();
+        ListaDeTurnosconSobreturnos = ListaDeTurnos.Where(p => p.Sobreturno == "SI" && p.IdOdontologo == IdOdontologoSeleccionado && p.DiaMesAño == selectedDate).ToList();
         TurnosFiltrados = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate).ToList();
+        TurnosFiltrados.AddRange(ListaDeTurnosconSobreturnos);
+        foreach (var horaSobreturno in ListaDeTurnosconSobreturnos)
+        {
+            string horaformatocorrecto = horaSobreturno.Hora.ToString();
+            horas.Add(horaformatocorrecto);
+        }
+        horas.Sort();
         TurnosFiltrados0 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate0).ToList();
         TurnosFiltrados1 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate1).ToList();
         TurnosFiltrados2 = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate2).ToList();
@@ -1382,6 +1415,8 @@ else
             }
 
         }
+        ActualizarTablaAlDia();
+        StateHasChanged();
     }
     public void SeleccionarOdontologo(ChangeEventArgs args)
     {
