@@ -599,6 +599,20 @@ a, .btn-link {
     justify-items: center;
     background-color: #F8F9F9;
 }
+
+.custom-modal .modal-dialog {
+    max-width: 90%; /* Puedes ajustar el porcentaje según el ancho deseado */
+}
+
+.divModal {
+    width: 450px;
+    border: 0px solid black; /* Solo para visualización */
+    padding: 0px; /* Añade espacio alrededor del contenido */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    justify-content: center;
+    justify-items: center;
+    background-color: #F8F9F9;
+}
 .divaltofijo {
     height: 1000px;
 }

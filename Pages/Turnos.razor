@@ -553,7 +553,7 @@
   <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
   <thead>
             <tr class="table-dark">
-                            <th style="width: 30px;">HORA <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></th>
+                            <th style="width: 30px;">HORA <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalPrueba">+</button></th>
                     <th style="width: 80px;">DIA @(selectedDate.ToString("dd/MM"))</th>
             <th style="width: 250px;">PACIENTE</th>
             <th style="width: 100px;">ODONTOLOGO</th>
@@ -586,6 +586,7 @@
                                     }
                                     else if ( turno.Sobreturno == "SI")
                                     {
+                                        cargarFila(hora);
                                         <tr class="table-warning" @onclick="() => SeleccionarTurno(hora, turno.Id)">
                                             <td>@horareal.ToString("hh\\:mm") <button class="mas-button" data-bs-toggle="modal" data-bs-target="#modalAgendarSobreTurno">+</button></td>
                                             <td>SOBRETURNO</td>
@@ -675,65 +676,94 @@
 </div>
 @if (horarios != null)
 {
-    <!-- Modal AGENDAR -->
-    <div class="modal fade" id="modalAgendarTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">AGENDAR TURNO</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+            <!-- Modal AGENDAR -->
+
+            <div class="modal fade custom-modal" id="modalAgendarTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">AGENDAR TURNO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
                             <p>ODONTOLOGO: @nombreOdontologo</p>
-                        <div class="form-group">
-                        <div class="form-group">
-                            <label style="width: 100%;">PACIENTE:</label>
-                            <select style="width: 100%;" @bind="IdPacienteAtendido">
-                                <option value="">Seleccionar</option>
-                                @foreach (var paciente in listaDePacientes)
+                            <div class="form-group">
+                                <!-- Contenido del formulario -->
+                                <button class="btn btn-warning fas fa-user-secret" @onclick="PacienteNuevoHabilitar"> PACIENTE NUEVO</button>
+                                <p></p>
+                                @if (pacientenuevo == "SI")
                                 {
-                                    <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                                    <!-- Si es paciente nuevo -->
+                                    <p></p>
+                                   <label for="nombreUsuario">NOMBRE PACIENTE:</label>
+                                    <p></p>
+                                    <InputText style="width: 200px;" @bind-Value="nombrePacienteNuevo" />
+                                    <p></p>
                                 }
-                            </select>
-                            <p> </p>
-                            <label style="width: 100%;">PRACTICA:</label>
-                            <select style="width: 100%;" @bind="IdPracticaSeleccionada">
-                                <option value="">Seleccionar</option>
-                                @foreach (var practicaseleccion in ListaDePracticas)
+                                else
                                 {
-                                    <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                    <!-- Si no es paciente nuevo -->
+                                    <div class="table-responsive">
+                                        <!-- Agrega la clase "table-responsive" para hacer la tabla responsive -->
+                                        <table class="table table-sm table-success table-hover table-bordered border-primary">
+                                            <!-- Estilos de tabla -->
+                                            <thead>
+                                                <tr class="table-dark">
+                                                    <th>NOMBRE</th>
+                                                    <th>APELLIDO</th>
+                                                    <th>DNI</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="table-success">
+                                                    <td> <input @oninput="ActualizarFiltroNombre" placeholder="Buscar..." /></td>
+                                                    <td><input @oninput="ActualizarFiltroApellido" placeholder="Buscar..." /></td>
+                                                    <td><input @oninput="ActualizarFiltroDni" placeholder="Buscar..." /></td>
+                                                </tr>                                                
+                                                @foreach (var datos in ListaDePacientes)
+                                                {
+                                                    <tr class="table-success" @onclick="() => SeleccionarPaciente(datos.Id)">
+                                                        <td>@datos.Nombre</td>
+                                                        <td>@datos.Apellido</td>
+                                                        <td>@datos.Dni</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 }
-                            </select>
-                            <div style="width: 100%;">
-                                <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+                                <p> </p>
+                                <label style="width: 100%;">PRACTICA:</label>
+                                <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                                    <option value="">Seleccionar</option>
+                                    @foreach (var practicaseleccion in ListaDePracticas)
+                                    {
+                                        <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                    }
+                                </select>
+                                <p> </p>
+                                <!-- Contenido adicional del formulario -->
+                                <div style="width: 100%;">
+                                    <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="Agendar">Agendar</button>
-                        <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="elTurnoFueAgendado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">TURNO AGENDADO</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="modal-footer">
-                         <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">CERRAR</button>
+                        <div class="modal-footer">
+                            @if (pacientenuevo == "SI")
+                            {
+                                <!-- Si es paciente nuevo -->
+                                <button style="width: 100%;" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="AgendarPacienteNuevo">Agendar</button>
+                            }
+                            else
+                            {
+                                <!-- Si no es paciente nuevo -->
+                                <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="Agendar">Agendar</button>
+                            }
+                            <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
             <!-- Modal AGENDAR SOBRETURNO -->
             <div class="modal fade" id="modalAgendarSobreTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -1093,6 +1123,7 @@ else
     private string odontologoSeleccionado = "";
     public int Precio = 0;
     public int IdEditar = 0;
+    private string pacientenuevo = "NO";
     public string miString = "";
     public int MostrarTotal = 0;
     public int MostrarTotalPorcentaje = 0;
@@ -1114,11 +1145,13 @@ else
     private int intervaloSeleccionado = 30;
     private string minutosSeleccionadoSobreTurno = "00";
     private string horaSeleccionadoSobreTurno = "00";
+    private string nombrePacienteNuevo = "";
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
     protected override void OnInitialized()
     {
+
         ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
         listaDePacientes = DbContext.Pacientes.ToList();
         ListaDePracticas = DbContext.Practicas.ToList();
@@ -1126,6 +1159,7 @@ else
         ListaDeTurnos = DbContext.Turnos.ToList();
         ListaDeOdontologos = ListaDeOdontologos.Where(p => p.Rol == "odon      ").ToList();
         InicializarHoras();
+        ActualizaTablaPacientes();
 
     }
     private void InicializarHoras()
@@ -1331,14 +1365,17 @@ else
                 using (DbDentistaContext db = new DbDentistaContext())
                 {
                     var paciente = DbContext.Pacientes.Find(elementoEncontrado.IdPaciente);
-                    nombrePaciente = paciente.Nombre + paciente.Apellido;
+                    if (paciente != null)
+                    { nombrePaciente = paciente.Nombre + paciente.Apellido; 
+                        nombreTratamiento = elementoEncontrado.Practica;
+                    }
+                    else
+                    {
+                        nombrePaciente = "ELIMINADO";
+                        nombreTratamiento = "ELIMINADO";
+                    }
                 }
-                // using (DbDentistaContext db = new DbDentistaContext())
-                // {
-                //     var Odontologo = DbContext.Logins.Find(elementoEncontrado.IdOdontologo);
-                //     nombreOdontologo = Odontologo.Usuario;
-                // }
-                nombreTratamiento = elementoEncontrado.Practica;
+
                 IdTurno = elementoEncontrado.Id;
             }
         }
@@ -1423,6 +1460,19 @@ else
         var odo = args.Value.ToString();
         odontologoSeleccionado = odo;
     }
+    private void PacienteNuevoHabilitar()
+    {
+        if (pacientenuevo == "NO")
+        {
+            pacientenuevo = "SI";
+            nombrePacienteNuevo = "nombre";
+        }
+        else
+        {
+            nombrePacienteNuevo = "";
+            pacientenuevo = "NO";
+        }
+    }
     private void Agendar()
     {
         using (DbDentistaContext db = new DbDentistaContext())
@@ -1444,6 +1494,31 @@ else
         prueba.DiaMesAño = selectedDate;
         prueba.Hora = Hora;
         prueba.IdPaciente = IdPacienteEditar;
+        prueba.Observaciones = textoMultilinea;
+        prueba.Sobreturno = "NO";
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Turnos.Add(prueba);
+            db.SaveChanges();
+        }
+        OnInitialized();
+        ActualizarTablaAlDia();
+        StateHasChanged();
+    }
+    private void AgendarPacienteNuevo()
+    {
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
+            PracticaSeleccionada = p.Practica;
+        }
+        var prueba = new Turno();
+
+        prueba.Practica = PracticaSeleccionada;
+        prueba.IdOdontologo = IdOdontologoSeleccionado;
+        prueba.DiaMesAño = selectedDate;
+        prueba.Hora = Hora;
+        prueba.IdPaciente = 2070;
         prueba.Observaciones = textoMultilinea;
         prueba.Sobreturno = "NO";
         using (DbDentistaContext db = new DbDentistaContext())
@@ -1540,15 +1615,17 @@ else
             using (DbDentistaContext db = new DbDentistaContext())
             {
                 var paciente = DbContext.Pacientes.Find(IdPacienteAtendido);
-                PacienteAtendido = paciente.Nombre + paciente.Apellido;
-                IdPacienteEditar = paciente.Id;
-            }
+                if (paciente != null)
+                {
+                    PacienteAtendido = paciente.Nombre + paciente.Apellido;
+                    IdPacienteEditar = paciente.Id;
+                }
+                else
+                {
+                    PacienteAtendido = "ELIMINADO";
+                }
 
-            // using (DbDentistaContext db = new DbDentistaContext())
-            // {
-            //     var odontologo = DbContext.Logins.Find(IdOdontologoSeleccionado);
-            //     nombreOdontologo = odontologo.Usuario;
-            // }
+            }
         }
     }
     private void Editar(int idturno)
@@ -1602,6 +1679,90 @@ else
         OnInitialized();
         ActualizarTablaAlDia();
         StateHasChanged();
+    }
+    //codigo para carga de selector de pacientes
+
+    private List<Paciente> ListaDePacientes = new List<Paciente>();
+    private string apellido = "";
+    private string nombre = "";
+    private string dni = "";
+    private void ActualizarFiltroNombre(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Nombre.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+    private void ActualizaTablaPacientes()
+    {
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
+    private void ActualizarFiltroApellido(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Apellido.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+
+    private void ActualizarFiltroDni(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.Dni.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+    private void ActualizarFiltroObraSocial(ChangeEventArgs e)
+    {
+        algo = e.Value.ToString().ToUpper();
+        if (!string.IsNullOrEmpty(algo))
+        {
+            ListaDePacientes = ListaDePacientes.Where(e => e.ObraSocial.Contains(algo)).ToList();
+        }
+        else
+        {
+            ActualizaTablaPacientes();
+        }
+
+
+    }
+
+    private void SeleccionarPaciente(int seleccionado)
+    {
+        registrosFiltrados = ListaDePracticasRealizadas.Where(e => e.IdPaciente == seleccionado).ToList();
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.Pacientes.Find(seleccionado);
+            IdEdit = prueba.Id;
+            nombrePaciente = prueba.Nombre;
+            apellido = prueba.Apellido;
+            dni = prueba.Dni;
+        }
+
     }
 }
 
