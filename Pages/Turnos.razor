@@ -13,6 +13,20 @@
 {
 <PageTitle>TURNOS</PageTitle>
 <style>
+
+
+        /* Estilos para la barra de desplazamiento */
+        ::-webkit-scrollbar {
+            width: 12px; /* Ancho de la barra de desplazamiento */
+        }
+
+        /* Estilos para el "pulgar" de la barra de desplazamiento */
+        ::-webkit-scrollbar-thumb {
+            background-color: darkorange; /* Color de fondo del "pulgar" */
+            border-radius: 6px; /* Radio de borde del "pulgar" */
+        }
+
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -689,19 +703,27 @@
                             <p>ODONTOLOGO: @nombreOdontologo</p>
                             <div class="form-group">
                                 <!-- Contenido del formulario -->
+                                <button class="btn btn-info fas fa-user" @onclick="PacienteNuevoDeshabilitar"> PACIENTE EXISTENTE</button> 
                                 <button class="btn btn-warning fas fa-user-secret" @onclick="PacienteNuevoHabilitar"> PACIENTE NUEVO</button>
+
+
                                 <p></p>
                                 @if (pacientenuevo == "SI")
                                 {
                                     <!-- Si es paciente nuevo -->
                                     <p></p>
-                                   <label for="nombreUsuario">NOMBRE PACIENTE:</label>
+                                    <div class="subTitulos">
+                                        NOMBRE PACIENTE: &nbsp; &nbsp; &nbsp;<InputText style="width: 200px;" @bind-Value="nombrePacienteNuevo" />
+                                        </div>
                                     <p></p>
-                                    <InputText style="width: 200px;" @bind-Value="nombrePacienteNuevo" />
-                                    <p></p>
+                                    <div class="subTitulos">
+                                        CELULAR: &nbsp; &nbsp; &nbsp; <InputText style="width: 200px;" @bind-Value="celular" />
+                                    </div>
+                                    <p></p>                                                                          
                                 }
                                 else
                                 {
+                                    <div style="max-height: 150px; overflow-y: auto;">
                                     <!-- Si no es paciente nuevo -->
                                     <div class="table-responsive">
                                         <!-- Agrega la clase "table-responsive" para hacer la tabla responsive -->
@@ -720,7 +742,7 @@
                                                     <td><input @oninput="ActualizarFiltroApellido" placeholder="Buscar..." /></td>
                                                     <td><input @oninput="ActualizarFiltroDni" placeholder="Buscar..." /></td>
                                                 </tr>                                                
-                                                @foreach (var datos in ListaDePacientes)
+                                                @foreach (var datos in ListaDePacientes2)
                                                 {
                                                     <tr class="table-success" @onclick="() => SeleccionarPaciente(datos.Id)">
                                                         <td>@datos.Nombre</td>
@@ -731,11 +753,23 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    </div>
+                                    <p>
+                                        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
+                                            <thead>
+                                                <tr class="table-dark">
+                                                    <th>NOMBRE: @nombrePacienteSelec </th>
+                                                    <th>APELLIDO: @apellido </th>
+                                                    <th>DNI: @dni</th>                                                 
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </p>
                                 }
                                 <p> </p>
                                 <label style="width: 100%;">PRACTICA:</label>
                                 <select style="width: 100%;" @bind="IdPracticaSeleccionada">
-                                    <option value="">Seleccionar</option>
+                                    <option value="Seleccionar">Seleccionar</option>
                                     @foreach (var practicaseleccion in ListaDePracticas)
                                     {
                                         <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
@@ -752,7 +786,7 @@
                             @if (pacientenuevo == "SI")
                             {
                                 <!-- Si es paciente nuevo -->
-                                <button style="width: 100%;" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="AgendarPacienteNuevo">Agendar</button>
+                                <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos2)" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="AgendarPacienteNuevo">Agendar</button>
                             }
                             else
                             {
@@ -1099,10 +1133,12 @@ else
     private string dia = "lunes";
     private string mostrarPagina = "NO";
     private bool CamposValidos => IdPacienteAtendido != 0 && IdPracticaSeleccionada != 0 && IdOdontologoSeleccionado != 0;
+    private bool CamposValidos2 => IdPracticaSeleccionada != 0 && IdOdontologoSeleccionado != 0;
     private int IdEdit = 0;
     private bool mostrarModalEdit = false;
     private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
     private List<Paciente> listaDePacientes = new List<Paciente>();
+    private List<Paciente> listaDePacientes2 = new List<Paciente>();
     private List<Practica1> ListaDePracticas = new List<Practica1>();
     private List<Login> ListaDeOdontologos = new List<Login>();
     private List<string> horas = new List<string>();
@@ -1146,12 +1182,14 @@ else
     private string minutosSeleccionadoSobreTurno = "00";
     private string horaSeleccionadoSobreTurno = "00";
     private string nombrePacienteNuevo = "";
+    private string celular = "";
+    private string nombrePacienteSelec = "";
     [Inject]
     private DbDentistaContext DbContext { get; set; }
 
     protected override void OnInitialized()
     {
-
+        listaDePacientes2 = DbContext.Pacientes.ToList();
         ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
         listaDePacientes = DbContext.Pacientes.ToList();
         ListaDePracticas = DbContext.Practicas.ToList();
@@ -1357,16 +1395,15 @@ else
         elementoEncontrado = TurnosFiltrados.FirstOrDefault(objeto => objeto.Hora == horaConvertida);
         if (elementoEncontrado != null)
         {
-            if (elementoEncontrado.IdPaciente == 0)
-            { estado = "BLOQUEADO"; }
-            else
+            if (elementoEncontrado.IdPaciente != 0)
             {
                 estado = "Agendado";
                 using (DbDentistaContext db = new DbDentistaContext())
                 {
                     var paciente = DbContext.Pacientes.Find(elementoEncontrado.IdPaciente);
                     if (paciente != null)
-                    { nombrePaciente = paciente.Nombre + paciente.Apellido; 
+                    {
+                        nombrePaciente = paciente.Nombre + paciente.Apellido;
                         nombreTratamiento = elementoEncontrado.Practica;
                     }
                     else
@@ -1375,9 +1412,13 @@ else
                         nombreTratamiento = "ELIMINADO";
                     }
                 }
-
-                IdTurno = elementoEncontrado.Id;
             }
+            else
+            {
+                estado = "BLOQUEADO";
+            }
+            IdTurno = elementoEncontrado.Id;
+            
         }
         else
         {
@@ -1462,16 +1503,13 @@ else
     }
     private void PacienteNuevoHabilitar()
     {
-        if (pacientenuevo == "NO")
-        {
             pacientenuevo = "SI";
-            nombrePacienteNuevo = "nombre";
-        }
-        else
-        {
-            nombrePacienteNuevo = "";
+            nombrePacienteNuevo = "NOMBRE";
+    
+    }
+    private void PacienteNuevoDeshabilitar()
+    {
             pacientenuevo = "NO";
-        }
     }
     private void Agendar()
     {
@@ -1507,6 +1545,7 @@ else
     }
     private void AgendarPacienteNuevo()
     {
+
         using (DbDentistaContext db = new DbDentistaContext())
         {
             var p = DbContext.Practicas.Find(IdPracticaSeleccionada);
@@ -1519,7 +1558,7 @@ else
         prueba.DiaMesAño = selectedDate;
         prueba.Hora = Hora;
         prueba.IdPaciente = 2070;
-        prueba.Observaciones = textoMultilinea;
+        prueba.Observaciones = "Nombre: " + nombrePacienteNuevo.ToUpper() + " Cel: " + celular + " Observaciones: " + textoMultilinea;
         prueba.Sobreturno = "NO";
         using (DbDentistaContext db = new DbDentistaContext())
         {
@@ -1607,7 +1646,7 @@ else
             Hora = turno.Hora;
 
         }
-        if (IdPacienteAtendido == 0)
+        if (IdPacienteAtendido != 0)
         {
         }
         else
@@ -1682,7 +1721,7 @@ else
     }
     //codigo para carga de selector de pacientes
 
-    private List<Paciente> ListaDePacientes = new List<Paciente>();
+    private List<Paciente> ListaDePacientes2 = new List<Paciente>();
     private string apellido = "";
     private string nombre = "";
     private string dni = "";
@@ -1691,7 +1730,7 @@ else
         algo = e.Value.ToString().ToUpper();
         if (!string.IsNullOrEmpty(algo))
         {
-            ListaDePacientes = ListaDePacientes.Where(e => e.Nombre.Contains(algo)).ToList();
+            ListaDePacientes2 = ListaDePacientes2.Where(e => e.Nombre.Contains(algo)).ToList();
         }
         else
         {
@@ -1702,7 +1741,7 @@ else
     }
     private void ActualizaTablaPacientes()
     {
-        ListaDePacientes = DbContext.Pacientes.ToList();
+        ListaDePacientes2 = DbContext.Pacientes.ToList();
         StateHasChanged();
 
     }
@@ -1711,7 +1750,7 @@ else
         algo = e.Value.ToString().ToUpper();
         if (!string.IsNullOrEmpty(algo))
         {
-            ListaDePacientes = ListaDePacientes.Where(e => e.Apellido.Contains(algo)).ToList();
+            ListaDePacientes2 = ListaDePacientes2.Where(e => e.Apellido.Contains(algo)).ToList();
         }
         else
         {
@@ -1726,7 +1765,7 @@ else
         algo = e.Value.ToString().ToUpper();
         if (!string.IsNullOrEmpty(algo))
         {
-            ListaDePacientes = ListaDePacientes.Where(e => e.Dni.Contains(algo)).ToList();
+            ListaDePacientes2 = ListaDePacientes2.Where(e => e.Dni.Contains(algo)).ToList();
         }
         else
         {
@@ -1740,7 +1779,7 @@ else
         algo = e.Value.ToString().ToUpper();
         if (!string.IsNullOrEmpty(algo))
         {
-            ListaDePacientes = ListaDePacientes.Where(e => e.ObraSocial.Contains(algo)).ToList();
+            ListaDePacientes2 = ListaDePacientes2.Where(e => e.ObraSocial.Contains(algo)).ToList();
         }
         else
         {
@@ -1758,9 +1797,11 @@ else
         {
             var prueba = DbContext.Pacientes.Find(seleccionado);
             IdEdit = prueba.Id;
-            nombrePaciente = prueba.Nombre;
+            IdPaciente = prueba.Id;
+            nombrePacienteSelec = prueba.Nombre;
             apellido = prueba.Apellido;
             dni = prueba.Dni;
+            IdPacienteAtendido = prueba.Id;
         }
 
     }
