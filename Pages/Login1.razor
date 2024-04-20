@@ -6,8 +6,20 @@
 
 
 <PageTitle>LOGIN</PageTitle>
-<p> </p>
-<div class="centrado2">
+
+<div style="width: 100%;">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('FONDOHOMEDOBLEBYPABLO.jpg');
+            background-size: cover; /* Para cubrir toda la pantalla */
+            background-position: center top; /* Para centrar la imagen */
+            background-attachment: fixed; /* Para que la imagen no se mueva al hacer scroll */
+        }
+    </style>
+    <body>
+        <div class="loginCustom fondoAzul">
 <h3>Iniciar Sesión</h3>
 
     <div class="centrado3">
@@ -21,7 +33,6 @@
         <InputText style="width: 200px;" id="contraseña" type="password" @bind-Value="contraseña" />
 
     <p> </p>
-</div>
 <button class="btn btn-primary" @onclick="IniciarSesion">INICIAR SESION</button>
 
 <p> </p>
@@ -50,6 +61,9 @@
         <button class="btn btn-primary" @onclick="CrearUsuario">Crear Usuario</button>
     </div>
 </div>
+</div>
+</div>
+    </body>
 </div>
 
 @code {
@@ -106,7 +120,7 @@
 
             {
                 Permiso.Logueado = 1;
-                if (entidad.Rol == "admin     ")
+                if (entidad.Rol == "admin")
                 {
                     Permiso.Admin = true;
                     info = "LOGUEADO CORRECTAMENTE COMO ADMINISTRADOR";

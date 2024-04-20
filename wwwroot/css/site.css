@@ -73,7 +73,6 @@ a, .btn-link {
     font-weight: bold; /* Texto en negrita */
     width: 100px;
     height: 35px;
-    vertical-align: center;
     font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: violet;
     border: 2px solid black;
@@ -179,7 +178,6 @@ a, .btn-link {
     font-weight: bold; /* Texto en negrita */
     width: 100px;
     height: 35px;
-    vertical-align: center;
     font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: lightgreen;
     border: 2px solid black;
@@ -199,7 +197,6 @@ a, .btn-link {
     font-weight: bold; /* Texto en negrita */
     width: 100px;
     height: 35px;
-    vertical-align: center;
     color: aliceblue;
     font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: black;
@@ -218,7 +215,7 @@ a, .btn-link {
     width: 100px;
     height: 35px;
     font-weight: bold; /* Texto en negrita */
-    vertical-align: center;
+    vertical-align: central;
     border-radius: 15px;
     font-size: 16px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: #85C1E9;
@@ -242,6 +239,18 @@ a, .btn-link {
     padding: 0; /* Sin márgenes */
     margin: 0;
 }
+.loginCustom {
+    width: 100%;
+    text-align: center; /* Alineación horizontal del texto */
+    font-family: Arial;
+    color: white;
+    font-size: 30px; /* Tamaño del texto dentro del boton central en píxeles */
+    background-color: midnightblue;
+    padding: 0; /* Sin márgenes */
+    margin: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 
 
 .ceroMargenTextocentrado {
@@ -260,12 +269,12 @@ a, .btn-link {
     top: 0px;
     left: 0px;
     vertical-align: top;
-    width: 50px;
-    height: 50px;
-    line-height: 50px; /* Alineación vertical del texto */
+    width: 40px;
+    height: 40px;
+    line-height: 40px; /* Alineación vertical del texto */
     text-align: center; /* Alineación horizontal del texto */
     font-family: Arial;
-    font-size: 48px; /* Tamaño del texto dentro del boton central en píxeles */
+    font-size: 40px; /* Tamaño del texto dentro del boton central en píxeles */
     background-color: white;
     border: 2px solid white;
     padding: 0; /* Sin márgenes */
@@ -341,14 +350,14 @@ a, .btn-link {
         border-color: yellow;
     }
 .squareselected-button {
-    line-height: 50px; /* Alineación vertical del texto */
+    line-height: 40px; /* Alineación vertical del texto */
     text-align: center; /* Alineación horizontal del texto */
     vertical-align: top;
     border-radius: 15px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     font-family: Arial;
-    font-size: 48px;
+    font-size: 40px;
     background-color: white;
     border: 2px solid black;
     padding: 0px;
@@ -361,14 +370,14 @@ a, .btn-link {
 }
 
 .squarewhite-button {
-    line-height: 50px; /* Alineación vertical del texto */
+    line-height: 40px; /* Alineación vertical del texto */
     text-align: center; /* Alineación horizontal del texto */
     vertical-align: top;
     border-radius: 15px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     font-family: Arial;
-    font-size: 48px;
+    font-size: 40px;
     background-color: white;
     border: 2px solid black;
     padding: 0px;
@@ -383,8 +392,8 @@ a, .btn-link {
 .squarered-button {
     vertical-align: top;
     border-radius: 15px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: red;
     border: 2px solid black;
     padding: 0px;
@@ -399,8 +408,8 @@ a, .btn-link {
 .squareblue-button {
     vertical-align: top;
     border-radius: 15px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: blue;
     border: 2px solid black;
     padding: 0px;
@@ -413,7 +422,7 @@ a, .btn-link {
     }
 
 .centradoVertical {
-    vertical-align: center;
+    vertical-align: central;
     padding: 0px;
     margin: 0;
     display: flex;
@@ -430,7 +439,7 @@ a, .btn-link {
 
 .barralarga {
     vertical-align: central;
-    width: 50px;
+    width: 40px;
     height: 1px;
     background-color: white;
     border: 1px solid grey;
@@ -441,7 +450,7 @@ a, .btn-link {
 
 .barracorta {
     vertical-align: central;
-    width: 20px;
+    width: 15px;
     height: 1px;
     background-color: white;
     border: 1px solid grey;
@@ -453,7 +462,7 @@ a, .btn-link {
 .barraverticalcortaarriba {
     vertical-align: bottom;
     width: 1px;
-    height: 20px;
+    height: 15px;
     background-color: white;
     border: 1px solid grey;
     padding: 0px;
@@ -464,7 +473,7 @@ a, .btn-link {
 .barraverticallarga {
     vertical-align: top;
     width: 1px;
-    height: 50px;
+    height: 40px;
     background-color: white;
     border: 1px solid grey;
     padding: 0px;
@@ -475,7 +484,7 @@ a, .btn-link {
 .barraverticalcorta {
     vertical-align: top;
     width: 1px;
-    height: 20px;
+    height: 15px;
     background-color: white;
     border: 1px solid grey;
     padding: 0px;
@@ -517,8 +526,8 @@ a, .btn-link {
     vertical-align: bottom;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-    width: 50px;
-    height: 20px;
+    width: 40px;
+    height: 15px;
     background-color: white;
     border: 2px solid black;
     transition: border-color 0.3s ease;
@@ -530,8 +539,8 @@ a, .btn-link {
 
 .abajo-button {
     vertical-align: top;
-    width: 50px;
-    height: 20px;
+    width: 40px;
+    height: 15px;
     background-color: white;
     border: 2px solid black;
     transition: border-color 0.3s ease;
@@ -546,8 +555,8 @@ a, .btn-link {
 
 .izquierda-button {
     vertical-align: top;
-    width: 20px;
-    height: 50px;
+    width: 15px;
+    height: 40px;
     background-color: white;
     border: 2px solid black;
     transition: border-color 0.3s ease;
@@ -570,8 +579,8 @@ a, .btn-link {
 
 .derecha-button {
     vertical-align: top;
-    width: 20px;
-    height: 50px;
+    width: 15px;
+    height: 40px;
     background-color: white;
     border: 2px solid black;
     transition: border-color 0.3s ease;
@@ -584,11 +593,6 @@ a, .btn-link {
         border-color: green;
     }
 
-.1a {
-    background-color: blue;
-    grid-column: 1/2;
-    grid-row: 2/3;
-}
 /* Establecer un ancho fijo de 200px para el div */
 .divFijo {
     width: 1532px;
@@ -663,7 +667,7 @@ a, .btn-link {
 
 .ceroMargen {
     padding: 5px; /* Añade espacio alrededor del contenido */
-    margin: 5 auto; /* Centra el div horizontalmente */
+    margin: 0 auto; /* Centra el div horizontalmente */
 }
 /* Estilo para la tabla sin márgenes internos */
 table {

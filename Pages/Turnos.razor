@@ -1039,7 +1039,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                        <p>PACIENTE: @PacienteAtendido</p>
+                            <p>PACIENTE: @PacienteAtendido</p>
                         <p>ODONTOLOGO: @nombreOdontologo</p>
                         <p>TRATAMIENTO: @NombrePracticaSeleccionada</p>
                     <p>
@@ -1053,47 +1053,98 @@
         </div>
     </div>
     <!-- Modal EDITAR -->
-    <div class="modal fade" id="modalEditarTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade custom-modal" id="modalEditarTurno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">EDITAR TURNO</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                        <div class="modal-body">
+                            <p>ODONTOLOGO: @nombreOdontologo</p>
+                            <div class="form-group">
+                                <!-- Contenido del formulario -->
+                                <button class="btn btn-info fas fa-user" @onclick="PacienteNuevoDeshabilitar"> PACIENTE EXISTENTE</button>
+                                <button class="btn btn-warning fas fa-user-secret" @onclick="PacienteNuevoHabilitar"> PACIENTE NUEVO</button>
 
-                    <label style="width: 100%;">ODONTOLOGO:</label>
-                    <select style="width: 100%;" @bind="IdOdontologoSeleccionado">
-                        <option value="">Seleccionar</option>
-                        @foreach (var odontologo in ListaDeOdontologos)
-                        {
-                            <option value="@odontologo.Id">@(odontologo.Usuario)</option>
-                        }
-                    </select>
-                    <div class="form-group">
-                        <div class="form-group">
-                            <label style="width: 100%;">PACIENTE:</label>
-                            <select style="width: 100%;" @bind="IdPacienteAtendido">
-                                <option value="">Seleccionar</option>
-                                @foreach (var paciente in listaDePacientes)
+
+                                <p></p>
+                                @if (pacientenuevo == "SI")
                                 {
-                                    <option value="@paciente.Id">@($"{paciente.Apellido} {paciente.Nombre}")</option>
+                                    <!-- Si es paciente nuevo -->
+                                    <p></p>
+                                    <div class="subTitulos">
+                                        NOMBRE PACIENTE: &nbsp; &nbsp; &nbsp;<InputText style="width: 200px;" @bind-Value="nombrePacienteNuevo" />
+                                    </div>
+                                    <p></p>
+                                    <div class="subTitulos">
+                                        CELULAR: &nbsp; &nbsp; &nbsp; <InputText style="width: 200px;" @bind-Value="celular" />
+                                    </div>
+                                    <p></p>
                                 }
-                            </select>
-                            <p> </p>
-                            <label style="width: 100%;">PRACTICA:</label>
-                            <select style="width: 100%;" @bind="IdPracticaSeleccionada">
-                                <option value="">Seleccionar</option>
-                                @foreach (var practicaseleccion in ListaDePracticas)
+                                else
                                 {
-                                    <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                    <div style="max-height: 150px; overflow-y: auto;">
+                                        <!-- Si no es paciente nuevo -->
+                                        <div class="table-responsive">
+                                            <!-- Agrega la clase "table-responsive" para hacer la tabla responsive -->
+                                            <table class="table table-sm table-success table-hover table-bordered border-primary">
+                                                <!-- Estilos de tabla -->
+                                                <thead>
+                                                    <tr class="table-dark">
+                                                        <th>NOMBRE</th>
+                                                        <th>APELLIDO</th>
+                                                        <th>DNI</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="table-success">
+                                                        <td> <input @oninput="ActualizarFiltroNombre" placeholder="Buscar..." /></td>
+                                                        <td><input @oninput="ActualizarFiltroApellido" placeholder="Buscar..." /></td>
+                                                        <td><input @oninput="ActualizarFiltroDni" placeholder="Buscar..." /></td>
+                                                    </tr>
+                                                    @foreach (var datos in ListaDePacientes2)
+                                                    {
+                                                        <tr class="table-success" @onclick="() => SeleccionarPaciente(datos.Id)">
+                                                            <td>@datos.Nombre</td>
+                                                            <td>@datos.Apellido</td>
+                                                            <td>@datos.Dni</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <p>
+                                         <div class="table-responsive">
+                                        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
+                                            <thead>
+                                                <tr class="table-dark">
+                                                        <th style="width: 33%;">NOMBRE: @nombrePacienteSelec </th>
+                                                    <th style="width: 33%;">APELLIDO: @apellido </th>
+                                                        <th style="width: 33%;">DNI: @dni</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        </div>
+                                    </p>
                                 }
-                            </select>
-                            <div style="width: 100%;">
-                                <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+                                <p> </p>
+                                <label style="width: 100%;">PRACTICA:</label>
+                                <select style="width: 100%;" @bind="IdPracticaSeleccionada">
+                                    <option value="Seleccionar">Seleccionar</option>
+                                    @foreach (var practicaseleccion in ListaDePracticas)
+                                    {
+                                        <option value="@practicaseleccion.Id">@practicaseleccion.Practica</option>
+                                    }
+                                </select>
+                                <p> </p>
+                                <!-- Contenido adicional del formulario -->
+                                <div style="width: 100%;">
+                                    <textarea rows="4" cols= style="width: 100%;" @bind="textoMultilinea"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     <div class="modal-footer">
                         <button style="width: 100%;" class="btn btn-success" disabled="@(!CamposValidos)" data-bs-toggle="modal" data-bs-target="#elTurnoFueAgendado" data-bs-dismiss="modal" @onclick="() => Editar(IdEdit)">EDITAR</button>
                         <button style="width: 100%;" class="btn btn-danger" data-bs-dismiss="modal">X</button>
@@ -1101,7 +1152,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
     <div class="modal fade" id="elTurnoFueAgendado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1195,7 +1246,7 @@ else
         ListaDePracticas = DbContext.Practicas.ToList();
         ListaDeOdontologos = DbContext.Logins.ToList();
         ListaDeTurnos = DbContext.Turnos.ToList();
-        ListaDeOdontologos = ListaDeOdontologos.Where(p => p.Rol == "odon      ").ToList();
+        ListaDeOdontologos = ListaDeOdontologos.Where(p => p.Rol == "odon").ToList();
         InicializarHoras();
         ActualizaTablaPacientes();
 
@@ -1434,7 +1485,7 @@ else
         horas.Clear();
         InicializarHoras();
         ListaDeTurnosconSobreturnos = ListaDeTurnos.Where(p => p.Sobreturno == "SI" && p.IdOdontologo == IdOdontologoSeleccionado && p.DiaMesAño == selectedDate).ToList();
-        TurnosFiltrados = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate).ToList();
+        TurnosFiltrados = ListaDeTurnos.Where(p => p.DiaMesAño == selectedDate && p.IdOdontologo == IdOdontologoSeleccionado).ToList();
         TurnosFiltrados.AddRange(ListaDeTurnosconSobreturnos);
         foreach (var horaSobreturno in ListaDeTurnosconSobreturnos)
         {
@@ -1477,6 +1528,7 @@ else
     }
     private void CambiarIdOdontologoSeleccionado(ChangeEventArgs e)
     {
+
         odontologoSeleccionadoNombre = e.Value.ToString();
         if (odontologoSeleccionadoNombre == "1234567890")
         {
@@ -1646,7 +1698,7 @@ else
             Hora = turno.Hora;
 
         }
-        if (IdPacienteAtendido != 0)
+        if (IdPacienteAtendido == 0)
         {
         }
         else
@@ -1796,7 +1848,6 @@ else
         using (DbDentistaContext db = new DbDentistaContext())
         {
             var prueba = DbContext.Pacientes.Find(seleccionado);
-            IdEdit = prueba.Id;
             IdPaciente = prueba.Id;
             nombrePacienteSelec = prueba.Nombre;
             apellido = prueba.Apellido;

@@ -9,7 +9,9 @@
 <PageTitle>PACIENTES</PageTitle>
 @if (Permiso.Logueado == 1)
 {
-<div class="divFijoConFlow">
+  <div style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Si no es paciente nuevo -->
+                                    <div class="table-responsive">
         <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
         <thead>
         <tr class="table-dark">
@@ -46,6 +48,7 @@
         </tbody>
     </table>
     </div>
+        </div>
     <p></p>
     <p></p>
 <!-- Modal AGREGAR -->
@@ -368,8 +371,11 @@
             </div>
         </div>
     </div>
-</div>
-<div class="divFijo">
+</div> 
+<div style="overflow-y: auto;">
+                                    <!-- Si no es paciente nuevo -->
+                                    <div class="table-responsive">
+
     <p>
         <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
         <thead>
@@ -2733,9 +2739,8 @@
             }
         </tbody>
     </table>
-    <!-- TABLA DE PRUEBA -->
 </div>
-
+</div>
 <!-- Modal OBSERVACIONES -->
 <div class="modal fade" id="modalobservaciones" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
