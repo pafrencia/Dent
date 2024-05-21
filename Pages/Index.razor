@@ -1,5 +1,11 @@
 ﻿@page "/"
 
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Threading.Tasks;
+@using Newtonsoft.Json;
+@using System.Collections.Generic;
 
 <PageTitle>HOME</PageTitle>
 <div style="width: 100%;">
@@ -7,13 +13,238 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('FONDOHOMEDOBLEBYPABLO.jpg');
-            background-size: cover; /* Para cubrir toda la pantalla */
-            background-position: center top; /* Para centrar la imagen */
-            background-attachment: fixed; /* Para que la imagen no se mueva al hacer scroll */
         }
     </style>
     <body>
+
+        <label for="dnibuscado">DNI:</label>
+        <InputText style="width: 200px;" id="dnibuscado" @bind-Value="DNI" />
+        <button @onclick="ConsultarEstado">Consultar Estado</button>
         <!-- Aquí puedes colocar tu contenido HTML -->
+        
+        <p>@ResultadoConsulta</p>
+        <p></p>
+        <p>@ResultadoConsulta2</p>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">NOMBRE</th>
+                    <th scope="col">APELLIDO</th>
+                    <th scope="col">EDAD</th>
+                    <th scope="col">NACIMIENTO</th>
+                    <th scope="col">ESTADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@nombre1</td>
+                    <td>@apellido1</td>
+                    <td>@edad1</td>
+                    <td>@fechaDeNacimiento1</td>
+                    <td>@estado1</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </div>
+
+@code {
+    private HttpClient _httpClient;
+    private string ResultadoConsulta;
+    private string ResultadoConsulta2;
+    private string DNI = ""; 
+
+    // Clase para deserializar los campos nombre y cuil
+    public class BeneficiarioInfo
+    {
+        public object constancia_id { get; set; }
+        public int numero { get; set; }
+        public string codigo { get; set; }
+        public int beneficiario_id { get; set; }
+        public string apellido { get; set; }
+        public string nombre { get; set; }
+        public string numero_de_documento { get; set; }
+        public string tipo_de_documento { get; set; }
+        public string cuil_beneficiario { get; set; }
+        public string cuil_titular { get; set; }
+        public int ficha_os { get; set; }
+        public int orden { get; set; }
+        public string parentesco_denominacion { get; set; }
+        public int parentesco_codigo { get; set; }
+        public string delegacion_nombre { get; set; }
+        public int delegacion_codigo { get; set; }
+        public int estado { get; set; }
+        public string fecha_de_nacimiento { get; set; }
+        public int edad { get; set; }
+        public bool plan_materno { get; set; }
+        public bool plan_infantil { get; set; }
+        public bool discapacidad { get; set; }
+        public bool estudiante { get; set; }
+        public string plan_descripcion { get; set; }
+        public string plan_codigo { get; set; }
+        public bool coseguro_exento { get; set; }
+        public string sexo { get; set; }
+        public List<object> coseguros { get; set; }
+        public object fecha_de_baja { get; set; }
+    }
+
+    public string nombre1 = "";
+    public string nombre2 = "";
+    public string apellido1 = "";
+    public string apellido2 = "";
+    public string fechaDeNacimiento1 = "";
+    public string fechaDeNacimiento2 = "";
+    public string estado1 = "";
+    public string estado2 = "";
+    public int edad1 = 0;
+    public int edad2 = 0;
+    private async Task ConsultarEstado()
+    {
+        _httpClient = new HttpClient();
+        // URL del endpoint del servicio RPC2
+        string serviceUrl = "https://ospia.org.ar/beneficiarios/RPC2";
+
+        // Usuario y contraseña para la autenticación básica
+        string username = "pfrencia310";
+        string password = "MEiufkxYWcIsU";
+
+        // Método y parámetros para la llamada al método beneficiarios.consultar_estado
+        string methodName = "beneficiarios.consultar_estado";
+        string[] methodParams = { DNI, "" }; // Parámetros proporcionados
+
+        // Crear un objeto JSON para la solicitud
+        var jsonRequest = new
+        {
+            method = methodName,
+            @params = methodParams
+        };
+
+        // Convertir el objeto JSON en una cadena JSON
+        string jsonRequestBody = JsonConvert.SerializeObject(jsonRequest);
+
+        // Convertir la cadena JSON en un contenido HTTP
+        HttpContent content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
+
+        // Agregar la autenticación básica
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic",
+            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
+
+        try
+        {
+            // Realizar una solicitud POST al servicio RPC2
+            HttpResponseMessage response = await _httpClient.PostAsync(serviceUrl, content);
+
+            // Verificar si la solicitud fue exitosa
+            if (response.IsSuccessStatusCode)
+            {
+                // Leer la respuesta como una cadena JSON
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                ResultadoConsulta2 = jsonResponse;
+                // Deserializar el JSON principal
+                var responseObject = JsonConvert.DeserializeObject<JsonResponse>(jsonResponse);
+
+                // Deserializar la propiedad "result" dentro del JSON principal
+                var resultObject = JsonConvert.DeserializeObject<List<BeneficiarioInfo>>(responseObject.result);
+
+                var primerBeneficiario = resultObject.FirstOrDefault();
+
+                // Asignar los valores a las variables en C#
+                if (primerBeneficiario != null)
+                {
+                    object constanciaId = primerBeneficiario.constancia_id;
+                    int numero = primerBeneficiario.numero;
+                    string codigo = primerBeneficiario.codigo;
+                    int beneficiarioId = primerBeneficiario.beneficiario_id;
+                    apellido1 = primerBeneficiario.apellido;
+                    nombre1 = primerBeneficiario.nombre;
+                    string numeroDocumento = primerBeneficiario.numero_de_documento;
+                    string tipoDocumento = primerBeneficiario.tipo_de_documento;
+                    string cuilBeneficiario = primerBeneficiario.cuil_beneficiario;
+                    string cuilTitular = primerBeneficiario.cuil_titular;
+                    int fichaOs = primerBeneficiario.ficha_os;
+                    int orden = primerBeneficiario.orden;
+                    string parentescoDenominacion = primerBeneficiario.parentesco_denominacion;
+                    int parentescoCodigo = primerBeneficiario.parentesco_codigo;
+                    string delegacionNombre = primerBeneficiario.delegacion_nombre;
+                    int delegacionCodigo = primerBeneficiario.delegacion_codigo;
+                    int estado = primerBeneficiario.estado;
+                    if (estado == 0 || estado == 1)
+                    {
+                        estado1 = "HABILITADO";
+                    }
+                    fechaDeNacimiento1 = primerBeneficiario.fecha_de_nacimiento;
+                    edad1 = primerBeneficiario.edad;
+                    bool planMaterno = primerBeneficiario.plan_materno;
+                    bool planInfantil = primerBeneficiario.plan_infantil;
+                    bool discapacidad = primerBeneficiario.discapacidad;
+                    bool estudiante = primerBeneficiario.estudiante;
+                    string planDescripcion = primerBeneficiario.plan_descripcion;
+                    string planCodigo = primerBeneficiario.plan_codigo;
+                    bool coseguroExento = primerBeneficiario.coseguro_exento;
+                    string sexo = primerBeneficiario.sexo;
+                    List<object> coseguros = primerBeneficiario.coseguros;
+                    object fechaBaja = primerBeneficiario.fecha_de_baja;
+
+                    // Aquí puedes hacer lo que necesites con las variables asignadas
+                    ResultadoConsulta =
+    $"Constancia ID: {constanciaId}, " +
+    $"Número: {numero}, " +
+    $"Código: {codigo}, " +
+    $"Beneficiario ID: {beneficiarioId}, " +
+    $"Apellido: {apellido1}, " +
+    $"Nombre: {nombre1}, " +
+    $"Número de documento: {numeroDocumento}, " +
+    $"Tipo de documento: {tipoDocumento}, " +
+    $"CUIL beneficiario: {cuilBeneficiario}, " +
+    $"CUIL titular: {cuilTitular}, " +
+    $"Ficha OS: {fichaOs}, " +
+    $"Orden: {orden}, " +
+    $"Parentesco denominación: {parentescoDenominacion}, " +
+    $"Parentesco código: {parentescoCodigo}, " +
+    $"Delegación nombre: {delegacionNombre}, " +
+    $"Delegación código: {delegacionCodigo}, " +
+    $"Estado: {estado}, " +
+    $"Fecha de nacimiento: {fechaDeNacimiento1}, " +
+    $"Edad: {edad1}, " +
+    $"Plan materno: {planMaterno}, " +
+    $"Plan infantil: {planInfantil}, " +
+    $"Discapacidad: {discapacidad}, " +
+    $"Estudiante: {estudiante}, " +
+    $"Plan descripción: {planDescripcion}, " +
+    $"Plan código: {planCodigo}, " +
+    $"Coseguro exento: {coseguroExento}, " +
+    $"Sexo: {sexo}, " +
+    $"Coseguros: {string.Join(", ", coseguros)}, " + // Si deseas concatenar los elementos de la lista coseguros
+    $"Fecha de baja: {fechaBaja}";
+                }
+            }
+            else
+            {
+                ResultadoConsulta = "La solicitud al servicio RPC2 falló con el código de estado: " + response.StatusCode;
+            }
+        }
+        catch (Exception ex)
+        {
+            ResultadoConsulta = "Ocurrió un error al realizar la solicitud al servicio RPC2: " + ex.Message;
+        }
+    }
+
+    // Clase para deserializar el JSON principal
+    public class JsonResponse
+    {
+        public string jsonrpc { get; set; }
+        public string id { get; set; }
+        public string result { get; set; }
+    }
+}

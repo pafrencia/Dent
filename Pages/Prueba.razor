@@ -1,0 +1,4834 @@
+﻿@page "/Prueba"
+
+@using Dent.Models
+@using Dent.Shared
+@using Dent.Pages
+@inject Permisos Permiso
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Threading.Tasks;
+@using Newtonsoft.Json;
+@using System.Collections.Generic;
+
+<div class="paginaSinMargenes">
+<PageTitle>PACIENTES</PageTitle>
+
+        <label for="dnibuscado">DNI:</label>
+        <InputText style="width: 200px;" id="dnibuscado" @bind-Value="DNI" />
+        <button @onclick="ConsultarEstado">Consultar Estado</button>
+
+ 
+
+@if (Permiso.Logueado == 1)
+{
+  <div style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Si no es paciente nuevo -->
+                                    <div class="table-responsive">
+        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">NOMBRE</th>
+                    <th scope="col">APELLIDO</th>
+                    <th scope="col">EDAD</th>
+                    <th scope="col">NACIMIENTO</th>
+                    <th scope="col">ESTADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-success" @onclick="() => SeleccionarPaciente()">
+                    <th scope="row">1</th>
+                    <td>@nombre1</td>
+                    <td>@apellido1</td>
+                    <td>@edad1</td>
+                    <td>@fechaDeNacimiento1</td>
+                    <td>@estado1</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+    </table>
+    </div>
+        </div>
+<div style="overflow-y: auto;">
+                                    <!-- Si no es paciente nuevo -->
+                                    <div class="table-responsive">
+
+    <p>
+        <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary">
+        <thead>
+        <tr class="table-dark">
+                <th style=" width: 306px;">NOMBRE: @nombrePaciente </th>
+                <th style="width: 306px;">APELLIDO: @apellido </th>
+                <th style="width: 306px;">DNI: @dni</th>
+                <th style="width: 306px;">OBRA SOCIAL: @obraSocialGuardar </th>
+            <th style="width: 308px;">                       
+                <button type="button" class="btn btn-light fas fa-teeth" @onclick="() => MostrarOdontograma()"></button>
+                <button type="button" class="btn btn-secondary fas fa-folder-open" @onclick="() => MostrarHistoriaClinica()"></button>
+             </th>
+        </tr>
+        </thead>
+    </table>
+    </p>
+</div>
+<div style="display: @(divOdontograma == 1 ? "block" : "none")">
+<div class="divFijo">
+            <div class="subTitulos">ODONTOGRAMA</div>
+                    <p> </p>
+    <div class="centrado">
+        <button class="adulto-button" @onclick="() => MostrarAdulto()">ADULTO</button>     <button class="nino-button" @onclick="() => MostrarNiño()">NIÑO</button>  <button class="mixto-button" @onclick="() => MostrarAmbos()">MIXTO</button> <button class="guardar-button" @onclick="() => GuardarOdontograma()">GUARDAR</button> <button class="odontograma-button" @onclick="() => MostrarOdontograma()">OCULTAR</button>
+    </div>
+    <p></p>
+    
+<div class="centrado">
+<button class="squarewhite-button" style="@($"background-color: red; {R};")" @onclick="() => SeleccionarColor(red, vacio, Rd)"></button>
+<button class="squarewhite-button" style="@($"background-color: blue; {B};")" @onclick="() => SeleccionarColor(blue, vacio, Bd)"></button>
+<button class="squarewhite-button" style="@($"background-color: white; {W};")" @onclick="() => SeleccionarColor(white, vacio, Wd)"></button>
+<button class="squarewhite-button" style="@($"color: red;{XR};")" @onclick="() => SeleccionarEstado(X, red, XRd)">X</button>
+<button class="squarewhite-button" style="@($"color: blue;{XB};")" @onclick="() => SeleccionarEstado(X, blue, XBd)">X</button>
+<button class="squarewhite-button" style="@($"color: red;{OR}")" @onclick="() => SeleccionarEstado(O, red, ORd)">O</button>
+<button class="squarewhite-button" style="@($"color: blue;{OB};")" @onclick="() => SeleccionarEstado(O, blue, OBd)">O</button>
+<button class="squarewhite-button" style="@($"color: red;{TR};")" @onclick="() => SeleccionarEstado(TC, red, TRd)">T</button>
+<button class="squarewhite-button" style="@($"color: blue;{TB};")" @onclick="() => SeleccionarEstado(TC, blue, TBd)">T</button>
+<button class="squarewhite-button" style="@($"color: red;{IGUALR};")" @onclick="() => SeleccionarEstado(IGUAL, red, IGUALRd)">=</button>
+<button class="squarewhite-button" style="@($"color: blue;{IGUALB};")" @onclick="() => SeleccionarEstado(IGUAL, blue, IGUALBd)">=</button>
+</div>
+   <p></p>
+    <div style="display: @(divAdulto == 1 ? "block" : "none")">
+
+        <table>
+    <thead>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 50px;>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+                <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>18</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>17</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>16</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>15</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>14</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>13</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>12</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>11</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>21</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>22</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>23</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>24</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>25</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>26</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>27</th>
+                    <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+                    <th width: 20px;></th>
+                    <th width: 50px;>28</th>
+                    <th width: 20px;></th>
+                    <th width: 10px;></th>
+        </tr>
+    </thead>
+    <tbody>
+                <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color18a};")"
+                @onclick="() => color18a = colorSeleccionado"></button></td>  <!-- 18 -->
+            <td></td>
+            <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color17a};")"
+                @onclick="() => color17a = colorSeleccionado"></button></td>  <!-- 17 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color16a};")"
+                @onclick="() => color16a = colorSeleccionado"></button></td> <!-- 16 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color15a};")"
+                @onclick="() => color15a = colorSeleccionado"></button></td> <!-- 15 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color14a};")"
+                @onclick="() => color14a = colorSeleccionado"></button></td> <!-- 14 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color13a};")"
+                @onclick="() => color13a = colorSeleccionado"></button></td> <!-- 13 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color12a};")"
+                @onclick="() => color12a = colorSeleccionado"></button></td> <!-- 12 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color11a};")"
+                @onclick="() => color11a = colorSeleccionado"></button></td> <!-- 11 -->
+                    <td></td>
+                    <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color21a};")" 
+                @onclick="() => color21a = colorSeleccionado"></button></td> <!-- 21 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color22a};")"
+               @onclick="() => color22a = colorSeleccionado"></button></td> <!-- 22 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color23a};")"
+               @onclick="() => color23a = colorSeleccionado"></button></td> <!-- 23 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color24a};")"
+                        @onclick="() => color24a = colorSeleccionado"></button></td> <!-- 24 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color25a};")"
+                        @onclick="() => color25a = colorSeleccionado"></button></td> <!-- 25 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color26a};")"
+                        @onclick="() => color26a = colorSeleccionado"></button></td> <!-- 26 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color27a};")"
+                        @onclick="() => color27a = colorSeleccionado"></button></td> <!-- 27 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+            <td><button class="arriba-button" style="@($"background-color: {color28a};")"
+                        @onclick="() => color28a = colorSeleccionado"></button></td> <!-- 28 -->
+                    <td></td>
+                    <td></td>
+        </tr>
+                <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color18i};")"
+                        @onclick="() => color18i = colorSeleccionado"></button><!-- 18 -->
+            </td>
+            <td>
+				<button class="square-button" style="@($"background-color: {color18}; color:  {colorLetra18}" )"
+                        @onclick="() => SeleccionarBoton18()">@estado18</button> <!-- 18 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color18d};")"
+						@onclick="() => color18d = colorSeleccionado"></button><!-- 18 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color17i};")"
+						@onclick="() => color17i = colorSeleccionado"></button><!-- 17 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color17}; color:  {colorLetra17}" )"
+                        @onclick="() => SeleccionarBoton17()">@estado17</button><!-- 17 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color17d};")"
+						@onclick="() => color17d = colorSeleccionado"></button><!-- 17 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color16i};")"
+						@onclick="() => color16i = colorSeleccionado"></button> <!-- 16 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color16}; color:  {colorLetra16}" )"
+						@onclick="() =>  SeleccionarBoton16()">@estado16</button><!-- 16 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color16d};")"
+						@onclick="() => color16d = colorSeleccionado"></button><!-- 16 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color15i};")"
+						@onclick="() => color15i = colorSeleccionado"></button><!-- 15 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color15}; color:  {colorLetra15}" )"
+						@onclick="() =>  SeleccionarBoton15()">@estado15</button><!-- 15 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color15d};")"
+						@onclick="() => color15d = colorSeleccionado"></button><!-- 15 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color14i};")"
+                        @onclick="() => color14i = colorSeleccionado"></button><!-- 14 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color14}; color:  {colorLetra14}" )"
+						@onclick="() =>  SeleccionarBoton14()">@estado14</button><!-- 14 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color14d};")"
+						@onclick="() => color14d = colorSeleccionado"></button><!-- 14 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color13i};")"
+						@onclick="() => color13i = colorSeleccionado"></button><!-- 13 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color13}; color:  {colorLetra13}" )"
+                        @onclick="() =>  SeleccionarBoton13()">@estado13</button><!-- 13 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color13d};")"
+						@onclick="() => color13d = colorSeleccionado"></button><!-- 13 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color12i};")"
+                        @onclick="() => color12i = colorSeleccionado"></button><!-- 12 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color12}; color:  {colorLetra12}" )"
+						@onclick="() =>  SeleccionarBoton12()">@estado12</button><!-- 12 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color12d};")"
+						@onclick="() => color12d = colorSeleccionado"></button><!-- 12 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color11i};")"
+						@onclick="() => color11i = colorSeleccionado"></button><!-- 11 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color11}; color:  {colorLetra11}" )"
+						@onclick="() =>  SeleccionarBoton11()">@estado11</button><!-- 11 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color11d};")"
+						@onclick="() => color11d = colorSeleccionado"></button><!-- 11 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color21i};")"
+                        @onclick="() => color21i = colorSeleccionado"></button><!-- 21 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color21};color:  {colorLetra21}" )"
+                        @onclick="() =>  SeleccionarBoton21()">@estado21</button><!-- 21 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color21d};")"
+                        @onclick="() => color21d = colorSeleccionado"></button><!-- 21 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color22i};")"
+                        @onclick="() => color22i = colorSeleccionado"></button><!-- 22 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color22};color:  {colorLetra22}" )"
+                        @onclick="() =>  SeleccionarBoton22()">@estado22</button><!-- 22 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color22d};")"
+                        @onclick="() => color22d = colorSeleccionado"></button><!-- 22 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color23i};")"
+                        @onclick="() => color23i = colorSeleccionado"></button><!-- 23 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color23};color:  {colorLetra23}" )"
+                        @onclick="() =>  SeleccionarBoton23()">@estado23</button><!-- 23 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color23d};")"
+                        @onclick="() => color23d = colorSeleccionado"></button><!-- 23 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color24i};")"
+                        @onclick="() => color24i = colorSeleccionado"></button><!-- 24 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color24};color:  {colorLetra24}" )"
+                        @onclick="() =>  SeleccionarBoton24()">@estado24</button><!-- 24 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color24d};")"
+                        @onclick="() => color24d = colorSeleccionado"></button><!-- 24 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color25i};")"
+                        @onclick="() => color25i = colorSeleccionado"></button><!-- 25 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color25};color:  {colorLetra25}" )"
+                        @onclick="() =>  SeleccionarBoton25()">@estado25</button><!-- 25 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color25d};")"
+                        @onclick="() => color25d = colorSeleccionado"></button><!-- 25 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color26i};")"
+                        @onclick="() => color26i = colorSeleccionado"></button><!-- 26 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color26};color:  {colorLetra26}" )"
+                        @onclick="() =>  SeleccionarBoton26()">@estado26</button><!-- 26 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color26d};")"
+                        @onclick="() => color26d = colorSeleccionado"></button><!-- 26 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color27i};")"
+                        @onclick="() => color27i = colorSeleccionado"></button><!-- 27 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color27};color:  {colorLetra27}" )"
+                        @onclick="() =>  SeleccionarBoton27()">@estado27</button><!-- 27 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color27d};")"
+                        @onclick="() => color27d = colorSeleccionado"></button><!-- 27 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color28i};")"
+                        @onclick="() => color28i = colorSeleccionado"></button><!-- 28 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color28};color:  {colorLetra28}" )"
+                        @onclick="() =>  SeleccionarBoton28()">@estado28</button><!-- 28 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color28d};")"
+                        @onclick="() => color28d = colorSeleccionado"></button><!-- 28 -->
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color18ab};")"
+                        @onclick="() => color18ab = colorSeleccionado"></button>
+            </td>  <!-- 18 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color17ab};")"
+                        @onclick="() => color17ab = colorSeleccionado"></button>
+            </td>  <!-- 17 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color16ab};")"
+                        @onclick="() => color16ab = colorSeleccionado"></button>
+            </td> <!-- 16 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color15ab};")"
+                        @onclick="() => color15ab = colorSeleccionado"></button>
+            </td> <!-- 15 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color14ab};")"
+                        @onclick="() => color14ab = colorSeleccionado"></button>
+            </td> <!-- 14 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color13ab};")"
+                        @onclick="() => color13ab = colorSeleccionado"></button>
+            </td> <!-- 13 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color12ab};")"
+                        @onclick="() => color12ab = colorSeleccionado"></button>
+            </td> <!-- 12 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color11ab};")"
+                        @onclick="() => color11ab = colorSeleccionado"></button>
+            </td> <!-- 11 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color21ab};")"
+                        @onclick="() => color21ab = colorSeleccionado"></button>
+            </td> <!-- 21 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color22ab};")"
+                        @onclick="() => color22ab = colorSeleccionado"></button>
+            </td> <!-- 22 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color23ab};")"
+                        @onclick="() => color23ab = colorSeleccionado"></button>
+            </td> <!-- 23 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color24ab};")"
+                        @onclick="() => color24ab = colorSeleccionado"></button>
+            </td> <!-- 24 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color25ab};")"
+                        @onclick="() => color25ab = colorSeleccionado"></button>
+            </td> <!-- 25 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color26ab};")"
+                        @onclick="() => color26ab = colorSeleccionado"></button>
+            </td> <!-- 26 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color27ab};")"
+                        @onclick="() => color27ab = colorSeleccionado"></button>
+            </td> <!-- 27 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color28ab};")"
+                        @onclick="() => color28ab = colorSeleccionado"></button>
+            </td> <!-- 28 -->
+            <td></td>
+            <td></td>
+        </tr>
+            <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcorta"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>48</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>47</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>46</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>45</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>44</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>43</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>42</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>41</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>31</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>32</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>33</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>34</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>35</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>36</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>37</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+            <th width: 20px;></th>
+            <th width: 50px;>38</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color48a};")"
+                        @onclick="() => color48a = colorSeleccionado"></button>
+            </td>  <!-- 48 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color47a};")"
+                        @onclick="() => color47a = colorSeleccionado"></button>
+            </td>  <!-- 47 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color46a};")"
+                        @onclick="() => color46a = colorSeleccionado"></button>
+            </td> <!-- 46 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color45a};")"
+                        @onclick="() => color45a = colorSeleccionado"></button>
+            </td> <!-- 45 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color44a};")"
+                        @onclick="() => color44a = colorSeleccionado"></button>
+            </td> <!-- 44 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color43a};")"
+                        @onclick="() => color43a = colorSeleccionado"></button>
+            </td> <!-- 43 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color42a};")"
+                        @onclick="() => color42a = colorSeleccionado"></button>
+            </td> <!-- 42 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color41a};")"
+                        @onclick="() => color41a = colorSeleccionado"></button>
+            </td> <!-- 41 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color31a};")"
+                        @onclick="() => color31a = colorSeleccionado"></button>
+            </td> <!-- 31 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color32a};")"
+                        @onclick="() => color32a = colorSeleccionado"></button>
+            </td> <!-- 32 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color33a};")"
+                        @onclick="() => color33a = colorSeleccionado"></button>
+            </td> <!-- 33 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color34a};")"
+                        @onclick="() => color34a = colorSeleccionado"></button>
+            </td> <!-- 34 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color35a};")"
+                        @onclick="() => color35a = colorSeleccionado"></button>
+            </td> <!-- 35 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color36a};")"
+                        @onclick="() => color36a = colorSeleccionado"></button>
+            </td> <!-- 36 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color37a};")"
+                        @onclick="() => color37a = colorSeleccionado"></button>
+            </td> <!-- 37 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color38a};")"
+                        @onclick="() => color38a = colorSeleccionado"></button>
+            </td> <!-- 38 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color48i};")"
+                        @onclick="() => color48i = colorSeleccionado"></button><!-- 48 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color48};color:  {colorLetra48}" )"
+                        @onclick="() =>  SeleccionarBoton48()">@estado48</button> <!-- 48 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color48d};")"
+                        @onclick="() => color48d = colorSeleccionado"></button><!-- 48 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color47i};")"
+                        @onclick="() => color47i = colorSeleccionado"></button><!-- 47 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color47};color:  {colorLetra47}" )"
+                        @onclick="() =>  SeleccionarBoton47()">@estado47</button><!-- 47 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color47d};")"
+                        @onclick="() => color47d = colorSeleccionado"></button><!-- 47 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color46i};")"
+                        @onclick="() => color46i = colorSeleccionado"></button> <!-- 46 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color46};color:  {colorLetra46}" )"
+                        @onclick="() =>  SeleccionarBoton46()">@estado46</button><!-- 46 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color46d};")"
+                        @onclick="() => color46d = colorSeleccionado"></button><!-- 46 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color45i};")"
+                        @onclick="() => color45i = colorSeleccionado"></button><!-- 45 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color45};color:  {colorLetra45}" )"
+                        @onclick="() =>  SeleccionarBoton45()">@estado45</button><!-- 45 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color45d};")"
+                        @onclick="() => color45d = colorSeleccionado"></button><!-- 45 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color44i};")"
+                        @onclick="() => color44i = colorSeleccionado"></button><!-- 44 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color44};color:  {colorLetra44}" )"
+                        @onclick="() =>  SeleccionarBoton44()">@estado44</button><!-- 44 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color44d};")"
+                        @onclick="() => color44d = colorSeleccionado"></button><!-- 44 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color43i};")"
+                        @onclick="() => color43i = colorSeleccionado"></button><!-- 43 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color43};color:  {colorLetra43}" )"
+                        @onclick="() =>  SeleccionarBoton43()">@estado43</button><!-- 43 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color43d};")"
+                        @onclick="() => color43d = colorSeleccionado"></button><!-- 43 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color42i};")"
+                        @onclick="() => color42i = colorSeleccionado"></button><!-- 42 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color42};color:  {colorLetra42}" )"
+                        @onclick="() =>  SeleccionarBoton42()">@estado42</button><!-- 42 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color42d};")"
+                        @onclick="() => color42d = colorSeleccionado"></button><!-- 42 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color41i};")"
+                        @onclick="() => color41i = colorSeleccionado"></button><!-- 41 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color41}; color:  {colorLetra41}" )"
+                        @onclick="() =>  SeleccionarBoton41()">@estado41</button><!-- 41 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color41d};")"
+                        @onclick="() => color41d = colorSeleccionado"></button><!-- 41 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color31i};")"
+                        @onclick="() => color31i = colorSeleccionado"></button><!-- 31 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color31}; color:  {colorLetra31}" )"
+                        @onclick="() =>  SeleccionarBoton31()">@estado31</button><!-- 31 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color31d};")"
+                        @onclick="() => color31d = colorSeleccionado"></button><!-- 31 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color32i};")"
+                        @onclick="() => color32i = colorSeleccionado"></button><!-- 32 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color32};color:  {colorLetra32}" )"
+                        @onclick="() =>  SeleccionarBoton32()">@estado32</button><!-- 32 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color32d};")"
+                        @onclick="() => color32d = colorSeleccionado"></button><!-- 32 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color33i};")"
+                        @onclick="() => color33i = colorSeleccionado"></button><!-- 33 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color33};color:  {colorLetra33}" )"
+                        @onclick="() =>  SeleccionarBoton33()">@estado33</button><!-- 33 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color33d};")"
+                        @onclick="() => color33d = colorSeleccionado"></button><!-- 33 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color34i};")"
+                        @onclick="() => color34i = colorSeleccionado"></button><!-- 34 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color34};color:  {colorLetra34}" )"
+                        @onclick="() =>  SeleccionarBoton34()">@estado34</button><!-- 34 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color34d};")"
+                        @onclick="() => color34d = colorSeleccionado"></button><!-- 34 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color35i};")"
+                        @onclick="() => color35i = colorSeleccionado"></button><!-- 35 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color35};color:  {colorLetra35}" )"
+                        @onclick="() =>  SeleccionarBoton35()">@estado35</button><!-- 35 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color35d};")"
+                        @onclick="() => color35d = colorSeleccionado"></button><!-- 35 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color36i};")"
+                        @onclick="() => color36i = colorSeleccionado"></button><!-- 36 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color36};color:  {colorLetra36}" )"
+                        @onclick="() =>  SeleccionarBoton36()">@estado36</button><!-- 36 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color36d};")"
+                        @onclick="() => color36d = colorSeleccionado"></button><!-- 36 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color37i};")"
+                        @onclick="() => color37i = colorSeleccionado"></button><!-- 37 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color37};color:  {colorLetra37}" )"
+                        @onclick="() =>  SeleccionarBoton37()">@estado37</button><!-- 37 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color37d};")"
+                        @onclick="() => color37d = colorSeleccionado"></button><!-- 37 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color38i};")"
+                        @onclick="() => color38i = colorSeleccionado"></button><!-- 38 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color38};color:  {colorLetra38}" )"
+                        @onclick="() =>  SeleccionarBoton38()">@estado38</button><!-- 38 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color38d};")"
+                        @onclick="() => color38d = colorSeleccionado"></button><!-- 38 -->
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color48ab};")"
+                        @onclick="() => color48ab = colorSeleccionado"></button>
+            </td>  <!-- 48 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color47ab};")"
+                        @onclick="() => color47ab = colorSeleccionado"></button>
+            </td>  <!-- 47 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color46ab};")"
+                        @onclick="() => color46ab = colorSeleccionado"></button>
+            </td> <!-- 46 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color45ab};")"
+                        @onclick="() => color45ab = colorSeleccionado"></button>
+            </td> <!-- 45 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color44ab};")"
+                        @onclick="() => color44ab = colorSeleccionado"></button>
+            </td> <!-- 44 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color43ab};")"
+                        @onclick="() => color43ab = colorSeleccionado"></button>
+            </td> <!-- 43 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color42ab};")"
+                        @onclick="() => color42ab = colorSeleccionado"></button>
+            </td> <!-- 42 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color41ab};")"
+                        @onclick="() => color41ab = colorSeleccionado"></button>
+            </td> <!-- 41 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color31ab};")"
+                        @onclick="() => color31ab = colorSeleccionado"></button>
+            </td> <!-- 31 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color32ab};")"
+                        @onclick="() => color32ab = colorSeleccionado"></button>
+            </td> <!-- 32 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color33ab};")"
+                        @onclick="() => color33ab = colorSeleccionado"></button>
+            </td> <!-- 33 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color34ab};")"
+                        @onclick="() => color34ab = colorSeleccionado"></button>
+            </td> <!-- 34 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color35ab};")"
+                        @onclick="() => color35ab = colorSeleccionado"></button>
+            </td> <!-- 35 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color36ab};")"
+                        @onclick="() => color36ab = colorSeleccionado"></button>
+            </td> <!-- 36 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color37ab};")"
+                        @onclick="() => color37ab = colorSeleccionado"></button>
+            </td> <!-- 37 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color38ab};")"
+                        @onclick="() => color38ab = colorSeleccionado"></button>
+            </td> <!-- 38 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 50px;>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+    </tbody>
+</table>
+    </div>
+    <p></p>
+    <p></p>
+       <div style="display: @(divNiño == 1 ? "block" : "none")">
+<table>
+    <thead>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 50px;>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>55</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>54</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>53</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>52</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>51</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>61</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>62</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>63</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>64</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>65</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color55a};")"
+                        @onclick="() => color55a = colorSeleccionado"></button>
+            </td> <!-- 55 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color54a};")"
+                        @onclick="() => color54a = colorSeleccionado"></button>
+            </td> <!-- 54 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color53a};")"
+                        @onclick="() => color53a = colorSeleccionado"></button>
+            </td> <!-- 53 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color52a};")"
+                        @onclick="() => color52a = colorSeleccionado"></button>
+            </td> <!-- 52 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color51a};")"
+                        @onclick="() => color51a = colorSeleccionado"></button>
+            </td> <!-- 51 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color61a};")"
+                        @onclick="() => color61a = colorSeleccionado"></button>
+            </td> <!-- 61 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color62a};")"
+                        @onclick="() => color62a = colorSeleccionado"></button>
+            </td> <!-- 62 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color63a};")"
+                        @onclick="() => color63a = colorSeleccionado"></button>
+            </td> <!-- 63 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color64a};")"
+                        @onclick="() => color64a = colorSeleccionado"></button>
+            </td> <!-- 64 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color65a};")"
+                        @onclick="() => color65a = colorSeleccionado"></button>
+            </td> <!-- 65 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color55i};")"
+                        @onclick="() => color55i = colorSeleccionado"></button><!-- 55 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color55};color:  {colorLetra55}" )"
+                        @onclick="() =>  SeleccionarBoton55()">
+                    @estado55
+                </button><!-- 55 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color55d};")"
+                        @onclick="() => color55d = colorSeleccionado"></button><!-- 55 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color54i};")"
+                        @onclick="() => color54i = colorSeleccionado"></button><!-- 54 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color54};color:  {colorLetra54}" )"
+                        @onclick="() =>  SeleccionarBoton54()">
+                    @estado54
+                </button><!-- 54 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color54d};")"
+                        @onclick="() => color54d = colorSeleccionado"></button><!-- 54 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color53i};")"
+                        @onclick="() => color53i = colorSeleccionado"></button><!-- 53 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color53};color:  {colorLetra53}" )"
+                        @onclick="() =>  SeleccionarBoton53()">
+                    @estado53
+                </button><!-- 53 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color53d};")"
+                        @onclick="() => color53d = colorSeleccionado"></button><!-- 53 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color52i};")"
+                        @onclick="() => color52i = colorSeleccionado"></button><!-- 52 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color52};color:  {colorLetra52}" )"
+                        @onclick="() =>  SeleccionarBoton52()">
+                    @estado52
+                </button><!-- 52 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color52d};")"
+                        @onclick="() => color52d = colorSeleccionado"></button><!-- 52 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color51i};")"
+                        @onclick="() => color51i = colorSeleccionado"></button><!-- 51 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color51};color:  {colorLetra51}" )"
+                        @onclick="() =>  SeleccionarBoton51()">
+                    @estado51
+                </button><!-- 51 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color51d};")"
+                        @onclick="() => color51d = colorSeleccionado"></button><!-- 51 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color61i};")"
+                        @onclick="() => color61i = colorSeleccionado"></button><!-- 61 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color61};color:  {colorLetra61}" )"
+                        @onclick="() =>  SeleccionarBoton61()">
+                    @estado61
+                </button><!-- 61 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color61d};")"
+                        @onclick="() => color61d = colorSeleccionado"></button><!-- 61 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color62i};")"
+                        @onclick="() => color62i = colorSeleccionado"></button><!-- 62 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color62};color:  {colorLetra62}" )"
+                        @onclick="() =>  SeleccionarBoton62()">
+                    @estado62
+                </button><!-- 62 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color62d};")"
+                        @onclick="() => color62d = colorSeleccionado"></button><!-- 62 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color63i};")"
+                        @onclick="() => color63i = colorSeleccionado"></button><!-- 63 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color63};color:  {colorLetra63}" )"
+                        @onclick="() =>  SeleccionarBoton63()">
+                    @estado63
+                </button><!-- 63 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color63d};")"
+                        @onclick="() => color63d = colorSeleccionado"></button><!-- 63 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color64i};")"
+                        @onclick="() => color64i = colorSeleccionado"></button><!-- 64 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color64}; color:  {colorLetra64}" )"
+                        @onclick="() =>  SeleccionarBoton64()">
+                    @estado64
+                </button><!-- 64 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color64d};")"
+                        @onclick="() => color64d = colorSeleccionado"></button><!-- 64 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color65i};")"
+                        @onclick="() => color65i = colorSeleccionado"></button><!-- 65 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color65}; color:  {colorLetra65}" )"
+                        @onclick="() =>  SeleccionarBoton65()">
+                    @estado65
+                </button><!-- 65 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color65d};")"
+                        @onclick="() => color65d = colorSeleccionado"></button><!-- 65 -->
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color55ab};")"
+                        @onclick="() => color55ab = colorSeleccionado"></button>
+            </td> <!-- 55 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color54ab};")"
+                        @onclick="() => color54ab = colorSeleccionado"></button>
+            </td> <!-- 54 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color53ab};")"
+                        @onclick="() => color53ab = colorSeleccionado"></button>
+            </td> <!-- 53 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color52ab};")"
+                        @onclick="() => color52ab = colorSeleccionado"></button>
+            </td> <!-- 52 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color51ab};")"
+                        @onclick="() => color51ab = colorSeleccionado"></button>
+            </td> <!-- 51 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color61ab};")"
+                        @onclick="() => color61ab = colorSeleccionado"></button>
+            </td> <!-- 61 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color62ab};")"
+                        @onclick="() => color62ab = colorSeleccionado"></button>
+            </td> <!-- 62 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color63ab};")"
+                        @onclick="() => color63ab = colorSeleccionado"></button>
+            </td> <!-- 63 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color64ab};")"
+                        @onclick="() => color64ab = colorSeleccionado"></button>
+            </td> <!-- 64 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color65ab};")"
+                        @onclick="() => color65ab = colorSeleccionado"></button>
+            </td> <!-- 65 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcorta"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 50px;><button class="barralarga"></button></th>
+            <th width: 20px;><button class="barracorta"></button></th>
+            <th width: 10px;>&nbsp;</th>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+              <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>85</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>84</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>83</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>82</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>81</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>71</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>72</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>73</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>74</th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;>75</th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-danger">
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color85a};")"
+                        @onclick="() => color85a = colorSeleccionado"></button>
+            </td> <!-- 85 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color84a};")"
+                        @onclick="() => color84a = colorSeleccionado"></button>
+            </td> <!-- 84 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color83a};")"
+                        @onclick="() => color83a = colorSeleccionado"></button>
+            </td> <!-- 83 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color82a};")"
+                        @onclick="() => color82a = colorSeleccionado"></button>
+            </td> <!-- 82 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color81a};")"
+                        @onclick="() => color81a = colorSeleccionado"></button>
+            </td> <!-- 81 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color71a};")"
+                        @onclick="() => color71a = colorSeleccionado"></button>
+            </td> <!-- 71 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color72a};")"
+                        @onclick="() => color72a = colorSeleccionado"></button>
+            </td> <!-- 72 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color73a};")"
+                        @onclick="() => color73a = colorSeleccionado"></button>
+            </td> <!-- 73 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color74a};")"
+                        @onclick="() => color74a = colorSeleccionado"></button>
+            </td> <!-- 74 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="arriba-button" style="@($"background-color: {color75a};")"
+                        @onclick="() => color75a = colorSeleccionado"></button>
+            </td> <!-- 75 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color85i};")"
+                        @onclick="() => color85i = colorSeleccionado"></button><!-- 85 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color85}; color:  {colorLetra85}" )"
+                        @onclick="() =>  SeleccionarBoton85()">
+                    @estado85
+                </button><!-- 85 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color85d};")"
+                        @onclick="() => color85d = colorSeleccionado"></button><!-- 85 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color84i};")"
+                        @onclick="() => color84i = colorSeleccionado"></button><!-- 84 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color84}; color:  {colorLetra84}" )"
+                        @onclick="() =>  SeleccionarBoton84()">
+                    @estado84
+                </button><!-- 84 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color84d};")"
+                        @onclick="() => color84d = colorSeleccionado"></button><!-- 84 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color83i};")"
+                        @onclick="() => color83i = colorSeleccionado"></button><!-- 83 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color83}; color:  {colorLetra83}" )"
+                        @onclick="() =>  SeleccionarBoton83()">
+                    @estado83
+                </button><!-- 83 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color83d};")"
+                        @onclick="() => color83d = colorSeleccionado"></button><!-- 83 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color82i};")"
+                        @onclick="() => color82i = colorSeleccionado"></button><!-- 82 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color82}; color:  {colorLetra82}" )"
+                        @onclick="() =>  SeleccionarBoton82()">
+                    @estado82
+                </button><!-- 82 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color82d};")"
+                        @onclick="() => color82d = colorSeleccionado"></button><!-- 82 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color81i};")"
+                        @onclick="() => color81i = colorSeleccionado"></button><!-- 81 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color81}; color:  {colorLetra81}" )"
+                        @onclick="() =>  SeleccionarBoton81()">
+                    @estado81
+                </button><!-- 81 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color81d};")"
+                        @onclick="() => color81d = colorSeleccionado"></button><!-- 81 -->
+            </td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color71i};")"
+                        @onclick="() => color71i = colorSeleccionado"></button><!-- 71 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color71}; color:  {colorLetra71}" )"
+                        @onclick="() =>  SeleccionarBoton71()">
+                    @estado71
+                </button><!-- 71 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color71d};")"
+                        @onclick="() => color71d = colorSeleccionado"></button><!-- 71 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color72i};")"
+                        @onclick="() => color72i = colorSeleccionado"></button><!-- 72 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color72}; color:  {colorLetra72}" )"
+                        @onclick="() =>  SeleccionarBoton72()">
+                    @estado72
+                </button><!-- 72 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color72d};")"
+                        @onclick="() => color72d = colorSeleccionado"></button><!-- 72 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color73i};")"
+                        @onclick="() => color73i = colorSeleccionado"></button><!-- 73 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color73}; color:  {colorLetra73}" )"
+                        @onclick="() =>  SeleccionarBoton73()">
+                    @estado73
+                </button><!-- 73 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color73d};")"
+                        @onclick="() => color73d = colorSeleccionado"></button><!-- 73 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color74i};")"
+                        @onclick="() => color74i = colorSeleccionado"></button><!-- 74 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color74}; color:  {colorLetra74}" )"
+                        @onclick="() =>  SeleccionarBoton74()">
+                    @estado74
+                </button><!-- 74 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color74d};")"
+                        @onclick="() => color74d = colorSeleccionado"></button><!-- 74 -->
+            </td>
+            <td></td>
+            <td>
+                <button class="izquierda-button" style="@($"background-color: {color75i};")"
+                        @onclick="() => color75i = colorSeleccionado"></button><!-- 75 -->
+            </td>
+            <td>
+                <button class="square-button" style="@($"background-color: {color75}; color:  {colorLetra75}" )"
+                        @onclick="() =>  SeleccionarBoton75()">
+                    @estado75
+                </button><!-- 75 -->
+            </td>
+            <td>
+                <button class="derecha-button" style="@($"background-color: {color75d};")"
+                        @onclick="() => color75d = colorSeleccionado"></button><!-- 75 -->
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color85ab};")"
+                        @onclick="() => color85ab = colorSeleccionado"></button>
+            </td> <!-- 85 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color84ab};")"
+                        @onclick="() => color84ab = colorSeleccionado"></button>
+            </td> <!-- 84 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color83ab};")"
+                        @onclick="() => color83ab = colorSeleccionado"></button>
+            </td> <!-- 83 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color82ab};")"
+                        @onclick="() => color82ab = colorSeleccionado"></button>
+            </td> <!-- 82 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color81ab};")"
+                        @onclick="() => color81ab = colorSeleccionado"></button>
+            </td> <!-- 81 -->
+            <td></td>
+            <td></td>
+            <td><button class="barraverticalcortaarriba"></button></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color71ab};")"
+                        @onclick="() => color71ab = colorSeleccionado"></button>
+            </td> <!-- 71 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color72ab};")"
+                        @onclick="() => color72ab = colorSeleccionado"></button>
+            </td> <!-- 72 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color73ab};")"
+                        @onclick="() => color73ab = colorSeleccionado"></button>
+            </td> <!-- 73 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color74ab};")"
+                        @onclick="() => color74ab = colorSeleccionado"></button>
+            </td> <!-- 74 -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="abajo-button" style="@($"background-color: {color75ab};")"
+                        @onclick="() => color75ab = colorSeleccionado"></button>
+            </td> <!-- 75 -->
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="table-danger">
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <td><button class="barraverticalcorta"></button></td>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;>&nbsp;</th>
+            <th width: 20px;></th>
+            <th width: 50px;></th>
+            <th width: 20px;></th>
+            <th width: 10px;></th>
+        </tr>
+    </tbody>
+</table>
+</div>
+    </div>
+</div>
+
+<div style="display: @(divHistoriaClinica == 1 ? "block" : "none")">
+<div class= "divFijo">
+    <div class="subTitulos">HISTORIA CLINICA</div>
+    <table class="table table-sm table align-middle table-success table-hover table-bordered border-primary ">
+        <thead>
+            <tr class="table-dark">
+                <th>FECHA</th>
+                <th>PACIENTE</th>
+                <th>PRACTICA</th>
+                <th>OBRA SOCIAL</th>
+                <th>ODONTOLOGO</th>
+                <th>@* 
+                <button type="button" class="btn btn-danger" @onclick="CerrarDiv">X</button> *@
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-success">
+            </tr>
+            @foreach (var practicaRealizada in registrosFiltrados)
+            {
+                <tr class="table-success" @onclick="() => CargarPacienteSeleccionado(practicaRealizada.Observaciones)">
+                    <td>@practicaRealizada.Fecha.ToString("dd/MM/yyyy")</td>
+                    <td>@practicaRealizada.Paciente</td>
+                    <td>@practicaRealizada.Practica</td>
+                    <td>@practicaRealizada.ObraSocial</td>
+                    <td>@practicaRealizada.Odontologo</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalobservaciones">&#128065</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</div>
+<!-- Modal OBSERVACIONES -->
+<div class="modal fade" id="modalobservaciones" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">OBSERVACIONES DE ESTA VISITA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p> </p>
+                <div style="width: 100%;">
+                    <textarea rows="4" cols= style="width: 100%;" @bind="observaciones"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" class="btn btn-dark" data-bs-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+}
+else
+{
+    <p>No tienes permiso para ver los datos.</p>
+}
+ </div>
+@code {
+
+    ////////////////////////////////////////////
+
+    
+    private HttpClient _httpClient;
+    private string ResultadoConsulta;
+    private string ResultadoConsulta2;
+    private string DNI = "";
+
+    // Clase para deserializar los campos nombre y cuil
+    public class BeneficiarioInfo
+    {
+        public object constancia_id { get; set; }
+        public int numero { get; set; }
+        public string codigo { get; set; }
+        public int beneficiario_id { get; set; }
+        public string apellido { get; set; }
+        public string nombre { get; set; }
+        public string numero_de_documento { get; set; }
+        public string tipo_de_documento { get; set; }
+        public string cuil_beneficiario { get; set; }
+        public string cuil_titular { get; set; }
+        public int ficha_os { get; set; }
+        public int orden { get; set; }
+        public string parentesco_denominacion { get; set; }
+        public int parentesco_codigo { get; set; }
+        public string delegacion_nombre { get; set; }
+        public int delegacion_codigo { get; set; }
+        public int estado { get; set; }
+        public string fecha_de_nacimiento { get; set; }
+        public int edad { get; set; }
+        public bool plan_materno { get; set; }
+        public bool plan_infantil { get; set; }
+        public bool discapacidad { get; set; }
+        public bool estudiante { get; set; }
+        public string plan_descripcion { get; set; }
+        public string plan_codigo { get; set; }
+        public bool coseguro_exento { get; set; }
+        public string sexo { get; set; }
+        public List<object> coseguros { get; set; }
+        public object fecha_de_baja { get; set; }
+    }
+
+    public string nombre1 = "";
+    public string nombre2 = "";
+    public string apellido1 = "";
+    public string apellido2 = "";
+    public string fechaDeNacimiento1 = "";
+    public string fechaDeNacimiento2 = "";
+    public string estado1 = "";
+    public string estado2 = "";
+    public int edad1 = 0;
+    public int edad2 = 0;
+    private async Task ConsultarEstado()
+    {
+        _httpClient = new HttpClient();
+        // URL del endpoint del servicio RPC2
+        string serviceUrl = "https://ospia.org.ar/beneficiarios/RPC2";
+
+        // Usuario y contraseña para la autenticación básica
+        string username = "pfrencia310";
+        string password = "MEiufkxYWcIsU";
+
+        // Método y parámetros para la llamada al método beneficiarios.consultar_estado
+        string methodName = "beneficiarios.consultar_estado";
+        string[] methodParams = { DNI, "" }; // Parámetros proporcionados
+
+        // Crear un objeto JSON para la solicitud
+        var jsonRequest = new
+        {
+            method = methodName,
+            @params = methodParams
+        };
+
+        // Convertir el objeto JSON en una cadena JSON
+        string jsonRequestBody = JsonConvert.SerializeObject(jsonRequest);
+
+        // Convertir la cadena JSON en un contenido HTTP
+        HttpContent content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
+
+        // Agregar la autenticación básica
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic",
+            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
+
+        try
+        {
+            // Realizar una solicitud POST al servicio RPC2
+            HttpResponseMessage response = await _httpClient.PostAsync(serviceUrl, content);
+
+            // Verificar si la solicitud fue exitosa
+            if (response.IsSuccessStatusCode)
+            {
+                // Leer la respuesta como una cadena JSON
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                ResultadoConsulta2 = jsonResponse;
+                // Deserializar el JSON principal
+                var responseObject = JsonConvert.DeserializeObject<JsonResponse>(jsonResponse);
+
+                // Deserializar la propiedad "result" dentro del JSON principal
+                var resultObject = JsonConvert.DeserializeObject<List<BeneficiarioInfo>>(responseObject.result);
+
+                var primerBeneficiario = resultObject.FirstOrDefault();
+
+                // Asignar los valores a las variables en C#
+                if (primerBeneficiario != null)
+                {
+                    object constanciaId = primerBeneficiario.constancia_id;
+                    int numero = primerBeneficiario.numero;
+                    string codigo = primerBeneficiario.codigo;
+                    int beneficiarioId = primerBeneficiario.beneficiario_id;
+                    apellido1 = primerBeneficiario.apellido;
+                    nombre1 = primerBeneficiario.nombre;
+                    string numeroDocumento = primerBeneficiario.numero_de_documento;
+                    string tipoDocumento = primerBeneficiario.tipo_de_documento;
+                    string cuilBeneficiario = primerBeneficiario.cuil_beneficiario;
+                    string cuilTitular = primerBeneficiario.cuil_titular;
+                    int fichaOs = primerBeneficiario.ficha_os;
+                    int orden = primerBeneficiario.orden;
+                    string parentescoDenominacion = primerBeneficiario.parentesco_denominacion;
+                    int parentescoCodigo = primerBeneficiario.parentesco_codigo;
+                    string delegacionNombre = primerBeneficiario.delegacion_nombre;
+                    int delegacionCodigo = primerBeneficiario.delegacion_codigo;
+                    int estado = primerBeneficiario.estado;
+                    if (estado == 0 || estado == 1)
+                    {
+                        estado1 = "HABILITADO";
+                    }
+                    fechaDeNacimiento1 = primerBeneficiario.fecha_de_nacimiento;
+                    edad1 = primerBeneficiario.edad;
+                    bool planMaterno = primerBeneficiario.plan_materno;
+                    bool planInfantil = primerBeneficiario.plan_infantil;
+                    bool discapacidad = primerBeneficiario.discapacidad;
+                    bool estudiante = primerBeneficiario.estudiante;
+                    string planDescripcion = primerBeneficiario.plan_descripcion;
+                    string planCodigo = primerBeneficiario.plan_codigo;
+                    bool coseguroExento = primerBeneficiario.coseguro_exento;
+                    string sexo = primerBeneficiario.sexo;
+                    List<object> coseguros = primerBeneficiario.coseguros;
+                    object fechaBaja = primerBeneficiario.fecha_de_baja;
+
+                }
+            }
+            else
+            {
+                ResultadoConsulta = "La solicitud al servicio RPC2 falló con el código de estado: " + response.StatusCode;
+                apellido1 = "";
+                nombre1 = "";
+                estado1 = "";
+                fechaDeNacimiento1 = "";
+                edad1 = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            ResultadoConsulta = "Ocurrió un error al realizar la solicitud al servicio RPC2: " + ex.Message;
+        }
+    }
+
+    // Clase para deserializar el JSON principal
+    public class JsonResponse
+    {
+        public string jsonrpc { get; set; }
+        public string id { get; set; }
+        public string result { get; set; }
+    }
+
+    ///////////////////////////////////////////
+
+    [Inject]
+    private DbDentistaContext DbContext { get; set; }
+    private List<PracticasRealizada> registrosFiltrados = new List<PracticasRealizada>();
+    private List<PracticasRealizada> ListaDePracticasRealizadas = new List<PracticasRealizada>();
+    protected override void OnInitialized()
+    {
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        ListaDePracticasRealizadas = DbContext.PracticasRealizadas.ToList();
+        registrosFiltrados = ListaDePracticasRealizadas.Where(e => e.IdPaciente == 0).ToList();
+    }
+    private string observaciones = "";
+    private string Rd = "R";
+    private string Bd = "B";
+    private string Wd = "W";
+    private string XRd = "XR";
+    private string XBd = "XB";
+    private string ORd = "OR";
+    private string OBd = "OB";
+    private string TRd = "TR";
+    private string TBd = "TB";
+    private string algo = "valor uno";
+    public string nombreDelBotonPacientes = "AGREGAR PACIENTE";
+    public string nombrePaciente = "-";
+    public string apellido = "-";
+    public string domicilio = "-";
+    public string celu = "0";
+    private int divHistoriaClinica = 0;
+    private string IGUALRd = "IGUALR";
+    private string IGUALBd = "IGUALB";
+    private string IGUALR = "2px solid black";
+    private string IGUALB = "2px solid black";
+    private string IGUAL = "=";
+    private string R = "R";
+    private string B = "B";
+    private string W = "W";
+    private string XR = "2px solid black";
+    private string XB = "2px solid black";
+    private string OR = "2px solid black";
+    private string OB = "2px solid black";
+    private string TR = "2px solid black";
+    private string TB = "2px solid black";
+    private DateTime fechaNacimiento = DateTime.Today;
+    private DateTime fechaAlta = DateTime.Today;
+    private string obraSocialSeleccionada;
+    public string obraSocialGuardar = "ninguna";
+    public string titular = "TITULAR";
+    public string plan = "-";
+    public string afiliado = "0";
+    private string textoMultilinea = "observacioes del paciente";
+    private bool CamposValidos => !string.IsNullOrEmpty(apellido) && !string.IsNullOrEmpty(nombrePaciente);
+    private bool mostrarModalEdit = false;
+    private List<Paciente> ListaDePacientes = new List<Paciente>();
+    private int PacienteIdEdit = 0;
+    private int currentDiv = 0;
+    public int edad = 0;
+    public int currentDivPacientes = 0;
+    public string pacienteAgregadoCorrectamente = "";
+    private int IdEdit = 0;
+    private string filtro = "";
+    private string dni = "0";
+    private int IdOdontogramaSeleccionado = 0;
+    private int IdOdontogramaSeleccionadoN = 0;
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    async Task CopiarAlPortapapeles(string texto)
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", texto);
+    }
+    public void EditarPaciente(int practicaId)
+    {
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            var prueba = DbContext.Pacientes.Find(practicaId);
+
+
+            prueba.Nombre = nombrePaciente.ToUpper();
+            prueba.Apellido = apellido.ToUpper();
+            prueba.Domicilio = domicilio.ToUpper();
+            prueba.Celular = celu;
+            prueba.FechaDeNacimiento = fechaNacimiento;
+            prueba.FechaDeAlta = DateTime.Today;
+            prueba.ObraSocial = obraSocialGuardar;
+            prueba.Titular = titular.ToUpper();
+            prueba.PlanDeObraSocial = plan;
+            prueba.NumeroAfiliado = afiliado;
+            prueba.Observaciones = textoMultilinea;
+            db.Update(prueba);
+            db.SaveChanges();
+
+        }
+
+    }
+
+    private void CargarPacienteSeleccionado(string observacionepasada)
+    {
+        observaciones = observacionepasada;
+    }
+
+    private void SeleccionarPaciente()
+    {
+    }
+
+
+    private void ShowDiv(int divNumber)
+    {
+        // Cambiar el número del div actual al hacer clic en el botón correspondiente
+        currentDiv = divNumber;
+    }
+
+
+    public void EliminarPaciente(int pacienteId)
+    {
+        //  Eliminarla.Eliminarla(practicaId);
+        var practica = DbContext.Pacientes.Find(pacienteId);
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Pacientes.Remove(practica);
+            db.SaveChanges();
+        }
+        ActualizaTabla();
+    }
+
+
+
+
+    private void ActualizaTabla()
+    {
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
+
+    private void AgregarPacientesMenu(int log)
+    {        if (currentDivPacientes == 0)
+        {
+            currentDivPacientes = log;
+            nombreDelBotonPacientes = "CERRAR PESTAÑA";
+        }
+        else
+        {
+            currentDivPacientes = 0;
+            nombreDelBotonPacientes = "AGREGAR PACIENTES";
+        }
+        InicializarPacientes();
+
+    }
+    private void CalcularEdad()
+    {
+
+        DateTime fechaActual = DateTime.Today;
+        edad = fechaActual.Year - fechaNacimiento.Year;
+
+        // Verifica si aún no ha cumplido años en el año actual
+        if (fechaActual.Month < fechaNacimiento.Month || (fechaActual.Month == fechaNacimiento.Month && fechaActual.Day < fechaNacimiento.Day))
+        {
+            edad--;
+        }    
+    }
+
+    private void MetodoPersonalizado(ChangeEventArgs args)
+    {
+        obraSocialSeleccionada = args.Value.ToString();
+        // Lógica del método personalizado
+        if (obraSocialSeleccionada == "particular")
+        {
+            obraSocialGuardar = "particular";
+            ShowDiv(0);
+            titular = "TITULAR";
+            plan = "-";
+            afiliado = "0";
+        }
+        else if (obraSocialSeleccionada == "0")
+        {
+            obraSocialGuardar = obraSocialSeleccionada;
+            ShowDiv(0);
+        }
+        else
+        {
+            obraSocialGuardar = obraSocialSeleccionada;
+            ShowDiv(1);
+        }        
+    }
+    public void InicializarPacientes()
+    {
+        nombrePaciente = "-";
+        apellido = "-";
+        domicilio = "-";
+        celu = "0000000000";
+        dni = "0";
+        fechaNacimiento = DateTime.Today;
+        fechaAlta = DateTime.Today;
+        obraSocialSeleccionada = "0";
+        obraSocialGuardar = "ninguna";
+        titular = "TITULAR";
+        plan = "-";
+        afiliado = "0";
+    }
+    private void InicializarOdontograma()
+    {
+
+        color18a = "white";
+        color17a = "white";
+        color16a = "white";
+        color15a = "white";
+        color14a = "white";
+        color13a = "white";
+        color12a = "white";
+        color11a = "white";
+        color21a = "white";
+        color22a = "white";
+        color23a = "white";
+        color24a = "white";
+        color25a = "white";
+        color26a = "white";
+        color27a = "white";
+        color28a = "white";
+        color18 = "white";
+        color17 = "white";
+        color16 = "white";
+        color15 = "white";
+        color14 = "white";
+        color13 = "white";
+        color12 = "white";
+        color11 = "white";
+        color21 = "white";
+        color22 = "white";
+        color23 = "white";
+        color24 = "white";
+        color25 = "white";
+        color26 = "white";
+        color27 = "white";
+        color28 = "white";
+        color18i = "white";
+        color17i = "white";
+        color16i = "white";
+        color15i = "white";
+        color14i = "white";
+        color13i = "white";
+        color12i = "white";
+        color11i = "white";
+        color21i = "white";
+        color22i = "white";
+        color23i = "white";
+        color24i = "white";
+        color25i = "white";
+        color26i = "white";
+        color27i = "white";
+        color28i = "white";
+        color18d = "white";
+        color17d = "white";
+        color16d = "white";
+        color15d = "white";
+        color14d = "white";
+        color13d = "white";
+        color12d = "white";
+        color11d = "white";
+        color21d = "white";
+        color22d = "white";
+        color23d = "white";
+        color24d = "white";
+        color25d = "white";
+        color26d = "white";
+        color27d = "white";
+        color28d = "white";
+        color18ab = "white";
+        color17ab = "white";
+        color16ab = "white";
+        color15ab = "white";
+        color14ab = "white";
+        color13ab = "white";
+        color12ab = "white";
+        color11ab = "white";
+        color21ab = "white";
+        color22ab = "white";
+        color23ab = "white";
+        color24ab = "white";
+        color25ab = "white";
+        color26ab = "white";
+        color27ab = "white";
+        color28ab = "white";
+        estado18 = "";
+        estado17 = "";
+        estado16 = "";
+        estado15 = "";
+        estado14 = "";
+        estado13 = "";
+        estado12 = "";
+        estado11 = "";
+        estado21 = "";
+        estado22 = "";
+        estado23 = "";
+        estado24 = "";
+        estado25 = "";
+        estado26 = "";
+        estado27 = "";
+        estado28 = "";
+        color48a = "white";
+        color47a = "white";
+        color46a = "white";
+        color45a = "white";
+        color44a = "white";
+        color43a = "white";
+        color42a = "white";
+        color41a = "white";
+        color31a = "white";
+        color32a = "white";
+        color33a = "white";
+        color34a = "white";
+        color35a = "white";
+        color36a = "white";
+        color37a = "white";
+        color38a = "white";
+        color48 = "white";
+        color47 = "white";
+        color46 = "white";
+        color45 = "white";
+        color44 = "white";
+        color43 = "white";
+        color42 = "white";
+        color41 = "white";
+        color31 = "white";
+        color32 = "white";
+        color33 = "white";
+        color34 = "white";
+        color35 = "white";
+        color36 = "white";
+        color37 = "white";
+        color38 = "white";
+        color48i = "white";
+        color47i = "white";
+        color46i = "white";
+        color45i = "white";
+        color44i = "white";
+        color43i = "white";
+        color42i = "white";
+        color41i = "white";
+        color31i = "white";
+        color32i = "white";
+        color33i = "white";
+        color34i = "white";
+        color35i = "white";
+        color36i = "white";
+        color37i = "white";
+        color38i = "white";
+        color48d = "white";
+        color47d = "white";
+        color46d = "white";
+        color44d = "white";
+        color43d = "white";
+        color42d = "white";
+        color41d = "white";
+        color31d = "white";
+        color32d = "white";
+        color33d = "white";
+        color34d = "white";
+        color35d = "white";
+        color36d = "white";
+        color37d = "white";
+        color38d = "white";
+        color48ab = "white";
+        color47ab = "white";
+        color46ab = "white";
+        color45ab = "white";
+        color44ab = "white";
+        color43ab = "white";
+        color42ab = "white";
+        color41ab = "white";
+        color31ab = "white";
+        color32ab = "white";
+        color33ab = "white";
+        color34ab = "white";
+        color35ab = "white";
+        color36ab = "white";
+        color37ab = "white";
+        color38ab = "white";
+        estado48 = "";
+        estado47 = "";
+        estado46 = "";
+        estado45 = "";
+        estado44 = "";
+        estado43 = "";
+        estado42 = "";
+        estado41 = "";
+        estado31 = "";
+        estado32 = "";
+        estado33 = "";
+        estado34 = "";
+        estado35 = "";
+        estado36 = "";
+        estado37 = "";
+        estado38 = "";    
+        color55i = "white";
+        color54i = "white";
+        color53i = "white";
+        color52i = "white";
+        color51i = "white";
+        color61i = "white";
+        color62i = "white";
+        color63i = "white";
+        color64i = "white";
+        color65i = "white";
+        color85i = "white";
+        color84i = "white";
+        color83i = "white";
+        color82i = "white";
+        color81i = "white";
+        color71i = "white";
+        color72i = "white";
+        color73i = "white";
+        color74i = "white";
+        color75i = "white";    
+        color55d = "white";
+        color54d = "white";
+        color53d = "white";
+        color52d = "white";
+        color51d = "white";
+        color61d = "white";
+        color62d = "white";
+        color63d = "white";
+        color64d = "white";
+        color65d = "white";
+        color85d = "white";
+        color84d = "white";
+        color83d = "white";
+        color82d = "white";
+        color81d = "white";
+        color71d = "white";
+        color72d = "white";
+        color73d = "white";
+        color74d = "white";
+        color75d = "white";
+        color55 = "white";
+        color54 = "white";
+        color53 = "white";
+        color52 = "white";
+        color51 = "white";
+        color61 = "white";
+        color62 = "white";
+        color63 = "white";
+        color64 = "white";
+        color65 = "white";
+        color85 = "white";
+        color84 = "white";
+        color83 = "white";
+        color82 = "white";
+        color81 = "white";
+        color71 = "white";
+        color72 = "white";
+        color73 = "white";
+        color74 = "white";
+        color75 = "white";
+        color55a = "white";
+        color54a = "white";
+        color53a = "white";
+        color52a = "white";
+        color51a = "white";
+        color61a = "white";
+        color62a = "white";
+        color63a = "white";
+        color64a = "white";
+        color65a = "white";
+        color85a = "white";
+        color84a = "white";
+        color83a = "white";
+        color82a = "white";
+        color81a = "white";
+        color71a = "white";
+        color72a = "white";
+        color73a = "white";
+        color74a = "white";
+        color75a = "white";    
+        color55ab = "white";
+        color54ab = "white";
+        color53ab = "white";
+        color52ab = "white";
+        color51ab = "white";
+        color61ab = "white";
+        color62ab = "white";
+        color63ab = "white";
+        color64ab = "white";
+        color65ab = "white";
+        color85ab = "white";
+        color84ab = "white";
+        color83ab = "white";
+        color82ab = "white";
+        color81ab = "white";
+        color71ab = "white";
+        color72ab = "white";
+        color73ab = "white";
+        color74ab = "white";
+        color75ab = "white";
+        estado55 = "";
+        estado54 = "";
+        estado53 = "";
+        estado52 = "";
+        estado51 = "";
+        estado61 = "";
+        estado62 = "";
+        estado63 = "";
+        estado64 = "";
+        estado65 = "";
+        estado85 = "";
+        estado84 = "";
+        estado83 = "";
+        estado82 = "";
+        estado81 = "";
+        estado71 = "";
+        estado72 = "";
+        estado73 = "";
+        estado74 = "";
+        estado75 = "";
+
+    }
+    public void Agregar()
+    {
+        InicializarOdontograma();
+
+        var prueba = new Paciente();
+        prueba.Nombre = nombrePaciente.ToUpper();
+        prueba.Apellido = apellido.ToUpper();
+        prueba.Domicilio = domicilio.ToUpper();
+        prueba.Celular = celu;
+        prueba.FechaDeNacimiento = fechaNacimiento;
+        prueba.FechaDeAlta = DateTime.Today;
+        prueba.ObraSocial = obraSocialGuardar;
+        prueba.Titular = titular.ToUpper();
+        prueba.PlanDeObraSocial = plan;
+        prueba.NumeroAfiliado = afiliado;
+        prueba.Observaciones = textoMultilinea;
+        prueba.Dni = dni;
+        prueba.IdOdontograma = 0;
+        prueba.IdOdontogramaNiño = 0;
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Pacientes.Add(prueba);
+            db.SaveChanges();
+        }
+        var odontrogramanuevo = new Dent.Models.Odontograma();
+
+        odontrogramanuevo.IdPaciente = prueba.Id;
+
+        odontrogramanuevo.Abajo18 = color18ab;
+        odontrogramanuevo.Arriba18 = color18a;
+        odontrogramanuevo.Izquierda18 = color18i;
+        odontrogramanuevo.Derecha18 = color18d;
+        odontrogramanuevo.Centro18 = color18;
+        odontrogramanuevo.Estado18 = estado18;
+        odontrogramanuevo.Color18 = colorLetra18;
+
+        odontrogramanuevo.Abajo17 = color17ab;
+        odontrogramanuevo.Arriba17 = color17a;
+        odontrogramanuevo.Izquierda17 = color17i;
+        odontrogramanuevo.Derecha17 = color17d;
+        odontrogramanuevo.Centro17 = color17;
+        odontrogramanuevo.Estado17 = estado17;
+        odontrogramanuevo.Color17 = colorLetra17;
+
+        odontrogramanuevo.Abajo16 = color16ab;
+        odontrogramanuevo.Arriba16 = color16a;
+        odontrogramanuevo.Izquierda16 = color16i;
+        odontrogramanuevo.Derecha16 = color16d;
+        odontrogramanuevo.Centro16 = color16;
+        odontrogramanuevo.Estado16 = estado16;
+        odontrogramanuevo.Color16 = colorLetra16;
+
+        odontrogramanuevo.Abajo15 = color15ab;
+        odontrogramanuevo.Arriba15 = color15a;
+        odontrogramanuevo.Izquierda15 = color15i;
+        odontrogramanuevo.Derecha15 = color15d;
+        odontrogramanuevo.Centro15 = color15;
+        odontrogramanuevo.Estado15 = estado15;
+        odontrogramanuevo.Color15 = colorLetra15;
+
+        odontrogramanuevo.Abajo14 = color14ab;
+        odontrogramanuevo.Arriba14 = color14a;
+        odontrogramanuevo.Izquierda14 = color14i;
+        odontrogramanuevo.Derecha14 = color14d;
+        odontrogramanuevo.Centro14 = color14;
+        odontrogramanuevo.Estado14 = estado14;
+        odontrogramanuevo.Color14 = colorLetra14;
+
+        odontrogramanuevo.Abajo13 = color13ab;
+        odontrogramanuevo.Arriba13 = color13a;
+        odontrogramanuevo.Izquierda13 = color13i;
+        odontrogramanuevo.Derecha13 = color13d;
+        odontrogramanuevo.Centro13 = color13;
+        odontrogramanuevo.Estado13 = estado13;
+        odontrogramanuevo.Color13 = colorLetra13;
+
+        odontrogramanuevo.Abajo12 = color12ab;
+        odontrogramanuevo.Arriba12 = color12a;
+        odontrogramanuevo.Izquierda12 = color12i;
+        odontrogramanuevo.Derecha12 = color12d;
+        odontrogramanuevo.Centro12 = color12;
+        odontrogramanuevo.Estado12 = estado12;
+        odontrogramanuevo.Color12 = colorLetra12;
+
+        odontrogramanuevo.Abajo11 = color11ab;
+        odontrogramanuevo.Arriba11 = color11a;
+        odontrogramanuevo.Izquierda11 = color11i;
+        odontrogramanuevo.Derecha11 = color11d;
+        odontrogramanuevo.Centro11 = color11;
+        odontrogramanuevo.Estado11 = estado11;
+        odontrogramanuevo.Color11 = colorLetra11;
+
+        odontrogramanuevo.Abajo21 = color21ab;
+        odontrogramanuevo.Arriba21 = color21a;
+        odontrogramanuevo.Izquierda21 = color21i;
+        odontrogramanuevo.Derecha21 = color21d;
+        odontrogramanuevo.Centro21 = color21;
+        odontrogramanuevo.Estado21 = estado21;
+        odontrogramanuevo.Color21 = colorLetra21;
+
+        odontrogramanuevo.Abajo22 = color22ab;
+        odontrogramanuevo.Arriba22 = color22a;
+        odontrogramanuevo.Izquierda22 = color22i;
+        odontrogramanuevo.Derecha22 = color22d;
+        odontrogramanuevo.Centro22 = color22;
+        odontrogramanuevo.Estado22 = estado22;
+        odontrogramanuevo.Color22 = colorLetra22;
+
+        odontrogramanuevo.Abajo23 = color23ab;
+        odontrogramanuevo.Arriba23 = color23a;
+        odontrogramanuevo.Izquierda23 = color23i;
+        odontrogramanuevo.Derecha23 = color23d;
+        odontrogramanuevo.Centro23 = color23;
+        odontrogramanuevo.Estado23 = estado23;
+        odontrogramanuevo.Color23 = colorLetra23;
+
+        odontrogramanuevo.Abajo24 = color24ab;
+        odontrogramanuevo.Arriba24 = color24a;
+        odontrogramanuevo.Izquierda24 = color24i;
+        odontrogramanuevo.Derecha24 = color24d;
+        odontrogramanuevo.Centro24 = color24;
+        odontrogramanuevo.Estado24 = estado24;
+        odontrogramanuevo.Color24 = colorLetra24;
+
+        odontrogramanuevo.Abajo25 = color25ab;
+        odontrogramanuevo.Arriba25 = color25a;
+        odontrogramanuevo.Izquierda25 = color25i;
+        odontrogramanuevo.Derecha25 = color25d;
+        odontrogramanuevo.Centro25 = color25;
+        odontrogramanuevo.Estado25 = estado25;
+        odontrogramanuevo.Color25 = colorLetra25;
+
+        odontrogramanuevo.Abajo26 = color26ab;
+        odontrogramanuevo.Arriba26 = color26a;
+        odontrogramanuevo.Izquierda26 = color26i;
+        odontrogramanuevo.Derecha26 = color26d;
+        odontrogramanuevo.Centro26 = color26;
+        odontrogramanuevo.Estado26 = estado26;
+        odontrogramanuevo.Color26 = colorLetra26;
+
+        odontrogramanuevo.Abajo27 = color27ab;
+        odontrogramanuevo.Arriba27 = color27a;
+        odontrogramanuevo.Izquierda27 = color27i;
+        odontrogramanuevo.Derecha27 = color27d;
+        odontrogramanuevo.Centro27 = color27;
+        odontrogramanuevo.Estado27 = estado27;
+        odontrogramanuevo.Color27 = colorLetra27;
+
+        odontrogramanuevo.Abajo28 = color28ab;
+        odontrogramanuevo.Arriba28 = color28a;
+        odontrogramanuevo.Izquierda28 = color28i;
+        odontrogramanuevo.Derecha28 = color28d;
+        odontrogramanuevo.Centro28 = color28;
+        odontrogramanuevo.Estado28 = estado28;
+        odontrogramanuevo.Color28 = colorLetra28;
+
+        odontrogramanuevo.Abajo48 = color48ab;
+        odontrogramanuevo.Arriba48 = color48a;
+        odontrogramanuevo.Izquierda48 = color48i;
+        odontrogramanuevo.Derecha48 = color48d;
+        odontrogramanuevo.Centro48 = color48;
+        odontrogramanuevo.Estado48 = estado48;
+        odontrogramanuevo.Color48 = colorLetra48;
+
+        odontrogramanuevo.Abajo47 = color47ab;
+        odontrogramanuevo.Arriba47 = color47a;
+        odontrogramanuevo.Izquierda47 = color47i;
+        odontrogramanuevo.Derecha47 = color47d;
+        odontrogramanuevo.Centro47 = color47;
+        odontrogramanuevo.Estado47 = estado47;
+        odontrogramanuevo.Color47 = colorLetra47;
+
+        odontrogramanuevo.Abajo46 = color46ab;
+        odontrogramanuevo.Arriba46 = color46a;
+        odontrogramanuevo.Izquierda46 = color46i;
+        odontrogramanuevo.Derecha46 = color46d;
+        odontrogramanuevo.Centro46 = color46;
+        odontrogramanuevo.Estado46 = estado46;
+        odontrogramanuevo.Color46 = colorLetra46;
+
+        odontrogramanuevo.Abajo45 = color45ab;
+        odontrogramanuevo.Arriba45 = color45a;
+        odontrogramanuevo.Izquierda45 = color45i;
+        odontrogramanuevo.Derecha45 = color45d;
+        odontrogramanuevo.Centro45 = color45;
+        odontrogramanuevo.Estado45 = estado45;
+        odontrogramanuevo.Color45 = colorLetra45;
+
+        odontrogramanuevo.Abajo44 = color44ab;
+        odontrogramanuevo.Arriba44 = color44a;
+        odontrogramanuevo.Izquierda44 = color44i;
+        odontrogramanuevo.Derecha44 = color44d;
+        odontrogramanuevo.Centro44 = color44;
+        odontrogramanuevo.Estado44 = estado44;
+        odontrogramanuevo.Color44 = colorLetra44;
+
+        odontrogramanuevo.Abajo43 = color43ab;
+        odontrogramanuevo.Arriba43 = color43a;
+        odontrogramanuevo.Izquierda43 = color43i;
+        odontrogramanuevo.Derecha43 = color43d;
+        odontrogramanuevo.Centro43 = color43;
+        odontrogramanuevo.Estado43 = estado43;
+        odontrogramanuevo.Color43 = colorLetra43;
+
+        odontrogramanuevo.Abajo42 = color42ab;
+        odontrogramanuevo.Arriba42 = color42a;
+        odontrogramanuevo.Izquierda42 = color42i;
+        odontrogramanuevo.Derecha42 = color42d;
+        odontrogramanuevo.Centro42 = color42;
+        odontrogramanuevo.Estado42 = estado42;
+        odontrogramanuevo.Color42 = colorLetra42;
+
+        odontrogramanuevo.Abajo41 = color41ab;
+        odontrogramanuevo.Arriba41 = color41a;
+        odontrogramanuevo.Izquierda41 = color41i;
+        odontrogramanuevo.Derecha41 = color41d;
+        odontrogramanuevo.Centro41 = color41;
+        odontrogramanuevo.Estado41 = estado41;
+        odontrogramanuevo.Color41 = colorLetra41;
+
+        odontrogramanuevo.Abajo31 = color31ab;
+        odontrogramanuevo.Arriba31 = color31a;
+        odontrogramanuevo.Izquierda31 = color31i;
+        odontrogramanuevo.Derecha31 = color31d;
+        odontrogramanuevo.Centro31 = color31;
+        odontrogramanuevo.Estado31 = estado31;
+        odontrogramanuevo.Color31 = colorLetra31;
+
+        odontrogramanuevo.Abajo32 = color32ab;
+        odontrogramanuevo.Arriba32 = color32a;
+        odontrogramanuevo.Izquierda32 = color32i;
+        odontrogramanuevo.Derecha32 = color32d;
+        odontrogramanuevo.Centro32 = color32;
+        odontrogramanuevo.Estado32 = estado32;
+        odontrogramanuevo.Color32 = colorLetra32;
+
+        odontrogramanuevo.Abajo33 = color33ab;
+        odontrogramanuevo.Arriba33 = color33a;
+        odontrogramanuevo.Izquierda33 = color33i;
+        odontrogramanuevo.Derecha33 = color33d;
+        odontrogramanuevo.Centro33 = color33;
+        odontrogramanuevo.Estado33 = estado33;
+        odontrogramanuevo.Color33 = colorLetra33;
+
+        odontrogramanuevo.Abajo34 = color34ab;
+        odontrogramanuevo.Arriba34 = color34a;
+        odontrogramanuevo.Izquierda34 = color34i;
+        odontrogramanuevo.Derecha34 = color34d;
+        odontrogramanuevo.Centro34 = color34;
+        odontrogramanuevo.Estado34 = estado34;
+        odontrogramanuevo.Color34 = colorLetra34;
+
+        odontrogramanuevo.Abajo35 = color35ab;
+        odontrogramanuevo.Arriba35 = color35a;
+        odontrogramanuevo.Izquierda35 = color35i;
+        odontrogramanuevo.Derecha35 = color35d;
+        odontrogramanuevo.Centro35 = color35;
+        odontrogramanuevo.Estado35 = estado35;
+        odontrogramanuevo.Color35 = colorLetra35;
+
+        odontrogramanuevo.Abajo36 = color36ab;
+        odontrogramanuevo.Arriba36 = color36a;
+        odontrogramanuevo.Izquierda36 = color36i;
+        odontrogramanuevo.Derecha36 = color36d;
+        odontrogramanuevo.Centro36 = color36;
+        odontrogramanuevo.Estado36 = estado36;
+        odontrogramanuevo.Color36 = colorLetra36;
+
+        odontrogramanuevo.Abajo37 = color37ab;
+        odontrogramanuevo.Arriba37 = color37a;
+        odontrogramanuevo.Izquierda37 = color37i;
+        odontrogramanuevo.Derecha37 = color37d;
+        odontrogramanuevo.Centro37 = color37;
+        odontrogramanuevo.Estado37 = estado37;
+        odontrogramanuevo.Color37 = colorLetra37;
+
+        odontrogramanuevo.Abajo38 = color38ab;
+        odontrogramanuevo.Arriba38 = color38a;
+        odontrogramanuevo.Izquierda38 = color38i;
+        odontrogramanuevo.Derecha38 = color38d;
+        odontrogramanuevo.Centro38 = color38;
+        odontrogramanuevo.Estado38 = estado38;
+        odontrogramanuevo.Color38 = colorLetra38;
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Odontogramas.Add(odontrogramanuevo);
+            db.SaveChanges();
+        }
+
+        var odontrogramanuevoN = new Dent.Models.OdontrogramaNiño();
+
+        odontrogramanuevoN.IdPaciente = prueba.Id;
+        odontrogramanuevoN.Abajo55 = color55ab;
+        odontrogramanuevoN.Arriba55 = color55a;
+        odontrogramanuevoN.Izquierda55 = color55i;
+        odontrogramanuevoN.Derecha55 = color55d;
+        odontrogramanuevoN.Centro55 = color55;
+        odontrogramanuevoN.Estado55 = estado55;
+
+        odontrogramanuevoN.Abajo54 = color54ab;
+        odontrogramanuevoN.Arriba54 = color54a;
+        odontrogramanuevoN.Izquierda54 = color54i;
+        odontrogramanuevoN.Derecha54 = color54d;
+        odontrogramanuevoN.Centro54 = color54;
+        odontrogramanuevoN.Estado54 = estado54;
+
+        odontrogramanuevoN.Abajo53 = color53ab;
+        odontrogramanuevoN.Arriba53 = color53a;
+        odontrogramanuevoN.Izquierda53 = color53i;
+        odontrogramanuevoN.Derecha53 = color53d;
+        odontrogramanuevoN.Centro53 = color53;
+        odontrogramanuevoN.Estado53 = estado53;
+
+        odontrogramanuevoN.Abajo52 = color52ab;
+        odontrogramanuevoN.Arriba52 = color52a;
+        odontrogramanuevoN.Izquierda52 = color52i;
+        odontrogramanuevoN.Derecha52 = color52d;
+        odontrogramanuevoN.Centro52 = color52;
+        odontrogramanuevoN.Estado52 = estado52;
+
+        odontrogramanuevoN.Abajo51 = color51ab;
+        odontrogramanuevoN.Arriba51 = color51a;
+        odontrogramanuevoN.Izquierda51 = color51i;
+        odontrogramanuevoN.Derecha51 = color51d;
+        odontrogramanuevoN.Centro51 = color51;
+        odontrogramanuevoN.Estado51 = estado51;
+
+        odontrogramanuevoN.Abajo61 = color61ab;
+        odontrogramanuevoN.Arriba61 = color61a;
+        odontrogramanuevoN.Izquierda61 = color61i;
+        odontrogramanuevoN.Derecha61 = color61d;
+        odontrogramanuevoN.Centro61 = color61;
+        odontrogramanuevoN.Estado61 = estado61;
+
+        odontrogramanuevoN.Abajo62 = color62ab;
+        odontrogramanuevoN.Arriba62 = color62a;
+        odontrogramanuevoN.Izquierda62 = color62i;
+        odontrogramanuevoN.Derecha62 = color62d;
+        odontrogramanuevoN.Centro62 = color62;
+        odontrogramanuevoN.Estado62 = estado62;
+
+        odontrogramanuevoN.Abajo63 = color63ab;
+        odontrogramanuevoN.Arriba63 = color63a;
+        odontrogramanuevoN.Izquierda63 = color63i;
+        odontrogramanuevoN.Derecha63 = color63d;
+        odontrogramanuevoN.Centro63 = color63;
+        odontrogramanuevoN.Estado63 = estado63;
+
+        odontrogramanuevoN.Abajo64 = color64ab;
+        odontrogramanuevoN.Arriba64 = color64a;
+        odontrogramanuevoN.Izquierda64 = color64i;
+        odontrogramanuevoN.Derecha64 = color64d;
+        odontrogramanuevoN.Centro64 = color64;
+        odontrogramanuevoN.Estado64 = estado64;
+
+        odontrogramanuevoN.Abajo65 = color65ab;
+        odontrogramanuevoN.Arriba65 = color65a;
+        odontrogramanuevoN.Izquierda65 = color65i;
+        odontrogramanuevoN.Derecha65 = color65d;
+        odontrogramanuevoN.Centro65 = color65;
+        odontrogramanuevoN.Estado65 = estado65;
+
+        odontrogramanuevoN.Abajo85 = color85ab;
+        odontrogramanuevoN.Arriba85 = color85a;
+        odontrogramanuevoN.Izquierda85 = color85i;
+        odontrogramanuevoN.Derecha85 = color85d;
+        odontrogramanuevoN.Centro85 = color85;
+        odontrogramanuevoN.Estado85 = estado85;
+
+        odontrogramanuevoN.Abajo84 = color84ab;
+        odontrogramanuevoN.Arriba84 = color84a;
+        odontrogramanuevoN.Izquierda84 = color84i;
+        odontrogramanuevoN.Derecha84 = color84d;
+        odontrogramanuevoN.Centro84 = color84;
+        odontrogramanuevoN.Estado84 = estado84;
+
+        odontrogramanuevoN.Abajo83 = color83ab;
+        odontrogramanuevoN.Arriba83 = color83a;
+        odontrogramanuevoN.Izquierda83 = color83i;
+        odontrogramanuevoN.Derecha83 = color83d;
+        odontrogramanuevoN.Centro83 = color83;
+        odontrogramanuevoN.Estado83 = estado83;
+
+        odontrogramanuevoN.Abajo82 = color82ab;
+        odontrogramanuevoN.Arriba82 = color82a;
+        odontrogramanuevoN.Izquierda82 = color82i;
+        odontrogramanuevoN.Derecha82 = color82d;
+        odontrogramanuevoN.Centro82 = color82;
+        odontrogramanuevoN.Estado82 = estado82;
+
+        odontrogramanuevoN.Abajo81 = color81ab;
+        odontrogramanuevoN.Arriba81 = color81a;
+        odontrogramanuevoN.Izquierda81 = color81i;
+        odontrogramanuevoN.Derecha81 = color81d;
+        odontrogramanuevoN.Centro81 = color81;
+        odontrogramanuevoN.Estado81 = estado81;
+
+        odontrogramanuevoN.Abajo71 = color71ab;
+        odontrogramanuevoN.Arriba71 = color71a;
+        odontrogramanuevoN.Izquierda71 = color71i;
+        odontrogramanuevoN.Derecha71 = color71d;
+        odontrogramanuevoN.Centro71 = color71;
+        odontrogramanuevoN.Estado71 = estado71;
+
+        odontrogramanuevoN.Abajo72 = color72ab;
+        odontrogramanuevoN.Arriba72 = color72a;
+        odontrogramanuevoN.Izquierda72 = color72i;
+        odontrogramanuevoN.Derecha72 = color72d;
+        odontrogramanuevoN.Centro72 = color72;
+        odontrogramanuevoN.Estado72 = estado72;
+
+        odontrogramanuevoN.Abajo73 = color73ab;
+        odontrogramanuevoN.Arriba73 = color73a;
+        odontrogramanuevoN.Izquierda73 = color73i;
+        odontrogramanuevoN.Derecha73 = color73d;
+        odontrogramanuevoN.Centro73 = color73;
+        odontrogramanuevoN.Estado73 = estado73;
+
+        odontrogramanuevoN.Abajo74 = color74ab;
+        odontrogramanuevoN.Arriba74 = color74a;
+        odontrogramanuevoN.Izquierda74 = color74i;
+        odontrogramanuevoN.Derecha74 = color74d;
+        odontrogramanuevoN.Centro74 = color74;
+        odontrogramanuevoN.Estado74 = estado74;
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.OdontrogramaNiños.Add(odontrogramanuevoN);
+            db.SaveChanges();
+        }
+
+        prueba.IdOdontograma = odontrogramanuevo.Id;
+        prueba.IdOdontogramaNiño = odontrogramanuevoN.Id;
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Update(prueba);
+            db.SaveChanges();
+        }
+        pacienteAgregadoCorrectamente = "paciente agregado correctamente";
+        ActualizaTablaPacientes();
+        InicializarPacientes();
+        AgregarPacientesMenu(1);
+
+
+    }
+    private void ActualizaTablaPacientes()
+    {    
+        ListaDePacientes = DbContext.Pacientes.ToList();
+        StateHasChanged();
+
+    }
+
+    string color = "red"; // Variable que contiene el color que deseas aplicar al botón
+    string color12c = "white";
+    string color18a = "white";
+    string color17a = "white";
+    string color16a = "white";
+    string color15a = "white";
+    string color14a = "white";
+    string color13a = "white";
+    string color12a = "white";
+    string color11a = "white";
+    string color21a = "white";
+    string color22a = "white";
+    string color23a = "white";
+    string color24a = "white";
+    string color25a = "white";
+    string color26a = "white";
+    string color27a = "white";
+    string color28a = "white";
+    string color18 = "white";
+    string color17 = "white";
+    string color16 = "white";
+    string color15 = "white";
+    string color14 = "white";
+    string color13 = "white";
+    string color12 = "white";
+    string color11 = "white";
+    string color21 = "white";
+    string color22 = "white";
+    string color23 = "white";
+    string color24 = "white";
+    string color25 = "white";
+    string color26 = "white";
+    string color27 = "white";
+    string color28 = "white";
+    string color18i = "white";
+    string color17i = "white";
+    string color16i = "white";
+    string color15i = "white";
+    string color14i = "white";
+    string color13i = "white";
+    string color12i = "white";
+    string color11i = "white";
+    string color21i = "white";
+    string color22i = "white";
+    string color23i = "white";
+    string color24i = "white";
+    string color25i = "white";
+    string color26i = "white";
+    string color27i = "white";
+    string color28i = "white";
+    string color18d = "white";
+    string color17d = "white";
+    string color16d = "white";
+    string color15d = "white";
+    string color14d = "white";
+    string color13d = "white";
+    string color12d = "white";
+    string color11d = "white";
+    string color21d = "white";
+    string color22d = "white";
+    string color23d = "white";
+    string color24d = "white";
+    string color25d = "white";
+    string color26d = "white";
+    string color27d = "white";
+    string color28d = "white";
+    string color18ab = "white";
+    string color17ab = "white";
+    string color16ab = "white";
+    string color15ab = "white";
+    string color14ab = "white";
+    string color13ab = "white";
+    string color12ab = "white";
+    string color11ab = "white";
+    string color21ab = "white";
+    string color22ab = "white";
+    string color23ab = "white";
+    string color24ab = "white";
+    string color25ab = "white";
+    string color26ab = "white";
+    string color27ab = "white";
+    string color28ab = "white";
+    string estado18 = "";
+    string estado17 = "";
+    string estado16 = "";
+    string estado15 = "";
+    string estado14 = "";
+    string estado13 = "";
+    string estado12 = "";
+    string estado11 = "";
+    string estado21 = "";
+    string estado22 = "";
+    string estado23 = "";
+    string estado24 = "";
+    string estado25 = "";
+    string estado26 = "";
+    string estado27 = "";
+    string estado28 = "";
+    string color48a = "white";
+    string color47a = "white";
+    string color46a = "white";
+    string color45a = "white";
+    string color44a = "white";
+    string color43a = "white";
+    string color42a = "white";
+    string color41a = "white";
+    string color31a = "white";
+    string color32a = "white";
+    string color33a = "white";
+    string color34a = "white";
+    string color35a = "white";
+    string color36a = "white";
+    string color37a = "white";
+    string color38a = "white";
+    string color48 = "white";
+    string color47 = "white";
+    string color46 = "white";
+    string color45 = "white";
+    string color44 = "white";
+    string color43 = "white";
+    string color42 = "white";
+    string color41 = "white";
+    string color31 = "white";
+    string color32 = "white";
+    string color33 = "white";
+    string color34 = "white";
+    string color35 = "white";
+    string color36 = "white";
+    string color37 = "white";
+    string color38 = "white";
+    string color48i = "white";
+    string color47i = "white";
+    string color46i = "white";
+    string color45i = "white";
+    string color44i = "white";
+    string color43i = "white";
+    string color42i = "white";
+    string color41i = "white";
+    string color31i = "white";
+    string color32i = "white";
+    string color33i = "white";
+    string color34i = "white";
+    string color35i = "white";
+    string color36i = "white";
+    string color37i = "white";
+    string color38i = "white";
+    string color48d = "white";
+    string color47d = "white";
+    string color46d = "white";
+    string color45d = "white";
+    string color44d = "white";
+    string color43d = "white";
+    string color42d = "white";
+    string color41d = "white";
+    string color31d = "white";
+    string color32d = "white";
+    string color33d = "white";
+    string color34d = "white";
+    string color35d = "white";
+    string color36d = "white";
+    string color37d = "white";
+    string color38d = "white";
+    string color48ab = "white";
+    string color47ab = "white";
+    string color46ab = "white";
+    string color45ab = "white";
+    string color44ab = "white";
+    string color43ab = "white";
+    string color42ab = "white";
+    string color41ab = "white";
+    string color31ab = "white";
+    string color32ab = "white";
+    string color33ab = "white";
+    string color34ab = "white";
+    string color35ab = "white";
+    string color36ab = "white";
+    string color37ab = "white";
+    string color38ab = "white";
+    string estado48 = "";
+    string estado47 = "";
+    string estado46 = "";
+    string estado45 = "";
+    string estado44 = "";
+    string estado43 = "";
+    string estado42 = "";
+    string estado41 = "";
+    string estado31 = "";
+    string estado32 = "";
+    string estado33 = "";
+    string estado34 = "";
+    string estado35 = "";
+    string estado36 = "";
+    string estado37 = "";
+    string estado38 = "";    
+    string color55i = "white";
+    string color54i = "white";
+    string color53i = "white";
+    string color52i = "white";
+    string color51i = "white";
+    string color61i = "white";
+    string color62i = "white";
+    string color63i = "white";
+    string color64i = "white";
+    string color65i = "white";
+    string color85i = "white";
+    string color84i = "white";
+    string color83i = "white";
+    string color82i = "white";
+    string color81i = "white";
+    string color71i = "white";
+    string color72i = "white";
+    string color73i = "white";
+    string color74i = "white";
+    string color75i = "white";    
+    string color55d = "white";
+    string color54d = "white";
+    string color53d = "white";
+    string color52d = "white";
+    string color51d = "white";
+    string color61d = "white";
+    string color62d = "white";
+    string color63d = "white";
+    string color64d = "white";
+    string color65d = "white";
+    string color85d = "white";
+    string color84d = "white";
+    string color83d = "white";
+    string color82d = "white";
+    string color81d = "white";
+    string color71d = "white";
+    string color72d = "white";
+    string color73d = "white";
+    string color74d = "white";
+    string color75d = "white";
+    string color55 = "white";
+    string color54 = "white";
+    string color53 = "white";
+    string color52 = "white";
+    string color51 = "white";
+    string color61 = "white";
+    string color62 = "white";
+    string color63 = "white";
+    string color64 = "white";
+    string color65 = "white";
+    string color85 = "white";
+    string color84 = "white";
+    string color83 = "white";
+    string color82 = "white";
+    string color81 = "white";
+    string color71 = "white";
+    string color72 = "white";
+    string color73 = "white";
+    string color74 = "white";
+    string color75 = "white";
+    string color55a = "white";
+    string color54a = "white";
+    string color53a = "white";
+    string color52a = "white";
+    string color51a = "white";
+    string color61a = "white";
+    string color62a = "white";
+    string color63a = "white";
+    string color64a = "white";
+    string color65a = "white";
+    string color85a = "white";
+    string color84a = "white";
+    string color83a = "white";
+    string color82a = "white";
+    string color81a = "white";
+    string color71a = "white";
+    string color72a = "white";
+    string color73a = "white";
+    string color74a = "white";
+    string color75a = "white";    
+    string color55ab = "white";
+    string color54ab = "white";
+    string color53ab = "white";
+    string color52ab = "white";
+    string color51ab = "white";
+    string color61ab = "white";
+    string color62ab = "white";
+    string color63ab = "white";
+    string color64ab = "white";
+    string color65ab = "white";
+    string color85ab = "white";
+    string color84ab = "white";
+    string color83ab = "white";
+    string color82ab = "white";
+    string color81ab = "white";
+    string color71ab = "white";
+    string color72ab = "white";
+    string color73ab = "white";
+    string color74ab = "white";
+    string color75ab = "white";
+    string estado55 = "";
+    string estado54 = "";
+    string estado53 = "";
+    string estado52 = "";
+    string estado51 = "";
+    string estado61 = "";
+    string estado62 = "";
+    string estado63 = "";
+    string estado64 = "";
+    string estado65 = "";
+    string estado85 = "";
+    string estado84 = "";
+    string estado83 = "";
+    string estado82 = "";
+    string estado81 = "";
+    string estado71 = "";
+    string estado72 = "";
+    string estado73 = "";
+    string estado74 = "";
+    string estado75 = "";
+    string colorLetra11 = "black";
+    string colorLetra12 = "black";
+    string colorLetra13 = "black";
+    string colorLetra14 = "black";
+    string colorLetra15 = "black";
+    string colorLetra16 = "black";
+    string colorLetra17 = "black";
+    string colorLetra18 = "black";
+    string colorLetra21 = "black";
+    string colorLetra22 = "black";
+    string colorLetra23 = "black";
+    string colorLetra24 = "black";
+    string colorLetra25 = "black";
+    string colorLetra26 = "black";
+    string colorLetra27 = "black";
+    string colorLetra28 = "black";
+    string colorLetra31 = "black";
+    string colorLetra32 = "black";
+    string colorLetra33 = "black";
+    string colorLetra34 = "black";
+    string colorLetra35 = "black";
+    string colorLetra36 = "black";
+    string colorLetra37 = "black";
+    string colorLetra38 = "black";
+    string colorLetra41 = "black";
+    string colorLetra42 = "black";
+    string colorLetra43 = "black";
+    string colorLetra44 = "black";
+    string colorLetra45 = "black";
+    string colorLetra46 = "black";
+    string colorLetra47 = "black";
+    string colorLetra48 = "black";
+    string colorLetra55 = "black";
+    string colorLetra54 = "black";
+    string colorLetra53 = "black";
+    string colorLetra52 = "black";
+    string colorLetra51 = "black";
+    string colorLetra61 = "black";
+    string colorLetra62 = "black";
+    string colorLetra63 = "black";
+    string colorLetra64 = "black";
+    string colorLetra65 = "black";
+    string colorLetra85 = "black";
+    string colorLetra84 = "black";
+    string colorLetra83 = "black";
+    string colorLetra82 = "black";
+    string colorLetra81 = "black";
+    string colorLetra71 = "black";
+    string colorLetra72 = "black";
+    string colorLetra73 = "black";
+    string colorLetra74 = "black";
+    string colorLetra75 = "black";   
+    string colorSeleccionado = "";
+    string colorLetraSeleccionado = "black";
+    string estadoBoton = "";
+    string red = "red";
+    string blue = "blue";
+    string white = "white";
+    string X = "X";
+    string O = "O";
+    string TC = "T";
+    string vacio = "";
+    private int divAdulto = 1;
+    private int divNiño = 0;
+    private int divOdontograma = 0;
+    private string botonSeleccionado = "";
+    string estadoSeleccionado = "";
+
+    private void MostrarOdontograma()
+    {
+        if (divOdontograma == 0)
+        { divOdontograma = 1; }
+        else
+        {divOdontograma = 0;}
+    }
+     private void MostrarHistoriaClinica()
+    {
+        if (divHistoriaClinica == 0)
+        { divHistoriaClinica = 1; }
+        else
+        {divHistoriaClinica = 0;}
+    }
+    private void MostrarAdulto()
+    {
+        divAdulto = 1;
+        divNiño = 0;
+    }
+    private void MostrarNiño()
+    {
+        divAdulto = 0;
+        divNiño = 1;
+    }
+    private void MostrarAmbos()
+    {
+        divAdulto = 1;
+        divNiño = 1;
+    }
+
+    private void GuardarDatosdeOdontograma()
+    {
+
+        var odontrogramanuevo = DbContext.Odontogramas.Find(IdOdontogramaSeleccionado);
+        odontrogramanuevo.Abajo18 = color18ab;
+        odontrogramanuevo.Arriba18 = color18a;
+        odontrogramanuevo.Izquierda18 = color18i;
+        odontrogramanuevo.Derecha18 = color18d;
+        odontrogramanuevo.Centro18 = color18;
+        odontrogramanuevo.Estado18 = estado18;
+        odontrogramanuevo.Color18 = colorLetra18;
+
+odontrogramanuevo.Abajo17 = color17ab;
+odontrogramanuevo.Arriba17 = color17a;
+odontrogramanuevo.Izquierda17 = color17i;
+odontrogramanuevo.Derecha17 = color17d;
+odontrogramanuevo.Centro17 = color17;
+odontrogramanuevo.Estado17 = estado17;
+odontrogramanuevo.Color17 = colorLetra17;
+
+odontrogramanuevo.Abajo16 = color16ab;
+odontrogramanuevo.Arriba16 = color16a;
+odontrogramanuevo.Izquierda16 = color16i;
+odontrogramanuevo.Derecha16 = color16d;
+odontrogramanuevo.Centro16 = color16;
+odontrogramanuevo.Estado16 = estado16;
+odontrogramanuevo.Color16 = colorLetra16;
+
+odontrogramanuevo.Abajo15 = color15ab;
+odontrogramanuevo.Arriba15 = color15a;
+odontrogramanuevo.Izquierda15 = color15i;
+odontrogramanuevo.Derecha15 = color15d;
+odontrogramanuevo.Centro15 = color15;
+odontrogramanuevo.Estado15 = estado15;
+odontrogramanuevo.Color15 = colorLetra15;
+
+odontrogramanuevo.Abajo14 = color14ab;
+odontrogramanuevo.Arriba14 = color14a;
+odontrogramanuevo.Izquierda14 = color14i;
+odontrogramanuevo.Derecha14 = color14d;
+odontrogramanuevo.Centro14 = color14;
+odontrogramanuevo.Estado14 = estado14;
+odontrogramanuevo.Color14 = colorLetra14;
+
+odontrogramanuevo.Abajo13 = color13ab;
+odontrogramanuevo.Arriba13 = color13a;
+odontrogramanuevo.Izquierda13 = color13i;
+odontrogramanuevo.Derecha13 = color13d;
+odontrogramanuevo.Centro13 = color13;
+odontrogramanuevo.Estado13 = estado13;
+odontrogramanuevo.Color13 = colorLetra13;
+
+odontrogramanuevo.Abajo12 = color12ab;
+odontrogramanuevo.Arriba12 = color12a;
+odontrogramanuevo.Izquierda12 = color12i;
+odontrogramanuevo.Derecha12 = color12d;
+odontrogramanuevo.Centro12 = color12;
+odontrogramanuevo.Estado12 = estado12;
+odontrogramanuevo.Color12 = colorLetra12;
+
+odontrogramanuevo.Abajo11 = color11ab;
+odontrogramanuevo.Arriba11 = color11a;
+odontrogramanuevo.Izquierda11 = color11i;
+odontrogramanuevo.Derecha11 = color11d;
+odontrogramanuevo.Centro11 = color11;
+odontrogramanuevo.Estado11 = estado11;
+odontrogramanuevo.Color11 = colorLetra11;
+
+odontrogramanuevo.Abajo21 = color21ab;
+odontrogramanuevo.Arriba21 = color21a;
+odontrogramanuevo.Izquierda21 = color21i;
+odontrogramanuevo.Derecha21 = color21d;
+odontrogramanuevo.Centro21 = color21;
+odontrogramanuevo.Estado21 = estado21;
+odontrogramanuevo.Color21 = colorLetra21;
+
+odontrogramanuevo.Abajo22 = color22ab;
+odontrogramanuevo.Arriba22 = color22a;
+odontrogramanuevo.Izquierda22 = color22i;
+odontrogramanuevo.Derecha22 = color22d;
+odontrogramanuevo.Centro22 = color22;
+odontrogramanuevo.Estado22 = estado22;
+odontrogramanuevo.Color22 = colorLetra22;
+
+odontrogramanuevo.Abajo23 = color23ab;
+odontrogramanuevo.Arriba23 = color23a;
+odontrogramanuevo.Izquierda23 = color23i;
+odontrogramanuevo.Derecha23 = color23d;
+odontrogramanuevo.Centro23 = color23;
+odontrogramanuevo.Estado23 = estado23;
+odontrogramanuevo.Color23 = colorLetra23;
+
+        odontrogramanuevo.Abajo24 = color24ab;
+        odontrogramanuevo.Arriba24 = color24a;
+        odontrogramanuevo.Izquierda24 = color24i;
+        odontrogramanuevo.Derecha24 = color24d;
+        odontrogramanuevo.Centro24 = color24;
+        odontrogramanuevo.Estado24 = estado24;
+        odontrogramanuevo.Color24 = colorLetra24;
+
+        odontrogramanuevo.Abajo25 = color25ab;
+        odontrogramanuevo.Arriba25 = color25a;
+        odontrogramanuevo.Izquierda25 = color25i;
+        odontrogramanuevo.Derecha25 = color25d;
+        odontrogramanuevo.Centro25 = color25;
+        odontrogramanuevo.Estado25 = estado25;
+        odontrogramanuevo.Color25 = colorLetra25;
+
+        odontrogramanuevo.Abajo26 = color26ab;
+        odontrogramanuevo.Arriba26 = color26a;
+        odontrogramanuevo.Izquierda26 = color26i;
+        odontrogramanuevo.Derecha26 = color26d;
+        odontrogramanuevo.Centro26 = color26;
+        odontrogramanuevo.Estado26 = estado26;
+        odontrogramanuevo.Color26 = colorLetra26;
+
+        odontrogramanuevo.Abajo27 = color27ab;
+        odontrogramanuevo.Arriba27 = color27a;
+        odontrogramanuevo.Izquierda27 = color27i;
+        odontrogramanuevo.Derecha27 = color27d;
+        odontrogramanuevo.Centro27 = color27;
+        odontrogramanuevo.Estado27 = estado27;
+        odontrogramanuevo.Color27 = colorLetra27;
+
+        odontrogramanuevo.Abajo28 = color28ab;
+        odontrogramanuevo.Arriba28 = color28a;
+        odontrogramanuevo.Izquierda28 = color28i;
+        odontrogramanuevo.Derecha28 = color28d;
+        odontrogramanuevo.Centro28 = color28;
+        odontrogramanuevo.Estado28 = estado28;
+        odontrogramanuevo.Color28 = colorLetra28;
+
+        odontrogramanuevo.Abajo48 = color48ab;
+        odontrogramanuevo.Arriba48 = color48a;
+        odontrogramanuevo.Izquierda48 = color48i;
+        odontrogramanuevo.Derecha48 = color48d;
+        odontrogramanuevo.Centro48 = color48;
+        odontrogramanuevo.Estado48 = estado48;
+        odontrogramanuevo.Color48 = colorLetra48;
+
+        odontrogramanuevo.Abajo47 = color47ab;
+        odontrogramanuevo.Arriba47 = color47a;
+        odontrogramanuevo.Izquierda47 = color47i;
+        odontrogramanuevo.Derecha47 = color47d;
+        odontrogramanuevo.Centro47 = color47;
+        odontrogramanuevo.Estado47 = estado47;
+        odontrogramanuevo.Color47 = colorLetra47;
+
+        odontrogramanuevo.Abajo46 = color46ab;
+        odontrogramanuevo.Arriba46 = color46a;
+        odontrogramanuevo.Izquierda46 = color46i;
+        odontrogramanuevo.Derecha46 = color46d;
+        odontrogramanuevo.Centro46 = color46;
+        odontrogramanuevo.Estado46 = estado46;
+        odontrogramanuevo.Color46 = colorLetra46;
+
+        odontrogramanuevo.Abajo45 = color45ab;
+        odontrogramanuevo.Arriba45 = color45a;
+        odontrogramanuevo.Izquierda45 = color45i;
+        odontrogramanuevo.Derecha45 = color45d;
+        odontrogramanuevo.Centro45 = color45;
+        odontrogramanuevo.Estado45 = estado45;
+        odontrogramanuevo.Color45 = colorLetra45;
+
+        odontrogramanuevo.Abajo44 = color44ab;
+        odontrogramanuevo.Arriba44 = color44a;
+        odontrogramanuevo.Izquierda44 = color44i;
+        odontrogramanuevo.Derecha44 = color44d;
+        odontrogramanuevo.Centro44 = color44;
+        odontrogramanuevo.Estado44 = estado44;
+        odontrogramanuevo.Color44 = colorLetra44;
+
+        odontrogramanuevo.Abajo43 = color43ab;
+        odontrogramanuevo.Arriba43 = color43a;
+        odontrogramanuevo.Izquierda43 = color43i;
+        odontrogramanuevo.Derecha43 = color43d;
+        odontrogramanuevo.Centro43 = color43;
+        odontrogramanuevo.Estado43 = estado43;
+        odontrogramanuevo.Color43 = colorLetra43;
+
+        odontrogramanuevo.Abajo42 = color42ab;
+        odontrogramanuevo.Arriba42 = color42a;
+        odontrogramanuevo.Izquierda42 = color42i;
+        odontrogramanuevo.Derecha42 = color42d;
+        odontrogramanuevo.Centro42 = color42;
+        odontrogramanuevo.Estado42 = estado42;
+        odontrogramanuevo.Color42 = colorLetra42;
+
+        odontrogramanuevo.Abajo41 = color41ab;
+        odontrogramanuevo.Arriba41 = color41a;
+        odontrogramanuevo.Izquierda41 = color41i;
+        odontrogramanuevo.Derecha41 = color41d;
+        odontrogramanuevo.Centro41 = color41;
+        odontrogramanuevo.Estado41 = estado41;
+        odontrogramanuevo.Color41 = colorLetra41;
+
+        odontrogramanuevo.Abajo31 = color31ab;
+        odontrogramanuevo.Arriba31 = color31a;
+        odontrogramanuevo.Izquierda31 = color31i;
+        odontrogramanuevo.Derecha31 = color31d;
+        odontrogramanuevo.Centro31 = color31;
+        odontrogramanuevo.Estado31 = estado31;
+        odontrogramanuevo.Color31 = colorLetra31;
+
+        odontrogramanuevo.Abajo32 = color32ab;
+        odontrogramanuevo.Arriba32 = color32a;
+        odontrogramanuevo.Izquierda32 = color32i;
+        odontrogramanuevo.Derecha32 = color32d;
+        odontrogramanuevo.Centro32 = color32;
+        odontrogramanuevo.Estado32 = estado32;
+        odontrogramanuevo.Color32 = colorLetra32;
+
+        odontrogramanuevo.Abajo33 = color33ab;
+        odontrogramanuevo.Arriba33 = color33a;
+        odontrogramanuevo.Izquierda33 = color33i;
+        odontrogramanuevo.Derecha33 = color33d;
+        odontrogramanuevo.Centro33 = color33;
+        odontrogramanuevo.Estado33 = estado33;
+        odontrogramanuevo.Color33 = colorLetra33;
+
+        odontrogramanuevo.Abajo34 = color34ab;
+        odontrogramanuevo.Arriba34 = color34a;
+        odontrogramanuevo.Izquierda34 = color34i;
+        odontrogramanuevo.Derecha34 = color34d;
+        odontrogramanuevo.Centro34 = color34;
+        odontrogramanuevo.Estado34 = estado34;
+        odontrogramanuevo.Color34 = colorLetra34;
+
+        odontrogramanuevo.Abajo35 = color35ab;
+        odontrogramanuevo.Arriba35 = color35a;
+        odontrogramanuevo.Izquierda35 = color35i;
+        odontrogramanuevo.Derecha35 = color35d;
+        odontrogramanuevo.Centro35 = color35;
+        odontrogramanuevo.Estado35 = estado35;
+        odontrogramanuevo.Color35 = colorLetra35;
+
+        odontrogramanuevo.Abajo36 = color36ab;
+        odontrogramanuevo.Arriba36 = color36a;
+        odontrogramanuevo.Izquierda36 = color36i;
+        odontrogramanuevo.Derecha36 = color36d;
+        odontrogramanuevo.Centro36 = color36;
+        odontrogramanuevo.Estado36 = estado36;
+        odontrogramanuevo.Color36 = colorLetra36;
+
+        odontrogramanuevo.Abajo37 = color37ab;
+        odontrogramanuevo.Arriba37 = color37a;
+        odontrogramanuevo.Izquierda37 = color37i;
+        odontrogramanuevo.Derecha37 = color37d;
+        odontrogramanuevo.Centro37 = color37;
+        odontrogramanuevo.Estado37 = estado37;
+        odontrogramanuevo.Color37 = colorLetra37;
+
+        odontrogramanuevo.Abajo38 = color38ab;
+        odontrogramanuevo.Arriba38 = color38a;
+        odontrogramanuevo.Izquierda38 = color38i;
+        odontrogramanuevo.Derecha38 = color38d;
+        odontrogramanuevo.Centro38 = color38;
+        odontrogramanuevo.Estado38 = estado38;
+        odontrogramanuevo.Color38 = colorLetra38;
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Update(odontrogramanuevo);
+            db.SaveChanges();
+        }
+
+        var odontrogramanuevoN = DbContext.OdontrogramaNiños.Find(IdOdontogramaSeleccionadoN);
+
+        
+        odontrogramanuevoN.Color55 = colorLetra55;
+odontrogramanuevoN.Abajo55 = color55ab;
+odontrogramanuevoN.Arriba55 = color55a;
+odontrogramanuevoN.Izquierda55 = color55i;
+odontrogramanuevoN.Derecha55 = color55d;
+odontrogramanuevoN.Centro55 = color55;
+odontrogramanuevoN.Estado55 = estado55;
+
+odontrogramanuevoN.Color54 = colorLetra54;
+odontrogramanuevoN.Abajo54 = color54ab;
+odontrogramanuevoN.Arriba54 = color54a;
+odontrogramanuevoN.Izquierda54 = color54i;
+odontrogramanuevoN.Derecha54 = color54d;
+odontrogramanuevoN.Centro54 = color54;
+odontrogramanuevoN.Estado54 = estado54;
+
+odontrogramanuevoN.Color53 = colorLetra53;
+odontrogramanuevoN.Abajo53 = color53ab;
+odontrogramanuevoN.Arriba53 = color53a;
+odontrogramanuevoN.Izquierda53 = color53i;
+odontrogramanuevoN.Derecha53 = color53d;
+odontrogramanuevoN.Centro53 = color53;
+odontrogramanuevoN.Estado53 = estado53;
+
+odontrogramanuevoN.Color52 = colorLetra52;
+odontrogramanuevoN.Abajo52 = color52ab;
+odontrogramanuevoN.Arriba52 = color52a;
+odontrogramanuevoN.Izquierda52 = color52i;
+odontrogramanuevoN.Derecha52 = color52d;
+odontrogramanuevoN.Centro52 = color52;
+odontrogramanuevoN.Estado52 = estado52;
+
+odontrogramanuevoN.Color51 = colorLetra51;
+odontrogramanuevoN.Abajo51 = color51ab;
+odontrogramanuevoN.Arriba51 = color51a;
+odontrogramanuevoN.Izquierda51 = color51i;
+odontrogramanuevoN.Derecha51 = color51d;
+odontrogramanuevoN.Centro51 = color51;
+odontrogramanuevoN.Estado51 = estado51;
+
+odontrogramanuevoN.Color61 = colorLetra61;
+odontrogramanuevoN.Abajo61 = color61ab;
+odontrogramanuevoN.Arriba61 = color61a;
+odontrogramanuevoN.Izquierda61 = color61i;
+odontrogramanuevoN.Derecha61 = color61d;
+odontrogramanuevoN.Centro61 = color61;
+odontrogramanuevoN.Estado61 = estado61;
+
+odontrogramanuevoN.Color62 = colorLetra62;
+odontrogramanuevoN.Abajo62 = color62ab;
+odontrogramanuevoN.Arriba62 = color62a;
+odontrogramanuevoN.Izquierda62 = color62i;
+odontrogramanuevoN.Derecha62 = color62d;
+odontrogramanuevoN.Centro62 = color62;
+odontrogramanuevoN.Estado62 = estado62;
+
+odontrogramanuevoN.Color63 = colorLetra63;
+odontrogramanuevoN.Abajo63 = color63ab;
+odontrogramanuevoN.Arriba63 = color63a;
+odontrogramanuevoN.Izquierda63 = color63i;
+odontrogramanuevoN.Derecha63 = color63d;
+odontrogramanuevoN.Centro63 = color63;
+odontrogramanuevoN.Estado63 = estado63;
+
+odontrogramanuevoN.Color64 = colorLetra64;
+odontrogramanuevoN.Abajo64 = color64ab;
+odontrogramanuevoN.Arriba64 = color64a;
+odontrogramanuevoN.Izquierda64 = color64i;
+odontrogramanuevoN.Derecha64 = color64d;
+odontrogramanuevoN.Centro64 = color64;
+odontrogramanuevoN.Estado64 = estado64;
+
+odontrogramanuevoN.Color65 = colorLetra65;
+odontrogramanuevoN.Abajo65 = color65ab;
+odontrogramanuevoN.Arriba65 = color65a;
+odontrogramanuevoN.Izquierda65 = color65i;
+odontrogramanuevoN.Derecha65 = color65d;
+odontrogramanuevoN.Centro65 = color65;
+odontrogramanuevoN.Estado65 = estado65;
+
+odontrogramanuevoN.Color85 = colorLetra85;
+odontrogramanuevoN.Abajo85 = color85ab;
+odontrogramanuevoN.Arriba85 = color85a;
+odontrogramanuevoN.Izquierda85 = color85i;
+odontrogramanuevoN.Derecha85 = color85d;
+odontrogramanuevoN.Centro85 = color85;
+odontrogramanuevoN.Estado85 = estado85;
+
+odontrogramanuevoN.Color84 = colorLetra84;
+odontrogramanuevoN.Abajo84 = color84ab;
+odontrogramanuevoN.Arriba84 = color84a;
+odontrogramanuevoN.Izquierda84 = color84i;
+odontrogramanuevoN.Derecha84 = color84d;
+odontrogramanuevoN.Centro84 = color84;
+odontrogramanuevoN.Estado84 = estado84;
+
+odontrogramanuevoN.Color83 = colorLetra83;
+odontrogramanuevoN.Abajo83 = color83ab;
+odontrogramanuevoN.Arriba83 = color83a;
+odontrogramanuevoN.Izquierda83 = color83i;
+odontrogramanuevoN.Derecha83 = color83d;
+odontrogramanuevoN.Centro83 = color83;
+odontrogramanuevoN.Estado83 = estado83;
+
+odontrogramanuevoN.Color82 = colorLetra82;
+odontrogramanuevoN.Abajo82 = color82ab;
+odontrogramanuevoN.Arriba82 = color82a;
+odontrogramanuevoN.Izquierda82 = color82i;
+odontrogramanuevoN.Derecha82 = color82d;
+odontrogramanuevoN.Centro82 = color82;
+odontrogramanuevoN.Estado82 = estado82;
+
+odontrogramanuevoN.Color81 = colorLetra81;
+odontrogramanuevoN.Abajo81 = color81ab;
+odontrogramanuevoN.Arriba81 = color81a;
+odontrogramanuevoN.Izquierda81 = color81i;
+odontrogramanuevoN.Derecha81 = color81d;
+odontrogramanuevoN.Centro81 = color81;
+odontrogramanuevoN.Estado81 = estado81;
+
+odontrogramanuevoN.Color71 = colorLetra71;
+odontrogramanuevoN.Abajo71 = color71ab;
+odontrogramanuevoN.Arriba71 = color71a;
+odontrogramanuevoN.Izquierda71 = color71i;
+odontrogramanuevoN.Derecha71 = color71d;
+odontrogramanuevoN.Centro71 = color71;
+odontrogramanuevoN.Estado71 = estado71;
+
+odontrogramanuevoN.Color72 = colorLetra72;
+odontrogramanuevoN.Abajo72 = color72ab;
+odontrogramanuevoN.Arriba72 = color72a;
+odontrogramanuevoN.Izquierda72 = color72i;
+odontrogramanuevoN.Derecha72 = color72d;
+odontrogramanuevoN.Centro72 = color72;
+odontrogramanuevoN.Estado72 = estado72;
+
+odontrogramanuevoN.Color73 = colorLetra73;
+odontrogramanuevoN.Abajo73 = color73ab;
+odontrogramanuevoN.Arriba73 = color73a;
+odontrogramanuevoN.Izquierda73 = color73i;
+odontrogramanuevoN.Derecha73 = color73d;
+odontrogramanuevoN.Centro73 = color73;
+odontrogramanuevoN.Estado73 = estado73;
+
+odontrogramanuevoN.Color74 = colorLetra74;
+odontrogramanuevoN.Abajo74 = color74ab;
+odontrogramanuevoN.Arriba74 = color74a;
+odontrogramanuevoN.Izquierda74 = color74i;
+odontrogramanuevoN.Derecha74 = color74d;
+odontrogramanuevoN.Centro74 = color74;
+odontrogramanuevoN.Estado74 = estado74;
+
+odontrogramanuevoN.Color75 = colorLetra75;
+odontrogramanuevoN.Abajo75 = color75ab;
+odontrogramanuevoN.Arriba75 = color75a;
+odontrogramanuevoN.Izquierda75 = color75i;
+odontrogramanuevoN.Derecha75 = color75d;
+odontrogramanuevoN.Centro75 = color75;
+odontrogramanuevoN.Estado75 = estado75;
+
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            db.Update(odontrogramanuevoN);
+            db.SaveChanges();
+        }
+    }
+
+
+    private void GuardarOdontograma()
+    {
+        GuardarDatosdeOdontograma();
+
+    }
+    private void SeleccionarEstado(string estado, string color, string border)
+    {
+        estadoSeleccionado = estado;
+        colorLetraSeleccionado = color;
+        colorSeleccionado = white;
+
+        resetearBotones();
+
+        if (border == "XR")
+            XR = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "XB")
+            XB = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "OR")
+            OR = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "OB")
+            OB = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "TR")
+            TR = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "TB")
+            TB = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "IGUALR")
+            IGUALR = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "IGUALB")
+            IGUALB = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+    }
+    private void resetearBotones()
+    {
+
+        R = "2px solid black";
+        B = "2px solid black";
+        W= "2px solid black";
+        XR = "2px solid black";
+        XB = "2px solid black";
+        OR = "2px solid black";
+        OB = "2px solid black";
+        TR = "2px solid black";
+        TB = "2px solid black";
+        IGUALR = "2px solid black";
+        IGUALB = "2px solid black";
+    }
+    private void SeleccionarColor(string colorRecibido, string estado, string border)
+    {
+        estadoSeleccionado = "";
+        colorSeleccionado = colorRecibido;
+
+        resetearBotones();
+        if (border == "R")
+        R = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "B")
+        B = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+        if (border == "W")
+        W = "border: 4px solid GREEN; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); border-radius: 20px; width: 55px; height: 55px; transition: border-color 0.3s ease;";
+
+    }
+
+    private void CambiaColor(ChangeEventArgs args)
+    {
+        var o = args.Value.ToString();
+        colorSeleccionado = o;
+    }
+    private void color12ccambiar()
+    {
+        botonSeleccionado = "12c";
+    }
+
+    private void SeleccionarBoton(string boton)
+    {
+        botonSeleccionado = boton;
+    }
+
+    private void SeleccionarBoton18()
+    {
+        estado18 = estadoSeleccionado;
+        color18 = colorSeleccionado;
+                colorLetra18 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton17()
+    {
+        estado17 = estadoSeleccionado;
+        color17 = colorSeleccionado;
+                colorLetra17 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton16()
+    {
+        estado16 = estadoSeleccionado;
+        color16 = colorSeleccionado;
+                colorLetra16 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton15()
+    {
+        estado15 = estadoSeleccionado;
+        color15 = colorSeleccionado;
+                colorLetra15 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton14()
+    {
+        estado14 = estadoSeleccionado;
+        color14 = colorSeleccionado;
+                colorLetra14 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton13()
+    {
+        estado13 = estadoSeleccionado;
+        color13 = colorSeleccionado;
+                colorLetra13 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton12()
+    {
+        estado12 = estadoSeleccionado;
+        color12 = colorSeleccionado;
+        colorLetra12 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton11()
+    {
+        estado11 = estadoSeleccionado;
+        color11 = colorSeleccionado;
+                colorLetra11 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton28()
+    {
+        estado28 = estadoSeleccionado;
+        color28 = colorSeleccionado;
+                colorLetra28 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton27()
+    {
+        estado27 = estadoSeleccionado;
+        color27 = colorSeleccionado;
+                colorLetra27 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton26()
+    {
+        estado26 = estadoSeleccionado;
+        color26 = colorSeleccionado;
+                colorLetra26 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton25()
+    {
+        estado25 = estadoSeleccionado;
+        color25 = colorSeleccionado;
+        colorLetra25 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton24()
+    {
+        estado24 = estadoSeleccionado;
+        color24 = colorSeleccionado;
+                colorLetra24 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton23()
+    {
+        estado23 = estadoSeleccionado;
+        color23 = colorSeleccionado;
+                colorLetra23 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton22()
+    {
+        estado22 = estadoSeleccionado;
+        color22 = colorSeleccionado;
+                colorLetra22 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton21()
+    {
+        estado21 = estadoSeleccionado;
+        color21 = colorSeleccionado;
+                colorLetra21 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton48()
+    {
+        estado48 = estadoSeleccionado;
+        color48 = colorSeleccionado;
+                colorLetra48 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton47()
+    {
+        estado47 = estadoSeleccionado;
+        color47 = colorSeleccionado;
+                colorLetra47 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton46()
+    {
+        estado46 = estadoSeleccionado;
+        color46 = colorSeleccionado;
+                colorLetra46 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton45()
+    {
+        estado45 = estadoSeleccionado;
+        color45 = colorSeleccionado;
+                colorLetra45 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton44()
+    {
+        estado44 = estadoSeleccionado;
+        color44 = colorSeleccionado;
+                colorLetra44 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton43()
+    {
+        estado43 = estadoSeleccionado;
+        color43 = colorSeleccionado;
+                colorLetra43 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton42()
+    {
+        estado42 = estadoSeleccionado;
+        color42 = colorSeleccionado;
+                colorLetra42 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton41()
+    {
+        estado41 = estadoSeleccionado;
+        color41 = colorSeleccionado;
+                colorLetra41 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton38()
+    {
+        estado38 = estadoSeleccionado;
+        color38 = colorSeleccionado;
+        colorLetra38 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton37()
+    {
+        estado37 = estadoSeleccionado;
+        color37 = colorSeleccionado;
+                colorLetra37 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton36()
+    {
+        estado36 = estadoSeleccionado;
+        color36 = colorSeleccionado;
+                colorLetra36 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton35()
+    {
+        estado35 = estadoSeleccionado;
+        color35 = colorSeleccionado;
+                colorLetra35 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton34()
+    {
+        estado34 = estadoSeleccionado;
+        color34 = colorSeleccionado;
+                colorLetra34 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton33()
+    {
+        estado33 = estadoSeleccionado;
+        color33 = colorSeleccionado;
+                colorLetra33 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton32()
+    {
+        estado32 = estadoSeleccionado;
+        color32 = colorSeleccionado;
+                colorLetra32 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton31()
+    {
+        estado31 = estadoSeleccionado;
+        color31 = colorSeleccionado;
+                colorLetra31 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton55()
+    {
+        estado55 = estadoSeleccionado;
+        color55 = colorSeleccionado;
+                colorLetra55 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton54()
+    {
+        estado54 = estadoSeleccionado;
+        color54 = colorSeleccionado;
+                colorLetra54 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton53()
+    {
+        estado53 = estadoSeleccionado;
+        color53 = colorSeleccionado;
+                colorLetra53 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton52()
+    {
+        estado52 = estadoSeleccionado;
+        color52 = colorSeleccionado;
+                colorLetra52 = colorLetraSeleccionado;
+    }        
+    private void SeleccionarBoton51()
+    {
+        estado51 = estadoSeleccionado;
+        color51 = colorSeleccionado;
+                colorLetra51 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton61()
+    {
+        estado61 = estadoSeleccionado;
+        color61 = colorSeleccionado;
+                colorLetra61 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton62()
+    {
+        estado62 = estadoSeleccionado;
+        color62 = colorSeleccionado;
+                colorLetra62 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton63()
+    {
+        estado63 = estadoSeleccionado;
+        color63 = colorSeleccionado;
+                colorLetra63 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton64()
+    {
+        estado64 = estadoSeleccionado;
+        color64 = colorSeleccionado;
+                colorLetra64 = colorLetraSeleccionado;
+    }
+    private void SeleccionarBoton65()
+    {
+        estado65 = estadoSeleccionado;
+        color65 = colorSeleccionado;
+        colorLetra65 = colorLetraSeleccionado;
+    }
+                private void SeleccionarBoton85()
+    {
+        estado85 = estadoSeleccionado;
+        color85 = colorSeleccionado;
+                colorLetra85 = colorLetraSeleccionado;
+    }
+                    private void SeleccionarBoton84()
+    {
+        estado84 = estadoSeleccionado;
+        color84 = colorSeleccionado;
+                colorLetra84 = colorLetraSeleccionado;
+    }
+                    private void SeleccionarBoton83()
+    {
+        estado83 = estadoSeleccionado;
+        color83 = colorSeleccionado;
+        colorLetra83 = colorLetraSeleccionado;
+    }
+                    private void SeleccionarBoton82()
+    {
+        estado82 = estadoSeleccionado;
+        color82 = colorSeleccionado;
+                colorLetra82 = colorLetraSeleccionado;
+    }
+                private void SeleccionarBoton81()
+    {
+        estado81 = estadoSeleccionado;
+        color81 = colorSeleccionado;
+                colorLetra81 = colorLetraSeleccionado;
+    }
+                    private void SeleccionarBoton71()
+    {
+        estado71 = estadoSeleccionado;
+        color71 = colorSeleccionado;
+                colorLetra71 = colorLetraSeleccionado;
+    }
+                        private void SeleccionarBoton72()
+    {
+        estado72 = estadoSeleccionado;
+        color72 = colorSeleccionado;
+                colorLetra72 = colorLetraSeleccionado;
+    }
+                        private void SeleccionarBoton73()
+    {
+        estado73 = estadoSeleccionado;
+        color73 = colorSeleccionado;
+                colorLetra73 = colorLetraSeleccionado;
+    }
+                        private void SeleccionarBoton74()
+    {
+        estado74 = estadoSeleccionado;
+        color74 = colorSeleccionado;
+                colorLetra74 = colorLetraSeleccionado;
+    }
+                        private void SeleccionarBoton75()
+    {
+        estado75 = estadoSeleccionado;
+        color75 = colorSeleccionado;
+                colorLetra75 = colorLetraSeleccionado;
+    }
+    public void CambiarColor()
+    {
+        color12c = colorSeleccionado;
+    }
+
+}

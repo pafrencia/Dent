@@ -2,6 +2,8 @@
 @using Dent.Models
 @using Dent.Shared
 @inject Permisos Permiso
+@inject IJSRuntime JS
+
 <PageTitle>IMPRIMIR</PageTitle>
 @if (Permiso.Logueado == 1)
 
@@ -38,14 +40,10 @@
                 display: block; /* Hacer que la imagen sea un bloque */
             }
     </style>
-    <button class="btn btn-primary" @onclick="() => OcultarTodo()">@nombreDelBoton</button>
-    <div style="display: @(OcultarImagen == 1 ? "block" : "none")">
-    <div class="image-container">
-            <img src="https://i.gyazo.com/4195baa2e73bef549cfb923918ee9b17.png" alt="Descripción de la imagen">
-    </div>
-    </div>
+    <button class="btn btn-primary" @onclick="() => GeneratePdf()">Generar PDF</button>
     <div style="display: @(OcultarTodoValor == 1 ? "block" : "none")">
 
+    
         <div class="form-group">
             <label for="inputText">% en 3 Cuotas:</label>
             <input type="text" id="inputText" @bind="TresCuotasPorcentaje" />
@@ -53,8 +51,12 @@
         <div class="form-group">
             <label for="inputText">% en 6 Cuotas:</label>
             <input type="text" id="inputText" @bind="SeisCuotasPorcentaje" />
-        </div>
+
     </div>
+    <div id="contentToConvert">
+            <div class="image-container">
+                <img src="banner.png" alt="Descripción de la imagen">
+            </div>
     <p> </p>
     <input type="text" id="inputText" class="input-small" @bind="Titulos[0]" size="36" readonly />
         <input type="text" id="inputText" @bind="Titulos[1]" size="6" readonly />
@@ -107,8 +109,8 @@
             <textarea rows="4" cols="100" @bind="textoMultilinea"></textarea>
     </div>
 
-
-
+    </div>
+    </div>
 
 
 
@@ -215,6 +217,12 @@ else
     private List<PracticasApro> ListaDePracticasApross = new List<PracticasApro>();
     private string textoMultilinea = "Aqui va la explicacion de precios y alguna observacion que quieras aplicar\n puede a ver saltos de linea no pasa nada\n tantos entres";
     
+    private async Task GeneratePdf()
+    {
+        OcultarImagen = 1;
+        await JS.InvokeVoidAsync("html2pdf.generatePdf", "contentToConvert");
+        OcultarImagen = 0;
+    }
 
     public void OcultarTodo()
     {
