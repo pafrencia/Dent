@@ -25,7 +25,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<AgregarPracticas>();
 builder.Services.AddSingleton<EliminarPracticaMetod>();
 builder.Services.AddSingleton<DbDentistaContext>();
-builder.Services.AddSingleton<ServicioAutenticacion>();
+builder.Services.AddSingleton<ServicioAutenticacionA>();
 builder.Services.AddSingleton<Permisos>();
 builder.Services.AddSingleton<ServiceHelper>();
 builder.Services.AddHttpClient();
