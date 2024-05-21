@@ -26,7 +26,7 @@ builder.Services.AddSingleton<AgregarPracticas>();
 builder.Services.AddSingleton<EliminarPracticaMetod>();
 builder.Services.AddSingleton<DbDentistaContext>();
 //simulo hotfix
-builder.Services.AddSingleton<ServicioAutenticacionA>();
+builder.Services.AddSingleton<ServicioAutenticacion>();
 builder.Services.AddSingleton<Permisos>();
 builder.Services.AddSingleton<ServiceHelper>();
 builder.Services.AddHttpClient();
