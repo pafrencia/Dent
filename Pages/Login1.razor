@@ -67,8 +67,6 @@
 </div>
 
 @code {
-    [Inject]
-    private DbDentistaContext DbContext { get; set; }
     string info = "Ingrese Usuario y contraseña";
     private static bool mostrarModal = false;
     private string nombreUsuario = "";
@@ -109,9 +107,10 @@
     private void IniciarSesion()
     {
         var entidad = new Login();
-
-        entidad = DbContext.Logins.SingleOrDefault(e => e.Usuario == nombreUsuario);
-
+        using (DbDentistaContext db = new DbDentistaContext())
+        {
+            entidad = db.Logins.SingleOrDefault(e => e.Usuario == nombreUsuario);
+        }
 
         if (entidad != null)
         {
